@@ -1,0 +1,184 @@
+﻿<Page x:Class="PL.Pages.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:pages="clr-namespace:PL.Pages"
+      mc:Ignorable="d"
+      d:DataContext="{d:DesignInstance Type=pages:HomePage}"
+      MinHeight="720" MinWidth="1200"
+      Title="HomePage"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}">
+
+    <Page.Resources>
+        <Style x:Key="MenuButton" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource MaterialDesignPaper}"/>
+            <Setter Property="Height" Value="170" />
+            <Setter Property="Width" Value="370" />
+            <Setter Property="BorderBrush" Value="{StaticResource MaterialDesignToolBackground}" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Padding" Value="14" />
+        </Style>
+
+        <Style x:Key="InnerGrid" TargetType="{x:Type Grid}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="{x:Type Ellipse}">
+            <Setter Property="Fill" Value="DodgerBlue" />
+            <Setter Property="Margin" Value="10 22" />
+        </Style>
+
+        <Style TargetType="{x:Type Image}">
+            <Setter Property="Margin" Value="22,35,22,35"/>
+        </Style>
+
+        <ResourceDictionary x:Key="RoundedCorners">
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="5"/>
+            </Style>
+        </ResourceDictionary>
+
+
+        <Style x:Key="Title" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Foreground" Value="#333333" />
+            <Setter Property="FontFamily" Value="Microsoft YaHei" />
+            <Setter Property="FontSize" Value="22" />
+        </Style>
+
+        <Style x:Key="Details" TargetType="TextBlock">
+            <Setter Property="Margin" Value="0,9,0,0" />
+            <Setter Property="Foreground" Value="DimGray" />
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="FontSize" Value="18" />
+        </Style>
+    </Page.Resources>
+
+    <!-- Page -->
+    <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth0">
+        <Grid Background="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="{Binding ElementName=Button, Path=Width}"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="{Binding ElementName=Button, Path=Width}"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="{Binding ElementName=Button, Path=Height}"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="{Binding ElementName=Button, Path=Height}"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+
+            <Button
+                x:Name="Button"
+                Style="{StaticResource MenuButton}"
+                Resources="{StaticResource RoundedCorners}"
+                Click="SentBtn_Click"
+                Grid.Row="1"
+                Grid.Column="1">
+                <DockPanel>
+                    <Grid Style="{StaticResource InnerGrid}">
+                        <Ellipse/>
+                        <Image Source="/Icons/package.png"/>
+                    </Grid>
+                    <StackPanel
+                        VerticalAlignment="Center">
+                        <TextBlock
+                            Text="New Parcel"
+                            Style="{StaticResource Title}" />
+                        <TextBlock
+                            Text="Send a new package     "
+                            Style="{StaticResource Details}" />
+                    </StackPanel>
+                </DockPanel>
+            </Button>
+
+            <Button
+                Style="{StaticResource MenuButton}"
+                Resources="{StaticResource RoundedCorners}"
+                Click="SentBtn_Click"
+                Grid.Row="3"
+                Grid.Column="1">
+                <DockPanel>
+                    <Grid Style="{StaticResource InnerGrid}">
+                        <Ellipse/>
+                        <Image Source="/Icons/sent.png"/>
+                    </Grid>
+                    <StackPanel
+                        VerticalAlignment="Center">
+                        <TextBlock
+                            Text="Sent Parcels"
+                            Style="{StaticResource Title}" />
+                        <TextBlock
+                            Text="Track packages you sent"
+                            Style="{StaticResource Details}" />
+                    </StackPanel>
+                </DockPanel>
+            </Button>
+
+            <Button
+                Style="{StaticResource MenuButton}"
+                Resources="{StaticResource RoundedCorners}"
+                Grid.Row="1"
+                Grid.Column="3"
+                Click="SettingsBtn_Click">
+                <DockPanel>
+                    <Grid Style="{StaticResource InnerGrid}">
+                        <Ellipse/>
+                        <Image Source="/Icons/settings.png" />
+                    </Grid>
+                    <StackPanel
+                        VerticalAlignment="Center">
+                        <TextBlock
+                            Text="Settings"
+                            Style="{StaticResource Title}" />
+                        <TextBlock
+                            Text="Update account settings"
+                            Style="{StaticResource Details}" />
+                    </StackPanel>
+                </DockPanel>
+            </Button>
+
+            <Button
+                Style="{StaticResource MenuButton}"
+                Resources="{StaticResource RoundedCorners}"
+                Click="ScheduledBtn_Click" 
+                Grid.Row="3"
+                Grid.Column="3">
+                <DockPanel>
+
+                    <Grid Style="{StaticResource InnerGrid}" >
+                        <Ellipse/>
+                        <Image Source="/Icons/incoming.png" />
+                    </Grid>
+
+                    <StackPanel
+                        VerticalAlignment="Center">
+                        <TextBlock
+                            Text="Scheduled"
+                            Style="{StaticResource Title}"/>
+                        <TextBlock
+                            Style="{StaticResource Details}">
+                            <Run Text="Track packages sent to  " />
+                            <LineBreak />
+                            <Run Text="you" />
+                        </TextBlock>
+                    </StackPanel>
+
+                </DockPanel>
+            </Button>
+
+        </Grid>
+    </materialDesign:Card>
+</Page>

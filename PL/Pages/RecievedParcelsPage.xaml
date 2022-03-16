@@ -1,0 +1,257 @@
+﻿<Page x:Class="PL.Pages.ReceivedParcelsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:local="clr-namespace:PL.Pages"
+      mc:Ignorable="d"
+      d:DataContext="{d:DesignInstance Type=local:ReceivedParcelsPage}"
+      Height="1020" Width="1800"
+      Title="ReceivedParcelsPage"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}">
+
+    <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="10*" />
+                <RowDefinition Height="1.2*"/>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="20*" />
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="40" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="1">
+                <TextBlock
+                    Text="Receiving Order Details"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    FontSize="28"
+                    FontWeight="Bold"
+                    FontFamily="Helvetica"
+                    Opacity="0.9" 
+                    Foreground="#FF222525" />
+
+                <TextBlock
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    FontWeight="Normal"
+                    FontSize="20"
+                    FontFamily="Netflix Sans Light"
+                    Foreground="#FF6D7484" 
+                    Opacity="0.8" 
+                    Margin="0,40,0,0">
+                    <Run
+                        Text="In the order details section, you can review and manage all orders that are sent to you with their information. You can view their details, such as their IDs, ordered product, price and status." />
+                    <LineBreak />
+                    <Run
+                        Text="Access to this area is limited. Only company management can apply changes. The changes you make will be approved after they are checked." />
+                </TextBlock>
+            </StackPanel>
+
+            <DockPanel
+                Grid.Column="1"
+                Grid.Row="2">
+                <Button
+                    x:Name="AllOrdersBtn"
+                    Style="{StaticResource PanelButton_Parcels}"
+                    Click="AllOrdersBtn_Click">
+                    <Button.Content>
+                        <StackPanel>
+                            <TextBlock
+                                Style="{StaticResource PanelText}"
+                                Text="All Orders"/>
+                            <Separator
+                                Foreground="#FFA3ACBD"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+
+                <Separator Visibility="Hidden" Width="8"/>
+
+                <Button
+                    x:Name="Button2"
+                    Style="{StaticResource PanelButton_Parcels}"
+                    Click="Panel2_Click">
+                    <Button.Content>
+                        <StackPanel>
+                            <TextBlock
+                                Style="{StaticResource PanelText}"
+                                Text="Completed"/>
+                            <Separator
+                                Foreground="#FFA3ACBD"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+
+                <Separator Visibility="Hidden" Width="8"/>
+
+                <Button
+                    x:Name="Button3"
+                    Style="{StaticResource PanelButton_Parcels}"
+                    Click="Panel3_Click">
+                    <Button.Content>
+                        <StackPanel>
+                            <TextBlock
+                                Style="{StaticResource PanelText}"
+                                Text="Ongoing"/>
+                            <Separator
+                                Foreground="#FFA3ACBD"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+
+                <Separator Visibility="Hidden" Width="8"/>
+
+                <Button
+                    x:Name="Button4"
+                    Style="{StaticResource PanelButton_Parcels}"
+                    Click="Panel4_Click">
+                    <Button.Content>
+                        <StackPanel>
+                            <TextBlock
+                                Style="{StaticResource PanelText}"
+                                Text="Pending"/>
+                            <Separator
+                                Foreground="#FFA3ACBD"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </DockPanel>
+
+            <Separator 
+                x:Name="FirstSeparator"
+                Background="#FFA3ACBD"
+                Grid.Row="2"
+                Grid.Column="1"
+                Margin="0 23 0 0"
+                Opacity="0.5"/>
+
+            <DockPanel 
+                Grid.Column="1"
+                Grid.Row="4">
+
+                <TextBlock
+                    Style="{StaticResource ColumnHeader_Parcels}"
+                    Text="Order Id"/>
+                <TextBlock
+                    Style="{StaticResource ColumnHeader_Parcels}"
+                    Margin="170 0 0 0"
+                    Text="Customer Id"/>
+                <TextBlock
+                    Style="{StaticResource ColumnHeader_Parcels}"
+                    Margin="135 0 0 0"
+                    Text="Priority"/>
+                <TextBlock
+                    Style="{StaticResource ColumnHeader_Parcels}"
+                    HorizontalAlignment="Center"
+                    Margin="226 0 0 0"
+                    Text="Scheduled Date" />
+                <TextBlock
+                    Style="{StaticResource ColumnHeader_Parcels}"
+                    Text="Weight"
+                    Margin="145 0 0 0"
+                    HorizontalAlignment="Center"/>
+                <TextBlock
+                    Style="{StaticResource ColumnHeader_Parcels}"
+                    HorizontalAlignment="Center"
+                    Margin="157 0 0 0"
+                    Text="Pay Method"/>
+                <TextBlock
+                    Style="{StaticResource ColumnHeader_Parcels}"
+                    HorizontalAlignment="Center"
+                    Margin="70 0 0 0"
+                    Text="Delivery Status" />
+
+            </DockPanel>
+
+            <Separator
+                VerticalAlignment="Top"
+                Grid.Column="1"
+                Grid.Row="5"
+                Background="#FFA3ACBD"
+                Opacity="{Binding Opacity, ElementName=FirstSeparator}" />
+
+            <!--Order Id List-->
+            <ListBox
+                Margin="0 5 0 0"
+                Grid.Column="1"
+                Grid.Row="5"
+                d:ItemsSource="{d:SampleData ItemCount=6}"
+                ItemsSource="{Binding ParcelViewModels}">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="FontSize" Value="18"/>
+                        <Setter Property="Height" Value="50" />
+                        <Setter Property="FontFamily" Value="Netflix Sans Light" />
+                        <Setter Property="Foreground" Value="#444444" />
+                        <Setter Property="Background" Value="{x:Null}"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True" >
+                                <Setter Property="FontFamily" Value="Netflix Sans Medium" />
+                                <Setter Property="Foreground" Value="#111111" />
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Background" Value="{x:Null}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="FontFamily" Value="Netflix Sans Medium" />
+                                <Setter Property="Background" Value="{x:Null}" />
+                                <Setter Property="Foreground" Value="#333333" />
+                                <Setter Property="BorderThickness" Value="0"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel Height="30">
+                            <TextBlock
+                                Text="{Binding Id}"
+                                HorizontalAlignment="Left"
+                                Width="240"/>
+                            <TextBlock
+                                Text="{Binding TargetId}"
+                                HorizontalAlignment="Left"
+                                Width="244"/>
+                            <TextBlock
+                                Text="{Binding Priority}"
+                                HorizontalAlignment="Left"
+                                Width="269"/>
+                            <TextBlock
+                                Text="{Binding Scheduled}"
+                                HorizontalAlignment="Center"
+                                Width="318"/>
+                            <TextBlock
+                                Text="{Binding Weight}"
+                                HorizontalAlignment="Center"
+                                Width="231"/>
+                            <TextBlock
+                                Text="Credit Card"
+                                HorizontalAlignment="Center"
+                                Width="246"/>
+                            <Border 
+                                CornerRadius="3" 
+                                Width="100" 
+                                Height="25">
+                                <Border.Background>
+                                    <ImageBrush Stretch="Fill" ImageSource="{Binding Status}"/>
+                                </Border.Background>
+                            </Border>
+                        </DockPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+
+        </Grid>
+    </materialDesign:Card>
+</Page>

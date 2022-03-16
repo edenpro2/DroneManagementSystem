@@ -1,0 +1,224 @@
+﻿<Window x:Class="PL.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:windows="clr-namespace:PL.Windows"
+        xmlns:controls="clr-namespace:PL.Controls"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
+        d:DataContext="{d:DesignInstance Type=windows:MainWindow}"
+        mc:Ignorable="d"
+        Title="MainWindow" 
+        MinHeight="820" MinWidth="1450"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{x:Null}"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <Style TargetType="{x:Type Separator}" BasedOn="{StaticResource Padding}">
+            <Setter Property="Height" Value="15"/>
+        </Style>
+
+        <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
+            <Setter Property="Width" Value="450"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignDivider}"/>
+        </Style>
+
+        <Style TargetType="PasswordBox" BasedOn="{StaticResource MaterialDesignOutlinedPasswordBox}">
+            <Setter Property="Width" Value="450"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignDivider}"/>
+        </Style>
+    </Window.Resources>
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation
+                        Duration="00:00:0.5" 
+                        Storyboard.TargetProperty="Opacity"
+                        From="0" To="1" />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
+
+    <materialDesign:Card
+        UniformCornerRadius="10"
+        materialDesign:ShadowAssist.ShadowDepth="Depth4">
+        <materialDesign:Card.Background>
+            <ImageBrush ImageSource="/Resources/Wallpaper.jpg"/>
+        </materialDesign:Card.Background>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="520"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="520"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+
+            <materialDesign:Card
+                Grid.Column="1"
+                Grid.Row="1"
+                Background="{StaticResource MaterialDesignLightBackground}"
+                UniformCornerRadius="10"
+                materialDesign:ShadowAssist.ShadowDepth="Depth4" >
+                <StackPanel>
+
+                    <Separator Height="50"/>
+
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontSize="28"
+                        FontWeight="Bold"
+                        Text="Welcome back" />
+
+                    <Separator/>
+
+                    <TextBlock
+                        FontSize="17"
+                        FontWeight="SemiBold"
+                        HorizontalAlignment="Center"
+                        Text="Log in to your account" />
+
+                    <Separator/>
+
+                    <TextBlock
+                        x:Name="ErrorTextBlock"
+                        FontSize="15"
+                        Foreground="IndianRed"
+                        FontWeight="SemiBold"
+                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Center"/>
+
+                    <Separator/>
+
+                    <TextBox
+                        x:Name="UsernameBox"
+                        Text="edenpro2"
+                        materialDesign:HintAssist.Hint="Enter Username"/>
+
+                    <Separator/>
+
+                    <PasswordBox
+                        x:Name="PassBox"
+                        Password="eden"
+                        materialDesign:HintAssist.Hint="Enter Password"/>
+
+                    <Separator/>
+
+                    <Button
+                        Style="{StaticResource MaterialDesignFlatMidBgButton}"
+                        x:Name="LoginButton"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                        Height="53"
+                        Width="450"
+                        materialDesign:ButtonAssist.CornerRadius="5"
+                        FontSize="18"
+                        Content="Login"
+                        Click="LoginBtn_Click"/>
+
+
+                    <DockPanel
+                        Margin="35 5 0 0"
+                        HorizontalAlignment="Left">
+                        <TextBlock
+                            Text="Need an account?"
+                            Foreground="#888888"
+                            FontWeight="SemiBold"
+                            FontSize="18"  
+                            VerticalAlignment="Center"/>
+                        <Button
+                            Content="Register"
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            FontSize="18"
+                            Click="RegBtn_Click" />
+                    </DockPanel>
+
+                    <Separator Height="25"/>
+
+                    <Button
+                        Content="For Employees"
+                        Style="{StaticResource MaterialDesignFlatButton}"
+                        FontSize="18"
+                        Click="EmployeeBtn_Click" 
+                        HorizontalAlignment="Right"
+                        Margin="0,0,24,0" />
+
+                </StackPanel>
+
+
+            </materialDesign:Card>
+
+
+
+            <Image  
+                Grid.Row="1"
+                Grid.Column="1"
+                x:Name="Gif"
+                gif:ImageBehavior.AnimatedSource="../Resources/loading.gif" 
+                HorizontalAlignment="Center" 
+                Visibility="Hidden"
+                VerticalAlignment="Top" 
+                Height="194" 
+                Width="260"
+                Margin="0,284,0,0"/>
+
+            <materialDesign:PopupBox
+                Margin="5"
+                Grid.Row="1"
+                Grid.Column="1"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                PlacementMode="BottomAndAlignRightEdges"
+                StaysOpen="False">
+                <StackPanel>
+                    <StackPanel
+                        Margin="16 10 0 6"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Text="Dark Mode" />
+                        <ToggleButton
+                            Cursor="Hand"
+                            ToolTip="Enable Dark Mode"
+                            Margin="12 0 8 0"/>
+                    </StackPanel>
+
+                    <Button
+                        ToolTip="Having Troubles in Logging In?"
+                        Margin="0 8 0 0"
+                        Content="Help Me" />
+                    <Button
+                        ToolTip="Back-end access"
+                        Content="For Developers"
+                        Click="DevBtn_Click" />
+                </StackPanel>
+
+            </materialDesign:PopupBox>
+
+            <controls:WindowControls
+                x:Name="CustomButtons"
+                Margin="10"
+                Grid.Row="0"
+                Grid.Column="2">
+            </controls:WindowControls>
+
+        </Grid>
+    </materialDesign:Card>
+
+</Window>
