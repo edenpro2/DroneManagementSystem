@@ -1,16 +1,11 @@
 ﻿using System;
 
-namespace DALFACADE
+namespace DalFacade
 {
     [Serializable]
-    public class DALNotFoundException : Exception
+    public class DalNotFoundException : Exception
     {
-        public DALNotFoundException()
-        {
-        }
+        public DalNotFoundException() : base("Item not found in list") {}
 
-        public DALNotFoundException(string message) : base("Item not found in list")
-        {
-        }
     }
 }

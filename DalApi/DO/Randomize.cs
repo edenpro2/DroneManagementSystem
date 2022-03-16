@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using static System.Math;
 
-namespace DO
+namespace DalFacade.DO
 {
     public static class Randomize
     {
         #region Names
 
-        public static string[] DroneModels =
+        private static readonly string[] DroneModels =
         {
             "Silver Arrow Micro-V", "IAI Skylark", "IAI General",
             "IAI Harpy", "IAI I-View", "IAI Panther", "IAI Ranger", "IAI Heron"
         };
 
-        public static string[] CustomerNames =
+        private static readonly string[] CustomerNames =
         {
             "Eden", "Leib", "Aaron", "Shlomo", "David", "Moshe", "Guy", "Kim", "Benny", "Brody", "Matthew",
             "Katie", "Katja", "Emily", "Dwayne", "Gabriella", "Tim", "John", "Sasha", "Anastasia", "Dinn",
@@ -22,7 +22,7 @@ namespace DO
             "Anna", "Peter", "Hans", "Christopher", "Joshua", "Abe", "Jake", "Timothee", "Hanrietta", "Phil"
         };
 
-        public static string[] CustomerLastNames =
+        private static readonly string[] CustomerLastNames =
         {
             "Cohen", "Levy", "Blam", "Amiga", "Putin", "Trump", "Netanyahu", "Murciano", "Kirshenbaum", "Romanov",
             "Rogers", "Whitefield", "Gruber", "McClane", "Samberg", "Johnson", "Rock", "Rappaport", "Heisenberg",
@@ -40,10 +40,7 @@ namespace DO
         /// </summary>
         /// <param name="rand"> random seed </param>
         /// <returns> model name </returns>
-        public static string Model(Random rand)
-        {
-            return DroneModels[rand.Next(DroneModels.Length)];
-        }
+        public static string Model(Random rand) => DroneModels[rand.Next(DroneModels.Length)];
 
         /// <summary>
         /// Chooses a random date between 2020 and 2021
@@ -77,106 +74,20 @@ namespace DO
         /// </summary>
         /// <param name="rand">random seed</param>
         /// <returns>random phone number</returns>
-        public static string Phone(Random rand)
-        {
-            return "0" + rand.Next(7) + rand.Next(10000000, 99999999);
-        }
+        public static string Phone(Random rand) => "0" + rand.Next(7) + rand.Next(10000000, 99999999);
 
         /// <summary>
         /// Returns a random station
         /// </summary>
         /// <param name="stationList"></param>
         /// <param name="rand"></param>
-        /// <returns>Random station</returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public static Station Station(List<Station> stationList, Random rand)
-        {
-            if (stationList == null)
-            {
-                throw new ArgumentNullException(nameof(stationList));
-            }
-
-            return stationList[rand.Next(stationList.Count)];
-        }
-
-        /// <summary>
-        /// Chooses a random latitude
-        /// </summary>
-        /// <param name="rand">random seed </param>
-        /// <returns>Random degree</returns>
-        public static double Latitude(Random rand)
-        {
-            double[] leftLat =
-            {
-                29.500245, 31.219613, 31.594679, 31.783575, 32.106105, 32.547652, 32.834150, 32.816392, 33.090650
-            };
-
-            double[] rightLat =
-            {
-                33.317275, 33.028124, 32.746742, 32.640416, 32.262633, 31.964862, 31.731554, 31.731554, 30.834918,
-                30.428427, 30.013101, 29.543660
-            };
-
-            var first = leftLat[rand.Next(leftLat.Length)];
-            var second = rightLat[rand.Next(rightLat.Length)];
-
-            return DoubleBetween(first, second, new Random());
-        }
-
-        /// <summary>
-        /// Chooses a random longitude
-        /// </summary>
-        /// <param name="rand"></param>
-        /// <returns>Random longitude</returns>
-        public static double Longitude(Random rand)
-        {
-            double[] leftLon =
-            {
-                34.913901, 34.305699, 34.508550, 34.61944, 34.769092, 34.901029, 34.963355, 35.025942, 35.109777
-            };
-
-            double[] rightLon =
-            {
-                35.770387, 35.848895, 35.752549, 35.573979, 35.497142, 35.480650, 35.480650, 35.502640, 35.502640,
-                35.299237, 35.159054, 35.104080, 34.977205
-            };
-
-            var first = leftLon[rand.Next(leftLon.Length)];
-            var second = rightLon[rand.Next(rightLon.Length)];
-
-            return DoubleBetween(first, second, rand);
-        }
-
-        /// <summary>
-        /// Gets a double between an interval
-        /// </summary>
-        /// <param name="minValue"></param>
-        /// <param name="maxValue"></param>
-        /// <param name="rand"></param>
-        /// <returns></returns>
-        private static double DoubleBetween(double minValue, double maxValue, Random rand) => minValue + rand.NextDouble() * (maxValue - minValue);
-
-        /// <summary>
-        /// Convert degree to radians
-        /// </summary>
-        /// <param name="degrees"></param>
-        /// <returns>Radians</returns>
-        private static double DegreesToRadians(double degrees) => degrees * PI / 180;
-
-        /// <summary>
-        /// Convert radians to degrees
-        /// </summary>
-        /// <param name="radians"></param>
-        /// <returns>Degrees</returns>
-        private static double RadiansToDegrees(double radians) => radians * 180 / PI;
+        /// <returns> Random station </returns>
+        public static Station Station(List<Station> stationList, Random rand) => stationList[rand.Next(stationList.Count)];
 
         /// <summary>
         /// Gets a random location in a given radius from a coordinate
         /// </summary>
-        /// <param name="x0"></param>
-        /// <param name="y0"></param>
-        /// <param name="radius"></param>
-        /// <returns>Location</returns>
+        /// <returns> Location </returns>
         public static Location LocationInRadius()
         {
             Location[] locations =
@@ -305,7 +216,7 @@ namespace DO
             var x0 = randomLocation.longitude;
 
             // Adjust the x-coordinate for the shrinking of the east-west distances
-            var newX = x / Cos(DegreesToRadians(y0));
+            var newX = x / Cos(y0 * PI / 180);
 
             var foundLongitude = newX + x0;
             var foundLatitude = y + y0;
@@ -317,5 +228,64 @@ namespace DO
             };
 
         }
+
+        // DEPRECATED ______________________________________________
+
+        ///// <summary>
+        ///// Chooses a random latitude
+        ///// </summary>
+        ///// <param name="rand">random seed </param>
+        ///// <returns> Random degree </returns>
+        //public static double Latitude(Random rand)
+        //{
+        //    double[] leftLat =
+        //    {
+        //        29.500245, 31.219613, 31.594679, 31.783575, 32.106105, 32.547652, 32.834150, 32.816392, 33.090650
+        //    };
+
+        //    double[] rightLat =
+        //    {
+        //        33.317275, 33.028124, 32.746742, 32.640416, 32.262633, 31.964862, 31.731554, 31.731554, 30.834918,
+        //        30.428427, 30.013101, 29.543660
+        //    };
+
+        //    var first = leftLat[rand.Next(leftLat.Length)];
+        //    var second = rightLat[rand.Next(rightLat.Length)];
+
+        //    return DoubleBetween(first, second, new Random());
+        //}
+
+        ///// <summary>
+        ///// Chooses a random longitude
+        ///// </summary>
+        ///// <param name="rand"></param>
+        ///// <returns>Random longitude</returns>
+        //public static double Longitude(Random rand)
+        //{
+        //    double[] leftLon =
+        //    {
+        //        34.913901, 34.305699, 34.508550, 34.61944, 34.769092, 34.901029, 34.963355, 35.025942, 35.109777
+        //    };
+
+        //    double[] rightLon =
+        //    {
+        //        35.770387, 35.848895, 35.752549, 35.573979, 35.497142, 35.480650, 35.480650, 35.502640, 35.502640,
+        //        35.299237, 35.159054, 35.104080, 34.977205
+        //    };
+
+        //    var first = leftLon[rand.Next(leftLon.Length)];
+        //    var second = rightLon[rand.Next(rightLon.Length)];
+
+        //    return DoubleBetween(first, second, rand);
+        //}
+
+        ///// <summary>
+        ///// Gets a double between an interval
+        ///// </summary>
+        ///// <param name="minValue"></param>
+        ///// <param name="maxValue"></param>
+        ///// <param name="rand"></param>
+        ///// <returns></returns>
+        //private static double DoubleBetween(double minValue, double maxValue, Random rand) => minValue + rand.NextDouble() * (maxValue - minValue);
     }
 }

@@ -1,4 +1,4 @@
-﻿using DO;
+﻿using DalFacade.DO;
 using System.Runtime.CompilerServices;
 
 namespace BL

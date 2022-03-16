@@ -1,10 +1,10 @@
-﻿using BO;
-using DO;
+﻿using BL.BO;
+using DalFacade.DO;
 using System;
 using System.Linq;
-using static BO.BlPredicates;
-using static BO.DistanceFinder;
-using static DO.DroneStatuses;
+using static BL.BO.BlPredicates;
+using static BL.BO.GIS;
+using static DalFacade.DO.DroneStatuses;
 
 namespace BL
 {
@@ -28,7 +28,7 @@ namespace BL
                     {
                         switch (ex)
                         {
-                            case BLNoMatchingParcels:
+                            case BlNoMatchingParcels:
                                 // If non-full battery, drone status will be maintenance, so send it to closest station
                                 if (drone.battery < 100)
                                 {
@@ -88,12 +88,12 @@ namespace BL
                             {
                                 switch (chargeException)
                                 {
-                                    case BLDroneNotFreeException:
+                                    case BlDroneNotFreeException:
                                         //TODO: Send drone rescue 
                                         progress = "Drone was near the charging port but isn't free";
                                         break;
 
-                                    case BLNoOpenSlotsException:
+                                    case BlNoOpenSlotsException:
                                         //TODO: No open slots
                                         progress = "Station doesn't have any open slots";
                                         break;
@@ -150,12 +150,12 @@ namespace BL
                     {
                         switch (exception)
                         {
-                            case BLNotEnoughBatteryException:
+                            case BlNotEnoughBatteryException:
                                 drone.status = Maintenance;
                                 progress =
                                     "Drone was in delivery, but doesn't have enough battery (now in maintenance)";
                                 break;
-                            case BLNoMatchingParcels:
+                            case BlNoMatchingParcels:
                                 drone.status = Maintenance;
                                 break;
                         }

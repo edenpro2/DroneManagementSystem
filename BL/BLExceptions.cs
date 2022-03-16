@@ -3,32 +3,32 @@
 namespace BL
 {
     //Item not found
-    public class BLNotFoundException : Exception { }
+    public class BlNotFoundException : Exception { }
 
     //Item already exists
-    public class BLAlreadyExistsException : Exception { }
+    public class BlAlreadyExistsException : Exception { }
 
     //Drone isn't free
-    public class BLDroneNotFreeException : Exception { }
+    public class BlDroneNotFreeException : Exception { }
 
     //Drone is not currently in maintenance
-    public class BLDroneNotMaintainedException : Exception { }
+    public class BlDroneNotMaintainedException : Exception { }
 
     //Empty parameter passed
     public class EmptyParameterException : Exception { }
 
     //Drone doesn't have enough battery
-    public class BLNotEnoughBatteryException : Exception { }
+    public abstract class BlNotEnoughBatteryException : Exception { }
 
     //Station doesn't have an open charge slot
-    public class BLNoOpenSlotsException : Exception { }
+    public class BlNoOpenSlotsException : Exception { }
 
     //Parcel is not awaiting collection
-    public class BLNoMatchingParcels : Exception { }
+    public class BlNoMatchingParcels : Exception { }
 
     //Parcel is not being delivered
-    public class BLNotBeingDeliveredException : Exception { }
+    public class BlNotBeingDeliveredException : Exception { }
 
     //Parcel already collected
-    public class BLAlreadyCollected : Exception { }
+    public class BlAlreadyCollected : Exception { }
 }

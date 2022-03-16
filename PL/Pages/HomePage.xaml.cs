@@ -1,35 +1,36 @@
-﻿using System.Windows;
+﻿using PL.Windows;
+using System.Windows;
 
 namespace PL.Pages
 {
     public partial class HomePage
     {
-        private CustomerUserInterfacePage CustomerUserInterfacePage { get; }
+        private CustomerUi customerUi { get; }
 
-        public HomePage(CustomerUserInterfacePage customerUi)
+        public HomePage(CustomerUi customerUi)
         {
-            CustomerUserInterfacePage = customerUi;
+            this.customerUi = customerUi;
             InitializeComponent();
         }
 
         private void NewParcelBtn_Click(object sender, RoutedEventArgs e)
         {
-            CustomerUserInterfacePage.AddPackageBtn_Click(sender, e);
+            customerUi.AddPackageBtn_Click(sender, e);
         }
 
         private void SentBtn_Click(object sender, RoutedEventArgs e)
         {
-            CustomerUserInterfacePage.TrackSentByBtn_Click(sender, e);
+            customerUi.TrackSentByBtn_Click(sender, e);
         }
 
         private void SettingsBtn_Click(object sender, RoutedEventArgs e)
         {
-            CustomerUserInterfacePage.SettingsBtn_Click(sender, e);
+            customerUi.SettingsBtn_Click(sender, e);
         }
 
         private void ScheduledBtn_Click(object sender, RoutedEventArgs e)
         {
-            CustomerUserInterfacePage.TrackSentToBtn_Click(sender, e);
+            customerUi.TrackSentToBtn_Click(sender, e);
         }
     }
 }

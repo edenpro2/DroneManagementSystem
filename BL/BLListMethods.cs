@@ -1,4 +1,4 @@
-﻿using DO;
+﻿using DalFacade.DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,25 +18,25 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> GetStations(Predicate<Station> predicate)
         {
-            return dalApi.GetStations(predicate);
+            return DalApi.GetStations(predicate);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Customer> GetCustomers(Predicate<Customer> predicate)
         {
-            return dalApi.GetCustomers(predicate);
+            return DalApi.GetCustomers(predicate);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> GetParcels(Predicate<Parcel> predicate)
         {
-            return dalApi.GetParcels(predicate);
+            return DalApi.GetParcels(predicate);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<User> GetUsers(Predicate<User> predicate)
         {
-            return dalApi.GetUsers(predicate);
+            return DalApi.GetUsers(predicate);
         }
         #endregion
 
@@ -50,31 +50,31 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> GetStations()
         {
-            return dalApi.GetStations();
+            return DalApi.GetStations();
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Customer> GetCustomers()
         {
-            return dalApi.GetCustomers();
+            return DalApi.GetCustomers();
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> GetParcels()
         {
-            return dalApi.GetParcels();
+            return DalApi.GetParcels();
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<User> GetUsers()
         {
-            return dalApi.GetUsers();
+            return DalApi.GetUsers();
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<User> GetEmployees()
         {
-            return dalApi.GetEmployees();
+            return DalApi.GetEmployees();
         }
         #endregion
     }

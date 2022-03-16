@@ -1,5 +1,5 @@
 ﻿using BLAPI;
-using DO;
+using DalFacade.DO;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -185,7 +185,7 @@ namespace PL.ViewModels
             }
 
             var loc = ibl.Location(parcel);
-            _dms = DegreePrinter.PrintToDms(loc.longitude, loc.latitude);
+            _dms = DegreeConverter.CoordinatesToSexagesimal(loc.longitude, loc.latitude);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

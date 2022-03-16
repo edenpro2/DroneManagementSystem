@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 
-namespace BO
+namespace BL.BO
 {
-    public static class UserVerifier
+    public static class UserVerification
     {
         private static readonly string[] Domains =
         {

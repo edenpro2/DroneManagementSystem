@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace DO
+namespace DalFacade.DO
 {
-    public struct DegreePrinter
+    public struct DegreeConverter
     {
         /// <summary>
         /// Special function to convert a lat and long into Degree-Minutes-Seconds format
@@ -10,7 +10,7 @@ namespace DO
         /// <param name="longitude"></param>
         /// <param name="latitude"></param>
         /// <returns>DMS string of given lat and long</returns>
-        public static string PrintToDms(double longitude, double latitude)
+        public static string CoordinatesToSexagesimal(double longitude, double latitude)
         {
             // convert each to absolute
             var absLong = Math.Abs(longitude);
@@ -24,7 +24,7 @@ namespace DO
             var longMinute = (int)(absLong % 1 * 60.0);
             var latMinute = (int)(absLat % 1 * 60.0);
 
-            // take the minutes mulitplied by 60, and take the remainder of it
+            // take the minutes multiplied by 60, and take the remainder of it
             var longSecond = absLong % 1 * 60.0 % 1;
             var latSecond = absLat % 1 * 60.0 % 1;
 

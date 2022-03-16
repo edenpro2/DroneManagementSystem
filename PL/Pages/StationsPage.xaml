@@ -77,7 +77,7 @@
                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
                 Grid.Row="4">
                 <ListBox.ItemContainerStyle>
-                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItem_ListPage}"/>
+                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource PageListBoxItem}"/>
                 </ListBox.ItemContainerStyle>
                 <ListBox.ItemTemplate>
                     <DataTemplate>

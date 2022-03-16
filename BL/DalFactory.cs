@@ -1,5 +1,4 @@
-﻿using DAL;
-using DALFACADE;
+﻿using DalFacade;
 using DALXML;
 using System;
 
@@ -12,7 +11,7 @@ namespace BL
             switch (param)
             {
                 case "DalObject":
-                    return DalObject.Instance;
+                    return DalObject.DalObject.Instance;
                 case "DalXml":
                     return DalXml.Instance;
                 default:

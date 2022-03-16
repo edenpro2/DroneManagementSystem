@@ -1,7 +1,7 @@
-﻿using DO;
+﻿using DalFacade.DO;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using static DO.DegreePrinter;
+using static DalFacade.DO.DegreeConverter;
 
 namespace PL.ViewModels
 {
@@ -32,7 +32,7 @@ namespace PL.ViewModels
         public CustomerViewModel(Customer customer)
         {
             _customer = customer;
-            _dms = PrintToDms(customer.longitude, customer.latitude);
+            _dms = CoordinatesToSexagesimal(customer.longitude, customer.latitude);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

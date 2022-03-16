@@ -1,10 +1,10 @@
-﻿using DALFACADE;
-using DO;
+﻿using DalFacade;
+using DalFacade.DO;
 using System;
 using System.Runtime.CompilerServices;
-using static DAL.DataSource;
+using static DalObject.DataSource;
 
-namespace DAL
+namespace DalObject
 {
     public partial class DalObject : DalApi
     {
@@ -12,9 +12,7 @@ namespace DAL
         public void AddStation(in Station station)
         {
             if (Stations.Count + 1 > (short)Maximum.Stations)
-            {
                 return;
-            }
 
             Stations.Add(station);
         }
@@ -23,9 +21,7 @@ namespace DAL
         public void AddCustomer(in Customer customer)
         {
             if (Customers.Count + 1 > (short)Maximum.Customers)
-            {
                 return;
-            }
 
             Customers.Add(customer);
         }
@@ -34,31 +30,27 @@ namespace DAL
         public void AddParcel(in Parcel parcel)
         {
             if (Parcels.Count + 1 > (short)Maximum.Packages)
-            {
                 return;
-            }
 
             Parcels.Add(parcel);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void AddUser(in User user)
-        {
-            Users.Add(user);
-        }
+        public void AddUser(in User user) => Users.Add(user);
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void CreateCustomer(string name, string phone)
         {
-            AddCustomer(new Customer(Config.CustomerId++, name, phone, Randomize.Latitude(new Random()),
-                Randomize.Longitude(new Random())));
+            var loc = Randomize.LocationInRadius();
+            AddCustomer(
+                new Customer(Config.CustomerId++, name, phone, loc.latitude, loc.longitude));
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void CreateParcel(int senderId, int targetId, WeightCategories weight, Priorities priority)
         {
-            AddParcel(new Parcel(Config.ParcelId++, senderId, targetId, -1, weight, priority, DateTime.Now, default,
-                default, default));
+            AddParcel(
+                new Parcel(Config.ParcelId++, senderId, targetId, -1, weight, priority, DateTime.Now));
         }
 
     }

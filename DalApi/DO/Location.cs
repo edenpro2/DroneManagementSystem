@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace DO
+namespace DalFacade.DO
 {
     [XmlRoot]
     public struct Location
@@ -22,6 +22,9 @@ namespace DO
             longitude = source.longitude;
         }
 
-        public override string ToString() => $"{longitude}, {latitude} ";
+        public override string ToString()
+        {
+            return $"{longitude}, {latitude} ";
+        }
     }
 }

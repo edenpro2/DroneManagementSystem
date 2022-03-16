@@ -22,7 +22,6 @@
             <Setter Property="Background" Value="{StaticResource MaterialDesignPaper}" />
             <Setter Property="BorderThickness" Value="0" />
         </Style>
-
     </Page.Resources>
 
     <materialDesign:Card
@@ -83,9 +82,9 @@
                         BorderBrush="#aaaaaa">
                         <ComboBox
                             x:Name="StatusComboBox"
-                            SelectionChanged="StatusComboBox_SelectionChanged"
+                            SelectionChanged="ComboBox_SelectionChanged"
                             Style="{StaticResource ComboBoxText}"
-                            ItemsSource="{Binding statuses }"
+                            ItemsSource="{Binding Statuses }"
                             Margin="10,0,10,0" />
                     </Border>
                 </Grid>
@@ -103,9 +102,9 @@
                         BorderBrush="#aaaaaa">
                         <ComboBox
                             x:Name="WeightComboBox"
-                            SelectionChanged="WeightComboBox_SelectionChanged"
+                            SelectionChanged="ComboBox_SelectionChanged"
                             Style="{StaticResource ComboBoxText}"
-                            ItemsSource="{Binding weights }"
+                            ItemsSource="{Binding Weights }"
                             Margin="10,0,10,0" />
                     </Border>
                 </Grid>
@@ -148,14 +147,14 @@
             <ListBox
                 x:Name="DronesListBox"
                 d:ItemsSource="{d:SampleData ItemCount=6}"
-                ItemsSource="{Binding viewModel}"
+                ItemsSource="{Binding DronesViewModel.Filtered}"
                 HorizontalContentAlignment="Stretch"
                 Grid.Column="1"
                 Grid.Row="4"
                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
                 MouseDoubleClick="DronesListBox_Click">
                 <ListBox.ItemContainerStyle>
-                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItem_ListPage}"/>
+                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource PageListBoxItem}"/>
                 </ListBox.ItemContainerStyle>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -172,38 +171,32 @@
 
                             <TextBlock
                                 Grid.Column="0"
-                                Text="{Binding Drone.id}"
+                                Text="{Binding id}"
                                 TextAlignment="Left"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center" 
                                 Margin="7,0,0,0" />
                             <TextBlock
                                 Grid.Column="1"
-                                Text="{Binding Drone.model}"
+                                Text="{Binding model}"
                                 TextAlignment="Left" 
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center" />
                             <TextBlock
                                 Grid.Column="2"
-                                Text="{Binding Drone.status}"
+                                Text="{Binding status}"
                                 TextAlignment="Left" 
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center" />
                             <TextBlock
                                 Grid.Column="3"
-                                Text="{Binding Drone.maxWeight}"
+                                Text="{Binding maxWeight}"
                                 TextAlignment="Left" 
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center" />
                             <TextBlock
                                 Grid.Column="4"
-                                Text="{Binding Drone.battery, StringFormat={}{0:0.##} %}"
-                                TextAlignment="Left"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center" />
-                            <TextBlock
-                                Grid.Column="5"
-                                Text="{Binding GeoCode}"
+                                Text="{Binding battery, StringFormat={}{0:0.##} %}"
                                 TextAlignment="Left"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center" />

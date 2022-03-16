@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace DO
+namespace DalFacade.DO
 {
     [XmlRoot]
     public struct User
@@ -22,10 +22,10 @@ namespace DO
         [XmlAttribute]
         public bool isEmployee { get; set; }
 
-        public User(int customerID = -1, string user = "", string pass = "", string mail = "",
+        public User(int customerId = -1, string user = "", string pass = "", string mail = "",
             string personalAddress = "", bool employed = false)
         {
-            customerId = customerID;
+            this.customerId = customerId;
             username = user;
             password = pass;
             email = mail;

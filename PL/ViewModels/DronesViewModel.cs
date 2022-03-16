@@ -1,6 +1,7 @@
-﻿using DO;
+﻿using DalFacade.DO;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace PL.ViewModels
@@ -34,6 +35,11 @@ namespace PL.ViewModels
         public DronesViewModel(IEnumerable<Drone> droneList)
         {
             _filtered = _drones = droneList;
+        }
+
+        public void Update(Drone drone)
+        {
+            _drones.ToList().Insert(drone.id, drone);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

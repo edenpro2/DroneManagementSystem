@@ -51,7 +51,7 @@
                 <Setter Property="VerticalAlignment" Value="Center" />
             </Style>
 
-            <Style x:Key="ColumnHeader_Parcels" TargetType="{x:Type TextBlock}">
+            <Style x:Key="ParcelsColumnHeader" TargetType="{x:Type TextBlock}">
                 <Setter Property="FontSize" Value="20"/>
                 <Setter Property="FontFamily" Value="Netflix Sans"/>
                 <Setter Property="Foreground" Value="#FF212327"/>
@@ -60,7 +60,7 @@
                 <Setter Property="HorizontalAlignment" Value="Left"/>
             </Style>
 
-            <Style x:Key="PanelButton_Parcels" TargetType="{x:Type Button}">
+            <Style x:Key="ParcelsPanelButton" TargetType="{x:Type Button}">
                 <Setter Property="Background" Value="{x:Null}"/>
                 <Setter Property="BorderBrush" Value="{x:Null}"/>
                 <Setter Property="Foreground" Value="#FFA3ACBD"/>
@@ -75,7 +75,7 @@
                 <Setter Property="Foreground" Value="#222222"/>
             </Style>
 
-            <Style x:Key="ListBoxItem_ListPage" TargetType="ListBoxItem">
+            <Style x:Key="PageListBoxItem" TargetType="ListBoxItem">
                 <Setter Property="Background" Value="{DynamicResource MaterialDesignPaper}" />
                 <Setter Property="Margin" Value="0 6 0 0" />
                 <Setter Property="Height" Value="45" />

@@ -1,9 +1,9 @@
 ﻿using BLAPI;
-using DO;
+using DalFacade.DO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using static BO.UserVerifier;
+using static BL.BO.UserVerification;
 
 namespace PL.Windows
 {

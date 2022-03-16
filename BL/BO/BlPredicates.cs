@@ -1,7 +1,7 @@
-﻿using DO;
+﻿using DalFacade.DO;
 using System;
 
-namespace BO
+namespace BL.BO
 {
     public static class BlPredicates
     {

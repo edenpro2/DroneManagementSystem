@@ -7,7 +7,7 @@ namespace PL.Windows
 {
     public partial class DroneWindow
     {
-        private BackgroundWorker _worker;
+        private BackgroundWorker? Worker { get; set; }
         private bool _simulationRunning;
         private const int Time = 1000;
         private bool _shouldStop;
@@ -16,16 +16,16 @@ namespace PL.Windows
         {
             if (_simulationRunning) { _shouldStop = true; /*and should*/ return; }
 
-            _worker = new BackgroundWorker();
-            _worker.WorkerReportsProgress = true;
-            _worker.WorkerSupportsCancellation = true;
+            Worker = new BackgroundWorker();
+            Worker.WorkerReportsProgress = true;
+            Worker.WorkerSupportsCancellation = true;
             _shouldStop = false;
-            _worker.DoWork += Worker_DoWork!;
-            _worker.ProgressChanged += Worker_ProgressChanged;
-            _worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
+            Worker.DoWork += Worker_DoWork!;
+            Worker.ProgressChanged += Worker_ProgressChanged;
+            Worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
             _simulationRunning = true;
             ProgressBox.Text = "Starting simulator...";
-            _worker.RunWorkerAsync();
+            Worker.RunWorkerAsync();
         }
 
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
@@ -36,13 +36,16 @@ namespace PL.Windows
                 var (drone, progress) = _bl.DroneSimulator(ViewModel.Drone);
                 ViewModel.Drone = drone;
                 Dispatcher.Invoke(() => { ProgressBox.Text = progress; });
-                _worker.ReportProgress(1);
+                Worker?.ReportProgress(1);
             }
 
             Worker_RunWorkerCompleted(sender, new RunWorkerCompletedEventArgs(sender, null, true));
         }
 
-        private void Worker_ProgressChanged(object? sender, ProgressChangedEventArgs e) => UpdateContent();
+        private void Worker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
+        {
+            UpdateContent();
+        }
 
         private void Worker_RunWorkerCompleted(object? o, RunWorkerCompletedEventArgs e)
         {
@@ -52,7 +55,7 @@ namespace PL.Windows
                 throw new Exception("Fix");
             }
             Dispatcher.Invoke(() => { ProgressBox.Text = "Stopping simulator..."; });
-            _worker.CancelAsync();
+            Worker?.CancelAsync();
             _simulationRunning = false;
             Dispatcher.Invoke(() => { ProgressBox.Text = ""; });
         }

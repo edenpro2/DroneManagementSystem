@@ -1,12 +1,9 @@
 ﻿using BL;
 using BLAPI;
-using DO;
+using DalFacade.DO;
 using PL.Controls;
 using PL.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -17,18 +14,17 @@ namespace PL.Windows
         private readonly BlApi _bl;
         public DroneViewModel ViewModel { get; }
         public MapViewModel MapUri { get; } = new();
-        private List<DroneViewModel> _dronesViewModel;
+        private readonly DronesViewModel _dronesViewModel;
 
-        public DroneWindow(BlApi bl, Drone drone, List<DroneViewModel> dronesVm)
+        public DroneWindow(BlApi bl, Drone drone, DronesViewModel dronesVm)
         {
             _bl = bl;
             ViewModel = new DroneViewModel(drone);
-            _dronesViewModel = dronesVm.ToList();
+            _dronesViewModel = dronesVm;
             InitializeComponent();
             DataContext = this;
             CustomButtons = new WindowControls(this);
             UpdateContent();
-            _worker = new BackgroundWorker();
         }
 
         private static Uri? NewMapUri(Location location)
@@ -47,29 +43,35 @@ namespace PL.Windows
 
         }
 
-        private void Window_MouseLeftBtnDown(object sender, MouseButtonEventArgs e) => DragMove();
+        private void Window_MouseLeftBtnDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
 
-        internal List<DroneViewModel> GetValue() => _dronesViewModel;
+        internal DronesViewModel GetValue()
+        {
+            return _dronesViewModel;
+        }
 
         private void ChargeBtn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 ViewModel.Drone = _bl.SendDroneToCharge(ViewModel.Drone);
-                _dronesViewModel = _bl.GetDrones().Select(d => new DroneViewModel(d)).ToList();
+                _dronesViewModel.Update(ViewModel.Drone);
                 ErrorBox.Text = "";
             }
             catch (Exception ex)
             {
                 switch (ex)
                 {
-                    case BLDroneNotFreeException:
+                    case BlDroneNotFreeException:
                         ErrorBox.Text = "Drone is currently not free";
                         break;
-                    case BLNoOpenSlotsException:
+                    case BlNoOpenSlotsException:
                         ErrorBox.Text = "No open slots found";
                         break;
-                    case BLNotEnoughBatteryException:
+                    case BlNotEnoughBatteryException:
                         ErrorBox.Text = "Not enough battery for trip";
                         break;
                 }
@@ -95,14 +97,14 @@ namespace PL.Windows
             try
             {
                 ViewModel.Drone = _bl.DroneReleaseAndCharge(ViewModel.Drone, hours);
-                _dronesViewModel = _bl.GetDrones().Select(d => new DroneViewModel(d)).ToList();
+                _dronesViewModel.Update(ViewModel.Drone);
                 ErrorBox.Text = "";
             }
             catch (Exception ex)
             {
                 switch (ex)
                 {
-                    case BLDroneNotMaintainedException:
+                    case BlDroneNotMaintainedException:
                         ErrorBox.Text = "Drone is currently not in maintenance";
                         break;
                 }
@@ -116,14 +118,14 @@ namespace PL.Windows
             try
             {
                 ViewModel.Drone = _bl.AssignDroneToParcel(ViewModel.Drone);
-                _dronesViewModel = _bl.GetDrones().Select(d => new DroneViewModel(d)).ToList();
+                _dronesViewModel.Update(ViewModel.Drone);
                 ErrorBox.Text = "";
             }
             catch (Exception ex)
             {
                 switch (ex)
                 {
-                    case BLDroneNotFreeException:
+                    case BlDroneNotFreeException:
                         ErrorBox.Text = "Drone is currently not free";
                         break;
                     default:
@@ -141,17 +143,17 @@ namespace PL.Windows
             try
             {
                 ViewModel.Drone = _bl.CollectParcelByDrone(ViewModel.Drone);
-                _dronesViewModel = _bl.GetDrones().Select(d => new DroneViewModel(d)).ToList();
+                _dronesViewModel.Update(ViewModel.Drone);
                 ErrorBox.Text = "";
             }
             catch (Exception ex)
             {
                 switch (ex)
                 {
-                    case BLNotFoundException:
+                    case BlNotFoundException:
                         ErrorBox.Text = "No collected parcel assigned to current drone";
                         break;
-                    case BLNoMatchingParcels:
+                    case BlNoMatchingParcels:
                         ErrorBox.Text = "No uncollected parcel found";
                         break;
                 }
@@ -165,14 +167,14 @@ namespace PL.Windows
             try
             {
                 ViewModel.Drone = _bl.DeliverByDrone(ViewModel.Drone);
-                _dronesViewModel = _bl.GetDrones().Select(d => new DroneViewModel(d)).ToList();
+                _dronesViewModel.Update(ViewModel.Drone);
                 ErrorBox.Text = "";
             }
             catch (Exception ex)
             {
                 switch (ex)
                 {
-                    case BLNotBeingDeliveredException:
+                    case BlNotBeingDeliveredException:
                         ErrorBox.Text = "No undelivered parcel found";
                         break;
                 }
@@ -180,37 +182,6 @@ namespace PL.Windows
 
             UpdateContent();
         }
-
-        //private void RestoreBtn_Click(object sender, RoutedEventArgs e)
-        //{
-        //    var maximized = new Thickness
-        //    {
-        //        Left = 0,
-        //        Right = 0,
-        //        Bottom = 0,
-        //        Top = 0
-        //    };
-
-        //    var minimized = new Thickness
-        //    {
-        //        Left = 10,
-        //        Right = 10,
-        //        Bottom = 10,
-        //        Top = 10
-        //    };
-
-        //    if (WindowState == WindowState.Maximized)
-        //    {
-        //        DesignCard.Margin = minimized;
-        //        WindowState = WindowState.Normal;
-
-        //    }
-        //    else
-        //    {
-        //        DesignCard.Margin = maximized;
-        //        WindowState = WindowState.Maximized;
-        //    }
-        //}
 
     }
 }

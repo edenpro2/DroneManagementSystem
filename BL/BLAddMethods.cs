@@ -1,4 +1,4 @@
-﻿using DO;
+﻿using DalFacade.DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ namespace BL
         {
             if (_drones.FirstOrDefault(d => d.id == drone.id).Equals(default))
             {
-                throw new BLAlreadyExistsException();
+                throw new BlAlreadyExistsException();
             }
 
             var station = Randomize.Station((List<Station>)GetStations(), new Random());
@@ -34,43 +34,43 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(Station station)
         {
-            dalApi.AddStation(station);
+            DalApi.AddStation(station);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCustomer(Customer customer)
         {
-            dalApi.AddCustomer(customer);
+            DalApi.AddCustomer(customer);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddParcel(Parcel parcel)
         {
-            dalApi.AddParcel(parcel);
+            DalApi.AddParcel(parcel);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddUser(User user)
         {
-            dalApi.AddUser(user);
+            DalApi.AddUser(user);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void CreateCustomer(string name, string phone)
         {
-            dalApi.CreateCustomer(name, phone);
+            DalApi.CreateCustomer(name, phone);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void CreateParcel(int senderId, int targetId, WeightCategories weight, Priorities priority)
         {
-            dalApi.CreateParcel(senderId, targetId, weight, priority);
+            DalApi.CreateParcel(senderId, targetId, weight, priority);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void CreateDrone(string model, WeightCategories maxWeight)
         {
-            var drone = new Drone(droneId++, model, maxWeight);
+            var drone = new Drone(_droneId++, model, maxWeight);
             AddDrone(drone);
         }
     }

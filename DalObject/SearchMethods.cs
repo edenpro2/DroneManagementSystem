@@ -1,9 +1,9 @@
-﻿using DO;
+﻿using DalFacade.DO;
 using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace DAL
+namespace DalObject
 {
     public partial class DalObject
     {

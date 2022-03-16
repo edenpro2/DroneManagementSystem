@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace PL.ViewModels
 {
-    public class MapViewModel : INotifyPropertyChanged
+    public sealed class MapViewModel : INotifyPropertyChanged
     {
         private Uri? _uri;
         public Uri? Uri
@@ -22,7 +22,7 @@ namespace PL.ViewModels
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

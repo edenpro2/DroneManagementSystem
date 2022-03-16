@@ -34,7 +34,7 @@ namespace PL.Pages
 
         private void DisplayAsMap_Click(object sender, RoutedEventArgs e)
         {
-            var map = new Map(_bl, "drone");
+            var map = new Map(_bl, "customer");
             map.Show();
 
         }

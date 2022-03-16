@@ -1,9 +1,10 @@
-﻿using DO;
+﻿using DalFacade.DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 
-namespace DAL
+namespace DalObject
 {
     internal static class DataSource
     {
@@ -46,7 +47,13 @@ namespace DAL
         {
             #region Capacities and Random Seed
 
-            var seed = new Random();
+            // Unpredictable seed
+            var cryptoSeed = new RNGCryptoServiceProvider();
+            var data = new byte[sizeof(int)];
+            cryptoSeed.GetBytes(data);
+            var seed = BitConverter.ToInt32(data, 0) & (int.MaxValue - 1);
+            var rand = new Random(seed);
+
             const int stationCap = 5;
             const int droneCap = 10;
             const int customerCap = 10;
@@ -60,8 +67,8 @@ namespace DAL
             {
                 Drone drone = new(
                     Config.DroneId++,
-                    Randomize.Model(seed),
-                    (WeightCategories)seed.Next(3));
+                    Randomize.Model(rand),
+                    (WeightCategories)rand.Next(3));
 
                 Drones.Add(drone);
             }
@@ -72,8 +79,8 @@ namespace DAL
 
                 Station station = new(
                     Config.StationId++,
-                    seed.Next(MaxStationName),
-                    Station.MAXCHARGESLOTS,
+                    rand.Next(MaxStationName),
+                    Station.MaxChargeSlots,
                     location.latitude,
                     location.longitude);
 
@@ -86,20 +93,22 @@ namespace DAL
 
                 Customer customer = new(
                     Config.CustomerId++,
-                    Randomize.Name(seed),
-                    Randomize.Phone(seed),
+                    Randomize.Name(rand),
+                    Randomize.Phone(rand),
                     location.latitude,
                     location.longitude);
 
                 Customers.Add(customer);
             }
 
+            var edenLoc = Randomize.LocationInRadius();
+
             Customers.Add(new Customer(
                     Config.CustomerId++,
                     "Eden Amiga",
                     "9546582943",
-                    Randomize.Latitude(seed),
-                    Randomize.Longitude(seed))
+                    edenLoc.latitude,
+                    edenLoc.longitude)
             );
 
             string name;
@@ -109,7 +118,7 @@ namespace DAL
                 .Select(c => new User(
                     c.id,
                     name = new string(c.name.Where(l => !char.IsWhiteSpace(l)).ToArray()) +
-                           seed.Next(100),
+                           rand.Next(100),
                     c.phone,
                     name + "@gmail.com"))
                 .ToList();
@@ -129,13 +138,13 @@ namespace DAL
                     pickedUp = default,
                     delivered = default;
 
-                var requested = Randomize.Date(seed);
-                var senderId = Customers[seed.Next(Customers.Count)].id;
+                var requested = Randomize.Date(rand);
+                var senderId = Customers[rand.Next(Customers.Count)].id;
                 int targetId;
 
                 do
                 {
-                    targetId = Customers[seed.Next(Customers.Count)].id;
+                    targetId = Customers[rand.Next(Customers.Count)].id;
                 } while (targetId == senderId);
 
                 var parcel = new Parcel(
@@ -143,8 +152,8 @@ namespace DAL
                     senderId,
                     targetId,
                     -1,
-                    (WeightCategories)seed.Next(3),
-                    (Priorities)seed.Next(3),
+                    (WeightCategories)rand.Next(3),
+                    (Priorities)rand.Next(3),
                     requested,
                     scheduled,
                     pickedUp,

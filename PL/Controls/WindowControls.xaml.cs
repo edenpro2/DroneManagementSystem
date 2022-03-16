@@ -1,17 +1,12 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 
 namespace PL.Controls
 {
-    public partial class WindowControls : UserControl
+    public partial class WindowControls
     {
         private static DependencyObject WindowObject;
 
-        public DependencyObject Window
-        {
-            get => (Window)WindowObject;
-            set => WindowObject = value;
-        }
+        private static DependencyObject Window => (Window)WindowObject;
 
         public WindowControls(DependencyObject window)
         {

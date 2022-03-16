@@ -1,4 +1,4 @@
-﻿using DO;
+﻿using DalFacade.DO;
 using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -43,14 +43,14 @@ namespace DALXML
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void CreateCustomer(string name, string phone)
         {
-            AddCustomer(new Customer(Config.CustomerId++, name, phone, Randomize.Latitude(new Random()), Randomize.Longitude(new Random())));
+            var loc = Randomize.LocationInRadius();
+            AddCustomer(new Customer(Config.CustomerId++, name, phone, loc.latitude, loc.longitude));
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void CreateParcel(int senderId, int targetId, WeightCategories weight, Priorities priority)
         {
-            AddParcel(new Parcel(Config.ParcelId++, senderId, targetId, -1, weight, priority, DateTime.Now, default,
-                default, default));
+            AddParcel(new Parcel(Config.ParcelId++, senderId, targetId, -1, weight, priority, DateTime.Now));
         }
     }
 }

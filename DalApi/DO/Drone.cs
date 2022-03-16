@@ -1,7 +1,7 @@
 ﻿using System.Xml.Serialization;
 
 #nullable enable
-namespace DO
+namespace DalFacade.DO
 {
     [XmlRoot]
     public struct Drone

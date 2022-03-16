@@ -1,7 +1,7 @@
-﻿using DO;
+﻿using DalFacade.DO;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using static DO.DegreePrinter;
+using static DalFacade.DO.DegreeConverter;
 
 namespace PL.ViewModels
 {
@@ -21,7 +21,7 @@ namespace PL.ViewModels
                 if (_drone.location is not null)
                 {
                     var loc = (Location)_drone.location;
-                    _dms = PrintToDms(loc.longitude, loc.latitude);
+                    _dms = CoordinatesToSexagesimal(loc.longitude, loc.latitude);
                 }
                 OnPropertyChanged();
             }

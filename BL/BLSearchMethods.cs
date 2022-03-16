@@ -1,8 +1,8 @@
-﻿using DO;
+﻿using DalFacade.DO;
 using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using static BO.BlPredicates;
+using static BL.BO.BlPredicates;
 
 namespace BL
 {
@@ -17,25 +17,25 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Station SearchForStation(Predicate<Station> predicate)
         {
-            return dalApi.SearchForStation(predicate);
+            return DalApi.SearchForStation(predicate);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel SearchForParcel(Predicate<Parcel> predicate)
         {
-            return dalApi.SearchForParcel(predicate);
+            return DalApi.SearchForParcel(predicate);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer SearchForCustomer(Predicate<Customer> predicate)
         {
-            return dalApi.SearchForCustomer(predicate);
+            return DalApi.SearchForCustomer(predicate);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public User SearchForUser(Predicate<User> predicate)
         {
-            return dalApi.SearchForUser(predicate);
+            return DalApi.SearchForUser(predicate);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]

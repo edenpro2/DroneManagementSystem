@@ -1,15 +1,11 @@
 ﻿using BLAPI;
 using PL.Controls;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using DO;
 using Image = System.Windows.Controls.Image;
 using Point = System.Windows.Point;
 
@@ -17,14 +13,16 @@ namespace PL.Windows
 {
     public partial class Map
     {
-        private readonly BlApi bl;
+        private readonly BlApi _bl;
         public Map(BlApi ibl, string type)
         {
-            bl = ibl;
+            _bl = ibl;
             InitializeComponent();
             Height = 1000;
             Width = 1300;
             CustomButtons = new WindowControls(this);
+            var resourcesDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)?.Parent?.Parent?.Parent + @"\Resources\";
+            var iconsDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)?.Parent?.Parent?.Parent + @"\Icons\";
 
             switch (type.ToLower())
             {
@@ -34,7 +32,7 @@ namespace PL.Windows
                     {
                         var icon = new Image
                         {
-                            Source = new BitmapImage(new Uri(@"C:\Users\Eden\source\repos\CS_Project_5782_8318\PL\Resources\drone.png")),
+                            Source = new BitmapImage(new Uri($"{resourcesDir}drone.png")),
                             Width = 30,
                             Height = 30
                         };
@@ -48,7 +46,7 @@ namespace PL.Windows
                     {
                         var icon = new Image
                         {
-                            Source = new BitmapImage(new Uri(@"C:\Users\Eden\source\repos\CS_Project_5782_8318\PL\Resources\warehouse3d.png")),
+                            Source = new BitmapImage(new Uri($"{resourcesDir}warehouse3d.png")),
                             Width = 30,
                             Height = 15
                         };
@@ -62,7 +60,7 @@ namespace PL.Windows
                     {
                         var icon = new Image
                         {
-                            Source = new BitmapImage(new Uri(@"C:\Users\Eden\source\repos\CS_Project_5782_8318\PL\Resources\account.jpg")),
+                            Source = new BitmapImage(new Uri($"{resourcesDir}account.jpg")),
                             Width = 30,
                             Height = 30
                         };
@@ -76,7 +74,7 @@ namespace PL.Windows
                     {
                         var icon = new Image
                         {
-                            Source = new BitmapImage(new Uri(@"C:\Users\Eden\source\repos\CS_Project_5782_8318\PL\Icons\package.png")),
+                            Source = new BitmapImage(new Uri($"{iconsDir}package.png")),
                             Width = 30,
                             Height = 30
                         };
@@ -91,18 +89,18 @@ namespace PL.Windows
         {
             CanvasMap.Children.Add(icon);
 
-            var loc = bl.Location(o);
+            var loc = _bl.Location(o);
             var latitude = loc.latitude;
             var longitude = loc.longitude;
 
-            var width = pixelX(longitude, MapGrid.Width);
-            var height = pixelY(latitude, MapGrid.Height);
+            var width = pixelX(longitude, MapScrollView.Width);
+            var height = pixelY(latitude, MapScrollView.Height);
 
             Canvas.SetLeft(icon, width);
             Canvas.SetTop(icon, height);
         }
 
-        private double pixelX(double targetLong, double Width)
+        private double pixelX(double targetLong, double width)
         {
             const double minLong = -87.852252;
             const double maxLong = -79.182916;
@@ -110,20 +108,23 @@ namespace PL.Windows
             var a = targetLong - minLong;
             var b = maxLong - minLong;
 
-            return ((a) / (b)) * (Width - 1);
+            return ((a) / (b)) * (width - 1);
         }
 
-        private double pixelY(double targetLat, double Height)
+        private double pixelY(double targetLat, double height)
         {
             const double minLat = 31.089027;
             const double maxLat = 24.614693;
 
-            return ((targetLat - minLat) / (maxLat - minLat)) * (Height - 1);
+            return ((targetLat - minLat) / (maxLat - minLat)) * (height - 1);
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e) => DragMove();
 
-        Point GetMousePos() => PointToScreen(Mouse.GetPosition(this));
+        //Point GetMousePos()
+        //{
+        //    return PointToScreen(Mouse.GetPosition(this));
+        //}
 
         private void Map_OnScrollWheel(object sender, MouseWheelEventArgs e)
         {

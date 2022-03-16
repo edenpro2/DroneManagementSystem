@@ -1,4 +1,4 @@
-﻿using DO;
+﻿using DalFacade.DO;
 using PL.Controls;
 using PL.ViewModels;
 using System;
@@ -20,7 +20,7 @@ namespace PL.Windows
             MapUri.Uri = NewMapUri(new Location(svm.Station.latitude, svm.Station.longitude));
         }
 
-        private static Uri? NewMapUri(Location location)
+        private static Uri NewMapUri(Location location)
         {
             var lat = location.latitude - location.latitude % 0.0001;
             var lon = location.longitude - location.longitude % 0.0001;

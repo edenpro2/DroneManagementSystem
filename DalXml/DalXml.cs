@@ -1,5 +1,4 @@
-﻿using DAL;
-using DALFACADE;
+﻿using DalFacade;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -50,27 +49,27 @@ namespace DALXML
         {
             if (!File.Exists(DronesFilePath))
             {
-                CreateXmlDoc(DronesFilePath, DalObject.Instance.GetDrones().ToList());
+                CreateXmlDoc(DronesFilePath, DalObject.DalObject.Instance.GetDrones().ToList());
             }
 
             if (!File.Exists(StationsFilePath))
             {
-                CreateXmlDoc(StationsFilePath, DalObject.Instance.GetStations().ToList());
+                CreateXmlDoc(StationsFilePath, DalObject.DalObject.Instance.GetStations().ToList());
             }
 
             if (!File.Exists(ParcelsFilePath))
             {
-                CreateXmlDoc(ParcelsFilePath, DalObject.Instance.GetParcels().ToList());
+                CreateXmlDoc(ParcelsFilePath, DalObject.DalObject.Instance.GetParcels().ToList());
             }
 
             if (!File.Exists(CustomersFilePath))
             {
-                CreateXmlDoc(CustomersFilePath, DalObject.Instance.GetCustomers().ToList());
+                CreateXmlDoc(CustomersFilePath, DalObject.DalObject.Instance.GetCustomers().ToList());
             }
 
             if (!File.Exists(UsersFilePath))
             {
-                CreateXmlDoc(UsersFilePath, DalObject.Instance.GetUsers().ToList());
+                CreateXmlDoc(UsersFilePath, DalObject.DalObject.Instance.GetUsers().ToList());
             }
 
             Config.CustomerId = GetCustomers().Count();

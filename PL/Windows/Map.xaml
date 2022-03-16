@@ -27,7 +27,11 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
+
             <ScrollViewer 
+                Width="1250" 
+                Height="900"
+                x:Name="MapScrollView"
                 Grid.Row="1">
                 <ScrollViewer.Style>
                     <Style TargetType="{x:Type ScrollViewer}">
@@ -35,7 +39,9 @@
                         <Setter Property="VerticalScrollBarVisibility" Value="Disabled"/>
                     </Style>
                 </ScrollViewer.Style>
-                <Grid ClipToBounds="True" x:Name="MapGrid" Width="1250" Height="900">
+
+                <Grid 
+                    ClipToBounds="True">
                     <Image 
                         Source="../Resources/map.jpg" 
                         Stretch="Fill" />

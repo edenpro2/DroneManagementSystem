@@ -1,9 +1,9 @@
-﻿using DO;
+﻿using DalFacade.DO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace DAL
+namespace DalObject
 {
     public partial class DalObject
     {
@@ -14,6 +14,7 @@ namespace DAL
             stations[station.id] = station;
             UpdateStationList(stations);
         }
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomer(Customer customer)
         {
@@ -21,6 +22,7 @@ namespace DAL
             customers[customer.id] = customer;
             UpdateCustomerList(customers);
         }
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateParcel(Parcel parcel)
         {
@@ -28,6 +30,7 @@ namespace DAL
             parcels[parcel.id] = parcel;
             UpdateParcelList(parcels);
         }
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateUser(User user)
         {
@@ -44,42 +47,18 @@ namespace DAL
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void UpdateDroneList(List<Drone> drones)
-        {
-            DataSource.Drones = drones;
-        }
+        public void UpdateDroneList(List<Drone> drones) => DataSource.Drones = drones;
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void UpdateStationList(List<Station> stations)
-        {
-            DataSource.Stations = stations;
-        }
+        public void UpdateStationList(List<Station> stations) => DataSource.Stations = stations;
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void UpdateCustomerList(List<Customer> customers)
-        {
-            DataSource.Customers = customers;
-        }
+        public void UpdateCustomerList(List<Customer> customers) => DataSource.Customers = customers;
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void UpdateParcelList(List<Parcel> parcels)
-        {
-            DataSource.Parcels = parcels;
-        }
+        public void UpdateParcelList(List<Parcel> parcels) => DataSource.Parcels = parcels;
+
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void UpdateUserList(List<User> users)
-        {
-            DataSource.Users = users;
-        }
-
-        public int GetCustomerId()
-        {
-            return DataSource.Config.CustomerId;
-        }
-
-        public int GetParcelId()
-        {
-            return DataSource.Config.ParcelId;
-        }
+        public void UpdateUserList(List<User> users) => DataSource.Users = users;
     }
 }

@@ -1,8 +1,8 @@
-﻿using DO;
+﻿using DalFacade.DO;
 using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using static BO.DistanceFinder;
+using static BL.BO.GIS;
 
 namespace BL
 {

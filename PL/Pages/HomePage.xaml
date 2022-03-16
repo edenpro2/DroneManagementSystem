@@ -84,7 +84,7 @@
                 x:Name="Button"
                 Style="{StaticResource MenuButton}"
                 Resources="{StaticResource RoundedCorners}"
-                Click="SentBtn_Click"
+                Click="NewParcelBtn_Click"
                 Grid.Row="1"
                 Grid.Column="1">
                 <DockPanel>

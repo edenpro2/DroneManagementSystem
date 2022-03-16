@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 
-namespace DO
+namespace DalFacade.DO
 {
     [XmlRoot]
     public struct Parcel
@@ -48,16 +48,18 @@ namespace DO
             active = true;
         }
 
-        public override string ToString() =>
-            "Id: " + id + '\n' +
-            "Sender: " + senderId + '\n' +
-            "Target: " + targetId + '\n' +
-            "Drone: " + droneId + '\n' +
-            "Weight: " + weight + '\n' +
-            "Priority: " + priority + '\n' +
-            "Requested: " + requested + '\n' +
-            "Scheduled: " + scheduled + '\n' +
-            "Collected: " + collected + '\n' +
-            "Delivered: " + delivered + '\n';
+        public override string ToString()
+        {
+            return "Id: " + id + '\n' +
+"Sender: " + senderId + '\n' +
+"Target: " + targetId + '\n' +
+"Drone: " + droneId + '\n' +
+"Weight: " + weight + '\n' +
+"Priority: " + priority + '\n' +
+"Requested: " + requested + '\n' +
+"Scheduled: " + scheduled + '\n' +
+"Collected: " + collected + '\n' +
+"Delivered: " + delivered + '\n';
+        }
     }
 }

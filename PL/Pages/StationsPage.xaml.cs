@@ -16,28 +16,19 @@ namespace PL.Pages
         public StationsPage(BlApi ibl)
         {
             _bl = ibl;
-            stationsViewModel = ibl.GetStations(s => s.active)
-                .Select(s => new StationViewModel(s)).ToList();
+            stationsViewModel = ibl.GetStations(s => s.active).Select(s => new StationViewModel(s)).ToList();
             InitializeComponent();
             DataContext = this;
         }
 
         private void StationListBox_Click(object sender, MouseButtonEventArgs e)
         {
-            if (StationListBox.SelectedItems.Count != 1)
-            {
-                return;
-            }
-
-            var stationDetailsWindow = new StationWindow((StationViewModel)StationListBox.SelectedItem);
-            stationDetailsWindow.ShowDialog();
+            new StationWindow((StationViewModel)StationListBox.SelectedItem).ShowDialog();
         }
 
         private void DisplayAsMap_Click(object sender, RoutedEventArgs e)
         {
-            var map = new Map(_bl, "station");
-            map.Show();
-
+            new Map(_bl, "station").Show();
         }
     }
 }

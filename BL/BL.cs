@@ -1,10 +1,10 @@
 ﻿using BLAPI;
-using DALFACADE;
-using DO;
+using DalFacade;
+using DalFacade.DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static BO.LocationFinder;
+using static BL.BO.LocationFinder;
 
 namespace BL
 {
@@ -17,15 +17,14 @@ namespace BL
         #region Constants
         private const int NumOfRates = 4;
         private const int MinBattery = 70;
-        private const int MinDeliveryBattery = 40;
         #endregion
 
         #region Attributes
-        private static readonly DalApi dalApi = DalFactory.GetDal("DalXml");
-        private List<Drone> _drones = dalApi.GetDrones().ToList();
+        private static readonly DalApi DalApi = DalFactory.GetDal("DalXml");
+        private List<Drone> _drones = DalApi.GetDrones().ToList();
         private readonly double[] _droneConsumptionRates = new double[NumOfRates];
         private readonly double _droneChargeRate;
-        private static int droneId;
+        private static int _droneId;
         #endregion
 
         private Bl()
@@ -33,16 +32,16 @@ namespace BL
             #region Pre-initialization
             int i;
             var rand = new Random();
-            var rates = dalApi.RequestPowerConsumption();
+            var rates = DalApi.RequestPowerConsumption();
             for (i = 0; i < NumOfRates; i++)
             {
                 _droneConsumptionRates[i] = rates[i];
             }
             _droneChargeRate = rates[i];
 
-            var parcels = dalApi.GetParcels().ToList();
-            var customers = dalApi.GetCustomers().ToList();
-            droneId = _drones.Count;
+            var parcels = DalApi.GetParcels().ToList();
+            var customers = DalApi.GetCustomers().ToList();
+            _droneId = _drones.Count;
 
             #endregion
 
@@ -113,7 +112,7 @@ namespace BL
                 {
                     // Since drone is in maintenance, it needs to be charged at a random station with open slots
                     case DroneStatuses.Maintenance:
-                        var freeStation = GetStations().Where(s => s.openSlots > 0).OrderBy(s => rand.Next()).First();
+                        var freeStation = GetStations().Where(s => s.openSlots > 0).OrderBy(_ => rand.Next()).First();
                         freeStation.openSlots--;
                         freeStation.ports.Add(new DroneCharge(drone.id, freeStation.id));
                         UpdateStation(freeStation);
@@ -133,8 +132,10 @@ namespace BL
 
         }
 
-        private Drone GetFreeRandomDrone(Random rand, Parcel parcel) =>
-            _drones.Where(d => d.status is DroneStatuses.Free or null).OrderBy(d => rand.Next()).FirstOrDefault(d => CanDroneMakeTrip(d, parcel));
+        private Drone GetFreeRandomDrone(Random rand, Parcel parcel)
+        {
+            return _drones.Where(d => d.status is DroneStatuses.Free or null).OrderBy(_ => rand.Next()).FirstOrDefault(d => CanDroneMakeTrip(d, parcel));
+        }
 
         private int MinForTripToStation(Drone drone)
         {
@@ -160,7 +161,10 @@ namespace BL
             return total;
         }
 
-        private static DroneStatuses GetRandomStatus(Random rand, short bound) => (DroneStatuses)rand.Next(bound);
+        private static DroneStatuses GetRandomStatus(Random rand, short bound)
+        {
+            return (DroneStatuses)rand.Next(bound);
+        }
     }
 
 }

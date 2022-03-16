@@ -1,4 +1,4 @@
-﻿using DO;
+﻿using DalFacade.DO;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -6,38 +6,38 @@ namespace PL.ViewModels
 {
     public class UserViewModel : INotifyPropertyChanged
     {
-        private string name;
+        private string _name;
 
-        private string phone;
+        private string _phone;
 
-        private User user;
+        private User _user;
 
         public User User
         {
-            get => user;
+            get => _user;
             set
             {
-                user = value;
+                _user = value;
                 OnPropertyChanged();
             }
         }
 
         public string Phone
         {
-            get => phone;
+            get => _phone;
             set
             {
-                phone = value;
+                _phone = value;
                 OnPropertyChanged();
             }
         }
 
         public string Name
         {
-            get => name;
+            get => _name;
             set
             {
-                name = value;
+                _name = value;
                 OnPropertyChanged();
             }
         }
@@ -45,8 +45,8 @@ namespace PL.ViewModels
         public UserViewModel(User user, string phone, string name)
         {
             User = user;
-            this.phone = phone;
-            this.name = name;
+            this._phone = phone;
+            this._name = name;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

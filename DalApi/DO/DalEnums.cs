@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace DO
+namespace DalFacade.DO
 {
     [DataContract]
     public enum DroneStatuses

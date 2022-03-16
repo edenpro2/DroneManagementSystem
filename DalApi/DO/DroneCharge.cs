@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace DO
+namespace DalFacade.DO
 {
     [XmlRoot]
     public struct DroneCharge

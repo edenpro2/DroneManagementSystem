@@ -1,7 +1,7 @@
 ﻿using System.Xml.Serialization;
-using static DO.DegreePrinter;
+using static DalFacade.DO.DegreeConverter;
 
-namespace DO
+namespace DalFacade.DO
 {
     [XmlRoot]
     public struct Customer
@@ -20,11 +20,11 @@ namespace DO
         public bool active { get; set; }
 
         // Constructor
-        public Customer(int Id, string Name, string Phone, double lat, double lon) : this()
+        public Customer(int Id, string name, string phone, double lat, double lon) : this()
         {
             id = Id;
-            name = Name;
-            phone = Phone;
+            this.name = name;
+            this.phone = phone;
             latitude = lat;
             longitude = lon;
             active = true;
@@ -47,7 +47,7 @@ namespace DO
                 "Id: " + id + '\n' +
                 "Name: " + name + '\n' +
                 "Phone: " + phone + '\n' +
-                PrintToDms(longitude, latitude) + '\n';
+                CoordinatesToSexagesimal(longitude, latitude) + '\n';
         }
     }
 }

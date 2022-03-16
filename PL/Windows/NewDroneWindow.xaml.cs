@@ -1,5 +1,5 @@
 ﻿using BLAPI;
-using DO;
+using DalFacade.DO;
 using System;
 using System.Windows;
 
@@ -41,6 +41,9 @@ namespace PL.Windows
             Close();
         }
 
-        private void ReturnBtn_Click(object sender, RoutedEventArgs e) => Close();
+        private void ReturnBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

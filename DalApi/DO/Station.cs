@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
-using static DO.DegreePrinter;
+using static DalFacade.DO.DegreeConverter;
 
-namespace DO
+namespace DalFacade.DO
 {
     [XmlRoot(ElementName = "Station")]
     public struct Station
     {
-        public static readonly short MAXCHARGESLOTS = 15;
+        public const short MaxChargeSlots = 15;
 
         [XmlAttribute]
         public int id { get; set; }
@@ -25,26 +25,26 @@ namespace DO
         [XmlAttribute]
         public bool active { get; set; }
 
-        public Station(int Id, int Name, int OpenSlots, double Latitude, double Longitude, List<DroneCharge> Ports, bool Active) : this()
+        public Station(int id, int name, int openSlots, double latitude, double longitude, List<DroneCharge> ports, bool active) : this()
         {
-            id = Id;
-            name = Name;
-            openSlots = OpenSlots;
-            latitude = Latitude;
-            longitude = Longitude;
-            ports = Ports;
-            active = Active;
+            this.id = id;
+            this.name = name;
+            this.openSlots = openSlots;
+            this.latitude = latitude;
+            this.longitude = longitude;
+            this.ports = ports;
+            this.active = active;
         }
 
         // Constructor
-        public Station(int Id, int Name, int OpenSlots, double Latitude, double Longitude) : this()
+        public Station(int id, int name, int openSlots, double latitude, double longitude) : this()
         {
-            id = Id;
-            name = Name;
-            openSlots = OpenSlots;
-            latitude = Latitude;
-            longitude = Longitude;
-            ports = new List<DroneCharge>(MAXCHARGESLOTS);
+            this.id = id;
+            this.name = name;
+            this.openSlots = openSlots;
+            this.latitude = latitude;
+            this.longitude = longitude;
+            ports = new List<DroneCharge>(MaxChargeSlots);
             active = true;
         }
 
@@ -66,7 +66,7 @@ namespace DO
                 "Id: " + id + '\n' +
                 "Name: " + name + '\n' +
                 "Available slots:" + openSlots + '\n' +
-                PrintToDms(longitude, latitude) + '\n';
+                CoordinatesToSexagesimal(longitude, latitude) + '\n';
         }
     }
 }

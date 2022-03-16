@@ -63,7 +63,7 @@
                 Grid.Row="2">
                 <Button
                     x:Name="AllOrdersBtn"
-                    Style="{StaticResource PanelButton_Parcels}"
+                    Style="{StaticResource ParcelsPanelButton}"
                     Click="AllOrdersBtn_Click">
                     <Button.Content>
                         <StackPanel>
@@ -80,7 +80,7 @@
 
                 <Button
                     x:Name="Button2"
-                    Style="{StaticResource PanelButton_Parcels}"
+                    Style="{StaticResource ParcelsPanelButton}"
                     Click="Panel2_Click">
                     <Button.Content>
                         <StackPanel>
@@ -97,7 +97,7 @@
 
                 <Button
                     x:Name="Button3"
-                    Style="{StaticResource PanelButton_Parcels}"
+                    Style="{StaticResource ParcelsPanelButton}"
                     Click="Panel3_Click">
                     <Button.Content>
                         <StackPanel>
@@ -114,7 +114,7 @@
 
                 <Button
                     x:Name="Button4"
-                    Style="{StaticResource PanelButton_Parcels}"
+                    Style="{StaticResource ParcelsPanelButton}"
                     Click="Panel4_Click">
                     <Button.Content>
                         <StackPanel>
@@ -141,33 +141,33 @@
                 Grid.Row="4">
 
                 <TextBlock
-                    Style="{StaticResource ColumnHeader_Parcels}"
+                    Style="{StaticResource ParcelsColumnHeader}"
                     Text="Order Id"/>
                 <TextBlock
-                    Style="{StaticResource ColumnHeader_Parcels}"
+                    Style="{StaticResource ParcelsColumnHeader}"
                     Margin="170 0 0 0"
                     Text="Customer Id"/>
                 <TextBlock
-                    Style="{StaticResource ColumnHeader_Parcels}"
+                    Style="{StaticResource ParcelsColumnHeader}"
                     Margin="135 0 0 0"
                     Text="Priority"/>
                 <TextBlock
-                    Style="{StaticResource ColumnHeader_Parcels}"
+                    Style="{StaticResource ParcelsColumnHeader}"
                     HorizontalAlignment="Center"
                     Margin="226 0 0 0"
                     Text="Scheduled Date" />
                 <TextBlock
-                    Style="{StaticResource ColumnHeader_Parcels}"
+                    Style="{StaticResource ParcelsColumnHeader}"
                     Text="Weight"
                     Margin="145 0 0 0"
                     HorizontalAlignment="Center"/>
                 <TextBlock
-                    Style="{StaticResource ColumnHeader_Parcels}"
+                    Style="{StaticResource ParcelsColumnHeader}"
                     HorizontalAlignment="Center"
                     Margin="157 0 0 0"
                     Text="Pay Method"/>
                 <TextBlock
-                    Style="{StaticResource ColumnHeader_Parcels}"
+                    Style="{StaticResource ParcelsColumnHeader}"
                     HorizontalAlignment="Center"
                     Margin="70 0 0 0"
                     Text="Delivery Status" />

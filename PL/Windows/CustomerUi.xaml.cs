@@ -1,29 +1,30 @@
-﻿using BLAPI;
-using DO;
-using PL.ViewModels;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using BLAPI;
+using DalFacade.DO;
+using PL.Controls;
+using PL.Pages;
+using PL.ViewModels;
 
-namespace PL.Pages
+namespace PL.Windows
 {
-    public partial class CustomerUserInterfacePage
+    public partial class CustomerUi
     {
         private const double Selected = 1.0;
         private const double Unselected = 0.5;
         private readonly BlApi _bl;
         public UserViewModel ViewModel { get; }
-        private Window Window { get; }
-        public Page CurrentPage { get; private set; }
+        private Page CurrentPage { get; set; }
 
-        public CustomerUserInterfacePage(BlApi ibl, User user, Window window)
+        public CustomerUi(BlApi ibl, User user)
         {
             _bl = ibl;
             var customer = _bl.SearchForCustomer(c => c.id == user.customerId);
             ViewModel = new UserViewModel(user, customer.phone, customer.name);
-            Window = window;
-            DataContext = this;
-
             InitializeComponent();
+            DataContext = this;
+            CustomButtons = new WindowControls(this);
             HomePanel.Opacity = Selected;
             CurrentPage = new HomePage(this);
             PagesNavigation.Navigate(CurrentPage);
@@ -70,12 +71,15 @@ namespace PL.Pages
             PagesNavigation.Navigate(CurrentPage);
         }
 
-        private void Reinitialize() => HomePanel.Opacity = AddPanel.Opacity = TrackPanel.Opacity = SentPanel.Opacity = SettingsPanel.Opacity = Unselected;
+        private void Reinitialize()
+        {
+            HomePanel.Opacity = AddPanel.Opacity =
+                TrackPanel.Opacity = SentPanel.Opacity = SettingsPanel.Opacity = Unselected;
+        }
 
-        private void CloseBtn_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
-
-        private void RestoreBtn_Click(object sender, RoutedEventArgs e) => Window.WindowState = Window.WindowState == WindowState.Normal ? WindowState.Maximized : WindowState.Normal;
-
-        private void MinimizeBtn_Click(object sender, RoutedEventArgs e) => Window.WindowState = WindowState.Minimized;
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
     }
 }

@@ -1,8 +1,8 @@
-﻿using DO;
+﻿using DalFacade.DO;
 using System;
 using System.Collections.Generic;
 
-namespace DALFACADE
+namespace DalFacade
 {
     public interface DalApi
     {
