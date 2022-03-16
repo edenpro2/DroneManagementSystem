@@ -1,7 +1,8 @@
-# C# Project 5782_8318
+# Drone Management System (Drone DBMS)
 Welcome to my C# Windows "Mini" Project for JCT Lev International Program in Computer Science. I am a second year CS student from Florida, currently living in Israel. This project is part of my course in C#. The project allows for both customers and employees to use a Drone Management System (DMS) with UI/UX design. For customers, they are greeted with a login page and the ability to register. Once logged in, they are able to look at their packages (incoming and sent), change profile settings and send a new parcel. For employees, they have lists of all entities and the ability to see each entity's details in a new window.
 
-Final stage is branch labeled: PR04
+![image](https://github.com/edenpro2/DroneManagementSystem/blob/main/PL/Resources/mainwindow.png?raw=true)
+
 
 ## Bonuses
 * Location coordinates in sexagesimal format, for user readability
