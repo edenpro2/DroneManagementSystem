@@ -7,20 +7,21 @@
       xmlns:local="clr-namespace:PL.Pages"
       mc:Ignorable="d"
       d:DataContext="{d:DesignInstance Type=local:SentParcelsPage}"
-      Height="1020" Width="1800"
+      MinHeight="720" 
+      MinWidth="1340"
       Title="SentParcelsPage"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}">
-
+    
     <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth0">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
-                <RowDefinition Height="10*" />
-                <RowDefinition Height="1.2*"/>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="1*" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="7*" />
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="2*" />
                 <RowDefinition Height="20*" />
-                <RowDefinition Height="50" />
+                <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="40" />
@@ -32,19 +33,20 @@
                 Grid.Row="1"
                 Grid.Column="1">
                 <TextBlock
-                    Text="Sent Order Details"
+                    Text="Sent Orders"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    FontSize="28"
+                    FontSize="26"
                     FontWeight="Bold"
                     FontFamily="Helvetica"
-                    Opacity="0.9" Foreground="#FF222525" />
+                    Opacity="0.9" 
+                    Foreground="#FF222525" />
 
                 <TextBlock
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     FontWeight="Normal"
-                    FontSize="20"
+                    FontSize="16"
                     FontFamily="Netflix Sans Light"
                     Foreground="#FF6D7484" 
                     Opacity="0.8" 
@@ -136,119 +138,155 @@
                 Margin="0 23 0 0"
                 Opacity="0.5"/>
 
-            <DockPanel 
-                Grid.Column="1"
-                Grid.Row="4">
-
-                <TextBlock
-                    Style="{StaticResource ParcelsColumnHeader}"
-                    Text="Order Id"/>
-                <TextBlock
-                    Style="{StaticResource ParcelsColumnHeader}"
-                    Margin="170 0 0 0"
-                    Text="Customer Id"/>
-                <TextBlock
-                    Style="{StaticResource ParcelsColumnHeader}"
-                    Margin="135 0 0 0"
-                    Text="Priority"/>
-                <TextBlock
-                    Style="{StaticResource ParcelsColumnHeader}"
-                    HorizontalAlignment="Center"
-                    Margin="226 0 0 0"
-                    Text="Scheduled Date" />
-                <TextBlock
-                    Style="{StaticResource ParcelsColumnHeader}"
-                    Text="Weight"
-                    Margin="145 0 0 0"
-                    HorizontalAlignment="Center"/>
-                <TextBlock
-                    Style="{StaticResource ParcelsColumnHeader}"
-                    HorizontalAlignment="Center"
-                    Margin="157 0 0 0"
-                    Text="Pay Method"/>
-                <TextBlock
-                    Style="{StaticResource ParcelsColumnHeader}"
-                    HorizontalAlignment="Center"
-                    Margin="70 0 0 0"
-                    Text="Delivery Status" />
-
-            </DockPanel>
-                
-            
-
-            <Separator
-                VerticalAlignment="Top"
-                Grid.Column="1"
-                Grid.Row="5"
-                Background="#FFA3ACBD"
-                Opacity="{Binding Opacity, ElementName=FirstSeparator}" />
-
             <!--Order Id List-->
             <ListBox
-                Margin="0 5 0 0"
                 Grid.Column="1"
                 Grid.Row="5"
-                d:ItemsSource="{d:SampleData ItemCount=6}"
+                d:ItemsSource="{d:SampleData ItemCount=7}"
                 ItemsSource="{Binding ParcelViewModels}">
+                <ListBox.Template>
+                    <ControlTemplate>
+                        <DockPanel LastChildFill="True">
+                            <Grid DockPanel.Dock="Top" Height="35" Margin="4 0 0 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="254"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    Style="{StaticResource ParcelsColumnHeader}"
+                                    Grid.Column="0"
+                                    Grid.Row="0"
+                                    Text="Order Id"/>
+                                <TextBlock
+                                    Style="{StaticResource ParcelsColumnHeader}"
+                                    Grid.Column="1"
+                                    Grid.Row="0"
+                                    Text="Customer Id"/>
+                                <TextBlock
+                                    Style="{StaticResource ParcelsColumnHeader}"
+                                    Grid.Column="2"
+                                    Grid.Row="0"
+                                    Text="Priority"/>
+                                <TextBlock
+                                    Style="{StaticResource ParcelsColumnHeader}"
+                                    Grid.Column="3"
+                                    Grid.Row="0"
+                                    Text="Weight" />
+                                <TextBlock
+                                    Style="{StaticResource ParcelsColumnHeader}"
+                                    Grid.Column="4"
+                                    Grid.Row="0"
+                                    Text="Requested"
+                                    HorizontalAlignment="Center"/>
+                                <TextBlock
+                                    Style="{StaticResource ParcelsColumnHeader}"
+                                    Grid.Column="5"
+                                    Grid.Row="0"
+                                    HorizontalAlignment="Center"
+                                    Text="Scheduled"/>
+                                <TextBlock
+                                    Style="{StaticResource ParcelsColumnHeader}"
+                                    Grid.Column="6"
+                                    Grid.Row="0"
+                                    HorizontalAlignment="Center"
+                                    Text="Delivery Status" />
+                                <Separator
+                                    Grid.Column="0"
+                                    Grid.Row="0"
+                                    Grid.ColumnSpan="7"
+                                    VerticalAlignment="Bottom"
+                                    Background="#FFA3ACBD"
+                                    Opacity="{Binding Opacity, ElementName=FirstSeparator}" />
+                            </Grid>
+                            <ScrollViewer
+                                VerticalScrollBarVisibility="Auto"
+                                HorizontalScrollBarVisibility="Hidden">
+                                <ItemsPresenter/>
+                            </ScrollViewer>
+                        </DockPanel>
+                    </ControlTemplate>
+                </ListBox.Template>
+            
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
-                        <Setter Property="FontSize" Value="18"/>
+                        <Setter Property="FontSize" Value="16"/>
                         <Setter Property="Height" Value="50" />
                         <Setter Property="FontFamily" Value="Netflix Sans Light" />
-                        <Setter Property="Foreground" Value="#444444" />
-                        <Setter Property="Background" Value="{x:Null}"/>
-                        <Style.Triggers>
+                         <Style.Triggers>
                             <Trigger Property="IsSelected" Value="True" >
                                 <Setter Property="FontFamily" Value="Netflix Sans Medium" />
-                                <Setter Property="Foreground" Value="#111111" />
+                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                <Setter Property="Foreground" Value="#222222" />
+                                <Setter Property="Background" Value="#222222"/>
                                 <Setter Property="BorderThickness" Value="0"/>
-                                <Setter Property="Background" Value="{x:Null}"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="FontWeight" Value="SemiBold"/>
                                 <Setter Property="FontFamily" Value="Netflix Sans Medium" />
-                                <Setter Property="Background" Value="{x:Null}" />
                                 <Setter Property="Foreground" Value="#333333" />
                                 <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Background" Value="Black"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
                 </ListBox.ItemContainerStyle>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <DockPanel Height="30">
-                            <TextBlock
+                        <Grid 
+                            Height="30">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="254"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock  
+                                x:Name="ColTxt1"
                                 Text="{Binding Id}"
-                                HorizontalAlignment="Left"
-                                Width="240"/>
+                                VerticalAlignment="Center"
+                                Grid.Column="0"/>
                             <TextBlock
                                 Text="{Binding TargetId}"
-                                HorizontalAlignment="Left"
-                                Width="244"/>
-                            <TextBlock
-                                Text="{Binding Priority}"
-                                HorizontalAlignment="Left"
-                                Width="269"/>
-                            <TextBlock
-                                Text="{Binding Scheduled}"
-                                HorizontalAlignment="Center"
-                                Width="318"/>
+                                VerticalAlignment="Center"
+                                Grid.Column="1"/>
                             <TextBlock
                                 Text="{Binding Weight}"
-                                HorizontalAlignment="Center"
-                                Width="231"/>
+                                VerticalAlignment="Center"
+                                Grid.Column="2"/>
                             <TextBlock
-                                Text="Credit Card"
+                                Text="{Binding Priority}"
+                                VerticalAlignment="Center"
+                                Grid.Column="3"/>
+                            <TextBlock
+                                Text="{Binding Requested}"
+                                VerticalAlignment="Center"
                                 HorizontalAlignment="Center"
-                                Width="246"/>
+                                Grid.Column="4"/>
+                            <TextBlock
+                                Text="{Binding Scheduled}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Grid.Column="5"/>
                             <Border 
-                                CornerRadius="3" 
-                                Width="100" 
-                                Height="25">
+                                CornerRadius="3"
+                                Grid.Column="6"
+                                Height="20">
                                 <Border.Background>
-                                    <ImageBrush Stretch="Fill" ImageSource="{Binding Status}"/>
+                                    <ImageBrush
+                                        Stretch="Uniform"
+                                        ImageSource="{Binding Status}"/>
                                 </Border.Background>
                             </Border>
-                        </DockPanel>
+                        </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

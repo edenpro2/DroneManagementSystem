@@ -1,7 +1,11 @@
-﻿using BLAPI;
+﻿using System.IO;
+using BLAPI;
 using DalFacade.DO;
 using PL.ViewModels;
 using System.Windows;
+using System.Windows.Media;
+using BL.BO;
+using Microsoft.Win32;
 
 namespace PL.Pages
 {
@@ -22,42 +26,89 @@ namespace PL.Pages
 
         private void ApplyBtn_Click(object sender, RoutedEventArgs e)
         {
-            var user = new User(ViewModel.User);
+            ErrorBlock.Text = "";
+            ErrorBlock.Foreground = Brushes.Tomato;
+            var name = NameBox.Text;
+            var username = UsernameBox.Text;
+            var password = PasswordBox.Password;
+            var confirmPass = ConfirmPasswordBox.Password;
+            var email = EmailBox.Text;
+            var confirmEmail = ConfirmEmailBox.Text;
 
-            if (UsernameBox.Text != "")
+            if (password != confirmPass)
             {
-                user.username = UsernameBox.Text;
+                ErrorBlock.Text = "Passwords do not match";
+                return;
             }
 
-            if (PasswordBox.Password != "")
+            var user = ViewModel.User;
+
+            if (password.Length > 0)
             {
-                user.password = PasswordBox.Password;
+                user.password = password;
             }
 
-            if (EmailBox.Text != "")
+            if (email != confirmEmail)
             {
-                user.email = EmailBox.Text;
+                ErrorBlock.Text = "Emails do not match";
+                return;
             }
 
-            if (AddressBox.Text != "")
+            if (!UserVerification.CheckEmail(email))
             {
-                user.address = AddressBox.Text;
+                ErrorBlock.Text = "Email not valid";
+                return;
             }
 
-            if (PhoneBox.Text != "")
-            {
-                _customer.phone = ViewModel.Phone = PhoneBox.Text;
-            }
+           
 
-            ViewModel.User = user;
+            // update each field
+            user.username = username;
+            user.email = email;
+            ViewModel.Name = name;
+
             _bl.UpdateCustomer(_customer);
             _bl.UpdateUser(user);
-            CleanForm();
+            ViewModel.User = user;
+
+            ErrorBlock.Foreground = Brushes.Green;
+            ErrorBlock.Text = "Successfully updated";
         }
 
-        private void CleanForm()
+
+        private void UploadPhotoBtn_Click(object sender, RoutedEventArgs e)
         {
-            UsernameBox.Text = PasswordBox.Password = EmailBox.Text = AddressBox.Text = PhoneBox.Text = "";
+            var fileDialog = new OpenFileDialog
+            {
+                DefaultExt = ".png", // Required file extension 
+                Filter = "Image Files|*.jpg;*.jpeg;*.bmp;*.tif;*.png" // Optional
+            };
+
+            //To read the content : You will get the filename from the OpenFileDialog and use that to do what IO operation on it.
+
+            if ((bool) fileDialog.ShowDialog())
+            {
+                var filePath = fileDialog.FileName;
+
+                if (new FileInfo(filePath).Length > 655_360) // > 5 Mb
+                {
+                    ErrorBlock.Text = "File too large";
+                    return;
+                }
+                var user = ViewModel.User;
+                user.profilePic = filePath;
+                ViewModel.User = user;
+                _bl.UpdateUser(user);
+                ErrorBlock.Text = "";
+            }
+        }
+
+        private void UserInfoBtn_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void BillingInfoBtn_Click(object sender, RoutedEventArgs e)
+        {
         }
     }
 }

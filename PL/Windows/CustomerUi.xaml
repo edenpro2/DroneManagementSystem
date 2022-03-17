@@ -9,7 +9,7 @@
       mc:Ignorable="d"
       AllowsTransparency="True"
       d:DataContext="{d:DesignInstance Type=windows:CustomerUi}"
-      MinHeight="820" MinWidth="1450"
+      MinHeight="920" MinWidth="1450"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
       Background="{x:Null}"
       WindowStyle="None"

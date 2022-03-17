@@ -5,30 +5,33 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:viewModels="clr-namespace:PL.ViewModels"
+      xmlns:themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
       mc:Ignorable="d"
+      MinHeight="720" 
+      MinWidth="1340"
       d:DataContext="{d:DesignInstance Type=viewModels:UserViewModel}"
-      Height="1020" Width="1800"
       Title="SettingsPage"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}">
 
     <Page.Resources>
         <Style x:Key="BorderDetails" TargetType="Border">
-            <Setter Property="Height" Value="100" />
+            <Setter Property="Height" Value="80" />
             <Setter Property="CornerRadius" Value="5" />
             <Setter Property="BorderBrush" Value="#FFEDEDED" />
             <Setter Property="BorderThickness" Value="2" />
-            <Setter Property="Margin" Value="0 20 0 0 " />
+            <Setter Property="Margin" Value="0 15 0 0 " />
         </Style>
 
-        <Style x:Key="InfoText" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="28"/>
-            <Setter Property="Foreground" Value="DarkGray" />
-            <Setter Property="HorizontalAlignment" Value="Left" />
+        <Style x:Key="PersonalInfo" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontSize" Value="26"/>
+            <Setter Property="Foreground" Value="#333333" />
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
 
         <Style x:Key="Details" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontSize" Value="24"/>
             <Setter Property="Foreground" Value="#333333" />
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="VerticalAlignment" Value="Center" />
@@ -37,231 +40,437 @@
         <Style x:Key="TextBoxDetails" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="Margin" Value="0,3,0,3"/>
-            <Setter Property="Height" Value="70" />
-            <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignDivider}"/> 
-            <Setter Property="FontSize" Value="26"/>
+            <Setter Property="Height" Value="64" />
+            <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignDivider}"/>
+            <Setter Property="FontSize" Value="22"/>
             <Setter Property="Width" Value="400" />
         </Style>
 
         <Style x:Key="PassBoxDetails" TargetType="PasswordBox" 
                BasedOn="{StaticResource MaterialDesignOutlinedPasswordBox}">
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignDivider}"/> 
+            <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignDivider}"/>
             <Setter Property="Margin" Value="0,3,0,3"/>
-            <Setter Property="Height" Value="70" />
-            <Setter Property="FontSize" Value="26"/>
+            <Setter Property="Height" Value="64" />
+            <Setter Property="FontSize" Value="22"/>
             <Setter Property="Width" Value="400" />
         </Style>
+
+        <Style x:Key="TextBoxLabel" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#333333"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+
+        </Style>
+
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
+            <Setter Property="Width" Value="260"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#333333"/>
+            <Setter Property="Margin" Value="0 5 0 0"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+        </Style>
+
+
+        <Style TargetType="PasswordBox" BasedOn="{StaticResource MaterialDesignOutlinedPasswordBox}">
+            <Setter Property="Width" Value="260"/>
+            <Setter Property="Foreground" Value="#333333"/>
+            <Setter Property="Margin" Value="0 5 0 0"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="BorderBrush" Value="#FFD7E1E8"/>
+        </Style>
+
+        <!--<Style x:Key="Watermark" TargetType="TextBlock" BasedOn="{StaticResource TextBoxLabel}">
+            <Setter Property="Text" Value="●●●●●●●●●●●●●●●●"/>
+            <Setter Property="Margin" Value="15"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Style.Triggers>
+                <Trigger Property="IsKeyboardFocused" Value="True">
+                    <Setter Property="Text" Value="" />
+                </Trigger>
+                <EventTrigger RoutedEvent="" ></EventTrigger>
+            </Style.Triggers>
+        </Style>-->
+
+
+        <Style TargetType="Separator">
+            <Setter Property="Height" Value="23"/>
+            <Setter Property="Visibility" Value="Hidden"/>
+        </Style>
+
+        <Style TargetType="RadioButton" >
+            <Setter Property="Template" >
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RadioButton}">
+                        <StackPanel Background="Transparent" >
+                            <ContentPresenter 
+                                x:Name="Presenter"
+                                Opacity="0.5"
+                                RecognizesAccessKey="True" 
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                            <themes:BulletChrome 
+                                x:Name="Bullet"
+                                DockPanel.Dock="Bottom"
+                                Height="1.65"
+                                BorderBrush="DodgerBlue"
+                                Visibility="Hidden"
+                                Background="DodgerBlue" 
+                                IsChecked="{TemplateBinding IsChecked}" 
+                                RenderMouseOver="{TemplateBinding IsMouseOver}" 
+                                RenderPressed="{TemplateBinding IsPressed}"/>
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True" >
+                                <Setter TargetName="Bullet" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="Presenter" Property="Opacity" Value="1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+
     </Page.Resources>
 
-    <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth0">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="800" />
-                <RowDefinition Height="3*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="1400" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+    <materialDesign:Card 
+        materialDesign:ShadowAssist.ShadowDepth="Depth0"
+        Background="#d1d9de">
 
-            <Grid
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="160"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition />
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+
+
+            <Border
+                Style="{StaticResource BorderShadowEffect}"
+                CornerRadius="5"
                 Grid.Column="1"
-                Grid.Row="1">
-                <StackPanel>
+                Grid.Row="1"
+                Background="White">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="20"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="20"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel
+                        Grid.Column="1"
+                        Grid.Row="1">
+                        <TextBlock
+                            d:Text="John Smith"
+                            Text="{Binding Name}"
+                            FontSize="24"
+                            Foreground="#333333" 
+                            FontWeight="Bold"
+                            HorizontalAlignment="Center"/>
+                        <DockPanel 
+                            HorizontalAlignment="Center" 
+                            Margin="0 7 0 0">
+                            <TextBlock
+                                Text="@"
+                                FontSize="12"
+                                Foreground="#333333" 
+                                FontWeight="SemiBold"/>
+                            <TextBlock
+                                d:Text="jsmithofficial"
+                                Text="{Binding User.username}"
+                                FontSize="12"
+                                Foreground="#333333" 
+                                FontWeight="SemiBold"/>
+                        </DockPanel>
+
+                        <Ellipse 
+                            Margin="10"
+                            Width="140" 
+                            Height="140">
+                            <Ellipse.Fill>
+                                <ImageBrush d:ImageSource="../Resources/account.jpg"  ImageSource="{Binding User.profilePic}" Opacity="0.6" Stretch="UniformToFill"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+
+                        <Button
+                            Click="UploadPhotoBtn_Click"
+                            Content="Upload New Photo"
+                            HorizontalAlignment="Center" 
+                            Background="#FF217BF3" 
+                            BorderBrush="#FF217BF3"/>
+
+                        <Border
+                            Margin="20"
+                            Height="80"
+                            CornerRadius="5"
+                            Background="#FFE2EEF7"
+                            BorderBrush="#FFBAD0E0"
+                            BorderThickness="1">
+                            <StackPanel Margin="10">
+                                <Label
+                                    VerticalContentAlignment="Center" 
+                                    HorizontalContentAlignment="Center"
+                                    FontSize="10"
+                                    FontFamily="Helvetica"
+                                    Foreground="#FF788392"
+                                    Content="Upload a new profile picture. Images not &#10;    scaled will be resized auto-magically."/>
+                                <DockPanel HorizontalAlignment="Center">
+                                    <Label
+                                        VerticalContentAlignment="Center" 
+                                        HorizontalContentAlignment="Center"
+                                        FontSize="10"
+                                        Foreground="#FF788392"
+                                        FontFamily="Helvetica"
+                                        Content="Maximum upload size:"/>
+                                    <Label
+                                        FontWeight="Bold"
+                                        FontSize="10"
+                                        Foreground="#FF4B525B"
+                                        FontFamily="Helvetica"
+                                        Content="5 MB"/>
+                                </DockPanel>
+
+
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+
+            </Border>
+
+            <Border
+                Style="{StaticResource BorderShadowEffect}"
+                CornerRadius="5"
+                Grid.Column="3"
+                Grid.RowSpan="2"
+                Grid.Row="1"
+                Background="White">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="40"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="3.2*"/>
+                        <RowDefinition Height="60"/>
+                    </Grid.RowDefinitions>
 
                     <Border
-                        Height="100" 
-                        CornerRadius="5" 
-                        Background="#FFEDEDED">
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3"
+                        CornerRadius="5 5 0 0"
+                        Background="#FFE2EEF7"/>
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Text="Edit Profile"
+                        FontSize="28"
+                        Foreground="#333333" 
+                        FontWeight="Bold"
+                        Margin="0 35 0 0"
+                        HorizontalAlignment="Left"/>
+
+                    <DockPanel
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        VerticalAlignment="Bottom">
+                        <RadioButton 
+                            Click="UserInfoBtn_Click"
+                            IsChecked="True"
+                            Content="User info"
+                            FontSize="16"
+                            Foreground="#85949e" 
+                            BorderThickness="0"
+                            FontWeight="Medium"
+                            VerticalAlignment="Bottom"
+                            HorizontalAlignment="Left">
+                        </RadioButton>
+
+                        <Separator Width="30"/>
+
+                        <RadioButton 
+                            Click="BillingInfoBtn_Click"
+                            Content="Billing Information"
+                            FontSize="16"
+                            Foreground="#85949e" 
+                            BorderThickness="0"
+                            FontWeight="Medium"
+                            VerticalAlignment="Bottom"
+                            HorizontalAlignment="Left">
+                        </RadioButton>
+
+                    </DockPanel>
+
+
+
+                    <StackPanel 
+                        Grid.Row="1"
+                        Grid.Column="1">
+
+                        <!-- Row 1 -->
+
+                        <Separator/>
+
                         <DockPanel>
-                            <Ellipse
-                                Margin="30,20"
-                                Width="64">
-                                <Ellipse.Fill>
-                                    <ImageBrush ImageSource="{Binding User.profilePic}" />
-                                </Ellipse.Fill>
-                            </Ellipse>
-                            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Margin="11,0,0,0">
+                            <StackPanel
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
                                 <TextBlock 
-                                    Text="Hello" 
-                                    FontSize="20"
-                                    Foreground="#FF868585" />
+                                    Text="Full Name"
+                                    Style="{StaticResource TextBoxLabel}"/>
+                                <TextBox
+                                    x:Name="NameBox"
+                                    d:Text="John Smith"
+                                    Text="{Binding Name, Mode=OneTime}"
+                                    BorderBrush="#FFD7E1E8"
+                                    BorderThickness="1.5"/>
+                            </StackPanel>
+
+                            <StackPanel
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
                                 <TextBlock 
-                                    Text="{Binding Name}" 
-                                    FontSize="26" />
+                                    Text="Username"
+                                    Style="{StaticResource TextBoxLabel}"/>
+                                <TextBox
+                                    x:Name="UsernameBox"
+                                    d:Text="jsmithoffical"
+                                    Text="{Binding User.username, Mode=OneTime}"
+                                    BorderBrush="#FFD7E1E8"
+                                    BorderThickness="1.5"/>
                             </StackPanel>
                         </DockPanel>
-                    </Border>
 
-                    <Border Style="{StaticResource BorderDetails}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="2.5*" />
-                                <ColumnDefinition Width="6*" />
-                                <ColumnDefinition Width="4.5*" />
-                                <ColumnDefinition Width="8*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock
-                                Grid.Column="1"
-                                Text="Username"
-                                Style="{StaticResource InfoText}" />
-                            <TextBlock
-                                Grid.Column="2"
-                                Text="{Binding User.username }"
-                                Style="{StaticResource Details}" />
-                            <TextBlock
-                                Grid.Column="3"
-                                Text="Change username"
-                                Style="{StaticResource InfoText}" />
-                            <TextBox
-                                x:Name="UsernameBox"
-                                Grid.Column="4"
-                                Style="{StaticResource TextBoxDetails}"
-                                materialDesign:HintAssist.Hint="Enter username"/>
-                        </Grid>
-                    </Border>
+                        <!-- Row 2 -->
 
-                    <Border Style="{StaticResource BorderDetails}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="2.5*" />
-                                <ColumnDefinition Width="6*" />
-                                <ColumnDefinition Width="4.5*" />
-                                <ColumnDefinition Width="8*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock
-                                Grid.Column="1"
-                                Text="Password"
-                                Style="{StaticResource InfoText}" />
-                            <TextBlock
-                                Grid.Column="2"
-                                Text="*************"
-                                Style="{StaticResource Details}" />
-                            <TextBlock
-                                Grid.Column="3"
-                                Style="{StaticResource InfoText}" Text="Change password" />
-                            <PasswordBox
-                                x:Name="PasswordBox"
-                                Grid.Column="4"
-                                Style="{StaticResource PassBoxDetails}"
-                                materialDesign:HintAssist.Hint="Enter password"  />
-                        </Grid>
-                    </Border>
+                        <Separator/>
 
-                    <Border Style="{StaticResource BorderDetails}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="2.5*" />
-                                <ColumnDefinition Width="6*" />
-                                <ColumnDefinition Width="4.5*" />
-                                <ColumnDefinition Width="8*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock
-                                Grid.Column="1"
-                                Text="Email"
-                                Style="{StaticResource InfoText}" />
-                            <TextBlock
-                                Grid.Column="2"
-                                Text="{Binding User.email }"
-                                Style="{StaticResource Details}" />
-                            <TextBlock
-                                Grid.Column="3"
-                                Text="Change email"
-                                Style="{StaticResource InfoText}" />
-                            <TextBox
-                                x:Name="EmailBox"
-                                Grid.Column="4"
-                                Style="{StaticResource TextBoxDetails}"
-                                materialDesign:HintAssist.Hint="Enter email" />
-                        </Grid>
-                    </Border>
+                        <DockPanel>
+                            <StackPanel
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                <TextBlock 
+                                    Text="Password"
+                                    Style="{StaticResource TextBoxLabel}"/>
+                                <Grid>
+                                    <!--<TextBlock 
+                                        Style="{StaticResource Watermark}"/>-->
+                                    <PasswordBox
+                                        x:Name="PasswordBox"
+                                        BorderBrush="#FFD7E1E8"
+                                        BorderThickness="1.5"/>
+                                </Grid>
+                            </StackPanel>
 
-                    <Border Style="{StaticResource BorderDetails}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="2.5*" />
-                                <ColumnDefinition Width="6*" />
-                                <ColumnDefinition Width="4.5*" />
-                                <ColumnDefinition Width="8*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock
-                                Grid.Column="1"
-                                Text="Address"
-                                Style="{StaticResource InfoText}" />
-                            <TextBlock
-                                Grid.Column="2"
-                                Text="{Binding User.address}"
-                                Style="{StaticResource Details}" />
-                            <TextBlock
-                                Grid.Column="3"
-                                Text="Change address"
-                                Style="{StaticResource InfoText}" />
-                            <TextBox
-                                x:Name="AddressBox"
-                                Grid.Column="4"
-                                Style="{StaticResource TextBoxDetails}"
-                                materialDesign:HintAssist.Hint="Enter address"/>
-                        </Grid>
-                    </Border>
+                            <StackPanel
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                <TextBlock 
+                                    Text="Confirm Password"
+                                    Style="{StaticResource TextBoxLabel}"/>
+                                <Grid>
+                                    <!--<TextBlock 
+                                        Style="{StaticResource Watermark}"/>-->
+                                    <PasswordBox
+                                    x:Name="ConfirmPasswordBox"
+                                    BorderBrush="#FFD7E1E8"
+                                    BorderThickness="1.5"/>
+                                </Grid>
+                            </StackPanel>
+                        </DockPanel>
 
-                    <Border Style="{StaticResource BorderDetails}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="2.5*" />
-                                <ColumnDefinition Width="6*" />
-                                <ColumnDefinition Width="4.5*" />
-                                <ColumnDefinition Width="8*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock
-                                Grid.Column="1"
-                                Text="Phone"
-                                Style="{StaticResource InfoText}" />
-                            <TextBlock
-                                Grid.Column="2"
-                                Text="{Binding Phone }"
-                                Style="{StaticResource Details}" />
-                            <TextBlock
-                                Grid.Column="3"
-                                Text="Change phone"
-                                Style="{StaticResource InfoText}" />
-                            <TextBox
-                                x:Name="PhoneBox"
-                                Grid.Column="4"
-                                Style="{StaticResource TextBoxDetails}"
-                                materialDesign:HintAssist.Hint="Enter phone"/>
-                        </Grid>
-                    </Border>
+                        <!-- Row 3 -->
 
-                    <Button 
-                        Margin="0 25 0 0"
-                        HorizontalAlignment="Center" 
-                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                        Height="60"
-                        Width="450" 
-                        Content="Apply"
-                        FontSize="24"
-                        Background="#FFF38121" 
-                        BorderBrush="#FFF38121" 
-                        Click="ApplyBtn_Click" />
+                        <Separator/>
 
-                </StackPanel>
-            </Grid>
+                        <DockPanel>
+                            <StackPanel
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                <TextBlock 
+                                    Text="Email Address"
+                                    Style="{StaticResource TextBoxLabel}"/>
+                                <TextBox
+                                    x:Name="EmailBox"
+                                    d:Text="johnsmith99@gmail.com"
+                                    Text="{Binding User.email, Mode=OneTime}"
+                                    BorderBrush="#FFD7E1E8"
+                                    BorderThickness="1.5"/>
+                            </StackPanel>
+
+                            <StackPanel
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                <TextBlock 
+                                    Text="Confirm Email Address"
+                                    Style="{StaticResource TextBoxLabel}"/>
+                                <TextBox
+                                    x:Name="ConfirmEmailBox"
+                                    DataContext="{Binding ElementName=EmailBox, Mode=OneTime}"
+                                    Text="{Binding Text}"
+                                    BorderBrush="#FFD7E1E8"
+                                    BorderThickness="1.5"/>
+                            </StackPanel>
+                        </DockPanel>
+
+                        <Separator Height="20"/>
+
+                        <TextBlock
+                            x:Name="ErrorBlock"
+                            FontSize="10"
+                            Foreground="IndianRed"
+                            FontWeight="SemiBold"
+                            VerticalAlignment="Bottom"
+                            HorizontalAlignment="Left" />
+
+                        <Separator Height="10"/>
+
+                        <Button 
+                            Click="ApplyBtn_Click"
+                            Width="180"
+                            Height="40"
+                            VerticalAlignment="Bottom"
+                            HorizontalAlignment="Left"
+                            Content="Update info" BorderBrush="#FF217BF3" Background="#FF217BF3"/>
+
+                    </StackPanel>
+
+
+
+                </Grid>
+
+
+            </Border>
+
+
 
 
         </Grid>
+
     </materialDesign:Card>
 
 </Page>

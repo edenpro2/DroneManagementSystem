@@ -68,7 +68,11 @@ namespace PL.Windows
                 ErrorTextBlock.Text = "Wrong username or password";
                 ChangeButtonState();
             }
-            else new CustomerUi(Bl, _user).Show();
+            else
+            {
+                new CustomerUi(Bl, _user).Show();
+                Close();
+            }
         }
 
         private void ChangeButtonState()

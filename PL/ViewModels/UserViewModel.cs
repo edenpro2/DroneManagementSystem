@@ -45,8 +45,8 @@ namespace PL.ViewModels
         public UserViewModel(User user, string phone, string name)
         {
             User = user;
-            this._phone = phone;
-            this._name = name;
+            _phone = phone;
+            _name = name;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

@@ -73,7 +73,7 @@ namespace DALXML
             }
 
             Config.CustomerId = GetCustomers().Count();
-            Config.ParcelId = GetUsers().Count();
+            Config.ParcelId = GetParcels().Count();
         }
 
         private static void CreateXmlDoc<T>(string filePath, List<T> list)

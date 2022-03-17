@@ -45,8 +45,8 @@ namespace PL.Pages
             }
             else
             {
-                ErrorTextBlock.Text = null;
-                var targetId = _bl.SearchForCustomer(c => c.name == NameComboBox.SelectedItem.ToString()).id;
+                ErrorTextBlock.Text = "";
+                var targetId = _bl.SearchForCustomer(c => c.name == (string)NameComboBox.SelectedItem).id;
 
                 WeightCategories weight;
                 Priorities priority;
