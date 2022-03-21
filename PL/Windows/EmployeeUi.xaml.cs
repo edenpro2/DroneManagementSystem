@@ -1,9 +1,9 @@
-﻿using System.Windows;
-using System.Windows.Input;
-using BLAPI;
+﻿using BLAPI;
 using DalFacade.DO;
 using PL.Pages;
 using PL.ViewModels;
+using System.Windows;
+using System.Windows.Input;
 
 namespace PL.Windows
 {
@@ -22,15 +22,29 @@ namespace PL.Windows
             PagesNavigation.Navigate(new DronesPage(_bl));
         }
 
-        private void DroneBtn_Checked(object sender, RoutedEventArgs e) => PagesNavigation.Navigate(new DronesPage(_bl));
+        private void DroneBtn_Checked(object sender, RoutedEventArgs e)
+        {
+            PagesNavigation.Navigate(new DronesPage(_bl));
+        }
 
-        private void StationBtn_Checked(object sender, RoutedEventArgs e) => PagesNavigation.Navigate(new StationsPage(_bl));
+        private void StationBtn_Checked(object sender, RoutedEventArgs e)
+        {
+            PagesNavigation.Navigate(new StationsPage(_bl));
+        }
 
-        private void CustomerBtn_Checked(object sender, RoutedEventArgs e) => PagesNavigation.Navigate(new CustomersPage(_bl));
+        private void CustomerBtn_Checked(object sender, RoutedEventArgs e)
+        {
+            PagesNavigation.Navigate(new CustomersPage(_bl));
+        }
 
-        private void ParcelBtn_Checked(object sender, RoutedEventArgs e) => PagesNavigation.Navigate(new ParcelsPage(_bl));
+        private void ParcelBtn_Checked(object sender, RoutedEventArgs e)
+        {
+            PagesNavigation.Navigate(new ParcelsPage(_bl));
+        }
 
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e) => DragMove();
-
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
     }
 }

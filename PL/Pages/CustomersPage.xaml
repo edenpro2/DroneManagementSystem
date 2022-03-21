@@ -57,24 +57,53 @@
                 Background="Gray"
                 BorderBrush="Gray"/>
 
-            <DockPanel
-                Grid.Column="1"
-                Grid.Row="3">
-                <TextBlock Text="ID" Style="{StaticResource ListColumnHeader}" Margin="12,0,0,0" />
-                <TextBlock Text="Name" Style="{StaticResource ListColumnHeader}" Margin="196,0,0,0" />
-                <TextBlock Text="Phone" Style="{StaticResource ListColumnHeader}" Margin="399,0,0,0" />
-                <TextBlock Text="Location" Style="{StaticResource ListColumnHeader}" Margin="396,0,0,0" />
-            </DockPanel>
-
+             
             <ListBox
                 x:Name="CustomerListBox"
                 d:ItemsSource="{d:SampleData ItemCount=6}"
                 ItemsSource="{Binding customersViewModel}"
                 HorizontalContentAlignment="Stretch"
-                Grid.Column="1"
                 MouseDoubleClick="CustomerListBox_Click"
                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                Grid.Column="1"
                 Grid.Row="4">
+                <ListBox.Template>
+                    <ControlTemplate>
+                        <DockPanel LastChildFill="True">
+                            <Grid 
+                                DockPanel.Dock="Top" 
+                                Height="30">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150*"/>
+                                    <ColumnDefinition Width="150*"/>
+                                    <ColumnDefinition Width="150*"/>
+                                    <ColumnDefinition Width="250*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock 
+                                    Text="ID" 
+                                    Style="{StaticResource ListColumnHeader}"
+                                    Grid.Column="0"/>
+                                <TextBlock
+                                    Text="Name" 
+                                    Style="{StaticResource ListColumnHeader}"
+                                    Grid.Column="1" />
+                                <TextBlock
+                                    Text="Phone" 
+                                    Style="{StaticResource ListColumnHeader}" 
+                                    Grid.Column="2" />
+                                <TextBlock 
+                                    Text="Location" 
+                                    Style="{StaticResource ListColumnHeader}" 
+                                    Grid.Column="3"/>
+                            </Grid>
+                            <ScrollViewer
+                                VerticalScrollBarVisibility="Hidden"
+                                HorizontalScrollBarVisibility="Hidden">
+                                <ItemsPresenter/>
+                            </ScrollViewer>
+                        </DockPanel>
+                    </ControlTemplate>  
+                </ListBox.Template>
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem" BasedOn="{StaticResource PageListBoxItem}"/>
                 </ListBox.ItemContainerStyle>
@@ -82,28 +111,24 @@
                     <DataTemplate>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="150*"/>
+                                <ColumnDefinition Width="150*"/>
+                                <ColumnDefinition Width="150*"/>
+                                <ColumnDefinition Width="250*"/>
                             </Grid.ColumnDefinitions>
 
                             <TextBlock
                                 Grid.Column="0"
-                                Text="{Binding Customer.id}"
-                                TextAlignment="Left" Margin="10,0,0,0" />
+                                Text="{Binding Customer.id}"/>
                             <TextBlock
                                 Grid.Column="1"
-                                Text="{Binding Customer.name}"
-                                TextAlignment="Left" />
+                                Text="{Binding Customer.name}"/>
                             <TextBlock
                                 Grid.Column="2"
-                                Text="{Binding Customer.phone}"
-                                TextAlignment="Left" />
+                                Text="{Binding Customer.phone}"/>
                             <TextBlock
                                 Grid.Column="3"
-                                Text="{Binding Dms}"
-                                TextAlignment="Left" />
+                                Text="{Binding Dms}"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

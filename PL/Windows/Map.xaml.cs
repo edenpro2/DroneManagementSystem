@@ -7,7 +7,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Image = System.Windows.Controls.Image;
-using Point = System.Windows.Point;
 
 namespace PL.Windows
 {
@@ -119,7 +118,10 @@ namespace PL.Windows
             return ((targetLat - minLat) / (maxLat - minLat)) * (height - 1);
         }
 
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e) => DragMove();
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
 
         //Point GetMousePos()
         //{

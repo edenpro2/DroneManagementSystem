@@ -16,6 +16,20 @@
       WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
+
+        <Style TargetType="{x:Type RadioButton}">
+            <Setter Property="Opacity" Value="{Binding Unselected}"/>
+            <Setter Property="Margin" Value="15 0 0 0"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="{Binding Selected}"/>
+                </Trigger>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Opacity" Value="{Binding Selected}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
         <Style x:Key="UiLabel" TargetType="Label">
             <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}" />
             <Setter Property="FontWeight" Value="DemiBold" />
@@ -26,6 +40,20 @@
             <Setter Property="Margin" Value="21 0 0 0" />
             <Setter Property="Opacity" Value="0.5" />
         </Style>
+
+        
+        <Style x:Key="Separator" TargetType="{x:Type Separator}">
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="Visibility" Value="Hidden"/>
+        </Style>
+
+
+        <Style x:Key="UiImage" TargetType="{x:Type Image}">
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Stretch" Value="Uniform"/>
+        </Style>
+
     </Window.Resources>
 
     <materialDesign:Card
@@ -44,7 +72,8 @@
             <Border
                 Grid.Column="0"
                 CornerRadius="10 0 0 10"
-                Background="{DynamicResource MaterialDesignBackground}" Margin="0,0,0,3">
+                Background="{DynamicResource MaterialDesignBackground}"
+                Margin="0,0,0,3">
                 <Grid x:Name="GridMenu" Width="70">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="60" />
@@ -58,11 +87,9 @@
                         Grid.Row="1"
                         VerticalAlignment="Top">
                         <Image
+                            Margin="14 0 0 0"
                             Source="/Icons/logo2.png"
-                            Stretch="UniformToFill"
-                            Width="36"
-                            Height="35"
-                            Margin="18,0,0,0" />
+                            Style="{StaticResource UiImage}"/>
                         <Label
                             Content="bundle.com"
                             Foreground="#555555"
@@ -87,7 +114,7 @@
                                             <Grid>
                                                 <Image 
                                                     Source="/Icons/menu.png"
-                                                    Height="60" 
+                                                    Stretch="Uniform"
                                                     Width="25" />
                                             </Grid>
                                         </ControlTemplate>
@@ -125,130 +152,113 @@
 
                     <StackPanel
                         Grid.Row="3">
-                        <DockPanel
-                            x:Name="HomePanel"
-                            Opacity="0.5">
+                        <DockPanel>
                             <RadioButton
-                                Tag="Package"
-                                Margin="20 0 0 5"
-                                Click="HomeBtn_Click">
-                                <RadioButton.Style>
-                                    <Style TargetType="{x:Type RadioButton}">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type RadioButton}">
-                                                    <Grid>
-                                                        <Image Source="/Icons/home.png" Height="60" Width="30" />
-                                                    </Grid>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </RadioButton.Style>
+                                Click="HomeBtn_Click"
+                                GroupName="ui"
+                                IsChecked="True">
+                                <RadioButton.Template>
+                                    <ControlTemplate>
+                                        <Image
+                                            Source="/Icons/home.png" 
+                                            Style="{StaticResource UiImage}"/>
+                                    </ControlTemplate>
+                                </RadioButton.Template>
                             </RadioButton>
-                            <Label Content="Home"
-                                   Style="{StaticResource UiLabel}" />
+                            <Label 
+                                Content="Home"
+                                Style="{StaticResource UiLabel}" />
                         </DockPanel>
 
-                        <DockPanel
-                            x:Name="AddPanel"
-                            Opacity="0.5">
+                        <Separator Style="{StaticResource Separator}" />
+
+                        <DockPanel>
                             <RadioButton
-                                Tag="Add package"
-                                Margin="20 0 0 5"
-                                Click="AddPackageBtn_Click">
-                                <RadioButton.Style>
-                                    <Style TargetType="{x:Type RadioButton}">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type RadioButton}">
-                                                    <Grid>
-                                                        <Image Source="/Icons/package.png" Height="60" Width="30" />
-                                                    </Grid>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </RadioButton.Style>
+                                Click="AddPackageBtn_Click"
+                                GroupName="ui">
+                                <RadioButton.Template>
+                                    <ControlTemplate>
+                                        <Image 
+                                            Source="/Icons/package.png" 
+                                            Style="{StaticResource UiImage}"/>
+                                    </ControlTemplate>
+                                </RadioButton.Template>
                             </RadioButton>
                             <Label
                                 Content="Add Package"
                                 Style="{StaticResource UiLabel}" />
                         </DockPanel>
 
-                        <DockPanel
-                            x:Name="SentPanel"
-                            Opacity="0.5">
+                        <Separator Style="{StaticResource Separator}" />
+
+                        <DockPanel>
                             <RadioButton
-                                Tag="Package"
-                                Margin="20 0 0 5"
-                                Click="TrackSentByBtn_Click">
-                                <RadioButton.Style>
-                                    <Style TargetType="{x:Type RadioButton}">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type RadioButton}">
-                                                    <Grid>
-                                                        <Image 
-                                                            Source="/Icons/sent.png" Height="65" Width="31" />
-                                                    </Grid>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </RadioButton.Style>
+                                Click="TrackSentByBtn_Click"
+                                GroupName="ui">
+                                <RadioButton.Template>
+                                    <ControlTemplate>
+                                        <Image 
+                                            Source="/Icons/sent.png"  
+                                            Style="{StaticResource UiImage}"/>
+                                    </ControlTemplate>
+                                </RadioButton.Template>
                             </RadioButton>
                             <Label
                                 Content="Outgoing"
                                 Style="{StaticResource UiLabel}" />
                         </DockPanel>
 
-                        <DockPanel
-                            x:Name="TrackPanel"
-                            Opacity="0.5">
+                        <Separator Style="{StaticResource Separator}" />
+
+                        <DockPanel>
                             <RadioButton
-                                Tag="Package"
-                                Margin="20 0 0 5"
-                                Click="TrackSentToBtn_Click">
-                                <RadioButton.Style>
-                                    <Style TargetType="{x:Type RadioButton}">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type RadioButton}">
-                                                    <Grid>
-                                                        <Image Source="/Icons/incoming.png" Height="65" Width="31" />
-                                                    </Grid>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </RadioButton.Style>
+                                Click="TrackSentToBtn_Click"
+                                GroupName="ui">
+                               <RadioButton.Template>
+                                   <ControlTemplate>
+                                       <Image
+                                           Source="/Icons/incoming.png" 
+                                           Style="{StaticResource UiImage}"/>
+                                    </ControlTemplate>
+                                </RadioButton.Template>
                             </RadioButton>
                             <Label
                                 Content="Incoming"
                                 Style="{StaticResource UiLabel}" />
                         </DockPanel>
 
-                        <DockPanel
-                            x:Name="SettingsPanel"
-                            Opacity="0.5">
+                        <Separator Style="{StaticResource Separator}" />
+
+                        <DockPanel>
                             <RadioButton
-                                Tag="Settings"
-                                Margin="20 4 0 5"
-                                Click="SettingsBtn_Click">
-                                <RadioButton.Style>
-                                    <Style TargetType="{x:Type RadioButton}">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type RadioButton}">
-                                                    <Grid>
-                                                        <Image Source="/Icons/settings.png" Height="60" Width="30" />
-                                                    </Grid>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </RadioButton.Style>
+                                Click="ChatBtn_Click"
+                                GroupName="ui">
+                                <RadioButton.Template>
+                                    <ControlTemplate>
+                                        <Image 
+                                            Source="/Icons/chat.png" 
+                                            Style="{StaticResource UiImage}"/>
+                                    </ControlTemplate>
+                                </RadioButton.Template>
+                            </RadioButton>
+                            <Label
+                                Content="Chat"
+                                Style="{StaticResource UiLabel}" />
+                        </DockPanel>
+
+                        <Separator Style="{StaticResource Separator}" />
+
+                        <DockPanel>
+                            <RadioButton
+                                Click="SettingsBtn_Click"
+                                GroupName="ui">
+                                <RadioButton.Template>
+                                    <ControlTemplate>
+                                        <Image 
+                                            Source="/Icons/settings.png"  
+                                            Style="{StaticResource UiImage}"/>
+                                    </ControlTemplate>
+                                </RadioButton.Template>
                             </RadioButton>
                             <Label
                                 Content="Settings"
@@ -267,11 +277,14 @@
                             Height="40" 
                             Margin="14 0 0 0">
                             <Ellipse.Fill>
-                                <ImageBrush ImageSource="/Resources/account.jpg" Opacity="0.6" />
+                                <ImageBrush
+                                    ImageSource="/Resources/account.jpg"
+                                    Opacity="0.6" />
                             </Ellipse.Fill>
                         </Ellipse>
 
-                        <StackPanel Margin="8 0 0 0">
+                        <StackPanel 
+                            Margin="8 0 0 0">
                             <Label
                                 Content="{Binding ViewModel.Name}"
                                 Foreground="{DynamicResource TextPrimaryColor}"

@@ -1,16 +1,19 @@
-﻿<Page x:Class="PL.Pages.ReceivedParcelsPage"
+﻿<Page x:Class="PL.Pages.ParcelFlowPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:PL.Pages"
+      xmlns:themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
       mc:Ignorable="d"
-      d:DataContext="{d:DesignInstance Type=local:ReceivedParcelsPage}"
+      d:DataContext="{d:DesignInstance Type=local:ParcelFlowPage}"
       MinHeight="720" 
       MinWidth="1340"
+      Title="ParcelFlowPage"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}">
 
+     
     <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth0">
         <Grid>
             <Grid.RowDefinitions>
@@ -32,100 +35,69 @@
                 Grid.Row="1"
                 Grid.Column="1">
                 <TextBlock
-                    Text="Receiving Orders"
+                    Text="{Binding Header}"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     FontSize="26"
                     FontWeight="Bold"
                     FontFamily="Helvetica"
                     Opacity="0.9" 
+                    TextWrapping="Wrap"
                     Foreground="#FF222525" />
 
                 <TextBlock
+                    Text="{Binding Intro}"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     FontWeight="Normal"
                     FontSize="16"
                     FontFamily="Netflix Sans Light"
                     Foreground="#FF6D7484" 
+                    TextWrapping="Wrap"
                     Opacity="0.8" 
                     Margin="0,40,0,0">
-                    <Run
-                        Text="In the order details section, you can review and manage all orders that are sent to you with their information. You can view their details, such as their IDs, ordered product, price and status." />
-                    <LineBreak />
-                    <Run
-                        Text="Access to this area is limited. Only company management can apply changes. The changes you make will be approved after they are checked." />
                 </TextBlock>
             </StackPanel>
 
             <DockPanel
                 Grid.Column="1"
                 Grid.Row="2">
-                <Button
+
+                <RadioButton
                     x:Name="AllOrdersBtn"
-                    Style="{StaticResource ParcelsPanelButton}"
-                    Click="AllOrdersBtn_Click">
-                    <Button.Content>
-                        <StackPanel>
-                            <TextBlock
-                                Style="{StaticResource PanelText}"
-                                Text="All Orders"/>
-                            <Separator
-                                Foreground="#FFA3ACBD"/>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
+                    Style="{StaticResource FilterPanel}"
+                    Click="AllOrders_Click"
+                    IsChecked="True"
+                    Content="All Orders">
+                </RadioButton>
 
                 <Separator Visibility="Hidden" Width="8"/>
 
-                <Button
-                    x:Name="Button2"
-                    Style="{StaticResource ParcelsPanelButton}"
-                    Click="Panel2_Click">
-                    <Button.Content>
-                        <StackPanel>
-                            <TextBlock
-                                Style="{StaticResource PanelText}"
-                                Text="Completed"/>
-                            <Separator
-                                Foreground="#FFA3ACBD"/>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
+                <RadioButton
+                    x:Name="CompletedBtn"
+                    Style="{StaticResource FilterPanel}"
+                    Click="Completed_Click"
+                    Content="Completed">
+                </RadioButton>
 
                 <Separator Visibility="Hidden" Width="8"/>
 
-                <Button
-                    x:Name="Button3"
-                    Style="{StaticResource ParcelsPanelButton}"
-                    Click="Panel3_Click">
-                    <Button.Content>
-                        <StackPanel>
-                            <TextBlock
-                                Style="{StaticResource PanelText}"
-                                Text="Ongoing"/>
-                            <Separator
-                                Foreground="#FFA3ACBD"/>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
+                <RadioButton
+                    x:Name="OngoingBtn"
+                    Style="{StaticResource FilterPanel}"
+                    Click="Ongoing_Click"
+                    Content="Ongoing">
+                </RadioButton>
 
                 <Separator Visibility="Hidden" Width="8"/>
 
-                <Button
-                    x:Name="Button4"
-                    Style="{StaticResource ParcelsPanelButton}"
-                    Click="Panel4_Click">
-                    <Button.Content>
-                        <StackPanel>
-                            <TextBlock
-                                Style="{StaticResource PanelText}"
-                                Text="Pending"/>
-                            <Separator
-                                Foreground="#FFA3ACBD"/>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
+                <RadioButton
+                    x:Name="PendingBtn"
+                    Style="{StaticResource FilterPanel}"
+                    Click="Pending_Click"
+                    Content="Pending">
+                </RadioButton>
+
             </DockPanel>
 
             <Separator 
@@ -141,7 +113,7 @@
                 Grid.Column="1"
                 Grid.Row="5"
                 d:ItemsSource="{d:SampleData ItemCount=7}"
-                ItemsSource="{Binding ParcelViewModels}">
+                ItemsSource="{Binding parcels.Filtered}">
                 <ListBox.Template>
                     <ControlTemplate>
                         <DockPanel LastChildFill="True">
@@ -209,13 +181,13 @@
                         </DockPanel>
                     </ControlTemplate>
                 </ListBox.Template>
-
+            
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="FontSize" Value="16"/>
                         <Setter Property="Height" Value="50" />
                         <Setter Property="FontFamily" Value="Netflix Sans Light" />
-                        <Style.Triggers>
+                         <Style.Triggers>
                             <Trigger Property="IsSelected" Value="True" >
                                 <Setter Property="FontFamily" Value="Netflix Sans Medium" />
                                 <Setter Property="FontWeight" Value="SemiBold"/>

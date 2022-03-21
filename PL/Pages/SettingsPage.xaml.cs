@@ -1,11 +1,12 @@
-﻿using System.IO;
+﻿using BL.BO;
 using BLAPI;
 using DalFacade.DO;
+using Microsoft.Win32;
 using PL.ViewModels;
+using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
-using BL.BO;
-using Microsoft.Win32;
 
 namespace PL.Pages
 {
@@ -13,21 +14,21 @@ namespace PL.Pages
     {
         private readonly BlApi _bl;
         private Customer _customer;
-        private UserViewModel ViewModel { get; }
+        private UserViewModel UserViewModel { get; }
 
         public SettingsPage(BlApi ibl, User user)
         {
             _bl = ibl;
             _customer = _bl.SearchForCustomer(c => c.id == user.customerId);
-            ViewModel = new UserViewModel(user, _customer.phone, _customer.name);
+            UserViewModel = new UserViewModel(user, _customer.phone, _customer.name);
             InitializeComponent();
-            DataContext = ViewModel;
+            DataContext = UserViewModel;
         }
 
         private void ApplyBtn_Click(object sender, RoutedEventArgs e)
         {
-            ErrorBlock.Text = "";
-            ErrorBlock.Foreground = Brushes.Tomato;
+            InfoErrorBlock.Text = "";
+            InfoErrorBlock.Foreground = Brushes.Tomato;
             var name = NameBox.Text;
             var username = UsernameBox.Text;
             var password = PasswordBox.Password;
@@ -37,11 +38,11 @@ namespace PL.Pages
 
             if (password != confirmPass)
             {
-                ErrorBlock.Text = "Passwords do not match";
+                InfoErrorBlock.Text = "Passwords do not match";
                 return;
             }
 
-            var user = ViewModel.User;
+            var user = UserViewModel.User;
 
             if (password.Length > 0)
             {
@@ -50,29 +51,28 @@ namespace PL.Pages
 
             if (email != confirmEmail)
             {
-                ErrorBlock.Text = "Emails do not match";
+                InfoErrorBlock.Text = "Emails do not match";
                 return;
             }
 
             if (!UserVerification.CheckEmail(email))
             {
-                ErrorBlock.Text = "Email not valid";
+                InfoErrorBlock.Text = "Email not valid";
                 return;
             }
-
-           
 
             // update each field
             user.username = username;
             user.email = email;
-            ViewModel.Name = name;
+            _customer.name = name;
 
             _bl.UpdateCustomer(_customer);
             _bl.UpdateUser(user);
-            ViewModel.User = user;
+            UserViewModel.User = user;
+            UserViewModel.Name = name;
 
-            ErrorBlock.Foreground = Brushes.Green;
-            ErrorBlock.Text = "Successfully updated";
+            InfoErrorBlock.Foreground = Brushes.Green;
+            InfoErrorBlock.Text = "Successfully updated";
         }
 
 
@@ -84,31 +84,59 @@ namespace PL.Pages
                 Filter = "Image Files|*.jpg;*.jpeg;*.bmp;*.tif;*.png" // Optional
             };
 
-            //To read the content : You will get the filename from the OpenFileDialog and use that to do what IO operation on it.
+            //To read the content : Get the filename from the OpenFileDialog.
 
-            if ((bool) fileDialog.ShowDialog())
+            if ((bool)fileDialog.ShowDialog())
             {
                 var filePath = fileDialog.FileName;
 
-                if (new FileInfo(filePath).Length > 655_360) // > 5 Mb
+                if (new FileInfo(filePath).Length > 52_428_800) // > 50 Mb
                 {
-                    ErrorBlock.Text = "File too large";
+                    InfoErrorBlock.Text = "File too large";
                     return;
                 }
-                var user = ViewModel.User;
+                var user = UserViewModel.User;
                 user.profilePic = filePath;
-                ViewModel.User = user;
+                UserViewModel.User = user;
                 _bl.UpdateUser(user);
-                ErrorBlock.Text = "";
+                InfoErrorBlock.Text = "";
             }
         }
 
-        private void UserInfoBtn_Click(object sender, RoutedEventArgs e)
+        private void UpdateBillingBtn_Click(object sender, RoutedEventArgs e)
         {
-        }
+            BillingErrorBox.Text = "";
+            BillingErrorBox.Foreground = Brushes.Tomato;
 
-        private void BillingInfoBtn_Click(object sender, RoutedEventArgs e)
-        {
+            var enumerable = PhoneBox.Text.Where(c => c != ' ').ToArray();
+
+            var phone = new string(enumerable);
+
+            var address = AddressBox.Text;
+            var user = UserViewModel.User;
+
+            var success = long.TryParse(phone, out var phoneNumber);
+
+            // update each field
+            if (success)
+            {
+                _customer.phone = phoneNumber.ToString();
+            }
+            else
+            {
+                BillingErrorBox.Text = "Phone is not valid";
+                return;
+            }
+
+            user.address = address;
+
+            _bl.UpdateCustomer(_customer);
+            _bl.UpdateUser(user);
+            UserViewModel.User = user;
+            UserViewModel.Phone = phoneNumber.ToString();
+
+            BillingErrorBox.Foreground = Brushes.Green;
+            BillingErrorBox.Text = "Successfully updated";
         }
     }
 }

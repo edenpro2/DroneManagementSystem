@@ -3,7 +3,6 @@ using BL;
 using BLAPI;
 using DalFacade.DO;
 using PL.Controls;
-using PL.Pages;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -17,16 +16,20 @@ namespace PL.Windows
 {
     public partial class MainWindow
     {
+        public static MainWindow Instance { get; }
+
         private static readonly BlApi Bl = BlFactory.GetBl();
         private Image background { get; } = new();
         private readonly BackgroundWorker _backgroundWorker;
         private User _user;
 
-        public MainWindow()
+        static MainWindow() => Instance = new MainWindow();
+
+        private MainWindow()
         {
             InitializeComponent();
             DataContext = this;
-            CustomButtons = new WindowControls(this);
+            CustomButtons = new WindowControls(Instance);
             background.Source = new BitmapImage(new Uri("../Resources/Wallpaper.jpg", UriKind.Relative));
             _backgroundWorker = new BackgroundWorker();
         }
@@ -95,7 +98,7 @@ namespace PL.Windows
         {
             var empLoginWindow = new EmployeeLoginWindow(Bl);
 
-            if ((bool) empLoginWindow.ShowDialog())
+            if ((bool)empLoginWindow.ShowDialog())
             {
                 new EmployeeUi(Bl, empLoginWindow.GetValue()).Show();
                 Close();

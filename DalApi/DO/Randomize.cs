@@ -40,7 +40,10 @@ namespace DalFacade.DO
         /// </summary>
         /// <param name="rand"> random seed </param>
         /// <returns> model name </returns>
-        public static string Model(Random rand) => DroneModels[rand.Next(DroneModels.Length)];
+        public static string Model(Random rand)
+        {
+            return DroneModels[rand.Next(DroneModels.Length)];
+        }
 
         /// <summary>
         /// Chooses a random date between 2020 and 2021
@@ -74,7 +77,10 @@ namespace DalFacade.DO
         /// </summary>
         /// <param name="rand">random seed</param>
         /// <returns>random phone number</returns>
-        public static string Phone(Random rand) => "0" + rand.Next(7) + rand.Next(10000000, 99999999);
+        public static string Phone(Random rand)
+        {
+            return "0" + rand.Next(7) + rand.Next(10000000, 99999999);
+        }
 
         /// <summary>
         /// Returns a random station
@@ -82,7 +88,10 @@ namespace DalFacade.DO
         /// <param name="stationList"></param>
         /// <param name="rand"></param>
         /// <returns> Random station </returns>
-        public static Station Station(List<Station> stationList, Random rand) => stationList[rand.Next(stationList.Count)];
+        public static Station Station(List<Station> stationList, Random rand)
+        {
+            return stationList[rand.Next(stationList.Count)];
+        }
 
         /// <summary>
         /// Gets a random location in a given radius from a coordinate

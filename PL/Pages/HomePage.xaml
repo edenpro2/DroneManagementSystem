@@ -84,7 +84,7 @@
                 x:Name="Button"
                 Style="{StaticResource MenuButton}"
                 Resources="{StaticResource RoundedCorners}"
-                Click="NewParcelBtn_Click"
+                MouseLeftButtonDown="NewParcelBtn_Click"
                 Grid.Row="1"
                 Grid.Column="1">
                 <DockPanel>
@@ -107,7 +107,7 @@
             <Button
                 Style="{StaticResource MenuButton}"
                 Resources="{StaticResource RoundedCorners}"
-                Click="SentBtn_Click"
+                MouseLeftButtonDown="SentBtn_Click"
                 Grid.Row="3"
                 Grid.Column="1">
                 <DockPanel>
@@ -132,7 +132,7 @@
                 Resources="{StaticResource RoundedCorners}"
                 Grid.Row="1"
                 Grid.Column="3"
-                Click="SettingsBtn_Click">
+                MouseLeftButtonDown="SettingsBtn_Click">
                 <DockPanel>
                     <Grid Style="{StaticResource InnerGrid}">
                         <Ellipse/>
@@ -153,7 +153,7 @@
             <Button
                 Style="{StaticResource MenuButton}"
                 Resources="{StaticResource RoundedCorners}"
-                Click="ScheduledBtn_Click" 
+                MouseLeftButtonDown="ScheduledBtn_Click" 
                 Grid.Row="3"
                 Grid.Column="3">
                 <DockPanel>

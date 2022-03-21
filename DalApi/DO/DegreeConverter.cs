@@ -32,9 +32,7 @@ namespace DalFacade.DO
             var longDir = longitude < 0 ? 'W' : 'E';
             var latDir = latitude < 0 ? 'S' : 'N';
 
-            return
-                longDegree + "° " + longMinute + "' " + $"{longSecond:0.00}" + "'' " + longDir + '\n' +
-                latDegree + "° " + latMinute + "' " + $"{latSecond:0.00}" + "'' " + latDir;
+            return $"{longDegree}°{longMinute}'{longSecond:0.00}”{longDir} {latDegree}°{latMinute}'{latSecond:0.00}”{latDir}";
 
         }
     }

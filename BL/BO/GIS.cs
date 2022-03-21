@@ -59,14 +59,20 @@ namespace BL.BO
         /// </summary>
         /// <param name="degrees"></param>
         /// <returns>Radians</returns>
-        private static double ToRadians(double degrees) => degrees * PI / 180;
+        private static double ToRadians(double degrees)
+        {
+            return degrees * PI / 180;
+        }
 
         /// <summary>
         /// Convert radians to degrees
         /// </summary>
         /// <param name="radians"></param>
         /// <returns>Degrees</returns>
-        private static double ToDegrees(double radians) => radians * 180 / PI;
+        private static double ToDegrees(double radians)
+        {
+            return radians * 180 / PI;
+        }
 
         /// <summary>
         /// Calculates the bearing (direction) of the drone

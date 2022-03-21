@@ -36,7 +36,10 @@ namespace DalObject
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void AddUser(in User user) => Users.Add(user);
+        public void AddUser(in User user)
+        {
+            Users.Add(user);
+        }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void CreateCustomer(string name, string phone)

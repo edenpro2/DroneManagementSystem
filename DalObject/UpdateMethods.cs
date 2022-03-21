@@ -47,18 +47,33 @@ namespace DalObject
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void UpdateDroneList(List<Drone> drones) => DataSource.Drones = drones;
+        public void UpdateDroneList(List<Drone> drones)
+        {
+            DataSource.Drones = drones;
+        }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void UpdateStationList(List<Station> stations) => DataSource.Stations = stations;
+        public void UpdateStationList(List<Station> stations)
+        {
+            DataSource.Stations = stations;
+        }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void UpdateCustomerList(List<Customer> customers) => DataSource.Customers = customers;
+        public void UpdateCustomerList(List<Customer> customers)
+        {
+            DataSource.Customers = customers;
+        }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void UpdateParcelList(List<Parcel> parcels) => DataSource.Parcels = parcels;
+        public void UpdateParcelList(List<Parcel> parcels)
+        {
+            DataSource.Parcels = parcels;
+        }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void UpdateUserList(List<User> users) => DataSource.Users = users;
+        public void UpdateUserList(List<User> users)
+        {
+            DataSource.Users = users;
+        }
     }
 }
