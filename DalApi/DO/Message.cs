@@ -7,28 +7,35 @@ namespace DalFacade.DO
     [XmlRoot]
     public struct Message
     {
-        [XmlElement]
-        public DateTime sentTime { get; }
+        [XmlElement(DataType = "date")]
+        public DateTime sentTime { get; set; }
 
         [XmlAttribute]
-        private string text { get; }
+        public string text { get; set; }
 
         [XmlAttribute]
-        private int senderId { get; }
+        public int senderId { get; set; }
 
         [XmlAttribute]
-        private int recipientId { get; }
+        public int recipientId { get; set; }
 
+        [XmlAttribute]
+        public string senderName { get; set; }
+
+        [XmlAttribute]
+        public string recipientName { get; set; }
 
         private string GetMessage() => text;
 
 
-        public Message(string msg, int sender, int recipient)
+        public Message(string msg, int sender, int recipient, string sName, string rName)
         {
             text = msg;
             sentTime = DateTime.Now;
             senderId = sender;
             recipientId = recipient;
+            senderName = sName;
+            recipientName = rName;
         }
 
         public override string ToString() => $"At {sentTime}, {senderId} sent {recipientId}: {GetMessage()}";

@@ -57,9 +57,9 @@ namespace PL.Pages
             parcels.Filtered = parcels.Parcels.Where(p => p.Scheduled == default).ToList();
         }
 
-        private const string SentHeader = "Sent Chats";
+        private const string SentHeader = "Sent ChatViewModels";
 
-        private const string ReceivedHeader = "Received Chats";
+        private const string ReceivedHeader = "Received ChatViewModels";
 
         private const string SentIntro =
             "In the order details section, you can review and manage all orders you've sent with " +

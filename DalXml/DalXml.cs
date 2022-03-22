@@ -23,7 +23,7 @@ namespace DALXML
         private const string CustomersFilePath = Dir + "Customers.xml";
         private const string ParcelsFilePath = Dir + "Parcels.xml";
         private const string UsersFilePath = Dir + "Users.xml";
-        private const string ChatsFilePath = Dir + "Chats.xml";
+        private const string ChatsFilePath = Dir + "Chats.xml"; 
 
         internal static class Config
         {

@@ -118,7 +118,7 @@
                     <StackPanel
                         VerticalAlignment="Center">
                         <TextBlock
-                            Text="Sent Chats"
+                            Text="Sent ChatViewModels"
                             Style="{StaticResource Title}" />
                         <TextBlock
                             Text="Track packages you sent"

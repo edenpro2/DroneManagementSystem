@@ -9,18 +9,18 @@ namespace DalFacade.DO
     [XmlRoot]
     public class Chat
     {
-        [XmlAttribute]
-        public DateTime createdOn { get; }
+        [XmlAttribute(DataType = "date")]
+        public DateTime createdOn { get; set; }
 
         [XmlElement]
-        public User user1 { get; }
+        public User user1 { get; set; }
 
         [XmlElement]
-        public User user2 { get; }
+        public User user2 { get; set; }
 
         [XmlArray]
         [XmlArrayItem("Message")]
-        public List<Message> _messages { get; set; }
+        public List<Message> messages { get; set; }
 
         public Message LastMessage => GetLastMessage();
 
@@ -29,7 +29,7 @@ namespace DalFacade.DO
             createdOn = default;
             user1 = default;
             user2 = default;
-            _messages = new List<Message>();
+            messages = new List<Message>();
         }
 
         public Chat(User u1, User u2)
@@ -37,12 +37,12 @@ namespace DalFacade.DO
             createdOn = DateTime.Now;
             user1 = u1;
             user2 = u2;
-            _messages = new List<Message>();
+            messages = new List<Message>();
         }
 
-        public void SendMessage(Message msg) => _messages.Add(msg);
+        public void SendMessage(Message msg) => messages.Add(msg);
 
-        public Message GetLastMessage() => _messages.Last();
+        public Message GetLastMessage() => messages.Last();
 
         public override string ToString() => $"Created on {createdOn}, between {user1.username} and {user2.username}";
     }

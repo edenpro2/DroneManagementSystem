@@ -184,13 +184,20 @@ namespace DalObject
                 {
                     var startPos = rand.Next(lines.Count() - 16);
                     Message msg;
+
+                    var user1 = users[i];
+                    var user2 = users[i + 1];
+
+                    var name1 = Customers.First(c => c.id == user1.customerId).name;
+                    var name2 = Customers.First(c => c.id == user2.customerId).name;
+
                     if (j % 2 == 0)
                     {
-                        msg = new Message(lines[startPos + j], users[i].customerId, users[i + 1].customerId);
+                        msg = new Message(lines[startPos + j], user1.customerId, user2.customerId, name1, name2);
                     }
                     else
                     {
-                        msg = new Message(lines[startPos + j], users[i + 1].customerId, users[i].customerId);
+                        msg = new Message(lines[startPos + j], user2.customerId, user1.customerId, name2, name1);
                     }
 
                     chat.SendMessage(msg);

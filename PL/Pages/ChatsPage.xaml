@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:PL.Pages"
+      xmlns:controls="clr-namespace:PL.Controls"
       mc:Ignorable="d"
       MinHeight="720" 
       MinWidth="1340"
@@ -19,7 +20,7 @@
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="3*" x:Name="BigCol"/>
             </Grid.ColumnDefinitions>
 
             <Grid 
@@ -36,7 +37,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="11*"/>
                 </Grid.RowDefinitions>
 
 
@@ -44,42 +45,19 @@
                     Grid.Row="1"
                     Grid.Column="1">
 
-                   <Grid>
-                       <!--<TextBox 
-                           FontSize="20"
-                           materialDesign:HintAssist.Hint="Search"
-                           Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
-                       <ListBox 
-                           ItemsSource="{Binding MyFilteredItems}"/>-->
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <TextBox
+                            Grid.Row="1"
+                            Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
+                        <ListBox 
+                            Grid.Row="1"  
+                            ItemsSource="{Binding MyFilteredItems}"/>
+                    </Grid>
 
-                       <StackPanel>
-                           <TextBox x:Name="tb" />
-                           <Popup 
-                               Width="{Binding RelativeSource={RelativeSource Self},Path=PlacementTarget.ActualWidth}"
-                               Placement="Bottom"
-                               PlacementTarget="{Binding ElementName=tb}">
-                               <Popup.Style>
-                                   <Style TargetType="{x:Type Popup}">
-                                       <Setter Property="IsOpen"
-                                               Value="False" />
-                                       <Style.Triggers>
-                                           <DataTrigger Binding="{Binding ElementName=tb,
-                                          Path=IsFocused}"
-                                                        Value="True">
-                                               <Setter Property="IsOpen"
-                                                       Value="True" />
-                                           </DataTrigger>
-                                       </Style.Triggers>
-                                   </Style>
-                               </Popup.Style>
-                               <ListBox>
-                                   <ListBoxItem Content="A" />
-                                   <ListBoxItem Content="B" />
-                               </ListBox>
-                           </Popup>
-                       </StackPanel>
-
-                   </Grid>
 
                 </DockPanel>
 
@@ -87,7 +65,7 @@
                     Grid.Row="2"
                     Grid.Column="1"
                     d:ItemsSource="{d:SampleData ItemCount=7}"
-                    ItemsSource="{Binding chats.Chats}">
+                    ItemsSource="{Binding personalChats.ChatViewModels}">
                     <ListBox.Template>
                         <ControlTemplate>
                             <ScrollViewer
@@ -131,7 +109,7 @@
                                        <ImageBrush
                                            Stretch="UniformToFill"
                                            ImageSource="{Binding Receiver.profilePic}"
-                                           d:ImageSource="E:\Pictures\Backup For All Photos\Target 73\001_24A.JPG"/>
+                                           d:ImageSource="/Icons/uicustomers.png"/>
                                    </Ellipse.Fill>
                                </Ellipse>
                                <StackPanel 
@@ -155,14 +133,14 @@
                                            HorizontalAlignment="Right"
                                            VerticalAlignment="Center"
                                            d:Text="10:30 AM"
-                                           Text="{Binding Chat.LastMessage.sentTime, StringFormat={}{0:hh:mm TT}}"/>
+                                           Text="{Binding Chat.LastMessage.sentTime, StringFormat={}{0:hh:mm tt}}"/>
                                    </DockPanel>
                                    <TextBlock
                                        Margin="0 5 0 0"
                                        d:Text="Hello there. General kenobi"
                                        FontSize="12"
                                        FontFamily="Helvetica" 
-                                       Text="{Binding Chat.LastMessage}" 
+                                       Text="{Binding Chat.LastMessage.text}" 
                                        Foreground="#DD3E3E3E"/>
                                </StackPanel>
                                
@@ -171,9 +149,91 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
 
+              
             </Grid>
-    
-            
+
+
+
+            <ListBox
+                Grid.Row="0"
+                Grid.Column="1"
+                HorizontalContentAlignment="Stretch"
+                HorizontalAlignment="Stretch"
+                d:ItemsSource="{d:SampleData ItemCount=7}"
+                ItemsSource="{Binding personalChats.ChatViewModels[0].Chat.messages}">
+                <ListBox.Template>
+                    <ControlTemplate>
+                        <ScrollViewer
+                            VerticalScrollBarVisibility="Auto"
+                            HorizontalScrollBarVisibility="Hidden">
+                            <ItemsPresenter/>
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </ListBox.Template>
+                <ListBox.Resources>
+                    <controls:ChatAlignmentConverter x:Key="ChatAlignmentConverter"/>
+                    <controls:BubbleColorConverter x:Key="BubbleColorConverter"/>
+                </ListBox.Resources>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            Margin="0 20 0 0"
+                            d:Background="LightBlue"
+                            VerticalAlignment="Center"
+                            CornerRadius="5">
+                            <DockPanel>
+                                <TextBlock 
+                                    Text="{Binding senderName}" 
+                                    d:Text="Roy Amiga"
+                                    DockPanel.Dock="Top"
+                                    FontSize="14"
+                                    FontFamily="Helvetica"
+                                    Margin="10 8 0 0"/>
+                                <TextBlock
+                                    TextWrapping="Wrap"
+                                    Margin="10"
+                                    d:Text="Hello There. General Kenobi"
+                                    FontFamily="Helvetica"
+                                    FontSize="24"
+                                    Text="{Binding text}">
+                                </TextBlock>
+                                <TextBlock
+                                    TextWrapping="Wrap"
+                                    Margin="0 0 0 5"
+                                    d:Text="10:30 PM"
+                                    FontFamily="Helvetica"
+                                    FontSize="14"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Bottom"
+                                    Text="{Binding sentTime, StringFormat={}{hh:mm tt}}" 
+                                    Foreground="#666666">
+                                </TextBlock>
+                            </DockPanel>
+                            <Border.HorizontalAlignment>
+                                <MultiBinding Converter="{StaticResource ChatAlignmentConverter}">
+                                    <Binding 
+                                        Path="senderId"/>
+                                    <Binding 
+                                        Path="user.customerId" 
+                                        RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Page}"/>
+                                </MultiBinding>
+                            </Border.HorizontalAlignment>
+                            <Border.Background>
+                                <MultiBinding Converter="{StaticResource BubbleColorConverter}">
+                                    <Binding 
+                                        Path="senderId"/>
+                                    <Binding 
+                                        Path="user.customerId" 
+                                        RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Page}"/>
+                                </MultiBinding>
+                            </Border.Background>
+                        </Border>
+
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+            </ListBox>
+
 
 
         </Grid>

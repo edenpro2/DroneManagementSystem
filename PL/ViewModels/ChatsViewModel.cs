@@ -8,24 +8,24 @@ namespace PL.ViewModels
 {
     public class ChatsViewModel : INotifyPropertyChanged
     {
-        private List<ChatViewModel> _chats;
+        private List<ChatViewModel> _chatViewModels;
 
-        public List<ChatViewModel> Chats
+        public List<ChatViewModel> ChatViewModels
         {
-            get => _chats;
+            get => _chatViewModels;
             set
             {
-                _chats = value;
-                OnPropertyChanged("_chats");
+                _chatViewModels = value;
+                OnPropertyChanged("_chatViewModels");
             }
         }
 
-        // Will take in all chats and keep only the current user's chats
+        // Will take in all personalChats and keep only the current user's personalChats
         public ChatsViewModel(IEnumerable<Customer> customerList, ref IEnumerable<Chat> chatList, User user)
         {
-            var chats = chatList.Where(chat => chat.user1.Equals(user) || chat.user2.Equals(user)).ToList();
+            var chats = chatList.Where(chat => chat.user1.customerId == user.customerId || chat.user2.customerId == user.customerId).ToList();
             var customers = customerList.ToList();
-            _chats = new List<ChatViewModel>();
+            _chatViewModels = new List<ChatViewModel>();
 
             foreach (var chat in chats)
             {
@@ -35,12 +35,12 @@ namespace PL.ViewModels
                 if (chat.user2.Equals(user))
                 {
                     name = customers.First(u => u.id == chat.user1.customerId).name;
-                    _chats.Add(new ChatViewModel(chat, chat.user1, name));
+                    _chatViewModels.Add(new ChatViewModel(chat, chat.user1, name));
                 }
                 else
                 {
                     name = customers.First(u => u.id == chat.user2.customerId).name;
-                    _chats.Add(new ChatViewModel(chat, chat.user2, name));
+                    _chatViewModels.Add(new ChatViewModel(chat, chat.user2, name));
                 }
             }
 

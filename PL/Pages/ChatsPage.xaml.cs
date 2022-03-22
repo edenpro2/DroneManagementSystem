@@ -9,28 +9,14 @@ namespace PL.Pages
 {
     public partial class ChatsPage : INotifyPropertyChanged
     {
-        public ChatsViewModel chats { get; set; }
+        public ChatsViewModel personalChats { get; set; }
         public User user { get; set; }
 
         public ChatsPage(List<Customer> customers, IEnumerable<Chat> allChats, User user)
         {
-            chats = new ChatsViewModel(customers, ref allChats, user);
+            personalChats = new ChatsViewModel(customers, ref allChats, user);
             this.user = user;
-            UserList = allChats.Select(chat =>
-            {
-                if (chat.user1.Equals(user))
-                {
-                    return customers.First(c => c.id == chat.user2.customerId).name;
-                }
-
-                if (chat.user2.Equals(user))
-                {
-                    return customers.First(c => c.id == chat.user1.customerId).name;
-                }
-
-                return "";
-
-            }).ToList();
+            UserList = customers.Select(c => c.name).ToList();
 
             InitializeComponent();
             DataContext = this;
@@ -44,7 +30,7 @@ namespace PL.Pages
             set
             {
                 _searchText = value;
-                OnPropertyChanged("_searchText");
+                OnPropertyChanged("SearchText");
                 OnPropertyChanged("MyFilteredItems");
             }
         }

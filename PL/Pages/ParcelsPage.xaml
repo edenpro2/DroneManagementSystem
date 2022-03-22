@@ -35,11 +35,11 @@
                 Grid.Row="0"
                 Margin="5 35 0 0">
                 <TextBlock
-                    Text="Chats list"
+                    Text="ChatViewModels list"
                     FontFamily="Netflix Sans"
                     FontSize="24" />
                 <TextBlock
-                    Text="View parcels in the system. Chats may be in different stages of delivery and each entry contains all necessary data."
+                    Text="View parcels in the system. ChatViewModels may be in different stages of delivery and each entry contains all necessary data."
                     FontFamily="Netflix Sans Light"
                     FontSize="14"
                     Margin="0 5 0 0" />
