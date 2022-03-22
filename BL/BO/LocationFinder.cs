@@ -45,7 +45,9 @@ namespace BL.BO
         private static Station GetClosestStation(IEnumerable<Station> stations, Location location)
         {
             if (stations == null)
+            {
                 throw new EmptyParameterException();
+            }
 
             var minDistance = 0.0;
             var firstIteration = true;
@@ -81,7 +83,9 @@ namespace BL.BO
             var stations = bl.GetStations();
 
             if (stations == null)
+            {
                 throw new EmptyParameterException();
+            }
 
             var minDistance = 0.0;
             var firstIteration = true;
@@ -94,7 +98,9 @@ namespace BL.BO
                 var current = Distance(stationLoc, objectLoc);
 
                 if ((current >= minDistance || station.openSlots - 1 < 0) && !firstIteration)
+                {
                     continue;
+                }
 
                 minDistance = current;
                 closest = new Station(station);

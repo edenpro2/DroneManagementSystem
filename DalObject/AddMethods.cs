@@ -12,7 +12,9 @@ namespace DalObject
         public void AddStation(in Station station)
         {
             if (Stations.Count + 1 > (short)Maximum.Stations)
+            {
                 return;
+            }
 
             Stations.Add(station);
         }
@@ -21,7 +23,9 @@ namespace DalObject
         public void AddCustomer(in Customer customer)
         {
             if (Customers.Count + 1 > (short)Maximum.Customers)
+            {
                 return;
+            }
 
             Customers.Add(customer);
         }
@@ -30,7 +34,9 @@ namespace DalObject
         public void AddParcel(in Parcel parcel)
         {
             if (Parcels.Count + 1 > (short)Maximum.Packages)
+            {
                 return;
+            }
 
             Parcels.Add(parcel);
         }

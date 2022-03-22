@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace PL.Controls
 {
-    public partial class IconRadioButton 
+    public partial class IconRadioButton
     {
         public string IconSource { get; set; } = "...\\Icons\\settings.png";
 
@@ -17,7 +16,7 @@ namespace PL.Controls
             get => (bool)GetValue(IsCheckedProperty);
             set
             {
-                SetValue(IsCheckedProperty, value); 
+                SetValue(IsCheckedProperty, value);
                 OnPropertyChanged("IsCheckedProperty");
             }
         }
@@ -29,11 +28,10 @@ namespace PL.Controls
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        
+
     }
 
-     
+
 }
 
 
-    

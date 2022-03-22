@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using PL.Windows;
+using System.Windows;
 
 namespace PL
 {
@@ -8,7 +9,8 @@ namespace PL
 
         private static void App_Startup(object sender, StartupEventArgs e)
         {
-            PL.Windows.MainWindow.Instance.Show();
+            var window = new MainWindow();
+            window.Show();
         }
     }
 }

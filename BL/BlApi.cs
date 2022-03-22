@@ -40,6 +40,7 @@ namespace BLAPI
         public IEnumerable<Customer> GetCustomers();
         public IEnumerable<Parcel> GetParcels();
         public IEnumerable<User> GetUsers();
+        public IEnumerable<Chat> GetChats();
         #endregion
 
         #region Filtered List Methods
@@ -96,6 +97,5 @@ namespace BLAPI
         #region Simulator Methods
         public Tuple<Drone, string> DroneSimulator(Drone drone);
         #endregion
-
     }
 }

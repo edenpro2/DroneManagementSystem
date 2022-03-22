@@ -16,20 +16,16 @@ namespace PL.Windows
 {
     public partial class MainWindow
     {
-        public static MainWindow Instance { get; }
-
-        private static readonly BlApi Bl = BlFactory.GetBl();
+        private static readonly BlApi bl = BlFactory.GetBl();
         private Image background { get; } = new();
         private readonly BackgroundWorker _backgroundWorker;
-        private User _user;
+        private static User _user = new();
 
-        static MainWindow() => Instance = new MainWindow();
-
-        private MainWindow()
+        public MainWindow()
         {
             InitializeComponent();
             DataContext = this;
-            CustomButtons = new WindowControls(Instance);
+            CustomButtons = new WindowControls(this);
             background.Source = new BitmapImage(new Uri("../Resources/Wallpaper.jpg", UriKind.Relative));
             _backgroundWorker = new BackgroundWorker();
         }
@@ -52,7 +48,7 @@ namespace PL.Windows
         private void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
         {
             _backgroundWorker.ReportProgress(1);
-            Dispatcher.Invoke(() => _user = Bl.GetUsers(u => u.username == UsernameBox.Text).FirstOrDefault());
+            Dispatcher.Invoke(() => _user = bl.GetUsers(u => u.username == UsernameBox.Text).FirstOrDefault());
         }
 
         private void BackgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e) => Gif.Visibility = Visibility.Visible;
@@ -73,7 +69,7 @@ namespace PL.Windows
             }
             else
             {
-                new CustomerUi(Bl, _user).Show();
+                new CustomerUi(bl, _user).Show();
                 Close();
             }
         }
@@ -96,11 +92,11 @@ namespace PL.Windows
 
         private void EmployeeBtn_Click(object sender, RoutedEventArgs e)
         {
-            var empLoginWindow = new EmployeeLoginWindow(Bl);
+            var empLoginWindow = new EmployeeLoginWindow(bl);
 
             if ((bool)empLoginWindow.ShowDialog())
             {
-                new EmployeeUi(Bl, empLoginWindow.GetValue()).Show();
+                new EmployeeUi(bl, empLoginWindow.GetValue()).Show();
                 Close();
             }
         }
@@ -108,7 +104,7 @@ namespace PL.Windows
         private void RegBtn_Click(object sender, RoutedEventArgs e)
         {
             ErrorTextBlock.Text = "";
-            RegistrationWindow regWindow = new(Bl);
+            RegistrationWindow regWindow = new(bl);
             regWindow.ShowDialog();
         }
 

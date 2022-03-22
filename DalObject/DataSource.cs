@@ -1,6 +1,7 @@
 ﻿using DalFacade.DO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 
@@ -34,13 +35,14 @@ namespace DalObject
         private const short MaxParcels = 1000;
         private const short MaxUsers = 100;
         private const short MaxStationName = 100;
-
+        private const short MaxChats = 1000;
         #endregion
 
         internal static List<Drone> Drones = new(MaxDrones);
         internal static List<Station> Stations = new(MaxStations);
         internal static List<Customer> Customers = new(MaxCustomers);
         internal static List<Parcel> Parcels = new(MaxParcels);
+        internal static List<Chat> Chats = new(MaxChats);
         internal static List<User> Users = new(MaxUsers);
 
         public static void Initialize()
@@ -162,8 +164,44 @@ namespace DalObject
                 Parcels.Add(parcel);
             }
 
+
+            const string textFile = @"../../../../RandomText.txt";
+            var text = File.ReadAllText(textFile);
+
+            var lines = text
+                .Split(new[] { "OBI-WAN", "ANAKIN", "COUNT-DOOKU", "PALPATINE", "DROID" },
+                    StringSplitOptions.TrimEntries)
+                .Select(s => s.Replace("\r", " ").Replace("\n", " ")).ToList();
+
+            const int numOfChats = 10;
+            var users = Users.ToList();
+
+            for (var i = 0; i < numOfChats; i += 2)
+            {
+                var chat = new Chat(users[i], users[i + 1]);
+
+                for (var j = 0; j < 15; j++)
+                {
+                    var startPos = rand.Next(lines.Count() - 16);
+                    Message msg;
+                    if (j % 2 == 0)
+                    {
+                        msg = new Message(lines[startPos + j], users[i].customerId, users[i + 1].customerId);
+                    }
+                    else
+                    {
+                        msg = new Message(lines[startPos + j], users[i + 1].customerId, users[i].customerId);
+                    }
+
+                    chat.SendMessage(msg);
+                }
+
+                Chats.Add(chat);
+            }
+
             #endregion
         }
+
 
 
     }

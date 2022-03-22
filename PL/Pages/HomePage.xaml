@@ -118,7 +118,7 @@
                     <StackPanel
                         VerticalAlignment="Center">
                         <TextBlock
-                            Text="Sent Parcels"
+                            Text="Sent Chats"
                             Style="{StaticResource Title}" />
                         <TextBlock
                             Text="Track packages you sent"

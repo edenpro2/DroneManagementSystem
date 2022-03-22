@@ -99,12 +99,16 @@ namespace BL
         public Drone ReceiveDroneForCharging(Drone drone)
         {
             if (drone.status is not Maintenance)
+            {
                 throw new BlDroneNotMaintainedException();
+            }
 
             var closestStation = this.ClosestAvailableStation(drone);
 
             if (closestStation.Equals(default))
+            {
                 throw new BlNoOpenSlotsException();
+            }
 
             var closestLocation = Location(closestStation);
 
@@ -406,7 +410,10 @@ namespace BL
                         change = _droneChargeRate;
 
                         // if overflow detected, change is adjusted
-                        if (drone.battery + change > 100) change = 100 - drone.battery;
+                        if (drone.battery + change > 100)
+                        {
+                            change = 100 - drone.battery;
+                        }
                     }
                     // drone is on it's way to station (hence it's free)
                     else
@@ -418,10 +425,14 @@ namespace BL
                 case Free:
                     // drone is at station (idle state)
                     if (Location(drone).Equals(Location(this.GetClosestStation(drone))))
+                    {
                         change = 0;
+                    }
                     // drone is on it's way to station (and free)
                     else
+                    {
                         change = -ConsumptionWhenFree();
+                    }
 
                     break;
                 default:

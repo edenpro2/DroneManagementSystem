@@ -46,6 +46,13 @@ namespace DALXML
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<Chat> GetChats()
+        {
+            return Load<Chat>(ChatsFilePath);
+        }
+
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> GetStations(Predicate<Station> predicate)
         {
             return GetStations().Where(s => predicate(s));

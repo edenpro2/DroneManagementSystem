@@ -76,6 +76,12 @@ namespace BL
         {
             return DalApi.GetEmployees();
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<Chat> GetChats()
+        {
+            return DalApi.GetChats();
+        }
         #endregion
     }
 }

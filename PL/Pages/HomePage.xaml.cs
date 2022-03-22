@@ -1,5 +1,4 @@
 ﻿using PL.Windows;
-using System.Windows;
 using System.Windows.Input;
 
 namespace PL.Pages
@@ -24,7 +23,7 @@ namespace PL.Pages
             customerUi.TrackSentByBtn_Click(sender, e);
         }
 
-        private void SettingsBtn_Click(object sender, MouseButtonEventArgs e)    
+        private void SettingsBtn_Click(object sender, MouseButtonEventArgs e)
         {
             customerUi.SettingsBtn_Click(sender, e);
         }

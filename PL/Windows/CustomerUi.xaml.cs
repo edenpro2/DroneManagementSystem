@@ -3,6 +3,7 @@ using DalFacade.DO;
 using PL.Controls;
 using PL.Pages;
 using PL.ViewModels;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -16,7 +17,7 @@ namespace PL.Windows
         public static double Selected => 1.0;
         public static double Unselected => 0.5;
         public UserViewModel ViewModel { get; }
-        
+
         public CustomerUi(BlApi ibl, User user)
         {
             _bl = ibl;
@@ -67,7 +68,8 @@ namespace PL.Windows
 
         private void ChatBtn_Click(object sender, RoutedEventArgs e)
         {
-            //TODO: Implement chat
+            CurrentPage = new ChatsPage(_bl.GetCustomers(c => c.active).ToList(), _bl.GetChats(), ViewModel.User);
+            PagesNavigation.Navigate(CurrentPage);
         }
     }
 }

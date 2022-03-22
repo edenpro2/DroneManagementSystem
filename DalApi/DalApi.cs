@@ -35,6 +35,8 @@ namespace DalFacade
         /// <returns>IEnumerable&lt;User&gt;</returns>
         public IEnumerable<User> GetEmployees();
 
+        public IEnumerable<Chat> GetChats();
+
         /// <summary>Returns a list of parcels based on predicate</summary>
         /// <param name="predicate" />
         /// <returns>IEnumerable&lt;Parcel&gt;</returns>
@@ -123,5 +125,7 @@ namespace DalFacade
         public void UpdateParcelList(List<Parcel> parcels);
         public void UpdateUserList(List<User> users);
         #endregion
+
+
     }
 }

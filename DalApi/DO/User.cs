@@ -1,26 +1,32 @@
-﻿using System.Xml.Serialization;
+﻿using System;
+using System.Xml.Serialization;
 
 namespace DalFacade.DO
 {
+    [Serializable]
     [XmlRoot]
-    public struct User
+    public class User
     {
-        [XmlAttribute]
         public int customerId { get; set; }
-        [XmlAttribute]
         public string username { get; set; }
-        [XmlAttribute]
         public string password { get; set; }
-        [XmlAttribute]
         public string email { get; set; }
-        [XmlAttribute]
         public string address { get; set; }
-        [XmlAttribute]
         public string profilePic { get; set; }
-        [XmlAttribute]
         public bool active { get; set; }
-        [XmlAttribute]
         public bool isEmployee { get; set; }
+
+        public User()
+        {
+            customerId = -1;
+            username = "";
+            password = "";
+            email = "";
+            address = "";
+            profilePic = "";
+            active = false;
+            isEmployee = false;
+        }
 
         public User(int customerId = -1, string user = "", string pass = "", string mail = "",
             string personalAddress = "", bool employed = false)

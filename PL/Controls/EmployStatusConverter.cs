@@ -14,7 +14,7 @@ namespace PL.Controls
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {   
+        {
             var strValue = value as string;
 
             return strValue switch

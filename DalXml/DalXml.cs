@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
+using System.Xml;
 using System.Xml.Serialization;
 
 
@@ -21,6 +23,7 @@ namespace DALXML
         private const string CustomersFilePath = Dir + "Customers.xml";
         private const string ParcelsFilePath = Dir + "Parcels.xml";
         private const string UsersFilePath = Dir + "Users.xml";
+        private const string ChatsFilePath = Dir + "Chats.xml";
 
         internal static class Config
         {
@@ -72,6 +75,12 @@ namespace DALXML
                 CreateXmlDoc(UsersFilePath, DalObject.DalObject.Instance.GetUsers().ToList());
             }
 
+            if (!File.Exists(ChatsFilePath))
+            {
+                CreateXmlDoc(ChatsFilePath, DalObject.DalObject.Instance.GetChats().ToList());
+            }
+
+
             Config.CustomerId = GetCustomers().Count();
             Config.ParcelId = GetParcels().Count();
         }
@@ -105,13 +114,13 @@ namespace DALXML
         public double[] RequestPowerConsumption()
         {
             return new[]
-{
-            Config.ConsumptionWhenFree,
-            Config.ConsumptionWhenLight,
-            Config.ConsumptionWhenMid,
-            Config.ConsumptionWhenHeavy,
-            Config.ChargingRate
-        };
+            {
+                Config.ConsumptionWhenFree,
+                Config.ConsumptionWhenLight,
+                Config.ConsumptionWhenMid,
+                Config.ConsumptionWhenHeavy,
+                Config.ChargingRate
+             };
         }
     }
 }

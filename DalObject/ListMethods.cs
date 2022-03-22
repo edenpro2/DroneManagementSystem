@@ -45,6 +45,12 @@ namespace DalObject
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<Chat> GetChats()
+        {
+            return DataSource.Chats.Select(c => c);
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> GetStations(Predicate<Station> predicate)
         {
             return DataSource.Stations.Where(s => predicate(s));
