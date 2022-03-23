@@ -53,5 +53,7 @@ namespace DalFacade.DO
             isEmployee = user.isEmployee;
         }
 
+        public override string ToString() => $"user:{username} \n email:{email} \n id:{customerId}";
+
     }
 }

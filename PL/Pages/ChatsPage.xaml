@@ -13,9 +13,11 @@
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
       Background="{x:Null}">
 
-    
-    <materialDesign:Card
-        materialDesign:ShadowAssist.ShadowDepth="Depth0">
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="../Resources/mountains.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
         <Grid>
 
             <Grid.ColumnDefinitions>
@@ -23,11 +25,14 @@
                 <ColumnDefinition Width="3*" x:Name="BigCol"/>
             </Grid.ColumnDefinitions>
 
-            <Grid 
-                Background="{DynamicResource MaterialDesignPaper}"
+            <Grid
                 Grid.Column="0"
                 Grid.Row="0">
-
+                <Grid.Background>
+                    <SolidColorBrush 
+                        Color="GhostWhite"
+                        Opacity="0.90"/>
+                </Grid.Background>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="20"/>
                     <ColumnDefinition MinWidth="211" Width="*" x:Name="col"/>
@@ -62,6 +67,7 @@
                 </DockPanel>
 
                 <ListBox
+                    Background="{x:Null}"
                     Grid.Row="2"
                     Grid.Column="1"
                     d:ItemsSource="{d:SampleData ItemCount=7}"
@@ -75,13 +81,13 @@
                             </ScrollViewer>
                         </ControlTemplate>
                     </ListBox.Template>
-                
+
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="FontSize" Value="16"/>
                             <Setter Property="Height" Value="80" />
                             <Setter Property="FontFamily" Value="Netflix Sans Light" />
-                             <Style.Triggers>
+                            <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True" >
                                     <Setter Property="FontFamily" Value="Netflix Sans Medium" />
                                     <Setter Property="FontWeight" Value="SemiBold"/>
@@ -101,23 +107,23 @@
                     </ListBox.ItemContainerStyle>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                           <DockPanel>
-                               <Ellipse
+                            <DockPanel>
+                                <Ellipse
                                    Width="60"
                                    Height="60">
-                                   <Ellipse.Fill>
-                                       <ImageBrush
+                                    <Ellipse.Fill>
+                                        <ImageBrush
                                            Stretch="UniformToFill"
                                            ImageSource="{Binding Receiver.profilePic}"
                                            d:ImageSource="/Icons/uicustomers.png"/>
-                                   </Ellipse.Fill>
-                               </Ellipse>
-                               <StackPanel 
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <StackPanel 
                                    Margin="10 0 0 0"
                                    Width="{Binding ElementName=col, Path=MinWidth}"
                                    VerticalAlignment="Center">
-                                   <DockPanel HorizontalAlignment="Stretch" >
-                                       <TextBlock 
+                                    <DockPanel HorizontalAlignment="Stretch" >
+                                        <TextBlock 
                                            HorizontalAlignment="Left"
                                            VerticalAlignment="Center"
                                            d:Text="Roy Amiga"
@@ -126,7 +132,7 @@
                                            FontSize="14"
                                            FontFamily="Helvetica" 
                                            Foreground="#FF5C7FF7"/>
-                                       <TextBlock
+                                        <TextBlock
                                            Foreground="#DD828282"
                                            FontFamily="Netflix Sans"
                                            FontSize="12"
@@ -134,61 +140,51 @@
                                            VerticalAlignment="Center"
                                            d:Text="10:30 AM"
                                            Text="{Binding Chat.LastMessage.sentTime, StringFormat={}{0:hh:mm tt}}"/>
-                                   </DockPanel>
-                                   <TextBlock
+                                    </DockPanel>
+                                    <TextBlock
                                        Margin="0 5 0 0"
                                        d:Text="Hello there. General kenobi"
                                        FontSize="12"
                                        FontFamily="Helvetica" 
                                        Text="{Binding Chat.LastMessage.text}" 
                                        Foreground="#DD3E3E3E"/>
-                               </StackPanel>
-                               
-                           </DockPanel>
+                                </StackPanel>
+
+                            </DockPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-
-              
             </Grid>
 
-
-
-            <ListBox
+            <ItemsControl
                 Grid.Row="0"
                 Grid.Column="1"
-                HorizontalContentAlignment="Stretch"
                 HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
                 d:ItemsSource="{d:SampleData ItemCount=7}"
                 ItemsSource="{Binding personalChats.ChatViewModels[0].Chat.messages}">
-                <ListBox.Template>
+                <ItemsControl.Template>
                     <ControlTemplate>
                         <ScrollViewer
-                            VerticalScrollBarVisibility="Auto"
+                            CanContentScroll="True"
+                            VerticalScrollBarVisibility="Hidden"
                             HorizontalScrollBarVisibility="Hidden">
-                            <ItemsPresenter/>
+                            <ItemsPresenter HorizontalAlignment="Stretch"/>
                         </ScrollViewer>
                     </ControlTemplate>
-                </ListBox.Template>
-                <ListBox.Resources>
+                </ItemsControl.Template>
+                <ItemsControl.Resources>
                     <controls:ChatAlignmentConverter x:Key="ChatAlignmentConverter"/>
                     <controls:BubbleColorConverter x:Key="BubbleColorConverter"/>
-                </ListBox.Resources>
-                <ListBox.ItemTemplate>
+                </ItemsControl.Resources>
+                <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border
-                            Margin="0 20 0 0"
+                            Style="{StaticResource MessageShadowEffect}"
+                            Margin="15 30 15 0"
                             d:Background="LightBlue"
-                            VerticalAlignment="Center"
-                            CornerRadius="5">
+                            CornerRadius="25">
                             <DockPanel>
-                                <TextBlock 
-                                    Text="{Binding senderName}" 
-                                    d:Text="Roy Amiga"
-                                    DockPanel.Dock="Top"
-                                    FontSize="14"
-                                    FontFamily="Helvetica"
-                                    Margin="10 8 0 0"/>
                                 <TextBlock
                                     TextWrapping="Wrap"
                                     Margin="10"
@@ -205,9 +201,13 @@
                                     FontSize="14"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Bottom"
-                                    Text="{Binding sentTime, StringFormat={}{hh:mm tt}}" 
+                                    Text="{Binding sentTime, StringFormat={}{0:hh:mm tt}}" 
                                     Foreground="#666666">
                                 </TextBlock>
+                                <TextBlock
+                                    TextWrapping="Wrap"
+                                    VerticalAlignment="Bottom"
+                                    Text="      "/>
                             </DockPanel>
                             <Border.HorizontalAlignment>
                                 <MultiBinding Converter="{StaticResource ChatAlignmentConverter}">
@@ -230,12 +230,12 @@
                         </Border>
 
                     </DataTemplate>
-                </ListBox.ItemTemplate>
+                </ItemsControl.ItemTemplate>
 
-            </ListBox>
+            </ItemsControl>
 
 
 
         </Grid>
-    </materialDesign:Card>
+    </Grid>
 </Page>

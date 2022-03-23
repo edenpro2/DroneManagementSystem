@@ -33,6 +33,17 @@
                 <Setter Property="Effect" Value="{StaticResource BDropShadowEffect}" />
             </Style>
 
+            <DropShadowEffect
+                x:Key="BDropShadowEffect2"
+                BlurRadius="10"
+                Direction="-75"
+                Color="#555555"
+                ShadowDepth="4"
+                Opacity="0.13" />
+            <Style TargetType="Border" x:Key="MessageShadowEffect">
+                <Setter Property="Effect" Value="{StaticResource BDropShadowEffect2}" />
+            </Style>
+
             <Style x:Key="ListColumnHeader" TargetType="{x:Type TextBlock}">
                 <Setter Property="FontSize" Value="14" />
                 <Setter Property="FontFamily" Value="Netflix Sans Medium" />

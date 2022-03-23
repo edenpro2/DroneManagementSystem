@@ -170,8 +170,9 @@ namespace DalObject
 
             var lines = text
                 .Split(new[] { "OBI-WAN", "ANAKIN", "COUNT-DOOKU", "PALPATINE", "DROID" },
-                    StringSplitOptions.TrimEntries)
-                .Select(s => s.Replace("\r", " ").Replace("\n", " ")).ToList();
+                    StringSplitOptions.TrimEntries).ToList();
+
+                //.Select(s => s.Replace("\r", " ").Replace("\n", " ")).
 
             const int numOfChats = 10;
             var users = Users.ToList();

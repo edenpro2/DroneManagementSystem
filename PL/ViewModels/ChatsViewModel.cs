@@ -32,11 +32,12 @@ namespace PL.ViewModels
                 string name;
 
                 // if user2 = current sender
-                if (chat.user2.Equals(user))
+                if (chat.user2.customerId == user.customerId)
                 {
                     name = customers.First(u => u.id == chat.user1.customerId).name;
                     _chatViewModels.Add(new ChatViewModel(chat, chat.user1, name));
                 }
+                // if user1 = current sender
                 else
                 {
                     name = customers.First(u => u.id == chat.user2.customerId).name;

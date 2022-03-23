@@ -20,8 +20,10 @@ namespace PL.Controls
             var senderId = System.Convert.ToInt32(values[0]);
             var userId = System.Convert.ToInt32(values[1]);
 
-            var receiverBrush = (SolidColorBrush)new BrushConverter().ConvertFrom("#3697ff");
+            // light blue
+            var receiverBrush = (SolidColorBrush)new BrushConverter().ConvertFrom("#d1e3ff");
 
+            // off-white
             var senderBrush = (SolidColorBrush)new BrushConverter().ConvertFrom("#ebebeb");
 
             if (senderId == userId)
