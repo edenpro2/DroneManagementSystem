@@ -3,7 +3,7 @@ Welcome to my C# Windows "Mini" Project for JCT Lev International Program in Com
 
 ![image](https://github.com/edenpro2/DroneManagementSystem/blob/main/PL/Resources/mainwindow.png?raw=true)
 
-# Note
+## Note
 Bonuses and personal additions are in the word doc files accordingly
 
 ## Bonuses
