@@ -165,14 +165,12 @@ namespace DalObject
             }
 
 
-            const string textFile = @"../../../../RandomText.txt";
-            var text = File.ReadAllText(textFile);
+            const string textFile = Resource.
+           
+            var text = File.ReadAllText(path);
 
-            var lines = text
-                .Split(new[] { "OBI-WAN", "ANAKIN", "COUNT-DOOKU", "PALPATINE", "DROID" },
+            var lines = text.Split(new[] { "OBI-WAN", "ANAKIN", "COUNT-DOOKU", "PALPATINE", "DROID" },
                     StringSplitOptions.TrimEntries).ToList();
-
-                //.Select(s => s.Replace("\r", " ").Replace("\n", " ")).
 
             const int numOfChats = 10;
             var users = Users.ToList();

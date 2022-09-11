@@ -25,6 +25,7 @@
 
         <Style x:Key="InnerGrid" TargetType="{x:Type Grid}">
             <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
         </Style>
 
         <Style TargetType="{x:Type Ellipse}">
@@ -118,7 +119,7 @@
                     <StackPanel
                         VerticalAlignment="Center">
                         <TextBlock
-                            Text="Sent ChatViewModels"
+                            Text="Sent Packages"
                             Style="{StaticResource Title}" />
                         <TextBlock
                             Text="Track packages you sent"
@@ -169,10 +170,10 @@
                             Text="Scheduled"
                             Style="{StaticResource Title}"/>
                         <TextBlock
-                            Style="{StaticResource Details}">
-                            <Run Text="Track packages sent to  " />
+                            Style="{StaticResource Details}" Width="210">
+                            <Run Text="Track packages on their" />
                             <LineBreak />
-                            <Run Text="you" />
+                            <Run Text="way to you" />
                         </TextBlock>
                     </StackPanel>
 
