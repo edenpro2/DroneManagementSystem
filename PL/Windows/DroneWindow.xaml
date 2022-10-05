@@ -12,8 +12,8 @@
     Background="{x:Null}"
     mc:Ignorable="d"
     Title="Login"
-    MinHeight="1234"
-    MinWidth="1800"
+    MinHeight="1000"
+    MinWidth="1200"
     AllowsTransparency="True"
     WindowStyle="None"
     WindowStartupLocation="CenterScreen"
@@ -24,7 +24,7 @@
         <ResourceDictionary>
             <Style x:Key="DroneTitle" TargetType="{x:Type TextBlock}">
                 <Setter Property="Foreground" Value="#FFB2B2B3"/>
-                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="FontSize" Value="18"/>
                 <Setter Property="FontFamily" Value="Netflix Sans"/>
                 <Setter Property="VerticalAlignment" Value="Top"/>
                 <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -32,7 +32,7 @@
             </Style>
 
             <Style x:Key="InfoHeader" TargetType="{x:Type TextBlock}">
-                <Setter Property="FontSize" Value="20" />
+                <Setter Property="FontSize" Value="18" />
                 <Setter Property="FontFamily" Value="Netflix Sans Medium" />
                 <Setter Property="Foreground" Value="#FF413940" />
                 <Setter Property="VerticalAlignment" Value="Top" />
@@ -41,7 +41,7 @@
             </Style>
 
             <Style x:Key="InfoDetails" TargetType="{x:Type TextBlock}">
-                <Setter Property="FontSize" Value="20" />
+                <Setter Property="FontSize" Value="18" />
                 <Setter Property="FontFamily" Value="Netflix Sans Light" />
                 <Setter Property="Foreground" Value="#FFB2B2B3" />
                 <Setter Property="VerticalAlignment" Value="Center" />
@@ -50,21 +50,16 @@
             </Style>
 
             <Style x:Key="ActionHeader" TargetType="{x:Type TextBlock}">
-                <Setter Property="FontSize" Value="22" />
+                <Setter Property="FontSize" Value="18" />
                 <Setter Property="FontFamily" Value="Netflix Sans" />
                 <Setter Property="Foreground" Value="#F2222222" />
-                <Setter Property="VerticalAlignment" Value="Center" />
-                <Setter Property="HorizontalAlignment" Value="Left" />
-                <Setter Property="Margin" Value="10 0 0 0" />
-            </Style>
+             </Style>
 
             <Style x:Key="ActionDetails" TargetType="{x:Type TextBlock}">
-                <Setter Property="FontSize" Value="18" />
+                <Setter Property="FontSize" Value="16" />
                 <Setter Property="FontFamily" Value="Segoe UI" />
                 <Setter Property="Foreground" Value="#FF767676" />
-                <Setter Property="HorizontalAlignment" Value="Left" />
-                <Setter Property="Margin" Value="10 0 0 0" />
-            </Style>
+             </Style>
 
             <Style x:Key="ButtonBorder" TargetType="{x:Type Border}">
                 <Setter Property="Background" Value="White" />
@@ -72,27 +67,25 @@
                 <Setter Property="CornerRadius" Value="10" />
             </Style>
 
-            <Style x:Key="DockPanelInButton" TargetType="{x:Type DockPanel}">
-                <Setter Property="Margin" Value="40 0 0 0"/>
+            <Style x:Key="GridInButton" TargetType="{x:Type Grid}">
+                 <Setter Property="Margin" Value="0 5 0 0"/>
             </Style>
 
             <Style x:Key="ActionButton" TargetType="{x:Type Button}">
-                <Setter Property="HorizontalAlignment" Value="Left"/>
-                <Setter Property="HorizontalContentAlignment" Value="Left"/>
                 <Setter Property="Background" Value="White"/>
                 <Setter Property="BorderBrush" Value="White"/>
-                <Setter Property="Height" Value="119"/>
-                <Setter Property="Width" Value="340"/>
                 <Setter Property="Margin" Value="2 2 0 0"/>
+            </Style>
 
+            <Style x:Key="ActionButtonStackPanel" TargetType="{x:Type StackPanel}">
+                <Setter Property="MinWidth" Value="200" />
             </Style>
 
             <Style TargetType="{x:Type Image}">
-                <Setter Property="Width" Value="81" />
-                <Setter Property="Height" Value="67" />
+                <Setter Property="Width" Value="50" />
                 <Setter Property="Stretch" Value="Uniform" />
-                <Setter Property="HorizontalAlignment" Value="Center" />
-                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="Margin" Value="0 0 10 0"/>
             </Style>
         </ResourceDictionary>
     </Window.Resources>
@@ -210,9 +203,14 @@
                     Style="{StaticResource ActionButton}"
                     Click="ChargeBtn_Click" >
                     <Button.Content>
-                        <DockPanel Style="{StaticResource DockPanelInButton}">
-                            <Image Source="/Icons/charge.png" />
-                            <StackPanel>
+                        <Grid Style="{StaticResource GridInButton}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="/Icons/charge.png" Grid.Column="0"/>
+                            <StackPanel Style="{StaticResource ActionButtonStackPanel}"
+                                        Grid.Column="1">
                                 <TextBlock
                                     Text="Charge Drone"
                                     Style="{StaticResource ActionHeader}" />
@@ -220,7 +218,7 @@
                                     Text="Send the drone to a&#x0a;charging station"
                                     Style="{StaticResource ActionDetails}" />
                             </StackPanel>
-                        </DockPanel>
+                        </Grid>
                     </Button.Content>
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
@@ -234,10 +232,14 @@
                     Style="{StaticResource ActionButton}"
                     Click="ReleaseBtn_Click">
                     <Button.Content>
-                        <DockPanel Style="{StaticResource DockPanelInButton}">
-                            <Image
-                                Source="/Icons/release.png"/>
-                            <StackPanel>
+                        <Grid Style="{StaticResource GridInButton}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="/Icons/release.png" Grid.Column="0"/>
+                            <StackPanel Style="{StaticResource ActionButtonStackPanel}" 
+                                        Grid.Column="1">
                                 <TextBlock
                                     Text="Release Drone"
                                     Style="{StaticResource ActionHeader}" />
@@ -245,7 +247,7 @@
                                     Text="Release the drone from&#x0a;a charging station"
                                     Style="{StaticResource ActionDetails}" />
                             </StackPanel>
-                        </DockPanel>
+                        </Grid>
                     </Button.Content>
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
@@ -258,10 +260,15 @@
                     Style="{StaticResource ActionButton}"
                     Click="AssignBtn_Click">
                     <Button.Content>
-                        <DockPanel Style="{StaticResource DockPanelInButton}">
+                        <Grid Style="{StaticResource GridInButton}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
                             <Image
-                                Source="/Icons/assign.png"/>
-                            <StackPanel>
+                                Source="/Icons/assign.png" Grid.Column="0"/>
+                            <StackPanel Style="{StaticResource ActionButtonStackPanel}"
+                                        Grid.Column="1">
                                 <TextBlock
                                     Text="Assign Parcel"
                                     Style="{StaticResource ActionHeader}" />
@@ -269,7 +276,7 @@
                                     Text="Send the drone to pick&#x0a;up a parcel"
                                     Style="{StaticResource ActionDetails}" />
                             </StackPanel>
-                        </DockPanel>
+                        </Grid>
                     </Button.Content>
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
@@ -282,10 +289,15 @@
                     Style="{StaticResource ActionButton}"
                     Click="CollectBtn_Click">
                     <Button.Content>
-                        <DockPanel Style="{StaticResource DockPanelInButton}">
+                        <Grid Style="{StaticResource GridInButton}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
                             <Image
-                                Source="/Icons/collect.png"/>
-                            <StackPanel>
+                                Source="/Icons/collect.png" Grid.Column="0"/>
+                            <StackPanel Style="{StaticResource ActionButtonStackPanel}"
+                                        Grid.Column="1">
                                 <TextBlock
                                     Text="Collect Parcel"
                                     Style="{StaticResource ActionHeader}" />
@@ -293,7 +305,7 @@
                                     Text="Send the drone to&#x0a;pick up a parcel"
                                     Style="{StaticResource ActionDetails}" />
                             </StackPanel>
-                        </DockPanel>
+                        </Grid>
                     </Button.Content>
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
@@ -306,10 +318,15 @@
                      Style="{StaticResource ActionButton}"
                      Click="DeliverButton_Click">
                     <Button.Content>
-                        <DockPanel Style="{StaticResource DockPanelInButton}">
+                        <Grid Style="{StaticResource GridInButton}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
                             <Image
-                                Source="/Icons/deliver.png"/>
-                            <StackPanel>
+                                Source="/Icons/deliver.png" Grid.Column="0"/>
+                            <StackPanel Style="{StaticResource ActionButtonStackPanel}"
+                                        Grid.Column="1">
                                 <TextBlock
                                     Text="Deliver Parcel"
                                     Style="{StaticResource ActionHeader}" />
@@ -317,7 +334,7 @@
                                     Text="Send the drone to&#x0a;deliver a parcel"
                                     Style="{StaticResource ActionDetails}" />
                             </StackPanel>
-                        </DockPanel>
+                        </Grid>
                     </Button.Content>
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
@@ -330,10 +347,16 @@
                     Style="{StaticResource ActionButton}"
                     Click="SimulatorBtn_Click">
                     <Button.Content>
-                        <DockPanel Style="{StaticResource DockPanelInButton}">
+                        <Grid Style="{StaticResource GridInButton}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
                             <Image
-                                Source="/Icons/drone.png"/>
-                            <StackPanel>
+                                Source="/Icons/drone.png" 
+                                Grid.Column="0" />
+                            <StackPanel Style="{StaticResource ActionButtonStackPanel}"
+                                        Grid.Column="1">
                                 <TextBlock
                                     Text="Simulator"
                                     Style="{StaticResource ActionHeader}" />
@@ -341,7 +364,7 @@
                                     Text="Start or stop simulator"
                                     Style="{StaticResource ActionDetails}" />
                             </StackPanel>
-                        </DockPanel>
+                        </Grid>
                     </Button.Content>
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">

@@ -20,8 +20,8 @@ namespace PL.Windows
             Height = 1000;
             Width = 1300;
             CustomButtons = new WindowControls(this);
-            var resourcesDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)?.Parent?.Parent?.Parent + @"\Resources\";
-            var iconsDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)?.Parent?.Parent?.Parent + @"\Icons\";
+            var resourcesDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)?.Parent?.Parent?.Parent?.Parent + @"\Resources\";
+            var iconsDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)?.Parent?.Parent?.Parent?.Parent + @"\Icons\";
 
             switch (type.ToLower())
             {
@@ -32,8 +32,8 @@ namespace PL.Windows
                         var icon = new Image
                         {
                             Source = new BitmapImage(new Uri($"{resourcesDir}drone.png")),
-                            Width = 30,
-                            Height = 30
+                            Width = 20,
+                            Height = 20
                         };
 
                         AddIcon(icon, drone);
@@ -47,7 +47,7 @@ namespace PL.Windows
                         {
                             Source = new BitmapImage(new Uri($"{resourcesDir}warehouse3d.png")),
                             Width = 30,
-                            Height = 15
+                            Height = 30
                         };
 
                         AddIcon(icon, station);
@@ -130,8 +130,7 @@ namespace PL.Windows
 
         private void Map_OnScrollWheel(object sender, MouseWheelEventArgs e)
         {
-
-
+            //no-op
         }
 
 

@@ -9,8 +9,8 @@ namespace PL.Pages
     public partial class ParcelFlowPage
     {
         public ParcelsViewModel parcels { get; }
-        public string Header { get; set; }
-        public string Intro { get; set; }
+        public string Header { get; }
+        public string Intro { get; }
 
         public ParcelFlowPage(BlApi ibl, User user, string type)
         {
@@ -34,32 +34,23 @@ namespace PL.Pages
             }
 
             InitializeComponent();
+            // Must set data context, else parcels don't appear
             DataContext = this;
         }
 
-        private void AllOrders_Click(object sender, RoutedEventArgs e)
-        {
-            parcels.Filtered = parcels.Parcels;
-        }
+        private void AllOrders_Click(object sender, RoutedEventArgs e) => parcels.Filtered = parcels.Parcels;
 
-        private void Completed_Click(object sender, RoutedEventArgs e)
-        {
-            parcels.Filtered = parcels.Parcels.Where(p => p.Delivered != default).ToList();
-        }
+        private void Completed_Click(object sender, RoutedEventArgs e) => parcels.Filtered = parcels.Parcels.Where(p => p.Delivered != default).ToList();
 
-        private void Ongoing_Click(object sender, RoutedEventArgs e)
-        {
-            parcels.Filtered = parcels.Parcels.Where(p => p.Delivered == default && p.Requested != default).ToList();
-        }
+        private void Ongoing_Click(object sender, RoutedEventArgs e) => parcels.Filtered = parcels.Parcels.Where(p => p.Delivered == default && p.Requested != default).ToList();
 
-        private void Pending_Click(object sender, RoutedEventArgs e)
-        {
-            parcels.Filtered = parcels.Parcels.Where(p => p.Scheduled == default).ToList();
-        }
+        private void Pending_Click(object sender, RoutedEventArgs e) => parcels.Filtered = parcels.Parcels.Where(p => p.Scheduled == default).ToList();
 
-        private const string SentHeader = "Sent ChatViewModels";
+        private const string SentHeader = "Sent Parcels";
 
-        private const string ReceivedHeader = "Received ChatViewModels";
+        private const string ReceivedHeader = "Received Parcels";
+
+        // Two types of intros, for two types of parcel flow pages
 
         private const string SentIntro =
             "In the order details section, you can review and manage all orders you've sent with " +

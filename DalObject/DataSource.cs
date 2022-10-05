@@ -165,9 +165,9 @@ namespace DalObject
             }
 
 
-            const string textFile = Resource.
-           
-            var text = File.ReadAllText(path);
+            var txtFile = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName + @"\RandomText.txt";
+
+            var text = File.ReadAllText(txtFile);
 
             var lines = text.Split(new[] { "OBI-WAN", "ANAKIN", "COUNT-DOOKU", "PALPATINE", "DROID" },
                     StringSplitOptions.TrimEntries).ToList();

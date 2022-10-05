@@ -16,7 +16,7 @@ namespace PL.Windows
         {
             _bl = ibl;
             var customer = _bl.SearchForCustomer(c => c.id == user.customerId);
-            ViewModel = new UserViewModel(user, customer.phone, customer.name);
+            ViewModel = new UserViewModel(user, customer.phone, customer.name, user.profilePic);
             InitializeComponent();
             DataContext = this;
             PagesNavigation.Navigate(new DronesPage(_bl));

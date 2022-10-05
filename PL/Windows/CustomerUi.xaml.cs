@@ -22,7 +22,7 @@ namespace PL.Windows
         {
             _bl = ibl;
             var customer = _bl.SearchForCustomer(c => c.id == user.customerId);
-            ViewModel = new UserViewModel(user, customer.phone, customer.name);
+            ViewModel = new UserViewModel(user, customer.phone, customer.name, user.profilePic);
             InitializeComponent();
             DataContext = this;
             CustomButtons = new WindowControls(this);
@@ -61,10 +61,7 @@ namespace PL.Windows
             PagesNavigation.Navigate(CurrentPage);
         }
 
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
-        {
-            DragMove();
-        }
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e) => DragMove();
 
         private void ChatBtn_Click(object sender, RoutedEventArgs e)
         {

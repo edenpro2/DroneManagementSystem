@@ -278,7 +278,7 @@
                             Margin="14 0 0 0">
                             <Ellipse.Fill>
                                 <ImageBrush
-                                    ImageSource="/Resources/account.jpg"
+                                    ImageSource="{Binding ViewModel.ProfilePic, Mode=TwoWay}"
                                     Opacity="0.6" />
                             </Ellipse.Fill>
                         </Ellipse>
@@ -323,8 +323,7 @@
                         FontSize="10" />
                     <controls:WindowControls
                         x:Name="CustomButtons"
-                        Padding="10">
-                    </controls:WindowControls>
+                        Padding="10" />
                 </DockPanel>
 
                 <Border
@@ -336,8 +335,6 @@
                         Background="{DynamicResource MaterialDesignBackground}">
                     </Frame>
                 </Border>
-
-             
 
             </Grid>
             <!-- Start: GridColumn Right -->

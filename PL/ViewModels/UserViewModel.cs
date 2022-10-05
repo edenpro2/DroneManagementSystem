@@ -12,6 +12,8 @@ namespace PL.ViewModels
 
         private User _user;
 
+        private string _profilePic;
+
         public User User
         {
             get => _user;
@@ -42,11 +44,22 @@ namespace PL.ViewModels
             }
         }
 
-        public UserViewModel(User user, string phone, string name)
+        public string ProfilePic
+        {
+            get => _profilePic;
+            set
+            {
+                _profilePic = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public UserViewModel(User user, string phone, string name, string pic)
         {
             User = user;
             _phone = phone;
             _name = name;
+            _profilePic = pic;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

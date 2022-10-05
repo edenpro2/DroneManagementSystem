@@ -16,8 +16,10 @@ namespace PL.Pages
         public ParcelsPage(BlApi ibl)
         {
             _bl = ibl;
-            parcelsViewModel = ibl.GetParcels()
+            parcelsViewModel = 
+                ibl.GetParcels()
                 .Select(p => new ParcelViewModel(_bl, p)).ToList();
+
             InitializeComponent();
             DataContext = this;
         }
@@ -25,9 +27,7 @@ namespace PL.Pages
         private void ParcelListBox_Click(object sender, MouseButtonEventArgs e)
         {
             if (ParcelListBox.SelectedItems.Count != 1)
-            {
                 return;
-            }
 
             var droneDetailsWindow = new ParcelWindow(_bl, (ParcelViewModel)ParcelListBox.SelectedItem);
             droneDetailsWindow.ShowDialog();
@@ -37,7 +37,6 @@ namespace PL.Pages
         {
             var map = new Map(_bl, "parcel");
             map.Show();
-
         }
 
     }
