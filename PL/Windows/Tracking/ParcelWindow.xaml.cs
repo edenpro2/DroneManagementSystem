@@ -1,11 +1,11 @@
-﻿using BLAPI;
+﻿using System;
+using System.Windows.Input;
+using BLAPI;
 using DalFacade.DO;
 using PL.Controls;
 using PL.ViewModels;
-using System;
-using System.Windows.Input;
 
-namespace PL.Windows
+namespace PL.Windows.Tracking
 {
     public partial class ParcelWindow
     {

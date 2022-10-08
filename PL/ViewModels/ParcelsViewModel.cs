@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -6,11 +7,11 @@ namespace PL.ViewModels
 {
     public class ParcelsViewModel : INotifyPropertyChanged
     {
-        private IEnumerable<ParcelViewModel> _parcels;
+        private ObservableCollection<ParcelViewModel> _parcels;
 
-        private IEnumerable<ParcelViewModel> _filtered;
+        private ObservableCollection<ParcelViewModel> _filtered;
 
-        public IEnumerable<ParcelViewModel> Parcels
+        public ObservableCollection<ParcelViewModel> Parcels
         {
             get => _parcels;
             set
@@ -20,7 +21,7 @@ namespace PL.ViewModels
             }
         }
 
-        public IEnumerable<ParcelViewModel> Filtered
+        public ObservableCollection<ParcelViewModel> Filtered
         {
             get => _filtered;
             set
@@ -32,7 +33,7 @@ namespace PL.ViewModels
 
         public ParcelsViewModel(IEnumerable<ParcelViewModel> parcelList)
         {
-            _filtered = _parcels = parcelList;
+            _filtered = _parcels = new ObservableCollection<ParcelViewModel>(parcelList);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

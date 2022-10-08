@@ -9,7 +9,7 @@ namespace PL.Windows
     public partial class EmployeeLoginWindow
     {
         private readonly BlApi _bl;
-        private User _user;
+        private User _user = new();
 
         public EmployeeLoginWindow(BlApi ibl)
         {
@@ -48,10 +48,7 @@ namespace PL.Windows
 
         }
 
-        internal User GetValue()
-        {
-            return _user;
-        }
+        internal User GetValue() => _user;
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {

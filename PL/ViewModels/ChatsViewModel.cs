@@ -1,5 +1,6 @@
 ﻿using DalFacade.DO;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -8,9 +9,9 @@ namespace PL.ViewModels
 {
     public class ChatsViewModel : INotifyPropertyChanged
     {
-        private List<ChatViewModel> _chatViewModels;
+        private ObservableCollection<ChatViewModel> _chatViewModels;
 
-        public List<ChatViewModel> ChatViewModels
+        public ObservableCollection<ChatViewModel> ChatViewModels
         {
             get => _chatViewModels;
             set
@@ -25,7 +26,7 @@ namespace PL.ViewModels
         {
             var chats = chatList.Where(chat => chat.user1.customerId == user.customerId || chat.user2.customerId == user.customerId).ToList();
             var customers = customerList.ToList();
-            _chatViewModels = new List<ChatViewModel>();
+            _chatViewModels = new ObservableCollection<ChatViewModel>();
 
             foreach (var chat in chats)
             {
@@ -44,10 +45,6 @@ namespace PL.ViewModels
                     _chatViewModels.Add(new ChatViewModel(chat, chat.user2, name));
                 }
             }
-
-
-
-
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

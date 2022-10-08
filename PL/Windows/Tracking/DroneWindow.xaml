@@ -5,10 +5,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
-    xmlns:windows="clr-namespace:PL.Windows"
     xmlns:controls="clr-namespace:PL.Controls"
-    d:DataContext="{d:DesignInstance Type=windows:DroneWindow}"
-    x:Class="PL.Windows.DroneWindow"
+    xmlns:tracking="clr-namespace:PL.Windows.Tracking"
+    x:Class="PL.Windows.Tracking.DroneWindow"
+    d:DataContext="{d:DesignInstance Type=tracking:DroneWindow}"
     Background="{x:Null}"
     mc:Ignorable="d"
     Title="Login"
@@ -23,12 +23,12 @@
     <Window.Resources>
         <ResourceDictionary>
             <Style x:Key="DroneTitle" TargetType="{x:Type TextBlock}">
-                <Setter Property="Foreground" Value="#FFB2B2B3"/>
-                <Setter Property="FontSize" Value="18"/>
-                <Setter Property="FontFamily" Value="Netflix Sans"/>
-                <Setter Property="VerticalAlignment" Value="Top"/>
-                <Setter Property="HorizontalAlignment" Value="Left"/>
-                <Setter Property="Margin" Value="0 15 0 0"></Setter>
+                <Setter Property="Foreground" Value="#FFB2B2B3" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="FontFamily" Value="Netflix Sans" />
+                <Setter Property="VerticalAlignment" Value="Top" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="Margin" Value="0 15 0 0" />
             </Style>
 
             <Style x:Key="InfoHeader" TargetType="{x:Type TextBlock}">
@@ -36,8 +36,8 @@
                 <Setter Property="FontFamily" Value="Netflix Sans Medium" />
                 <Setter Property="Foreground" Value="#FF413940" />
                 <Setter Property="VerticalAlignment" Value="Top" />
-                <Setter Property="HorizontalAlignment" Value="Left"/>
-                <Setter Property="Margin" Value="0 15 0 0"/>
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="Margin" Value="0 15 0 0" />
             </Style>
 
             <Style x:Key="InfoDetails" TargetType="{x:Type TextBlock}">
@@ -46,20 +46,20 @@
                 <Setter Property="Foreground" Value="#FFB2B2B3" />
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="HorizontalAlignment" Value="Left" />
-                <Setter Property="Margin" Value="0 15 0 0"/>
+                <Setter Property="Margin" Value="0 15 0 0" />
             </Style>
 
             <Style x:Key="ActionHeader" TargetType="{x:Type TextBlock}">
                 <Setter Property="FontSize" Value="18" />
                 <Setter Property="FontFamily" Value="Netflix Sans" />
                 <Setter Property="Foreground" Value="#F2222222" />
-             </Style>
+            </Style>
 
             <Style x:Key="ActionDetails" TargetType="{x:Type TextBlock}">
                 <Setter Property="FontSize" Value="16" />
                 <Setter Property="FontFamily" Value="Segoe UI" />
                 <Setter Property="Foreground" Value="#FF767676" />
-             </Style>
+            </Style>
 
             <Style x:Key="ButtonBorder" TargetType="{x:Type Border}">
                 <Setter Property="Background" Value="White" />
@@ -68,13 +68,13 @@
             </Style>
 
             <Style x:Key="GridInButton" TargetType="{x:Type Grid}">
-                 <Setter Property="Margin" Value="0 5 0 0"/>
+                <Setter Property="Margin" Value="0 5 0 0" />
             </Style>
 
             <Style x:Key="ActionButton" TargetType="{x:Type Button}">
-                <Setter Property="Background" Value="White"/>
-                <Setter Property="BorderBrush" Value="White"/>
-                <Setter Property="Margin" Value="2 2 0 0"/>
+                <Setter Property="Background" Value="White" />
+                <Setter Property="BorderBrush" Value="White" />
+                <Setter Property="Margin" Value="2 2 0 0" />
             </Style>
 
             <Style x:Key="ActionButtonStackPanel" TargetType="{x:Type StackPanel}">
@@ -85,7 +85,7 @@
                 <Setter Property="Width" Value="50" />
                 <Setter Property="Stretch" Value="Uniform" />
                 <Setter Property="HorizontalAlignment" Value="Left" />
-                <Setter Property="Margin" Value="0 0 10 0"/>
+                <Setter Property="Margin" Value="0 0 10 0" />
             </Style>
         </ResourceDictionary>
     </Window.Resources>
@@ -100,48 +100,48 @@
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40"/>
-                <ColumnDefinition Width="350"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="350" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="40" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
-                <RowDefinition/>
-                <RowDefinition Height="40"/>
+                <RowDefinition Height="40" />
+                <RowDefinition />
+                <RowDefinition Height="40" />
             </Grid.RowDefinitions>
 
-            <StackPanel 
-                Grid.Column="1" 
+            <StackPanel
+                Grid.Column="1"
                 Grid.Row="1">
 
                 <Border
-                   Style="{StaticResource ButtonBorder}">
+                    Style="{StaticResource ButtonBorder}">
                     <StackPanel Margin="10 0 0 0">
                         <TextBlock
                             Text="Drone Information"
-                            Style="{StaticResource DroneTitle}"/>
+                            Style="{StaticResource DroneTitle}" />
                         <DockPanel>
                             <StackPanel>
                                 <TextBlock
                                     Text="ID"
-                                    Style="{StaticResource InfoHeader}"/>
+                                    Style="{StaticResource InfoHeader}" />
                                 <TextBlock
                                     Text="Model"
-                                    Style="{StaticResource InfoHeader}"/>
+                                    Style="{StaticResource InfoHeader}" />
                                 <TextBlock
                                     Text="Max Weight"
-                                    Style="{StaticResource InfoHeader}"/>
+                                    Style="{StaticResource InfoHeader}" />
                             </StackPanel>
 
                             <StackPanel DataContext="{Binding ViewModel}" Margin="30 0 0 0">
                                 <TextBlock
                                     Text="{Binding Drone.id}"
-                                    Style="{StaticResource InfoDetails}"/>
+                                    Style="{StaticResource InfoDetails}" />
                                 <TextBlock
                                     Text="{Binding Drone.model}"
-                                    Style="{StaticResource InfoDetails}"/>
+                                    Style="{StaticResource InfoDetails}" />
                                 <TextBlock
                                     Text="{Binding Drone.maxWeight}"
                                     Style="{StaticResource InfoDetails}" />
@@ -150,18 +150,18 @@
 
                         <TextBlock
                             Text="Drone Health"
-                            Style="{StaticResource DroneTitle}"/>
+                            Style="{StaticResource DroneTitle}" />
                         <DockPanel>
                             <StackPanel>
                                 <TextBlock
                                     Text="Status"
-                                    Style="{StaticResource InfoHeader}"/>
+                                    Style="{StaticResource InfoHeader}" />
                                 <TextBlock
                                     Text="Battery"
-                                    Style="{StaticResource InfoHeader}"/>
+                                    Style="{StaticResource InfoHeader}" />
                                 <TextBlock
                                     Text="Location"
-                                    Style="{StaticResource InfoHeader}"/>
+                                    Style="{StaticResource InfoHeader}" />
                             </StackPanel>
                             <StackPanel DataContext="{Binding ViewModel}" Margin="55 0 0 0">
                                 <TextBlock
@@ -186,7 +186,7 @@
                             FontSize="15"
                             Foreground="Tomato"
                             FontWeight="SemiBold"
-                            HorizontalAlignment="Left"/>
+                            HorizontalAlignment="Left" />
                         <TextBlock
                             x:Name="ProgressBox"
                             Margin="0 10 0 0"
@@ -194,21 +194,21 @@
                             Foreground="MidnightBlue"
                             FontWeight="SemiBold"
                             HorizontalAlignment="Left"
-                            Visibility="Visible"/>
+                            Visibility="Visible" />
                     </StackPanel>
                 </Border>
 
 
                 <Button
                     Style="{StaticResource ActionButton}"
-                    Click="ChargeBtn_Click" >
+                    Click="ChargeBtn_Click">
                     <Button.Content>
                         <Grid Style="{StaticResource GridInButton}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Image Source="/Icons/charge.png" Grid.Column="0"/>
+                            <Image Source="/Icons/charge.png" Grid.Column="0" />
                             <StackPanel Style="{StaticResource ActionButtonStackPanel}"
                                         Grid.Column="1">
                                 <TextBlock
@@ -222,7 +222,7 @@
                     </Button.Content>
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="10"/>
+                            <Setter Property="CornerRadius" Value="10" />
                         </Style>
                     </Button.Resources>
                 </Button>
@@ -234,11 +234,11 @@
                     <Button.Content>
                         <Grid Style="{StaticResource GridInButton}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Image Source="/Icons/release.png" Grid.Column="0"/>
-                            <StackPanel Style="{StaticResource ActionButtonStackPanel}" 
+                            <Image Source="/Icons/release.png" Grid.Column="0" />
+                            <StackPanel Style="{StaticResource ActionButtonStackPanel}"
                                         Grid.Column="1">
                                 <TextBlock
                                     Text="Release Drone"
@@ -251,7 +251,7 @@
                     </Button.Content>
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="10"/>
+                            <Setter Property="CornerRadius" Value="10" />
                         </Style>
                     </Button.Resources>
                 </Button>
@@ -262,11 +262,11 @@
                     <Button.Content>
                         <Grid Style="{StaticResource GridInButton}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Image
-                                Source="/Icons/assign.png" Grid.Column="0"/>
+                                Source="/Icons/assign.png" Grid.Column="0" />
                             <StackPanel Style="{StaticResource ActionButtonStackPanel}"
                                         Grid.Column="1">
                                 <TextBlock
@@ -280,7 +280,7 @@
                     </Button.Content>
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="10"/>
+                            <Setter Property="CornerRadius" Value="10" />
                         </Style>
                     </Button.Resources>
                 </Button>
@@ -291,11 +291,11 @@
                     <Button.Content>
                         <Grid Style="{StaticResource GridInButton}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Image
-                                Source="/Icons/collect.png" Grid.Column="0"/>
+                                Source="/Icons/collect.png" Grid.Column="0" />
                             <StackPanel Style="{StaticResource ActionButtonStackPanel}"
                                         Grid.Column="1">
                                 <TextBlock
@@ -309,22 +309,22 @@
                     </Button.Content>
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="10"/>
+                            <Setter Property="CornerRadius" Value="10" />
                         </Style>
                     </Button.Resources>
                 </Button>
 
                 <Button
-                     Style="{StaticResource ActionButton}"
-                     Click="DeliverButton_Click">
+                    Style="{StaticResource ActionButton}"
+                    Click="DeliverButton_Click">
                     <Button.Content>
                         <Grid Style="{StaticResource GridInButton}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Image
-                                Source="/Icons/deliver.png" Grid.Column="0"/>
+                                Source="/Icons/deliver.png" Grid.Column="0" />
                             <StackPanel Style="{StaticResource ActionButtonStackPanel}"
                                         Grid.Column="1">
                                 <TextBlock
@@ -338,7 +338,7 @@
                     </Button.Content>
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="10"/>
+                            <Setter Property="CornerRadius" Value="10" />
                         </Style>
                     </Button.Resources>
                 </Button>
@@ -349,11 +349,11 @@
                     <Button.Content>
                         <Grid Style="{StaticResource GridInButton}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Image
-                                Source="/Icons/drone.png" 
+                                Source="/Icons/drone.png"
                                 Grid.Column="0" />
                             <StackPanel Style="{StaticResource ActionButtonStackPanel}"
                                         Grid.Column="1">
@@ -368,15 +368,15 @@
                     </Button.Content>
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="10"/>
+                            <Setter Property="CornerRadius" Value="10" />
                         </Style>
                     </Button.Resources>
                 </Button>
 
             </StackPanel>
 
-            <Grid 
-                Grid.Column="3" 
+            <Grid
+                Grid.Column="3"
                 Grid.Row="1">
                 <Border
                     Style="{StaticResource ButtonBorder}">
@@ -386,7 +386,7 @@
                             ScrollViewer.VerticalScrollBarVisibility="Disabled"
                             ScrollViewer.CanContentScroll="False"
                             ZoomFactor="0.96"
-                            materialDesign:ScrollBarAssist.ButtonsVisibility="Hidden"/>
+                            materialDesign:ScrollBarAssist.ButtonsVisibility="Hidden" />
                     </Grid>
                 </Border>
             </Grid>
@@ -397,10 +397,9 @@
                 Grid.ColumnSpan="2"
                 HorizontalAlignment="Right"
                 x:Name="CustomButtons"
-                Margin="0 10 10 0">
-            </controls:WindowControls>
+                Margin="0 10 10 0" />
 
-            
+
         </Grid>
     </materialDesign:Card>
 

@@ -8,6 +8,7 @@
       xmlns:controls="clr-namespace:PL.Controls"
       mc:Ignorable="d"
       AllowsTransparency="True"
+      Title="CustomerUI"
       d:DataContext="{d:DesignInstance Type=windows:CustomerUi}"
       MinHeight="920" MinWidth="1450"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -314,12 +315,11 @@
                     HorizontalAlignment="Right">
                     <Image
                         Source="/Icons/region.png"
-                        Height="20"
-                        Width="18" />
+                        Height="15"/>
                     <TextBlock
                         VerticalAlignment="Center"
                         Text="Language"
-                        Padding="5"
+                        Margin="5 0 0 0"
                         FontSize="10" />
                     <controls:WindowControls
                         x:Name="CustomButtons"

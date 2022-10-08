@@ -51,9 +51,15 @@ namespace PL.Windows
             Dispatcher.Invoke(() => _user = bl.GetUsers(u => u.username == UsernameBox.Text).FirstOrDefault());
         }
 
-        private void BackgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e) => Gif.Visibility = Visibility.Visible;
+        private void BackgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
+        {
+            Gif.Visibility = Visibility.Visible;
+        }
 
-        private void BackgroundWorker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e) => Task.Delay(1500).ContinueWith(_ => { Dispatcher.Invoke(Login); });
+        private void BackgroundWorker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
+        {
+            Task.Delay(1500).ContinueWith(_ => { Dispatcher.Invoke(Login); });
+        }
 
         private void Login()
         {
@@ -94,11 +100,11 @@ namespace PL.Windows
         {
             var empLoginWindow = new EmployeeLoginWindow(bl);
 
-            if ((bool)empLoginWindow.ShowDialog())
-            {
-                new EmployeeUi(bl, empLoginWindow.GetValue()).Show();
-                Close();
-            }
+            if (!(bool)empLoginWindow.ShowDialog())
+                return;
+
+            new EmployeeUi(bl, empLoginWindow.GetValue()).Show();
+            Close();
         }
 
         private void RegBtn_Click(object sender, RoutedEventArgs e)
@@ -110,6 +116,9 @@ namespace PL.Windows
 
         private void DevBtn_Click(object sender, RoutedEventArgs e) { /* TODO: Not required by project */ }
 
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e) => DragMove();
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
     }
 }

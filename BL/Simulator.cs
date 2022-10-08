@@ -18,10 +18,8 @@ namespace BL
             {
                 // ______________________________________________________________________________________________________
                 case Free:
-
-                    try
+                    try // Drone status set to delivery if no exceptions
                     {
-                        // Drone status set to delivery if no exceptions
                         drone = AssignDroneToParcel(drone);
                     }
                     catch (Exception ex)
@@ -35,10 +33,7 @@ namespace BL
                                     drone.status = Maintenance;
                                     progress = "Will be sent to nearest charging port";
                                 }
-                                else
-                                {
-                                    progress = "Currently idle";
-                                }
+                                else progress = "Currently idle";
 
                                 break;
                         }
@@ -47,10 +42,9 @@ namespace BL
                 // ______________________________________________________________________________________________________
                 case Maintenance:
 
-                    // search for closest station for charging
                     var station = this.ClosestAvailableStation(drone);
 
-                    // drone is at station
+                    // Drone is at a station:
                     if (Location(drone).Equals(Location(station)))
                     {
                         switch (drone.battery)
@@ -66,8 +60,8 @@ namespace BL
                                 break;
                         }
                     }
-                    // drone is on its way to the station 
-                    else
+
+                    else // On its way to a station:
                     {
                         // Drone isn't at station yet
                         if (Distance(Location(drone), Location(station)) > this.Speed(drone))
@@ -94,7 +88,7 @@ namespace BL
                                         break;
 
                                     case BlNoOpenSlotsException:
-                                        //TODO: No open slots
+                                        //TODO: No open slots solution
                                         progress = "Station doesn't have any open slots";
                                         break;
                                 }
@@ -109,9 +103,7 @@ namespace BL
                     {
                         var parcel = GetParcels(p => p.active).First(p => p.droneId == drone.id);
                         if (!CanDroneMakeTrip(drone, parcel))
-                        {
                             progress = $"Parcel (id {parcel.id}) assigned to drone, but not enough battery to make trip";
-                        }
 
                         if (WaitingForDrone(parcel))
                         {
@@ -161,13 +153,9 @@ namespace BL
                         }
                         break;
                     }
-                    // ______________________________________________________________________________________________________
-
             }
 
-
             UpdateDrone(drone);
-
             return new Tuple<Drone, string>(drone, progress);
         }
     }

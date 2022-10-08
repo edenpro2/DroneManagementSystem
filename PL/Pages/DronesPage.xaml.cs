@@ -4,10 +4,12 @@ using PL.ViewModels;
 using PL.Windows;
 using System;
 using System.Collections;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using DroneWindow = PL.Windows.Tracking.DroneWindow;
 
 namespace PL.Pages
 {
@@ -43,12 +45,12 @@ namespace PL.Pages
             if (StatusComboBox.SelectedItem != null)
             {
                 var cbStatus = (DroneStatuses)StatusComboBox.SelectedItem;
-                DronesViewModel.Filtered = DronesViewModel.Filtered.Where(drone => drone.status == cbStatus).ToList();
+                DronesViewModel.Filtered = new ObservableCollection<Drone>(DronesViewModel.Filtered.Where(drone => drone.status == cbStatus));
             }
             if (WeightComboBox.SelectedItem != null)
             {
                 var cbWeight = (WeightCategories)WeightComboBox.SelectedItem;
-                DronesViewModel.Filtered = DronesViewModel.Filtered.Where(drone => drone.maxWeight == cbWeight).ToList();
+                DronesViewModel.Filtered = new ObservableCollection<Drone>(DronesViewModel.Filtered.Where(drone => drone.maxWeight == cbWeight));
             }
         }
 
@@ -61,7 +63,7 @@ namespace PL.Pages
         {
             NewDroneWindow newDroneWindow = new(_bl);
             newDroneWindow.ShowDialog();
-            DronesViewModel.Drones = _bl.GetDrones();
+            DronesViewModel.Drones = new ObservableCollection<Drone>(_bl.GetDrones());
             DronesListBox.ItemsSource = DronesViewModel.Drones;
             ClearSelButton_Click(sender, e);
         }

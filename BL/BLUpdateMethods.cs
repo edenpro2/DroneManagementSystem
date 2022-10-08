@@ -17,6 +17,7 @@ namespace BL
         public void UpdateDrone(Drone drone)
         {
             var drones = GetDrones().ToList();
+
             for (var i = 0; i < drones.Count; i++)
             {
                 if (drones[i].id == drone.id)
@@ -99,16 +100,12 @@ namespace BL
         public Drone ReceiveDroneForCharging(Drone drone)
         {
             if (drone.status is not Maintenance)
-            {
                 throw new BlDroneNotMaintainedException();
-            }
 
             var closestStation = this.ClosestAvailableStation(drone);
 
             if (closestStation.Equals(default))
-            {
                 throw new BlNoOpenSlotsException();
-            }
 
             var closestLocation = Location(closestStation);
 
@@ -136,16 +133,12 @@ namespace BL
         public Drone SendDroneToCharge(Drone drone)
         {
             if (drone.status is not Free)
-            {
                 throw new BlDroneNotFreeException();
-            }
 
             var closestStation = this.ClosestAvailableStation(drone);
 
             if (closestStation.Equals(default))
-            {
                 throw new BlNoOpenSlotsException();
-            }
 
             lock (DalApi)
             {
@@ -171,13 +164,9 @@ namespace BL
             var total = _droneChargeRate * hours;
 
             if (drone.battery + total > 100)
-            {
                 drone.battery = 100;
-            }
             else
-            {
                 drone.battery += total;
-            }
 
             UpdateDrone(drone);
             return drone;
@@ -194,9 +183,7 @@ namespace BL
         public Drone DroneReleaseAndCharge(Drone drone, int hours)
         {
             if (drone.status is not Maintenance)
-            {
                 throw new BlDroneNotMaintainedException();
-            }
 
             var droneLocation = Location(drone);
 
@@ -205,13 +192,9 @@ namespace BL
                 var batteryAfterCharge = _droneChargeRate * hours;
 
                 if (drone.battery + batteryAfterCharge > 100)
-                {
                     drone.battery = 100;
-                }
                 else
-                {
                     drone.battery += batteryAfterCharge;
-                }
 
                 drone.status = Free;
 
@@ -237,9 +220,7 @@ namespace BL
         public Drone DroneRelease(Drone drone)
         {
             if (drone.status is not Maintenance)
-            {
                 throw new BlDroneNotMaintainedException();
-            }
 
             lock (DalApi)
             {
@@ -271,18 +252,14 @@ namespace BL
         {
             // can't assign if not free
             if (drone.status is not Free)
-            {
                 throw new BlDroneNotFreeException();
-            }
 
             // look for the highest priority parcel and closest available drone 
             var parcel = BestMatchingParcel(drone);
 
             // if parcel not found will be automatically default
             if (parcel.Equals(default) || parcel.active is false)
-            {
                 throw new BlNoMatchingParcels();
-            }
 
             lock (DalApi)
             {
@@ -310,14 +287,10 @@ namespace BL
             var parcel = GetParcels(p => p.active).FirstOrDefault(p => p.droneId == drone.id);
 
             if (parcel.requested == default)
-            {
                 throw new BlNotFoundException();
-            }
 
             if (!WaitingForDrone(parcel))
-            {
                 throw new BlAlreadyCollected();
-            }
 
             lock (DalApi)
             {
@@ -457,9 +430,6 @@ namespace BL
                     .FirstOrDefault(p => CanDroneMakeTrip(drone, p));
             }
         }
-
-
-
         #endregion
     }
 }

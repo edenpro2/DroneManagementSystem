@@ -1,4 +1,4 @@
-﻿ 
+﻿
 
 using System;
 using System.Drawing;
@@ -6,8 +6,6 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
 using System.Windows.Media;
-using Color = System.Drawing.Color;
-using ColorConverter = System.Drawing.ColorConverter;
 
 namespace PL.Controls
 {

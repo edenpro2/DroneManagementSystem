@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Threading;
 using System.Windows;
 
-namespace PL.Windows
+namespace PL.Windows.Tracking
 {
     public partial class DroneWindow
     {

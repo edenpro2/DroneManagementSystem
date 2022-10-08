@@ -24,7 +24,6 @@ namespace PL.Windows
                 return;
             }
 
-
             var model = ModelBox.Text;
             var weight = (WeightCategories)WeightComboBox.SelectedItem;
 

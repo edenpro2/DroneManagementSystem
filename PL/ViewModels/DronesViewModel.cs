@@ -1,5 +1,6 @@
 ﻿using DalFacade.DO;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -8,11 +9,11 @@ namespace PL.ViewModels
 {
     public class DronesViewModel : INotifyPropertyChanged
     {
-        private IEnumerable<Drone> _drones;
+        private ObservableCollection<Drone> _drones;
 
-        private IEnumerable<Drone> _filtered;
+        private ObservableCollection<Drone> _filtered;
 
-        public IEnumerable<Drone> Drones
+        public ObservableCollection<Drone> Drones
         {
             get => _drones;
             set
@@ -22,7 +23,7 @@ namespace PL.ViewModels
             }
         }
 
-        public IEnumerable<Drone> Filtered
+        public ObservableCollection<Drone> Filtered
         {
             get => _filtered;
             set
@@ -34,7 +35,7 @@ namespace PL.ViewModels
 
         public DronesViewModel(IEnumerable<Drone> droneList)
         {
-            _filtered = _drones = droneList;
+            _filtered = _drones = new ObservableCollection<Drone>(droneList);
         }
 
         public void Update(Drone drone)

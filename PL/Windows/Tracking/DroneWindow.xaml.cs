@@ -1,13 +1,13 @@
-﻿using BL;
+﻿using System;
+using System.Windows;
+using System.Windows.Input;
+using BL;
 using BLAPI;
 using DalFacade.DO;
 using PL.Controls;
 using PL.ViewModels;
-using System;
-using System.Windows;
-using System.Windows.Input;
 
-namespace PL.Windows
+namespace PL.Windows.Tracking
 {
     public partial class DroneWindow
     {

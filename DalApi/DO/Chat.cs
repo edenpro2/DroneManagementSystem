@@ -40,10 +40,19 @@ namespace DalFacade.DO
             messages = new List<Message>();
         }
 
-        public void SendMessage(Message msg) => messages.Add(msg);
+        public void SendMessage(Message msg)
+        {
+            messages.Add(msg);
+        }
 
-        public Message GetLastMessage() => messages.Last();
+        public Message GetLastMessage()
+        {
+            return messages.Last();
+        }
 
-        public override string ToString() => $"Created on {createdOn}, between {user1.username} and {user2.username}";
+        public override string ToString()
+        {
+            return $"Created on {createdOn}, between {user1.username} and {user2.username}";
+        }
     }
 }

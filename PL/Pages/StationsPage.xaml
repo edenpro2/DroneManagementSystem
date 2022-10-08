@@ -54,18 +54,23 @@
                 Content="View as Map"
                 FontFamily="Netflix Sans Light"
                 HorizontalAlignment="Left"
-                Background="Gray"
-                BorderBrush="Gray"/>
+                Background="LightBlue"
+                BorderBrush="LightBlue"/>
 
-            <StackPanel
-                Orientation="Horizontal"
+            <Grid
                 Grid.Column="1"
                 Grid.Row="3">
-                <TextBlock Text="ID" Style="{StaticResource ListColumnHeader}" Margin="12,0,0,0" />
-                <TextBlock Text="Name" Style="{StaticResource ListColumnHeader}" Margin="270,0,0,0" />
-                <TextBlock Text="Open Slots" Style="{StaticResource ListColumnHeader}" Margin="253,0,0,0" />
-                <TextBlock Text="Location" Style="{StaticResource ListColumnHeader}" Margin="219,0,0,0" />
-            </StackPanel>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="ID" Style="{StaticResource ListColumnHeader}" Grid.Column="0" Margin="15,0,0,0" />
+                <TextBlock Text="Name" Style="{StaticResource ListColumnHeader}" Grid.Column="1" Margin="2,0,0,0" />
+                <TextBlock Text="Open Slots" Style="{StaticResource ListColumnHeader}" Grid.Column="2" />
+                <TextBlock Text="Location" Style="{StaticResource ListColumnHeader}" Grid.Column= "3"/>
+            </Grid>
 
             <ListBox
                 x:Name="StationListBox"
@@ -73,9 +78,9 @@
                 ItemsSource="{Binding stationsViewModel}"
                 HorizontalContentAlignment="Stretch"
                 Grid.Column="1"
+                Grid.Row="4"
                 MouseDoubleClick="StationListBox_Click"
-                ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                Grid.Row="4">
+                ScrollViewer.VerticalScrollBarVisibility="Disabled">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem" BasedOn="{StaticResource PageListBoxItem}"/>
                 </ListBox.ItemContainerStyle>
@@ -83,16 +88,17 @@
                     <DataTemplate>
                         <Grid>
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="6*" />
                             </Grid.ColumnDefinitions>
 
                             <TextBlock
                                 Grid.Column="0"
                                 Text="{Binding Station.id}"
-                                TextAlignment="Left" Margin="10,0,0,0" />
+                                TextAlignment="Left" 
+                                Margin="10,0,0,0" />
                             <TextBlock
                                 Grid.Column="1"
                                 Text="{Binding Station.name}"

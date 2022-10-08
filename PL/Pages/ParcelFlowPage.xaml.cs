@@ -1,4 +1,5 @@
-﻿using BLAPI;
+﻿using System.Collections.ObjectModel;
+using BLAPI;
 using DalFacade.DO;
 using PL.ViewModels;
 using System.Linq;
@@ -38,13 +39,25 @@ namespace PL.Pages
             DataContext = this;
         }
 
-        private void AllOrders_Click(object sender, RoutedEventArgs e) => parcels.Filtered = parcels.Parcels;
+        private void AllOrders_Click(object sender, RoutedEventArgs e)
+        {
+            parcels.Filtered = parcels.Parcels;
+        }
 
-        private void Completed_Click(object sender, RoutedEventArgs e) => parcels.Filtered = parcels.Parcels.Where(p => p.Delivered != default).ToList();
+        private void Completed_Click(object sender, RoutedEventArgs e)
+        {
+            parcels.Filtered = new ObservableCollection<ParcelViewModel>(parcels.Parcels.Where(p => p.Delivered != default));
+        }
 
-        private void Ongoing_Click(object sender, RoutedEventArgs e) => parcels.Filtered = parcels.Parcels.Where(p => p.Delivered == default && p.Requested != default).ToList();
+        private void Ongoing_Click(object sender, RoutedEventArgs e)
+        {
+            parcels.Filtered = new ObservableCollection<ParcelViewModel>(parcels.Parcels.Where(p => p.Delivered == default && p.Requested != default));
+        }
 
-        private void Pending_Click(object sender, RoutedEventArgs e) => parcels.Filtered = parcels.Parcels.Where(p => p.Scheduled == default).ToList();
+        private void Pending_Click(object sender, RoutedEventArgs e)
+        {
+            parcels.Filtered = new ObservableCollection<ParcelViewModel>(parcels.Parcels.Where(p => p.Scheduled == default));
+        }
 
         private const string SentHeader = "Sent Parcels";
 

@@ -5,10 +5,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
-    xmlns:windows="clr-namespace:PL.Windows"
     xmlns:controls="clr-namespace:PL.Controls"
-    d:DataContext="{d:DesignInstance Type=windows:CustomerWindow}"
-    x:Class="PL.Windows.CustomerWindow"
+    xmlns:tracking="clr-namespace:PL.Windows.Tracking"
+    d:DataContext="{d:DesignInstance Type=tracking:StationWindow}"
+    x:Class="PL.Windows.Tracking.StationWindow"
     mc:Ignorable="d"
     Title="Login"
     Height="600"
@@ -19,41 +19,7 @@
     WindowStyle="None"
     WindowStartupLocation="CenterScreen"
     MouseLeftButtonDown="Window_MouseLeftBtnDown">
-
-    <!-- Styles -->
-    <Window.Resources>
-        <ResourceDictionary>
-
-            <Style x:Key="InfoHeader" TargetType="TextBlock">
-                <Setter Property="FontSize" Value="20" />
-                <Setter Property="FontFamily" Value="Dubai Medium" />
-                <Setter Property="Foreground" Value="#FF413940" />
-                <Setter Property="VerticalAlignment" Value="Top" />
-            </Style>
-
-            <Style x:Key="InfoDetails" TargetType="TextBlock">
-                <Setter Property="FontSize" Value="20" />
-                <Setter Property="FontFamily" Value="Dubai" />
-                <Setter Property="Foreground" Value="#FFB2B2B3" />
-                <Setter Property="VerticalAlignment" Value="Center" />
-                <Setter Property="HorizontalAlignment" Value="Left" />
-            </Style>
-
-            <DropShadowEffect
-                x:Key="DropShadowEffect"
-                BlurRadius="17"
-                Direction="-75"
-                Color="#333333"
-                ShadowDepth="5"
-                Opacity="0.2" />
-            <Style TargetType="Border">
-                <Setter Property="Effect" Value="{StaticResource DropShadowEffect}" />
-            </Style>
-
-        </ResourceDictionary>
-    </Window.Resources>
-    <!-- End of Styles-->
-
+    
     <materialDesign:Card
         UniformCornerRadius="10"
         Background="{DynamicResource MaterialDesignPaper}"
@@ -72,14 +38,17 @@
                 <RowDefinition Height="{Binding ElementName=EdgeRow, Path=Height}" />
             </Grid.RowDefinitions>
 
-            <DockPanel Grid.Column="1" Grid.Row="1">
+            <DockPanel
+                Grid.Column="1" 
+                Grid.Row="1">
                 <Border
+                    Style="{StaticResource BorderShadowEffect}"
                     Background="White"
                     BorderThickness="1"
                     CornerRadius="3" Width="438">
                     <Grid>
                         <TextBlock
-                        Text="Customer Information"
+                        Text="Station Information"
                         FontSize="20"
                         FontFamily="Dubai Medium"
                         Margin="10,20,0,0"
@@ -97,15 +66,20 @@
                                Style="{StaticResource InfoHeader}"
                                HorizontalAlignment="Left" />
                             <TextBlock
-                               Text="Phone"
+                               Text="Slots available"
                                Margin="0,15,0,0"
                                Style="{StaticResource InfoHeader}" 
                                HorizontalAlignment="Left" />
                             <TextBlock
-                               Text="Active"
+                               Text="Total ports"
                                Margin="0,15,0,0"
                                Style="{StaticResource InfoHeader}" 
                                HorizontalAlignment="Left" />
+                            <TextBlock
+                                Text="Active"
+                                Margin="0,15,0,0"
+                                Style="{StaticResource InfoHeader}" 
+                                HorizontalAlignment="Left" />
                             <TextBlock
                                Text="Location"
                                Margin="0,15,0,0"
@@ -115,18 +89,22 @@
 
                         <StackPanel Margin="147,100,0,0" DataContext="{Binding ViewModel}">
                             <TextBlock
-                                Text="{Binding Customer.id}"
+                                Text="{Binding Station.id}"
                                 Style="{StaticResource InfoDetails}"/>
                             <TextBlock
-                                Text="{Binding Customer.name}"
+                                Text="{Binding Station.name}"
                                 Margin="0,15,0,0"
                                 Style="{StaticResource InfoDetails}"/>
                             <TextBlock
-                                Text="{Binding Customer.phone}"
+                                Text="{Binding Station.openSlots}"
                                 Margin="0,15,0,0"
                                 Style="{StaticResource InfoDetails}" />
                             <TextBlock
-                                Text="{Binding Customer.active}"
+                                Text="{Binding Station.ports}"
+                                Margin="0,15,0,0"
+                                Style="{StaticResource InfoDetails}" />
+                            <TextBlock
+                                Text="{Binding Station.active}"
                                 Margin="0,15,0,0"
                                 Style="{StaticResource InfoDetails}" />
                             <TextBlock
@@ -152,14 +130,15 @@
 
             </DockPanel>
 
-            <!-- Window Controls -->
             <controls:WindowControls
-                x:Name="CustomButtons"
-                Margin="10"
                 Grid.Row="0"
-                Grid.Column="2">
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                HorizontalAlignment="Right"
+                x:Name="CustomButtons"
+                Margin="0 10 10 0">
             </controls:WindowControls>
-            <!-- End: Button Close | Restore | Minimize -->
+
         </Grid>
     </materialDesign:Card>
 

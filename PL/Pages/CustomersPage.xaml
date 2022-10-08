@@ -82,6 +82,7 @@
                                 <TextBlock 
                                     Text="ID" 
                                     Style="{StaticResource ListColumnHeader}"
+                                    Margin="10 0 0 0"
                                     Grid.Column="0"/>
                                 <TextBlock
                                     Text="Name" 
@@ -119,6 +120,7 @@
 
                             <TextBlock
                                 Grid.Column="0"
+                                Margin="5 0 0 0"
                                 Text="{Binding Customer.id}"/>
                             <TextBlock
                                 Grid.Column="1"

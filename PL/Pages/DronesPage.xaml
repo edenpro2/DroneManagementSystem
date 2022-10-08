@@ -157,7 +157,8 @@
                                 <TextBlock 
                                     Text="ID" 
                                     Style="{StaticResource ListColumnHeader}"
-                                    Grid.Column="0"/>
+                                    Grid.Column="0"
+                                    Margin="10 0 0 0"/>
                                 <TextBlock
                                     Text="Model" 
                                     Style="{StaticResource ListColumnHeader}"
@@ -201,6 +202,7 @@
 
                             <TextBlock
                                 Grid.Column="0"
+                                Margin="5 0 0 0"
                                 Text="{Binding id}"/>
                             <TextBlock
                                 Grid.Column="1"

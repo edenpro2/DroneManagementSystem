@@ -11,7 +11,6 @@ namespace BL
     public partial class Bl : BlApi
     {
         private static BlApi _instance;
-
         public static BlApi Instance => _instance ??= new Bl();
 
         #region Constants
@@ -31,29 +30,26 @@ namespace BL
         {
             #region Pre-initialization
             int i;
-            var rand = new Random();
             var rates = DalApi.RequestPowerConsumption();
-            for (i = 0; i < NumOfRates; i++)
-            {
+
+            for (i = 0; i < NumOfRates; i++) 
                 _droneConsumptionRates[i] = rates[i];
-            }
             _droneChargeRate = rates[i];
 
             var parcels = DalApi.GetParcels().ToList();
             var customers = DalApi.GetCustomers().ToList();
             _droneId = _drones.Count;
-
             #endregion
 
+            var rand = new Random();
             // All parcels have different stages...but no drone assigned to them yet
             foreach (var p in parcels)
             {
-                // Check if there are any free drones
                 var drone = GetFreeRandomDrone(rand, p);
+
+                // if drone isn't active, skip it
                 if (drone.active == false)
-                {
                     break;
-                }
 
                 var parcel = p;
                 parcel.droneId = drone.id;
@@ -99,7 +95,7 @@ namespace BL
                 UpdateParcel(parcel);
             }
 
-            // Only drones that aren't in delivery will be processed further
+            // Only drones that aren't in delivery will be processed 
             foreach (var d in _drones.Where(d => d.status != DroneStatuses.Delivery))
             {
                 var drone = d;
@@ -134,7 +130,10 @@ namespace BL
 
         private Drone GetFreeRandomDrone(Random rand, Parcel parcel)
         {
-            return _drones.Where(d => d.status is DroneStatuses.Free or null).OrderBy(_ => rand.Next()).FirstOrDefault(d => CanDroneMakeTrip(d, parcel));
+            return _drones.
+                Where(d => d.status is DroneStatuses.Free or null).
+                OrderBy(_ => rand.Next()).
+                FirstOrDefault(d => CanDroneMakeTrip(d, parcel));
         }
 
         private int MinForTripToStation(Drone drone)

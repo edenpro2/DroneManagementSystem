@@ -56,18 +56,26 @@
                 Background="Gray"
                 BorderBrush="Gray"/>
 
-            <StackPanel
-                Orientation="Horizontal"
+            <Grid
                 Grid.Column="1"
                 Grid.Row="3">
-                <TextBlock Text="ID" Style="{StaticResource ListColumnHeader}" Margin="15,0,0,0" />
-                <TextBlock Text="Drone ID" Style="{StaticResource ListColumnHeader}" Margin="157,0,0,0" />
-                <TextBlock Text="Sender ID" Style="{StaticResource ListColumnHeader}" Margin="158,0,0,0" />
-                <TextBlock Text="Target ID" Style="{StaticResource ListColumnHeader}" Margin="207,0,0,0" />
-                <TextBlock Text="Weight" Style="{StaticResource ListColumnHeader}" Margin="162,0,0,0" />
-                <TextBlock Text="Priority" Style="{StaticResource ListColumnHeader}" Margin="290,0,0,0" />
-                <TextBlock Text="Requested" Style="{StaticResource ListColumnHeader}" Margin="287,0,0,0" />
-            </StackPanel>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.2*"/>
+                    <ColumnDefinition Width="1.4*"/>
+                    <ColumnDefinition Width="1.2*"/>
+                    <ColumnDefinition Width="1.2*"/>
+                    <ColumnDefinition Width="1.9*"/>
+                    <ColumnDefinition Width="2.5*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="ID" Style="{StaticResource ListColumnHeader}" Grid.Column="0" Margin="10 0 0 0" />
+                <TextBlock Text="Drone ID" Style="{StaticResource ListColumnHeader}" Grid.Column="1" />
+                <TextBlock Text="Sender ID" Style="{StaticResource ListColumnHeader}" Grid.Column="2" />
+                <TextBlock Text="Target ID" Style="{StaticResource ListColumnHeader}" Grid.Column="3" HorizontalAlignment="Center" />
+                <TextBlock Text="Weight" Style="{StaticResource ListColumnHeader}" Grid.Column="4" HorizontalAlignment="Center"/>
+                <TextBlock Text="Priority" Style="{StaticResource ListColumnHeader}" Grid.Column="5" HorizontalAlignment="Center"/>
+                <TextBlock Text="Requested" Style="{StaticResource ListColumnHeader}" Grid.Column="6" HorizontalAlignment="Center"/>
+            </Grid>
 
             <!-- MouseDoubleClick="ParcelsListBox_Click" -->
             <ListBox
@@ -127,9 +135,7 @@
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
-
             </ListBox>
-
 
         </Grid>
 

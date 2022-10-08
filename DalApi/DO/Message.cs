@@ -25,8 +25,10 @@ namespace DalFacade.DO
         [XmlAttribute]
         public string recipientName { get; set; }
 
-        private string GetMessage() => text;
-
+        private string GetMessage()
+        {
+            return text;
+        }
 
         public Message(string msg, int sender, int recipient, string sName, string rName)
         {
@@ -38,7 +40,9 @@ namespace DalFacade.DO
             recipientName = rName;
         }
 
-        public override string ToString() => $"At {sentTime}, {senderId} sent {recipientId}: {GetMessage()}";
-
+        public override string ToString()
+        {
+            return $"At {sentTime}, {senderId} sent {recipientId}: {GetMessage()}";
+        }
     }
 }

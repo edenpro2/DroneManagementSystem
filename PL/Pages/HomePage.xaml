@@ -85,9 +85,9 @@
                 x:Name="Button"
                 Style="{StaticResource MenuButton}"
                 Resources="{StaticResource RoundedCorners}"
-                MouseLeftButtonDown="NewParcelBtn_Click"
+                Click="NewParcelBtn_Click"
                 Grid.Row="1"
-                Grid.Column="1">
+                Grid.Column="1" >
                 <DockPanel>
                     <Grid Style="{StaticResource InnerGrid}">
                         <Ellipse/>
@@ -108,7 +108,7 @@
             <Button
                 Style="{StaticResource MenuButton}"
                 Resources="{StaticResource RoundedCorners}"
-                MouseLeftButtonDown="SentBtn_Click"
+                Click="SentBtn_Click"
                 Grid.Row="3"
                 Grid.Column="1">
                 <DockPanel>
@@ -133,7 +133,7 @@
                 Resources="{StaticResource RoundedCorners}"
                 Grid.Row="1"
                 Grid.Column="3"
-                MouseLeftButtonDown="SettingsBtn_Click">
+                Click="SettingsBtn_Click">
                 <DockPanel>
                     <Grid Style="{StaticResource InnerGrid}">
                         <Ellipse/>
@@ -154,16 +154,14 @@
             <Button
                 Style="{StaticResource MenuButton}"
                 Resources="{StaticResource RoundedCorners}"
-                MouseLeftButtonDown="ScheduledBtn_Click" 
+                Click="ScheduledBtn_Click" 
                 Grid.Row="3"
                 Grid.Column="3">
                 <DockPanel>
-
                     <Grid Style="{StaticResource InnerGrid}" >
                         <Ellipse/>
                         <Image Source="/Icons/incoming.png" />
                     </Grid>
-
                     <StackPanel
                         VerticalAlignment="Center">
                         <TextBlock
@@ -176,7 +174,6 @@
                             <Run Text="way to you" />
                         </TextBlock>
                     </StackPanel>
-
                 </DockPanel>
             </Button>
 
