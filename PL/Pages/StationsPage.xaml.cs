@@ -1,11 +1,11 @@
 ﻿using BLAPI;
 using PL.ViewModels;
 using PL.Windows;
+using PL.Windows.Tracking;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using PL.Windows.Tracking;
 
 namespace PL.Pages
 {
@@ -19,7 +19,6 @@ namespace PL.Pages
             _bl = ibl;
             stationsViewModel = ibl.GetStations(s => s.active).Select(s => new StationViewModel(s)).ToList();
             InitializeComponent();
-            DataContext = this;
         }
 
         private void StationListBox_Click(object sender, MouseButtonEventArgs e)

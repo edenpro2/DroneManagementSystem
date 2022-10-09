@@ -1,8 +1,8 @@
-﻿using System;
-using System.Windows.Input;
-using DalFacade.DO;
+﻿using DalFacade.DO;
 using PL.Controls;
 using PL.ViewModels;
+using System;
+using System.Windows.Input;
 
 namespace PL.Windows.Tracking
 {
@@ -13,10 +13,9 @@ namespace PL.Windows.Tracking
 
         public CustomerWindow(CustomerViewModel cvm)
         {
-            ViewModel = cvm;
             InitializeComponent();
+            ViewModel = cvm;
             CustomButtons = new WindowControls(this);
-            DataContext = this;
             MapUri.Uri = NewMapUri(new Location(cvm.Customer.latitude, cvm.Customer.longitude));
         }
 

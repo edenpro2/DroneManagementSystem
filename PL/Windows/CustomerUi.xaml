@@ -1,15 +1,15 @@
 ﻿<Window x:Class="PL.Windows.CustomerUi"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      xmlns:windows="clr-namespace:PL.Windows"
       xmlns:controls="clr-namespace:PL.Controls"
       mc:Ignorable="d"
       AllowsTransparency="True"
       Title="CustomerUI"
-      d:DataContext="{d:DesignInstance Type=windows:CustomerUi}"
+      DataContext="{Binding RelativeSource={RelativeSource Self}}"
       MinHeight="920" MinWidth="1450"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
       Background="{x:Null}"
@@ -17,16 +17,19 @@
       WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
+        
+        <sys:Double x:Key="Selected">1.0</sys:Double>
+        <sys:Double x:Key="Unselected">0.5</sys:Double>
 
         <Style TargetType="{x:Type RadioButton}">
-            <Setter Property="Opacity" Value="{Binding Unselected}"/>
+            <Setter Property="Opacity" Value="{StaticResource Unselected}"/>
             <Setter Property="Margin" Value="15 0 0 0"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Opacity" Value="{Binding Selected}"/>
+                    <Setter Property="Opacity" Value="{StaticResource Selected}"/>
                 </Trigger>
                 <Trigger Property="IsChecked" Value="True">
-                    <Setter Property="Opacity" Value="{Binding Selected}"/>
+                    <Setter Property="Opacity" Value="{StaticResource Selected}"/>
                 </Trigger>
             </Style.Triggers>
         </Style>

@@ -1,7 +1,7 @@
-﻿using System.Collections.ObjectModel;
-using BLAPI;
+﻿using BLAPI;
 using DalFacade.DO;
 using PL.ViewModels;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 
@@ -35,8 +35,6 @@ namespace PL.Pages
             }
 
             InitializeComponent();
-            // Must set data context, else parcels don't appear
-            DataContext = this;
         }
 
         private void AllOrders_Click(object sender, RoutedEventArgs e)

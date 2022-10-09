@@ -4,15 +4,14 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      xmlns:local="clr-namespace:PL.Pages"
       mc:Ignorable="d"
       MinHeight="600"
       MinWidth="1200"
       Title="CustomersPage"
-      d:DataContext="{d:DesignInstance Type=local:CustomersPage}"
+      DataContext="{Binding RelativeSource={RelativeSource Self}}"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
       Background="{x:Null}">
-
+ 
     <materialDesign:Card
         materialDesign:ShadowAssist.ShadowDepth="Depth0" Background="#f2f3f7">
         <Grid>

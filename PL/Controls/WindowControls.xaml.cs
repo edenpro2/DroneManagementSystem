@@ -4,7 +4,7 @@ namespace PL.Controls
 {
     public partial class WindowControls
     {
-        private static DependencyObject WindowObject;
+        private static DependencyObject WindowObject = new();
 
         private static DependencyObject Window => (Window)WindowObject;
 

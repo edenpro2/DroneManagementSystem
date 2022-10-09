@@ -1,6 +1,5 @@
-﻿using System.Windows;
-using PL.Windows;
-using System.Windows.Input;
+﻿using PL.Windows;
+using System.Windows;
 
 namespace PL.Pages
 {
@@ -32,7 +31,7 @@ namespace PL.Pages
         private void ScheduledBtn_Click(object sender, RoutedEventArgs e)
         {
             customerUi.TrackSentToBtn_Click(sender, e);
-        }   
- 
+        }
+
     }
 }

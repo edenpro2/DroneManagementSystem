@@ -6,8 +6,7 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
     xmlns:controls="clr-namespace:PL.Controls"
-    xmlns:tracking="clr-namespace:PL.Windows.Tracking"
-    d:DataContext="{d:DesignInstance Type=tracking:StationWindow}"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
     x:Class="PL.Windows.Tracking.StationWindow"
     mc:Ignorable="d"
     Title="Login"
@@ -100,7 +99,7 @@
                                 Margin="0,15,0,0"
                                 Style="{StaticResource InfoDetails}" />
                             <TextBlock
-                                Text="{Binding Station.ports}"
+                                Text="{Binding Station.ports.Capacity}"
                                 Margin="0,15,0,0"
                                 Style="{StaticResource InfoDetails}" />
                             <TextBlock
@@ -130,14 +129,14 @@
 
             </DockPanel>
 
+            <!-- Window Controls -->
             <controls:WindowControls
+                x:Name="CustomButtons"
+                Margin="2"
                 Grid.Row="0"
                 Grid.Column="1"
-                Grid.ColumnSpan="2"
-                HorizontalAlignment="Right"
-                x:Name="CustomButtons"
-                Margin="0 10 10 0">
-            </controls:WindowControls>
+                Grid.ColumnSpan="2"/>
+            <!-- End: Button Close | Restore | Minimize -->
 
         </Grid>
     </materialDesign:Card>

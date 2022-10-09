@@ -11,7 +11,7 @@
       mc:Ignorable="d"
       MinHeight="720" 
       MinWidth="1340"
-      d:DataContext="{d:DesignInstance Type=viewModels:UserViewModel}"
+      DataContext="{Binding RelativeSource={RelativeSource Self}}"
       Title="SettingsPage"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}">
 

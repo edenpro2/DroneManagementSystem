@@ -9,13 +9,12 @@ namespace PL.Windows
     public partial class EmployeeLoginWindow
     {
         private readonly BlApi _bl;
-        private User _user = new();
+        private User? _user;
 
         public EmployeeLoginWindow(BlApi ibl)
         {
-            _bl = ibl;
             InitializeComponent();
-            DataContext = this;
+            _bl = ibl;
         }
 
         private void LoginBtn_Click(object sender, RoutedEventArgs e)
@@ -34,7 +33,7 @@ namespace PL.Windows
             else
             {
                 var user = _bl.GetUsers(u => u.active).FirstOrDefault(u => u.username == username);
-                if (user.password == password)
+                if (user?.password == password)
                 {
                     _user = user;
                     DialogResult = true;
@@ -48,7 +47,7 @@ namespace PL.Windows
 
         }
 
-        internal User GetValue() => _user;
+        internal User? GetValue() => _user;
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {

@@ -4,13 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:windows="clr-namespace:PL.Windows"
         xmlns:controls="clr-namespace:PL.Controls"
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
-        d:DataContext="{d:DesignInstance Type=windows:MainWindow}"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
         mc:Ignorable="d"
         Title="MainWindow" 
-        MinHeight="820" MinWidth="1450"
+        MinHeight="820" 
+        MinWidth="1450"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{x:Null}"
         AllowsTransparency="True"
@@ -42,9 +42,9 @@
             <BeginStoryboard>
                 <Storyboard>
                     <DoubleAnimation
-                        Duration="00:00:0.5" 
+                        Duration="00:00:2" 
                         Storyboard.TargetProperty="Opacity"
-                        From="0" To="1" />
+                        From="0.25" To="1" />
                 </Storyboard>
             </BeginStoryboard>
         </EventTrigger>
@@ -200,7 +200,7 @@
                     </StackPanel>
 
                     <Button
-                        ToolTip="Having Troubles in Logging In?"
+                        ToolTip="Having trouble logging in?"
                         Margin="0 8 0 0"
                         Content="Help Me" />
                     <Button

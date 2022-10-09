@@ -1,11 +1,11 @@
 ﻿using BLAPI;
 using PL.ViewModels;
 using PL.Windows;
+using PL.Windows.Tracking;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using PL.Windows.Tracking;
 
 namespace PL.Pages
 {
@@ -17,12 +17,11 @@ namespace PL.Pages
         public ParcelsPage(BlApi ibl)
         {
             _bl = ibl;
-            parcelsViewModel = 
+            parcelsViewModel =
                 ibl.GetParcels()
                 .Select(p => new ParcelViewModel(_bl, p)).ToList();
 
             InitializeComponent();
-            DataContext = this;
         }
 
         private void ParcelListBox_Click(object sender, MouseButtonEventArgs e)

@@ -12,61 +12,50 @@ namespace PL.Windows
 {
     public partial class CustomerUi
     {
-        private readonly BlApi _bl;
-        private Page CurrentPage { get; set; }
-        public static double Selected => 1.0;
-        public static double Unselected => 0.5;
+        private readonly BlApi _bl;  
         public UserViewModel ViewModel { get; }
-
+ 
         public CustomerUi(BlApi ibl, User user)
         {
             _bl = ibl;
             var customer = _bl.SearchForCustomer(c => c.id == user.customerId);
             ViewModel = new UserViewModel(user, customer.phone, customer.name, user.profilePic);
+            this.CustomButtons = new WindowControls(this);
             InitializeComponent();
-            DataContext = this;
-            CustomButtons = new WindowControls(this);
-            CurrentPage = new HomePage(this);
-            PagesNavigation.Navigate(CurrentPage);
+            PagesNavigation.Navigate(new HomePage(this));
         }
 
         private void HomeBtn_Click(object sender, RoutedEventArgs e)
         {
-            CurrentPage = new HomePage(this);
-            PagesNavigation.Navigate(CurrentPage);
+            PagesNavigation.Navigate(new HomePage(this));
         }
 
         public void AddPackageBtn_Click(object sender, RoutedEventArgs e)
         {
-            CurrentPage = new AddParcelPage(_bl, ViewModel.User);
-            PagesNavigation.Navigate(CurrentPage);
+            PagesNavigation.Navigate(new AddParcelPage(_bl, ViewModel.User));
         }
 
         public void TrackSentByBtn_Click(object sender, RoutedEventArgs e)
         {
-            CurrentPage = new ParcelFlowPage(_bl, ViewModel.User, "sent");
-            PagesNavigation.Navigate(CurrentPage);
+            PagesNavigation.Navigate(new ParcelFlowPage(_bl, ViewModel.User, "sent"));
         }
 
         public void TrackSentToBtn_Click(object sender, RoutedEventArgs e)
         {
-            CurrentPage = new ParcelFlowPage(_bl, ViewModel.User, "received");
-            PagesNavigation.Navigate(CurrentPage);
+            PagesNavigation.Navigate(new ParcelFlowPage(_bl, ViewModel.User, "received"));
         }
 
         public void SettingsBtn_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.User = _bl.SearchForUser(u => ViewModel.User.customerId == u.customerId);
-            CurrentPage = new SettingsPage(_bl, ViewModel.User);
-            PagesNavigation.Navigate(CurrentPage);
+            PagesNavigation.Navigate(new SettingsPage(_bl, ViewModel.User));
         }
-
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e) => DragMove();
 
         private void ChatBtn_Click(object sender, RoutedEventArgs e)
         {
-            CurrentPage = new ChatsPage(_bl.GetCustomers(c => c.active).ToList(), _bl.GetChats(), ViewModel.User);
-            PagesNavigation.Navigate(CurrentPage);
+            PagesNavigation.Navigate(new ChatsPage(_bl.GetCustomers(c => c.active).ToList(), _bl.GetChats(), ViewModel.User));
         }
+
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e) => DragMove();
     }
 }

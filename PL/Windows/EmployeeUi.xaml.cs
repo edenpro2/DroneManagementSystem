@@ -1,5 +1,6 @@
 ﻿using BLAPI;
 using DalFacade.DO;
+using PL.Controls;
 using PL.Pages;
 using PL.ViewModels;
 using System.Windows;
@@ -18,7 +19,8 @@ namespace PL.Windows
             var customer = _bl.SearchForCustomer(c => c.id == user.customerId);
             ViewModel = new UserViewModel(user, customer.phone, customer.name, user.profilePic);
             InitializeComponent();
-            DataContext = this;
+            //Set custom controls reference to this window
+            CustomButtons = new WindowControls(this);
             PagesNavigation.Navigate(new DronesPage(_bl));
         }
 

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Windows.Input;
-using BLAPI;
+﻿using BLAPI;
 using DalFacade.DO;
 using PL.Controls;
 using PL.ViewModels;
+using System;
+using System.Windows.Input;
 
 namespace PL.Windows.Tracking
 {
@@ -15,11 +15,10 @@ namespace PL.Windows.Tracking
         public ParcelWindow(BlApi bl, ParcelViewModel pvm)
         {
             ViewModel = pvm;
-            InitializeComponent();
-            DataContext = this;
             CustomButtons = new WindowControls(this);
             var loc = bl.Location(bl.SearchForDrone(d => pvm.Id == d.id));
             MapUri.Uri = NewMapUri(new Location(loc.latitude, loc.longitude));
+            InitializeComponent();
         }
 
         private static Uri NewMapUri(Location location)

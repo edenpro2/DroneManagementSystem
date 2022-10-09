@@ -6,8 +6,7 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
     xmlns:controls="clr-namespace:PL.Controls"
-    xmlns:tracking="clr-namespace:PL.Windows.Tracking"
-    d:DataContext="{d:DesignInstance Type=tracking:CustomerWindow}"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
     x:Class="PL.Windows.Tracking.CustomerWindow"
     mc:Ignorable="d"
     Title="Login"
@@ -155,9 +154,10 @@
             <!-- Window Controls -->
             <controls:WindowControls
                 x:Name="CustomButtons"
-                Margin="10"
+                Margin="2"
                 Grid.Row="0"
-                Grid.Column="2" />
+                Grid.Column="1"
+                Grid.ColumnSpan="2"/>
             <!-- End: Button Close | Restore | Minimize -->
         </Grid>
     </materialDesign:Card>

@@ -17,37 +17,34 @@ namespace PL.Windows
     public partial class MainWindow
     {
         private static readonly BlApi bl = BlFactory.GetBl();
-        private Image background { get; } = new();
-        private readonly BackgroundWorker _backgroundWorker;
-        private static User _user = new();
+        private BackgroundWorker? _bgThread;
+        private static User? _user;
 
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = this;
             CustomButtons = new WindowControls(this);
-            background.Source = new BitmapImage(new Uri("../Resources/Wallpaper.jpg", UriKind.Relative));
-            _backgroundWorker = new BackgroundWorker();
         }
 
         private void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
-            // Disable login and make create button a cancel.
-            ChangeButtonState();
+            _bgThread = new();
 
-            _backgroundWorker.WorkerReportsProgress = true;
-            _backgroundWorker.WorkerSupportsCancellation = true;
-            _backgroundWorker.DoWork += BackgroundWorker_DoWork;
-            _backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
-            _backgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
+            // Disable login 
+            ChangeButtonState();
+            _bgThread.WorkerReportsProgress = true;
+            _bgThread.WorkerSupportsCancellation = true;
+            _bgThread.DoWork += BackgroundWorker_DoWork;
+            _bgThread.ProgressChanged += BackgroundWorker_ProgressChanged;
+            _bgThread.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
 
             // Start the background worker.
-            _backgroundWorker.RunWorkerAsync();
+            _bgThread.RunWorkerAsync();
         }
 
         private void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
         {
-            _backgroundWorker.ReportProgress(1);
+            _bgThread?.ReportProgress(1);
             Dispatcher.Invoke(() => _user = bl.GetUsers(u => u.username == UsernameBox.Text).FirstOrDefault());
         }
 
@@ -59,11 +56,12 @@ namespace PL.Windows
         private void BackgroundWorker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
         {
             Task.Delay(1500).ContinueWith(_ => { Dispatcher.Invoke(Login); });
+            _bgThread?.CancelAsync();
         }
 
         private void Login()
         {
-            if (_user.username == null)
+            if (_user == null || _user.username == null)
             {
                 ErrorTextBlock.Text = "User not found. If you are new, try registering";
                 ChangeButtonState();
@@ -75,7 +73,7 @@ namespace PL.Windows
             }
             else
             {
-                new CustomerUi(bl, _user).Show();
+                new CustomerUi(bl, _user).Show();   
                 Close();
             }
         }
@@ -103,7 +101,12 @@ namespace PL.Windows
             if (!(bool)empLoginWindow.ShowDialog())
                 return;
 
-            new EmployeeUi(bl, empLoginWindow.GetValue()).Show();
+            _user = empLoginWindow.GetValue();
+
+            if (_user == null)
+                return;
+
+            new EmployeeUi(bl, _user).Show();
             Close();
         }
 
@@ -114,11 +117,11 @@ namespace PL.Windows
             regWindow.ShowDialog();
         }
 
-        private void DevBtn_Click(object sender, RoutedEventArgs e) { /* TODO: Not required by project */ }
-
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
-        {
-            DragMove();
+        private void DevBtn_Click(object sender, RoutedEventArgs e)
+        { 
+            //TODO: Expansion
         }
+
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e) => DragMove();
     }
 }

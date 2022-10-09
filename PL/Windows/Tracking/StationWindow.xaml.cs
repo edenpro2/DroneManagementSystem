@@ -1,8 +1,8 @@
-﻿using System;
-using System.Windows.Input;
-using DalFacade.DO;
+﻿using DalFacade.DO;
 using PL.Controls;
 using PL.ViewModels;
+using System;
+using System.Windows.Input;
 
 namespace PL.Windows.Tracking
 {
@@ -14,10 +14,9 @@ namespace PL.Windows.Tracking
         public StationWindow(StationViewModel svm)
         {
             ViewModel = svm;
-            InitializeComponent();
             CustomButtons = new WindowControls(this);
-            DataContext = this;
             MapUri.Uri = NewMapUri(new Location(svm.Station.latitude, svm.Station.longitude));
+            InitializeComponent();
         }
 
         private static Uri NewMapUri(Location location)

@@ -17,9 +17,7 @@ namespace PL.Pages
             personalChats = new ChatsViewModel(customers, ref allChats, user);
             this.user = user;
             UserList = customers.Select(c => c.name).ToList();
-
             InitializeComponent();
-            DataContext = this;
         }
 
         private string _searchText = "";

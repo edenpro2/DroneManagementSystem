@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL.Windows"
         xmlns:controls="clr-namespace:PL.Controls"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        d:DataContext="{d:DesignInstance Type=local:Map}"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         mc:Ignorable="d"
         Height="1100" Width="1300"

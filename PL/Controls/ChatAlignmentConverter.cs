@@ -20,7 +20,7 @@ namespace PL.Controls
 
             else return HorizontalAlignment.Left;
         }
-        
+
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotSupportedException();

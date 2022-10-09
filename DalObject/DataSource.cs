@@ -56,16 +56,16 @@ namespace DalObject
             var seed = BitConverter.ToInt32(data, 0) & (int.MaxValue - 1);
             var rand = new Random(seed);
 
-            const int stationCap = 5;
-            const int droneCap = 10;
-            const int customerCap = 10;
-            const int parcelCap = 10;
+            const int STATION_MAX = 5;
+            const int DRONE_MAX = 10;
+            const int CUSTOMER_MAX = 10;
+            const int PARCEL_MAX = 30;
 
             #endregion
 
             #region Random intialize loops
 
-            for (var i = 0; i < droneCap; ++i)
+            for (var i = 0; i < DRONE_MAX; ++i)
             {
                 Drone drone = new(
                     Config.DroneId++,
@@ -75,7 +75,7 @@ namespace DalObject
                 Drones.Add(drone);
             }
 
-            for (var i = 0; i < stationCap; ++i)
+            for (var i = 0; i < STATION_MAX; ++i)
             {
                 var location = Randomize.LocationInRadius();
 
@@ -89,7 +89,7 @@ namespace DalObject
                 Stations.Add(station);
             }
 
-            for (var i = 0; i < customerCap - 1; ++i)
+            for (var i = 0; i < CUSTOMER_MAX - 1; ++i)
             {
                 var location = Randomize.LocationInRadius();
 
@@ -133,7 +133,7 @@ namespace DalObject
             Users[Config.CustomerId - 1] = eden;
 
 
-            for (var i = 0; i < parcelCap; ++i)
+            for (var i = 0; i < PARCEL_MAX; ++i)
             {
                 DateTime
                     scheduled = default,
@@ -165,9 +165,16 @@ namespace DalObject
             }
 
 
-            var txtFile = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName + @"\RandomText.txt";
+            var txtFileLoc1 = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName + @"\RandomText.txt";
+            var txtFileLoc2 = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\RandomText.txt";
 
-            var text = File.ReadAllText(txtFile);
+            string text;
+
+            if (File.Exists(txtFileLoc1))
+                text = File.ReadAllText(txtFileLoc1);
+            else if (File.Exists(txtFileLoc2))
+                text = File.ReadAllText(txtFileLoc2);
+            else throw new Exception("Unhandled event. No text file present");
 
             var lines = text.Split(new[] { "OBI-WAN", "ANAKIN", "COUNT-DOOKU", "PALPATINE", "DROID" },
                     StringSplitOptions.TrimEntries).ToList();

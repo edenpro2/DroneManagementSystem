@@ -21,10 +21,9 @@ namespace PL.Windows.Tracking
             _bl = bl;
             ViewModel = new DroneViewModel(drone);
             _dronesViewModel = dronesVm;
-            InitializeComponent();
-            DataContext = this;
             CustomButtons = new WindowControls(this);
             UpdateContent();
+            InitializeComponent();
         }
 
         private static Uri? NewMapUri(Location location)
@@ -48,10 +47,7 @@ namespace PL.Windows.Tracking
             DragMove();
         }
 
-        internal DronesViewModel GetValue()
-        {
-            return _dronesViewModel;
-        }
+        internal DronesViewModel GetValue() => _dronesViewModel;
 
         private void ChargeBtn_Click(object sender, RoutedEventArgs e)
         {

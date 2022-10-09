@@ -18,11 +18,10 @@ namespace PL.Pages
 
         public SettingsPage(BlApi ibl, User user)
         {
+            InitializeComponent();
             _bl = ibl;
             _customer = _bl.SearchForCustomer(c => c.id == user.customerId);
             UserViewModel = new UserViewModel(user, _customer.phone, _customer.name, user.profilePic);
-            InitializeComponent();
-            DataContext = UserViewModel;
         }
 
         private void ApplyBtn_Click(object sender, RoutedEventArgs e)

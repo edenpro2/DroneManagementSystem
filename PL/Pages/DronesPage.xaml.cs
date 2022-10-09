@@ -25,7 +25,6 @@ namespace PL.Pages
             _bl = ibl;
             DronesViewModel = new DronesViewModel(_bl.GetDrones(d => d.active));
             InitializeComponent();
-            DataContext = this;
         }
 
         private void DisplayAsMap_Click(object sender, RoutedEventArgs e)

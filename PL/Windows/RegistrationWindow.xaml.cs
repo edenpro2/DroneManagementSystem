@@ -13,8 +13,8 @@ namespace PL.Windows
 
         public RegistrationWindow(BlApi database)
         {
-            _bl = database;
             InitializeComponent();
+            _bl = database;
         }
 
         /// <summary>

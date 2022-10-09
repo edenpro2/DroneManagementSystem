@@ -9,10 +9,10 @@
       MinHeight="600"
       MinWidth="1200"
       Title="ParcelsPage"
-      d:DataContext="{d:DesignInstance Type=local:ParcelsPage}"
+      DataContext="{Binding RelativeSource={RelativeSource Self}}"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
       Background="{x:Null}">
-
+ 
     <materialDesign:Card
         materialDesign:ShadowAssist.ShadowDepth="Depth0" Background="#f2f3f7">
         <Grid>

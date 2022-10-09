@@ -9,10 +9,10 @@
       MinHeight="600"
       MinWidth="1200"
       Title="DronesPage"
-      d:DataContext="{d:DesignInstance Type=local:DronesPage}"
+      DataContext="{Binding RelativeSource={RelativeSource Self}}"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
       Background="{x:Null}">
-
+    
     <Page.Resources>
         <Style x:Key="ComboBoxText" TargetType="{x:Type ComboBox}"
                BasedOn="{StaticResource MaterialDesignComboBox}">

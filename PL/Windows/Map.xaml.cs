@@ -15,13 +15,26 @@ namespace PL.Windows
         private readonly BlApi _bl;
         public Map(BlApi ibl, string type)
         {
-            _bl = ibl;
             InitializeComponent();
+            _bl = ibl;
             Height = 1000;
             Width = 1300;
             CustomButtons = new WindowControls(this);
-            var resourcesDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)?.Parent?.Parent?.Parent?.Parent + @"\Resources\";
-            var iconsDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)?.Parent?.Parent?.Parent?.Parent + @"\Icons\";
+
+            var parentDir1 = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)?.Parent?.Parent?.Parent?.Parent;
+            var parentDir2 = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)?.Parent?.Parent?.Parent;
+
+            string resources;
+            string icons;
+
+            if (File.Exists($"{parentDir1}\\Resources"))                
+            {
+                resources = parentDir1 + "\\Resources\\";
+                icons = parentDir1 + "\\Icons\\";
+            }
+
+            resources = parentDir2 + "\\Resources\\";
+            icons = parentDir2 + "\\Icons\\";            
 
             switch (type.ToLower())
             {
@@ -31,7 +44,7 @@ namespace PL.Windows
                     {
                         var icon = new Image
                         {
-                            Source = new BitmapImage(new Uri($"{resourcesDir}drone.png")),
+                            Source = new BitmapImage(new Uri($"{resources}drone.png")),
                             Width = 20,
                             Height = 20
                         };
@@ -45,7 +58,7 @@ namespace PL.Windows
                     {
                         var icon = new Image
                         {
-                            Source = new BitmapImage(new Uri($"{resourcesDir}warehouse3d.png")),
+                            Source = new BitmapImage(new Uri($"{resources}warehouse3d.png")),
                             Width = 30,
                             Height = 30
                         };
@@ -59,7 +72,7 @@ namespace PL.Windows
                     {
                         var icon = new Image
                         {
-                            Source = new BitmapImage(new Uri($"{resourcesDir}account.jpg")),
+                            Source = new BitmapImage(new Uri($"{resources}account.jpg")),
                             Width = 30,
                             Height = 30
                         };
@@ -73,7 +86,7 @@ namespace PL.Windows
                     {
                         var icon = new Image
                         {
-                            Source = new BitmapImage(new Uri($"{iconsDir}package.png")),
+                            Source = new BitmapImage(new Uri($"{icons}package.png")),
                             Width = 30,
                             Height = 30
                         };

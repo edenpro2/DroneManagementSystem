@@ -32,7 +32,7 @@ namespace BL
             int i;
             var rates = DalApi.RequestPowerConsumption();
 
-            for (i = 0; i < NumOfRates; i++) 
+            for (i = 0; i < NumOfRates; i++)
                 _droneConsumptionRates[i] = rates[i];
             _droneChargeRate = rates[i];
 
