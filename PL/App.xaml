@@ -17,6 +17,7 @@
                     Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
+
             <Style x:Key="Padding" TargetType="{x:Type Separator}">
                 <Setter Property="Height" Value="20"/>
                 <Setter Property="Visibility" Value="Hidden"/>

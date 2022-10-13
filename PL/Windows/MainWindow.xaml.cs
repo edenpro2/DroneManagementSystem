@@ -3,14 +3,11 @@ using BL;
 using BLAPI;
 using DalFacade.DO;
 using PL.Controls;
-using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 
 namespace PL.Windows
 {
@@ -19,6 +16,8 @@ namespace PL.Windows
         private static readonly BlApi bl = BlFactory.GetBl();
         private BackgroundWorker? _bgThread;
         private static User? _user;
+        public double min_scr_height => PLMethods.MinScreenHeight(0.9);
+        public double min_scr_width => PLMethods.MinScreenWidth(0.9);
 
         public MainWindow()
         {
@@ -73,7 +72,7 @@ namespace PL.Windows
             }
             else
             {
-                new CustomerUi(bl, _user).Show();   
+                new CustomerUi(bl, _user).Show();
                 Close();
             }
         }
@@ -118,7 +117,7 @@ namespace PL.Windows
         }
 
         private void DevBtn_Click(object sender, RoutedEventArgs e)
-        { 
+        {
             //TODO: Expansion
         }
 

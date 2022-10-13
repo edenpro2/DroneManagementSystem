@@ -27,14 +27,14 @@ namespace PL.Windows
             string resources;
             string icons;
 
-            if (File.Exists($"{parentDir1}\\Resources"))                
+            if (File.Exists($"{parentDir1}\\Resources"))
             {
                 resources = parentDir1 + "\\Resources\\";
                 icons = parentDir1 + "\\Icons\\";
             }
 
             resources = parentDir2 + "\\Resources\\";
-            icons = parentDir2 + "\\Icons\\";            
+            icons = parentDir2 + "\\Icons\\";
 
             switch (type.ToLower())
             {

@@ -5,22 +5,25 @@ using PL.Pages;
 using PL.ViewModels;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace PL.Windows
 {
     public partial class CustomerUi
     {
-        private readonly BlApi _bl;  
+        private readonly BlApi _bl;
         public UserViewModel ViewModel { get; }
- 
+        // 691,2
+        public double min_scr_height => PLMethods.MinScreenHeight(0.9);
+        // 1229.4
+        public double min_scr_width => PLMethods.MinScreenWidth(0.9);
+
         public CustomerUi(BlApi ibl, User user)
         {
             _bl = ibl;
             var customer = _bl.SearchForCustomer(c => c.id == user.customerId);
             ViewModel = new UserViewModel(user, customer.phone, customer.name, user.profilePic);
-            this.CustomButtons = new WindowControls(this);
+            CustomButtons = new WindowControls(this);
             InitializeComponent();
             PagesNavigation.Navigate(new HomePage(this));
         }

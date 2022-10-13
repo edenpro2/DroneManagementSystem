@@ -3,8 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       DataContext="{Binding RelativeSource={RelativeSource Self}}"
-      MinHeight="720" 
-      MinWidth="1340"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}">
 
     <Page.Resources>
@@ -13,7 +11,7 @@
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="VerticalAlignment" Value="Top" />
             <Setter Property="FontFamily" Value="Segoe UI Variable Text" />
-            <Setter Property="FontSize" Value="22" />
+            <Setter Property="FontSize" Value="18" />
             <Setter Property="Foreground" Value="#FF666666" />
         </Style>
 
@@ -25,7 +23,7 @@
         <Style x:Key="CheckBoxText" TargetType="TextBlock">
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="FontFamily" Value="Segoe UI Variable Text" />
-            <Setter Property="FontSize" Value="22" />
+            <Setter Property="FontSize" Value="16" />
             <Setter Property="Foreground" Value="#FF444444" />
             <Setter Property="Margin" Value="15 0 0 0"/>
         </Style>
@@ -61,108 +59,45 @@
 
     <!-- Start of Page -->
     <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth0">
-        <Grid>
-            
+        <Viewbox
+            Stretch="Uniform" 
+            HorizontalAlignment="Stretch" 
+            VerticalAlignment="Stretch">
             <Grid
-               Margin="50">
+               Margin="30">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="40" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="3*" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="40" />
                 </Grid.ColumnDefinitions>
-
-                <StackPanel
-                    Grid.Column="1"
-                    VerticalAlignment="Center">
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        Text="Send a new package"
-                        VerticalAlignment="Top"
-                        FontFamily="Segoe UI Variable Text"
-                        FontWeight="DemiBold"
-                        FontSize="44" />
-
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        Text="The #1 drone delivery service"
-                        FontFamily="Segoe UI Variable Text Semilight"
-                        FontSize="26" 
-                        Margin="0,20,0,0" />
-
-                    <DockPanel 
-                        Margin="0,13,0,0" 
-                        HorizontalAlignment="Center">
-                        <StackPanel>
-                            <TextBlock
-                                Text="Reliable delivery services"
-                                Foreground="#FF6F6F6F"
-                                HorizontalAlignment="Center"/>
-                            <Grid Height="135" Width="140" >
-                                <Ellipse Margin="15">
-                                    <Ellipse.Fill>
-                                        <ImageBrush ImageSource="/Resources/mandeliveringparcel.jpg" />
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                            </Grid>
-                        </StackPanel>
-
-                        <StackPanel>
-                            <TextBlock
-                                Text="Fast and affordable"
-                                Foreground="#FF6F6F6F"
-                                HorizontalAlignment="Center"/>
-                            <Grid Height="135" Width="140" >
-                                <Ellipse Margin="15">
-                                    <Ellipse.Fill>
-                                        <ImageBrush ImageSource="/Resources/droneattack.JPG" />
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                            </Grid>
-                        </StackPanel>
-                    </DockPanel>
-
-
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        Text="Anywhere, on the go"
-                        FontFamily="Segoe UI Variable Text Semilight"
-                        FontSize="20"
-                        Padding="10" />
-
-                    <DockPanel 
-                        HorizontalAlignment="Center">
-                        <Grid Width="150">
-                            <Image Source="/Resources/devices.jpg" />
-                        </Grid>
-                    </DockPanel>
-                </StackPanel>
+ 
 
                 <Border
                     Style="{StaticResource ShadowEffect}"
                     Background="{StaticResource MaterialDesignPaper}"
                     Grid.Column="3">
                     <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="40" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="20" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="40" />
-                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="2*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                     
                         <TextBlock
                             Grid.Column="1"
                             Grid.Row="1"
@@ -439,6 +374,6 @@
                 </Border>
 
             </Grid>
-        </Grid>
+        </Viewbox>
     </materialDesign:Card>
 </Page>

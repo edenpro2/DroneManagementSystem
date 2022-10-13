@@ -3,35 +3,32 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       DataContext="{Binding RelativeSource={RelativeSource Self}}"
-      MinHeight="720" MinWidth="1200"
       Title="HomePage"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}">
 
     <Page.Resources>
         <Style x:Key="MenuButton" TargetType="Button">
             <Setter Property="Background" Value="{StaticResource MaterialDesignPaper}"/>
-            <Setter Property="Height" Value="170" />
-            <Setter Property="Width" Value="370" />
             <Setter Property="BorderBrush" Value="{StaticResource MaterialDesignToolBackground}" />
             <Setter Property="BorderThickness" Value="2" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="Padding" Value="14" />
         </Style>
-
-        <Style x:Key="InnerGrid" TargetType="{x:Type Grid}">
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-        </Style>
-
+ 
         <Style TargetType="{x:Type Ellipse}">
             <Setter Property="Fill" Value="DodgerBlue" />
-            <Setter Property="Margin" Value="10 22" />
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="100"/>
+        </Style>
+
+        <Style x:Key="StackPanelMargin" TargetType="{x:Type StackPanel}">
+            <Setter Property="Margin" Value="20 0 0 0" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Grid.Column" Value="1" />
         </Style>
 
         <Style TargetType="{x:Type Image}">
-            <Setter Property="Margin" Value="22,35,22,35"/>
-        </Style>
+            <Setter Property="Width" Value="70"/>
+         </Style>
 
         <ResourceDictionary x:Key="RoundedCorners">
             <Style TargetType="Border">
@@ -42,38 +39,37 @@
 
         <Style x:Key="Title" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="VerticalAlignment" Value="Top" />
             <Setter Property="Foreground" Value="#333333" />
             <Setter Property="FontFamily" Value="Microsoft YaHei" />
-            <Setter Property="FontSize" Value="22" />
+            <Setter Property="FontSize" Value="20" />
         </Style>
 
         <Style x:Key="Details" TargetType="TextBlock">
-            <Setter Property="Margin" Value="0,9,0,0" />
+            <Setter Property="Margin" Value="0,8,0,0" />
             <Setter Property="Foreground" Value="DimGray" />
-            <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="FontFamily" Value="Segoe UI" />
-            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontSize" Value="17" />
         </Style>
     </Page.Resources>
 
     <!-- Page -->
     <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth0">
-        <Grid Background="White">
+        <Grid 
+            x:Name="MainGrid"
+            Background="White">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="{Binding ElementName=Button, Path=Width}"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="{Binding ElementName=Button, Path=Width}"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="{Binding ElementName=Button, Path=Height}"/>
-                <RowDefinition Height="10"/>
-                <RowDefinition Height="{Binding ElementName=Button, Path=Height}"/>
-                <RowDefinition/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
 
 
@@ -84,13 +80,17 @@
                 Click="NewParcelBtn_Click"
                 Grid.Row="1"
                 Grid.Column="1" >
-                <DockPanel>
-                    <Grid Style="{StaticResource InnerGrid}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
                         <Ellipse/>
                         <Image Source="/Icons/package.png"/>
                     </Grid>
-                    <StackPanel
-                        VerticalAlignment="Center">
+                    <StackPanel 
+                        Style="{StaticResource StackPanelMargin}">
                         <TextBlock
                             Text="New Parcel"
                             Style="{StaticResource Title}" />
@@ -98,7 +98,7 @@
                             Text="Send a new package     "
                             Style="{StaticResource Details}" />
                     </StackPanel>
-                </DockPanel>
+                </Grid>
             </Button>
 
             <Button
@@ -107,13 +107,17 @@
                 Click="SentBtn_Click"
                 Grid.Row="3"
                 Grid.Column="1">
-                <DockPanel>
-                    <Grid Style="{StaticResource InnerGrid}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
                         <Ellipse/>
                         <Image Source="/Icons/sent.png"/>
                     </Grid>
                     <StackPanel
-                        VerticalAlignment="Center">
+                        Style="{StaticResource StackPanelMargin}">
                         <TextBlock
                             Text="Sent Packages"
                             Style="{StaticResource Title}" />
@@ -121,7 +125,7 @@
                             Text="Track packages you sent"
                             Style="{StaticResource Details}" />
                     </StackPanel>
-                </DockPanel>
+                </Grid>
             </Button>
 
             <Button
@@ -130,13 +134,17 @@
                 Grid.Row="1"
                 Grid.Column="3"
                 Click="SettingsBtn_Click">
-                <DockPanel>
-                    <Grid Style="{StaticResource InnerGrid}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
                         <Ellipse/>
                         <Image Source="/Icons/settings.png" />
                     </Grid>
                     <StackPanel
-                        VerticalAlignment="Center">
+                        Style="{StaticResource StackPanelMargin}">
                         <TextBlock
                             Text="Settings"
                             Style="{StaticResource Title}" />
@@ -144,7 +152,7 @@
                             Text="Update account settings"
                             Style="{StaticResource Details}" />
                     </StackPanel>
-                </DockPanel>
+                </Grid>
             </Button>
 
             <Button
@@ -153,13 +161,17 @@
                 Click="ScheduledBtn_Click" 
                 Grid.Row="3"
                 Grid.Column="3">
-                <DockPanel>
-                    <Grid Style="{StaticResource InnerGrid}" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
                         <Ellipse/>
                         <Image Source="/Icons/incoming.png" />
                     </Grid>
-                    <StackPanel
-                        VerticalAlignment="Center">
+                    <StackPanel 
+                        Style="{StaticResource StackPanelMargin}">
                         <TextBlock
                             Text="Scheduled"
                             Style="{StaticResource Title}"/>
@@ -170,7 +182,7 @@
                             <Run Text="way to you" />
                         </TextBlock>
                     </StackPanel>
-                </DockPanel>
+                </Grid>
             </Button>
 
         </Grid>

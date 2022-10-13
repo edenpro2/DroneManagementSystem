@@ -50,7 +50,7 @@ namespace DalFacade.DO
 
         public override string ToString()
         {
-            return  "Id: " + id + '\n' +
+            return "Id: " + id + '\n' +
                     "Sender: " + senderId + '\n' +
                     "Target: " + targetId + '\n' +
                     "Drone: " + droneId + '\n' +
