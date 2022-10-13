@@ -79,38 +79,36 @@ namespace DalObject
             {
                 var location = Randomize.LocationInRadius();
 
-                Station station = new(
+                Stations.Add(new Station(
                     Config.StationId++,
                     rand.Next(MaxStationName),
                     Station.MaxChargeSlots,
                     location.latitude,
-                    location.longitude);
-
-                Stations.Add(station);
+                    location.longitude)); 
             }
 
             for (var i = 0; i < CUSTOMER_MAX - 1; ++i)
             {
                 var location = Randomize.LocationInRadius();
 
-                Customer customer = new(
+                Customers.Add(new Customer(
                     Config.CustomerId++,
                     Randomize.Name(rand),
                     Randomize.Phone(rand),
                     location.latitude,
-                    location.longitude);
-
-                Customers.Add(customer);
+                    location.longitude)); 
             }
 
-            var edenLoc = Randomize.LocationInRadius();
+            #endregion
+
+            // Also possible to use Randomize.LocationInRadius() for coordinates
 
             Customers.Add(new Customer(
                     Config.CustomerId++,
                     "Eden Amiga",
-                    "9546582943",
-                    edenLoc.latitude,
-                    edenLoc.longitude)
+                    "9546582944",
+                    26.03939549441853,
+                    -80.29447791353097)
             );
 
             string name;
@@ -122,26 +120,25 @@ namespace DalObject
                     name = new string(c.name.Where(l => !char.IsWhiteSpace(l)).ToArray()) +
                            rand.Next(100),
                     c.phone,
-                    name + "@gmail.com"))
+                    name.ToLower() + "@gmail.com"))
                 .ToList();
 
-            // This is for me to check the employee login
-            var eden = Users[Config.CustomerId - 1];
+            // Easy admin account for quick login
+            User eden = Users[Config.CustomerId - 1];
             eden.isEmployee = true;
-            eden.username = "edenpro2";
-            eden.password = "eden";
+            eden.username = "admin";
+            eden.password = "1234isabadpassword";
             Users[Config.CustomerId - 1] = eden;
 
 
             for (var i = 0; i < PARCEL_MAX; ++i)
             {
-                DateTime
-                    scheduled = default,
-                    pickedUp = default,
-                    delivered = default;
+                DateTime scheduled = default,
+                         pickedUp = default,
+                         delivered = default;
 
-                var requested = Randomize.Date(rand);
-                var senderId = Customers[rand.Next(Customers.Count)].id;
+                DateTime requested = Randomize.Date(rand);
+                int senderId = Customers[rand.Next(Customers.Count)].id;
                 int targetId;
 
                 do
@@ -149,7 +146,8 @@ namespace DalObject
                     targetId = Customers[rand.Next(Customers.Count)].id;
                 } while (targetId == senderId);
 
-                var parcel = new Parcel(
+                Parcels.Add(new Parcel
+                (
                     Config.ParcelId++,
                     senderId,
                     targetId,
@@ -159,12 +157,13 @@ namespace DalObject
                     requested,
                     scheduled,
                     pickedUp,
-                    delivered);
+                    delivered
+                ));
 
-                Parcels.Add(parcel);
+                 
             }
 
-
+            #region Chats creator
             var txtFileLoc1 = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName + @"\RandomText.txt";
             var txtFileLoc2 = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\RandomText.txt";
 

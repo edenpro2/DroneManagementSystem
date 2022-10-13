@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using static System.Math;
-
+using Newtonsoft.Json;
 namespace DalFacade.DO
 {
     public static class Randomize
@@ -14,26 +16,29 @@ namespace DalFacade.DO
             "IAI Harpy", "IAI I-View", "IAI Panther", "IAI Ranger", "IAI Heron"
         };
 
-        private static readonly string[] CustomerNames =
-        {
-            "Eden", "Leib", "Aaron", "Shlomo", "David", "Moshe", "Guy", "Kim", "Benny", "Brody", "Matthew",
-            "Katie", "Katja", "Emily", "Dwayne", "Gabriella", "Tim", "John", "Sasha", "Anastasia", "Dinn",
-            "Olga", "Natasha", "Gustav", "Piet", "Mark", "Vladimir", "Donald", "Joe", "Jill", "Adam", "Luke",
-            "Anna", "Peter", "Hans", "Christopher", "Joshua", "Abe", "Jake", "Timothee", "Hanrietta", "Phil"
-        };
+        private const string LastNames = "lastnames.json";
+        private const string FirstNames = "firstnames.json";
 
-        private static readonly string[] CustomerLastNames =
-        {
-            "Cohen", "Levy", "Blam", "Amiga", "Putin", "Trump", "Netanyahu", "Murciano", "Kirshenbaum", "Romanov",
-            "Rogers", "Whitefield", "Gruber", "McClane", "Samberg", "Johnson", "Rock", "Rappaport", "Heisenberg",
-            "Planck",
-            "Armstrong", "Leibowitz", "Adamson", "Lev", "Bar-lev", "Gosalker", "Gonsalez", "Zyrkowsky", "Ten-Boom",
-            "Rosenfeld",
-            "Ben-nun", "Gomez", "Swift", "Amsalem", "Wick", "Alon", "Oppenheimer", "Einstein", "Heisenberg", "Singh",
-            "Kapoor"
-        };
 
         #endregion
+
+        public static List<string> LoadTextFile(string filename)
+        {
+            var txtFileLoc1 = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.Parent.FullName + $"\\{filename}";
+            var txtFileLoc2 = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName + $"\\{filename}";
+            var txtFileLoc3 = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + $"\\{filename}";
+
+            string jsonFile;
+
+            if (File.Exists(txtFileLoc1))
+                jsonFile = File.ReadAllText(txtFileLoc1);
+            else if (File.Exists(txtFileLoc2))
+                jsonFile = File.ReadAllText(txtFileLoc2);
+            else  
+                jsonFile = File.ReadAllText(txtFileLoc3);
+
+            return JsonConvert.DeserializeObject<List<string>>(jsonFile);
+        }
 
         /// <summary>
         /// Chooses a random model name from the list of drone models
@@ -56,9 +61,7 @@ namespace DalFacade.DO
             var endDate = DateTime.Now;
             var timeSpan = endDate - startDate;
             var newSpan = new TimeSpan(0, rand.Next(0, (int)timeSpan.TotalMinutes), 0);
-            var newDate = startDate + newSpan;
-
-            return newDate;
+            return startDate + newSpan;
         }
 
         /// <summary>
@@ -68,8 +71,9 @@ namespace DalFacade.DO
         /// <returns> random name and surname</returns>
         public static string Name(Random rand)
         {
-            return CustomerNames[rand.Next(CustomerNames.Length)] + " " +
-              CustomerLastNames[rand.Next(CustomerLastNames.Length)];
+            return 
+                LoadTextFile(LastNames)[rand.Next(LoadTextFile(LastNames).Count)] + " " +
+                LoadTextFile(FirstNames)[rand.Next(LoadTextFile(FirstNames).Count)];
         }
 
         /// <summary>
@@ -205,11 +209,11 @@ namespace DalFacade.DO
 
             };
 
-            var random = new Random();
+            var random = new Random(Guid.NewGuid().GetHashCode());
 
             var randomLocation = locations[random.Next(locations.Length)];
 
-            const double radiusInMeters = 10000;
+            const double radiusInMeters = 5000;
 
             // Convert radius from meters to degrees
             const double radiusInDegrees = radiusInMeters / 111000f;
@@ -230,71 +234,9 @@ namespace DalFacade.DO
             var foundLongitude = newX + x0;
             var foundLatitude = y + y0;
 
-            return new Location
-            {
-                latitude = foundLatitude,
-                longitude = foundLongitude
-            };
+            return new(foundLatitude, foundLongitude);
 
         }
 
-        // DEPRECATED ______________________________________________
-
-        ///// <summary>
-        ///// Chooses a random latitude
-        ///// </summary>
-        ///// <param name="rand">random seed </param>
-        ///// <returns> Random degree </returns>
-        //public static double Latitude(Random rand)
-        //{
-        //    double[] leftLat =
-        //    {
-        //        29.500245, 31.219613, 31.594679, 31.783575, 32.106105, 32.547652, 32.834150, 32.816392, 33.090650
-        //    };
-
-        //    double[] rightLat =
-        //    {
-        //        33.317275, 33.028124, 32.746742, 32.640416, 32.262633, 31.964862, 31.731554, 31.731554, 30.834918,
-        //        30.428427, 30.013101, 29.543660
-        //    };
-
-        //    var first = leftLat[rand.Next(leftLat.Length)];
-        //    var second = rightLat[rand.Next(rightLat.Length)];
-
-        //    return DoubleBetween(first, second, new Random());
-        //}
-
-        ///// <summary>
-        ///// Chooses a random longitude
-        ///// </summary>
-        ///// <param name="rand"></param>
-        ///// <returns>Random longitude</returns>
-        //public static double Longitude(Random rand)
-        //{
-        //    double[] leftLon =
-        //    {
-        //        34.913901, 34.305699, 34.508550, 34.61944, 34.769092, 34.901029, 34.963355, 35.025942, 35.109777
-        //    };
-
-        //    double[] rightLon =
-        //    {
-        //        35.770387, 35.848895, 35.752549, 35.573979, 35.497142, 35.480650, 35.480650, 35.502640, 35.502640,
-        //        35.299237, 35.159054, 35.104080, 34.977205
-        //    };
-
-        //    var first = leftLon[rand.Next(leftLon.Length)];
-        //    var second = rightLon[rand.Next(rightLon.Length)];
-
-        //    return DoubleBetween(first, second, rand);
-        //}
-
-        ///// <summary>
-        ///// Gets a double between an interval
-        ///// </summary>
-        ///// <param name="minValue"></param>
-        ///// <param name="maxValue"></param>
-        ///// <param name="rand"></param>
-        ///// <returns></returns>
-        //private static double DoubleBetween(double minValue, double maxValue, Random rand) => minValue + rand.NextDouble() * (maxValue - minValue);
     }
 }
