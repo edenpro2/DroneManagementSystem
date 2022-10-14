@@ -1,11 +1,12 @@
 ﻿using BLAPI;
-using DalFacade.DO;
 using PL.Controls;
 using PL.Pages;
 using PL.ViewModels;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using Windows.System;
+using User = DalFacade.DO.User;
 
 namespace PL.Windows
 {
@@ -13,9 +14,7 @@ namespace PL.Windows
     {
         private readonly BlApi _bl;
         public UserViewModel ViewModel { get; }
-        // 691,2
         public static double MinScrHeight => PLMethods.MinScreenHeight(0.9);
-        // 1229.4
         public static double MinScrWidth => PLMethods.MinScreenWidth(0.9);
 
         public CustomerUi(BlApi ibl, User user)
@@ -25,12 +24,14 @@ namespace PL.Windows
             ViewModel = new UserViewModel(user, customer.phone, customer.name, user.profilePic);
             CustomButtons = new WindowControls(this);
             InitializeComponent();
-            PagesNavigation.Navigate(new HomePage(this));
+            var latest = new ParcelViewModel(_bl, _bl.GetParcels(p => p.targetId == ViewModel.User.customerId).OrderByDescending(p => p.requested).FirstOrDefault());
+            PagesNavigation.Navigate(new HomePage(latest, this));
         }
 
         private void HomeBtn_Click(object sender, RoutedEventArgs e)
         {
-            PagesNavigation.Navigate(new HomePage(this));
+            var latest = new ParcelViewModel(_bl, _bl.GetParcels(p => p.targetId == ViewModel.User.customerId).OrderByDescending(p => p.requested).FirstOrDefault());
+            PagesNavigation.Navigate(new HomePage(latest, this));
         }
 
         public void AddPackageBtn_Click(object sender, RoutedEventArgs e)

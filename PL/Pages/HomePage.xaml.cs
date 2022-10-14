@@ -1,36 +1,43 @@
-﻿using PL.Windows;
+﻿using BLAPI;
+using DalFacade.DO;
+using PL.ViewModels;
+using PL.Windows;
 using System.Windows;
 
 namespace PL.Pages
 {
     public partial class HomePage
     {
-        private CustomerUi customerUi { get; }
+        public CustomerUi CustomerUi { get; set; }
 
-        public HomePage(CustomerUi customerUi)
+        public ParcelViewModel LatestParcel { get; set; } 
+
+        public HomePage(ParcelViewModel parcelvm, CustomerUi customerUi)
         {
-            this.customerUi = customerUi;
+            LatestParcel = parcelvm;
+            CustomerUi = customerUi;
             InitializeComponent();
+            DataContext = this;
         }
 
         private void NewParcelBtn_Click(object sender, RoutedEventArgs e)
         {
-            customerUi.AddPackageBtn_Click(sender, e);
+            CustomerUi.AddPackageBtn_Click(sender, e);
         }
 
         private void SentBtn_Click(object sender, RoutedEventArgs e)
         {
-            customerUi.TrackSentByBtn_Click(sender, e);
+            CustomerUi.TrackSentByBtn_Click(sender, e);
         }
 
         private void SettingsBtn_Click(object sender, RoutedEventArgs e)
         {
-            customerUi.SettingsBtn_Click(sender, e);
+            CustomerUi.SettingsBtn_Click(sender, e);
         }
 
         private void ScheduledBtn_Click(object sender, RoutedEventArgs e)
         {
-            customerUi.TrackSentToBtn_Click(sender, e);
+            CustomerUi.TrackSentToBtn_Click(sender, e);
         }
 
     }

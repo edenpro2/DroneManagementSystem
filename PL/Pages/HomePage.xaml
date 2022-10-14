@@ -1,33 +1,54 @@
 ﻿<Page x:Class="PL.Pages.HomePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:viewmodels="clr-namespace:PL.ViewModels"
+      xmlns:controls="clr-namespace:PL.Controls"
+      mc:Ignorable="d"
       DataContext="{Binding RelativeSource={RelativeSource Self}}"
       Title="HomePage"
+      Height="691"
+      Width="1229"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}">
 
     <Page.Resources>
-        <Style x:Key="MenuButton" TargetType="Button">
-            <Setter Property="Background" Value="{StaticResource MaterialDesignPaper}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource MaterialDesignToolBackground}" />
-            <Setter Property="BorderThickness" Value="2" />
-            <Setter Property="Padding" Value="14" />
-        </Style>
- 
-        <Style TargetType="{x:Type Ellipse}">
-            <Setter Property="Fill" Value="DodgerBlue" />
-            <Setter Property="Width" Value="100" />
-            <Setter Property="Height" Value="100" />
+
+        <Style x:Key="CardStyle" TargetType="{x:Type materialDesign:Card}">
+            <Setter Property="UniformCornerRadius" Value="5"/>
+            <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth1"/>
+            <Setter Property="materialDesign:ShadowAssist.ShadowEdges" Value="Bottom" />
+            <Setter Property="Background" Value="{StaticResource MaterialDesignPaper}" />
+            <Setter Property="Margin" Value="25"/>
         </Style>
 
+        <Style x:Key="MenuButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="{StaticResource MaterialDesignPaper}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Margin" Value="15 0 0 0" />
+            <Setter Property="Width" Value="203"/>
+        </Style>
+
+        <Style x:Key="LeftPanelText" TargetType="{x:Type TextBlock}">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Netflix Sans Medium" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Margin" Value="0 10 0 0" />
+        </Style>
+
+        <controls:DateProgressConverter x:Key="DateProgressConverter"/>
+
         <Style x:Key="StackPanelMargin" TargetType="{x:Type StackPanel}">
-            <Setter Property="Margin" Value="20 0 0 0" />
+            <Setter Property="Margin" Value="10 0 0 0" />
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Grid.Column" Value="1" />
         </Style>
 
         <Style TargetType="{x:Type Image}">
-            <Setter Property="Width" Value="70"/>
+            <Setter Property="Width" Value="40"/>
          </Style>
 
         <ResourceDictionary x:Key="RoundedCorners">
@@ -36,152 +57,231 @@
             </Style>
         </ResourceDictionary>
 
-
-        <Style x:Key="Title" TargetType="TextBlock">
+        <Style x:Key="Title" TargetType="{x:Type TextBlock}">
+            <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="Foreground" Value="#333333" />
             <Setter Property="FontFamily" Value="Microsoft YaHei" />
-            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Margin" Value="10 0 0 0" />
         </Style>
 
-        <Style x:Key="Details" TargetType="TextBlock">
-            <Setter Property="Margin" Value="0,8,0,0" />
-            <Setter Property="Foreground" Value="DimGray" />
-            <Setter Property="FontFamily" Value="Segoe UI" />
-            <Setter Property="FontSize" Value="17" />
-        </Style>
     </Page.Resources>
 
     <!-- Page -->
-    <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth0">
+    <Grid>
         <Grid 
             Margin="10"
             Background="White">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" x:Name="DefColumn"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="{Binding ElementName=DefColumn, Path=Width}"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="3*" />
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="10"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+
+            <!-- LEFT PANEL -->
+            <materialDesign:Card 
+                DataContext="{Binding CustomerUi.ViewModel}"
+                Grid.Column="0"
+                Style="{StaticResource CardStyle}">
+                <StackPanel>
+                    <Ellipse 
+                        Margin="0 20 0 0"
+                        Width="120"
+                        Height="{Binding RelativeSource={RelativeSource Self}, Path=Width}">
+                        <Ellipse.Fill>
+                            <ImageBrush 
+                                ImageSource="{Binding ProfilePic}"
+                                d:ImageSource="../Resources/account.jpg"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <TextBlock 
+                        Style="{StaticResource LeftPanelText}"
+                        d:Text="Eden Amiga"
+                        Text="{Binding Name}"
+                        FontSize="24"
+                        FontWeight="Bold"/>
+                    <TextBlock 
+                        Style="{StaticResource LeftPanelText}"
+                        d:Text="edenamiga56@gmail.com"
+                        Text="{Binding User.email }"
+                        Width="200"
+                        FontSize="14"
+                        TextWrapping="Wrap"
+                        FontWeight="SemiBold"/>
+                </StackPanel>
+            </materialDesign:Card>
+
+            <!-- RIGHT PANEL -->
+            <Grid 
+                Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="5*"/>
+                </Grid.RowDefinitions>
+
+                <!-- QUICK ACTION BUTTONS -->
+                <DockPanel 
+                    Margin="10 25 0 0"
+                    Grid.Row="0">
+                    <Button
+                        x:Name="Button"
+                        Style="{StaticResource MenuButton}"
+                        Resources="{StaticResource RoundedCorners}"
+                        Click="NewParcelBtn_Click">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image
+                                Grid.Column="0"
+                                Source="/Icons/package.png" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Text="New Parcel"
+                                Style="{StaticResource Title}" />
+                        </Grid>
+                    </Button>
+
+                    <Button
+                        Style="{StaticResource MenuButton}"
+                        Resources="{StaticResource RoundedCorners}"
+                        Click="SentBtn_Click">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image
+                                Grid.Column="0"
+                                Source="/Icons/sent.png" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Text="Sent"
+                                Style="{StaticResource Title}" />
+                        </Grid>
+                    </Button>
+
+                    <Button
+                        Style="{StaticResource MenuButton}"
+                        Resources="{StaticResource RoundedCorners}"
+                        Click="ScheduledBtn_Click">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image
+                                Grid.Column="0"
+                                Source="/Icons/incoming.png" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Text="Scheduled"
+                                Style="{StaticResource Title}"/>
+                        </Grid>
+                    </Button>
+
+                    <Button
+                        Style="{StaticResource MenuButton}"
+                        Resources="{StaticResource RoundedCorners}"
+                        Click="SettingsBtn_Click">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image
+                                Grid.Column="0"
+                                Source="/Icons/settings.png" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Text="Settings"
+                                Style="{StaticResource Title}" />
+                        </Grid>
+                    </Button>
+                </DockPanel>
+
+                <!-- STATUS -->
+                <materialDesign:Card
+                    DataContext="{Binding LatestParcel}"
+                    Grid.Row="1"
+                    Style="{StaticResource CardStyle}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="3*" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel 
+                            Grid.Column="0"
+                            VerticalAlignment="Center">
+                            <Image 
+                                Source="../Icons/package.png"
+                                Width="80"/>
+                            <TextBlock
+                                d:Text="Order #44032"
+                                Text="{Binding Id, StringFormat={}{0:000000}}" 
+                                HorizontalAlignment="Center"
+                                FontSize="15"
+                                FontWeight="Bold"/>
+                        </StackPanel>
+
+                        <StackPanel 
+                            Grid.Column="1" >
+                            <TextBlock
+                                Text="Latest"
+                                HorizontalAlignment="Left"
+                                Margin="20"
+                                FontSize="20"
+                                FontWeight="Bold"
+                                Foreground="DarkSlateGray"/>
+                            <DockPanel 
+                                Margin="20 0 0 0"
+                                HorizontalAlignment="Left">
+                                <Ellipse
+                                    Width="70"
+                                    Height="{Binding RelativeSource={RelativeSource Self}, Path=Width}"
+                                    d:Fill="Gray"
+                                    Fill="{Binding Scheduled, Converter={StaticResource DateProgressConverter}}"/>
+                                <Rectangle
+                                    Width="100"
+                                    Height="15"
+                                    d:Fill="Gray"
+                                    Fill="{Binding Scheduled, Converter={StaticResource DateProgressConverter}}"/>
+                                <Ellipse
+                                    Width="70"
+                                    Height="{Binding RelativeSource={RelativeSource Self}, Path=Width}"
+                                    d:Fill="Gray"
+                                    Fill="{Binding Scheduled, Converter={StaticResource DateProgressConverter}}"/>
+                                <Rectangle
+                                    Width="100"
+                                    Height="15"
+                                    d:Fill="Gray"
+                                    Fill="{Binding Collected, Converter={StaticResource DateProgressConverter}}"/>
+                                <Ellipse
+                                    Width="70"
+                                    Height="{Binding RelativeSource={RelativeSource Self}, Path=Width}"
+                                    d:Fill="Gray"
+                                    Fill="{Binding Collected, Converter={StaticResource DateProgressConverter}}"/>
+                                <Rectangle
+                                    Width="100"
+                                    Height="15"
+                                    d:Fill="Gray"
+                                    Fill="{Binding Delivered, Converter={StaticResource DateProgressConverter}}"/>
+                                <Ellipse
+                                    Width="70"
+                                    Height="{Binding RelativeSource={RelativeSource Self}, Path=Width}"
+                                    d:Fill="Gray"
+                                    Fill="{Binding Delivered, Converter={StaticResource DateProgressConverter}}"/>
 
 
-            <Button
-                x:Name="Button"
-                Style="{StaticResource MenuButton}"
-                Resources="{StaticResource RoundedCorners}"
-                Click="NewParcelBtn_Click"
-                Grid.Row="0"
-                Grid.Column="0" >
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="2*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        <Ellipse/>
-                        <Image Source="/Icons/package.png"/>
+                            </DockPanel>
+                        </StackPanel>
                     </Grid>
-                    <StackPanel 
-                        Style="{StaticResource StackPanelMargin}">
-                        <TextBlock
-                            Text="New Parcel"
-                            Style="{StaticResource Title}" />
-                        <TextBlock
-                            Text="Send a new package     "
-                            Style="{StaticResource Details}" />
-                    </StackPanel>
-                </Grid>
-            </Button>
+                </materialDesign:Card>
 
-            <Button
-                Style="{StaticResource MenuButton}"
-                Resources="{StaticResource RoundedCorners}"
-                Click="SentBtn_Click"
-                Grid.Row="0"
-                Grid.Column="2">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="2*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        <Ellipse/>
-                        <Image Source="/Icons/sent.png"/>
-                    </Grid>
-                    <StackPanel
-                        Style="{StaticResource StackPanelMargin}">
-                        <TextBlock
-                            Text="Sent Packages"
-                            Style="{StaticResource Title}" />
-                        <TextBlock
-                            Text="Track packages you sent"
-                            Style="{StaticResource Details}" />
-                    </StackPanel>
-                </Grid>
-            </Button>
-
-            <Button
-                Style="{StaticResource MenuButton}"
-                Resources="{StaticResource RoundedCorners}"
-                Click="ScheduledBtn_Click" 
-                Grid.Row="2"
-                Grid.Column="0">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="2*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        <Ellipse/>
-                        <Image Source="/Icons/incoming.png" />
-                    </Grid>
-                    <StackPanel 
-                        Style="{StaticResource StackPanelMargin}">
-                        <TextBlock
-                            Text="Scheduled"
-                            Style="{StaticResource Title}"/>
-                        <TextBlock
-                            Style="{StaticResource Details}" >
-                            <Run Text="Track packages on their" />
-                            <LineBreak />
-                            <Run Text="way to you" />
-                        </TextBlock>
-                    </StackPanel>
-                </Grid>
-            </Button>
-
-            <Button
-                Style="{StaticResource MenuButton}"
-                Resources="{StaticResource RoundedCorners}"
-                Grid.Row="2"
-                Grid.Column="2"
-                Click="SettingsBtn_Click">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="2*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        <Ellipse/>
-                        <Image Source="/Icons/settings.png" />
-                    </Grid>
-                    <StackPanel
-                        Style="{StaticResource StackPanelMargin}">
-                        <TextBlock
-                            Text="Settings"
-                            Style="{StaticResource Title}" />
-                        <TextBlock
-                            Text="Update account settings"
-                            Style="{StaticResource Details}" />
-                    </StackPanel>
-                </Grid>
-            </Button>
-
+            </Grid>
 
         </Grid>
-    </materialDesign:Card>
+    </Grid>
 </Page>
