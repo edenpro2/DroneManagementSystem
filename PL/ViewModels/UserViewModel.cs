@@ -50,7 +50,7 @@ namespace PL.ViewModels
             set
             {
                 _profilePic = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ProfilePic"));
             }
         }
 

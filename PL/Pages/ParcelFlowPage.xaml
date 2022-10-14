@@ -25,7 +25,7 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="1311" />
                 <ColumnDefinition Width="40" />
             </Grid.ColumnDefinitions>
 
@@ -35,7 +35,6 @@
                 <TextBlock
                     Text="{Binding Header}"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
                     FontSize="26"
                     FontWeight="Bold"
                     FontFamily="Helvetica"
@@ -46,12 +45,11 @@
                 <TextBlock
                     Text="{Binding Intro}"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
                     FontWeight="Normal"
                     FontSize="16"
                     FontFamily="Netflix Sans Light"
                     Foreground="#FF6D7484" 
-                    TextWrapping="Wrap"
+                    TextWrapping="WrapWithOverflow"
                     Opacity="0.8" 
                     Margin="0,40,0,0">
                 </TextBlock>
@@ -100,11 +98,12 @@
 
             <Separator 
                 x:Name="FirstSeparator"
-                Background="#FFA3ACBD"
+                BorderBrush="#FFA3ACBD"
+                BorderThickness="2"
                 Grid.Row="2"
                 Grid.Column="1"
-                Margin="0 23 0 0"
-                Opacity="0.5"/>
+                Margin="0 12.4 0 0"
+                Opacity="0.4"/>
 
             <!--Order Id List-->
             <ListBox

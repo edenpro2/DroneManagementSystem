@@ -44,7 +44,6 @@ namespace PL.Windows
                     ErrorTextBlock.Text = "Incorrect username or password";
                 }
             }
-
         }
 
         internal User? GetValue() => _user;

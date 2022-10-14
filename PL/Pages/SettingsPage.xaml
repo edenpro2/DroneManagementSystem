@@ -7,11 +7,10 @@
       xmlns:viewModels="clr-namespace:PL.ViewModels"
       xmlns:themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
       xmlns:controls="clr-namespace:PL.Controls"
-      xmlns:pages="clr-namespace:PL.Pages"
       mc:Ignorable="d"
       MinHeight="720" 
       MinWidth="1340"
-      DataContext="{Binding RelativeSource={RelativeSource Self}}"
+      DataContext="{Binding RelativeSource={RelativeSource Self}, Path=UserViewModel}"
       Title="SettingsPage"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}">
 
@@ -218,7 +217,11 @@
                             Width="140" 
                             Height="140">
                             <Ellipse.Fill>
-                                <ImageBrush d:ImageSource="../Resources/account.jpg"  ImageSource="{Binding User.profilePic}" Opacity="0.6" Stretch="UniformToFill"/>
+                                <ImageBrush 
+                                    d:ImageSource="../Resources/account.jpg"  
+                                    ImageSource="{Binding User.profilePic}" 
+                                    Opacity="0.6" 
+                                    Stretch="UniformToFill"/>
                             </Ellipse.Fill>
                         </Ellipse>
 

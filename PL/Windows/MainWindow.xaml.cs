@@ -16,8 +16,8 @@ namespace PL.Windows
         private static readonly BlApi bl = BlFactory.GetBl();
         private BackgroundWorker? _bgThread;
         private static User? _user;
-        public double min_scr_height => PLMethods.MinScreenHeight(0.9);
-        public double min_scr_width => PLMethods.MinScreenWidth(0.9);
+        public static double MinScreenHeight => PLMethods.MinScreenHeight(0.9);
+        public static double MinScreenWidth => PLMethods.MinScreenWidth(0.9);
 
         public MainWindow()
         {
@@ -27,7 +27,7 @@ namespace PL.Windows
 
         private void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
-            _bgThread = new();
+            _bgThread = new BackgroundWorker();
 
             // Disable login 
             ChangeButtonState();

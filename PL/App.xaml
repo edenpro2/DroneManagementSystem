@@ -112,8 +112,8 @@
             </Style>
 
             <Style x:Key="FilterPanel" TargetType="{x:Type RadioButton}" >
-                <Setter Property="FontFamily" Value="Helvetica"/>
-                <Setter Property="FontSize" Value="24"/>
+                <Setter Property="FontFamily" Value="Netflix Sans Light"/>
+                <Setter Property="FontSize" Value="20"/>
                 <Setter Property="HorizontalAlignment" Value="Left"/>
                 <Setter Property="Template" >
                     <Setter.Value>

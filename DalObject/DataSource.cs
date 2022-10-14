@@ -127,7 +127,7 @@ namespace DalObject
             User eden = Users[Config.CustomerId - 1];
             eden.isEmployee = true;
             eden.username = "admin";
-            eden.password = "1234isabadpassword";
+            eden.password = "admin";
             Users[Config.CustomerId - 1] = eden;
 
 

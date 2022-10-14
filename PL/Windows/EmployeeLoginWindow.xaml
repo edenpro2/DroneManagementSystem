@@ -3,7 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Title="EmployeeLoginWindow" Height="613" Width="684"
+        Title="EmployeeLoginWindow"
+        Height="613" 
+        Width="620"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{x:Null}"
         AllowsTransparency="True"
@@ -51,18 +53,11 @@
                  
                 <Separator/>
 
-                <!-- Right Grid Panel -->
-                <Border
-                    CornerRadius="5"
-                    BorderThickness="0"
-                    Height="90">
-                    <Border.Background>
-                        <ImageBrush
-                            Stretch="Uniform"
-                            ImageSource="/Icons/logo2.png" />
-                    </Border.Background>
-                </Border>
-                
+                <Image 
+                    Width="70"
+                    Source="../Icons/logo2.png"
+                    Stretch="Uniform"/>
+
                 <Separator/>
 
                 <TextBlock
@@ -92,15 +87,17 @@
                 <Separator/>
 
                 <TextBox
+                    Width="550"
                     x:Name="UsernameBox"
-                    Text="edenpro2"
+                    Text="admin"
                     FontSize="18"
                     materialDesign:HintAssist.Hint="Enter Username"/>
 
                 <Separator/>
 
                 <PasswordBox
-                    Password="eden"
+                    Width="550"
+                    Password="admin"
                     x:Name="PassBox"
                     materialDesign:HintAssist.Hint="Enter Password"/>
                 <Separator/>
@@ -109,18 +106,17 @@
 
                 <Button
                     Style="{StaticResource MaterialDesignFlatMidBgButton}"
-                    materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                    materialDesign:ShadowAssist.ShadowDepth="Depth2"
                     Height="53"
-                    Width="600"
-                    materialDesign:ButtonAssist.CornerRadius="10"
+                    Width="550"
+                    materialDesign:ButtonAssist.CornerRadius="5"
                     FontSize="18"
                     Content="Login"
                     Click="LoginBtn_Click" />
 
                 <Button
                     Style="{StaticResource MaterialDesignFlatButton}"
-                    Height="53"
-                    Width="240"
+                    Margin="0 10 0 0"
                     materialDesign:ButtonAssist.CornerRadius="10"
                     FontSize="18"
                     Content="Not an employee?"

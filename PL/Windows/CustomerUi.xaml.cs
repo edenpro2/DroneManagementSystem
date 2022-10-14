@@ -14,9 +14,9 @@ namespace PL.Windows
         private readonly BlApi _bl;
         public UserViewModel ViewModel { get; }
         // 691,2
-        public double min_scr_height => PLMethods.MinScreenHeight(0.9);
+        public static double MinScrHeight => PLMethods.MinScreenHeight(0.9);
         // 1229.4
-        public double min_scr_width => PLMethods.MinScreenWidth(0.9);
+        public static double MinScrWidth => PLMethods.MinScreenWidth(0.9);
 
         public CustomerUi(BlApi ibl, User user)
         {

@@ -60,7 +60,6 @@
     </Window.Resources>
 
     <materialDesign:Card
-        Margin="5"
         UniformCornerRadius="10"
         Background="{DynamicResource MaterialDesignPaper}"
         materialDesign:ShadowAssist.ShadowDepth="Depth5">

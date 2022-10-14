@@ -21,7 +21,7 @@ namespace DalFacade.DO
 
 
         #endregion
-
+        //TODO: Patch
         public static List<string> LoadTextFile(string filename)
         {
             var txtFileLoc1 = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.Parent.FullName + $"\\{filename}";
@@ -71,9 +71,9 @@ namespace DalFacade.DO
         /// <returns> random name and surname</returns>
         public static string Name(Random rand)
         {
-            return 
-                LoadTextFile(LastNames)[rand.Next(LoadTextFile(LastNames).Count)] + " " +
-                LoadTextFile(FirstNames)[rand.Next(LoadTextFile(FirstNames).Count)];
+            return
+                LoadTextFile(FirstNames)[rand.Next(LoadTextFile(FirstNames).Count)] + " " +
+                LoadTextFile(LastNames)[rand.Next(LoadTextFile(LastNames).Count)];
         }
 
         /// <summary>

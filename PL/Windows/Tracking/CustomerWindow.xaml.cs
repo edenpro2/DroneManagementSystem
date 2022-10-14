@@ -10,13 +10,15 @@ namespace PL.Windows.Tracking
     {
         public CustomerViewModel ViewModel { get; }
         public MapViewModel MapUri { get; } = new();
+        public static double MinScreenHeight => PLMethods.MinScreenHeight(0.30);
+        public static double MinScreenWidth => PLMethods.MinScreenWidth(0.40);
 
         public CustomerWindow(CustomerViewModel cvm)
         {
-            InitializeComponent();
             ViewModel = cvm;
             CustomButtons = new WindowControls(this);
             MapUri.Uri = NewMapUri(new Location(cvm.Customer.latitude, cvm.Customer.longitude));
+            InitializeComponent();
         }
 
         private static Uri? NewMapUri(Location location)
@@ -25,10 +27,6 @@ namespace PL.Windows.Tracking
             var lon = location.longitude - location.longitude % 0.0001;
             return new Uri($"https://www.openstreetmap.org/?mlat={lat}&amp;mlon={lon}#map=10/{lat}/{lon}&amp;layers=N");
         }
-
-        private void Window_MouseLeftBtnDown(object sender, MouseButtonEventArgs e)
-        {
-            DragMove();
-        }
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e) => DragMove();
     }
 }

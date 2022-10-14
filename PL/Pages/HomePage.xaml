@@ -16,8 +16,8 @@
  
         <Style TargetType="{x:Type Ellipse}">
             <Setter Property="Fill" Value="DodgerBlue" />
-            <Setter Property="Width" Value="100"/>
-            <Setter Property="Height" Value="100"/>
+            <Setter Property="Width" Value="100" />
+            <Setter Property="Height" Value="100" />
         </Style>
 
         <Style x:Key="StackPanelMargin" TargetType="{x:Type StackPanel}">
@@ -55,21 +55,17 @@
     <!-- Page -->
     <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth0">
         <Grid 
-            x:Name="MainGrid"
+            Margin="10"
             Background="White">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="4*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="4*"/>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*" x:Name="DefColumn"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="{Binding ElementName=DefColumn, Path=Width}"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="4*"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="4*"/>
-                <RowDefinition Height="3*"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
 
@@ -78,8 +74,8 @@
                 Style="{StaticResource MenuButton}"
                 Resources="{StaticResource RoundedCorners}"
                 Click="NewParcelBtn_Click"
-                Grid.Row="1"
-                Grid.Column="1" >
+                Grid.Row="0"
+                Grid.Column="0" >
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
@@ -105,8 +101,8 @@
                 Style="{StaticResource MenuButton}"
                 Resources="{StaticResource RoundedCorners}"
                 Click="SentBtn_Click"
-                Grid.Row="3"
-                Grid.Column="1">
+                Grid.Row="0"
+                Grid.Column="2">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
@@ -131,8 +127,38 @@
             <Button
                 Style="{StaticResource MenuButton}"
                 Resources="{StaticResource RoundedCorners}"
-                Grid.Row="1"
-                Grid.Column="3"
+                Click="ScheduledBtn_Click" 
+                Grid.Row="2"
+                Grid.Column="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Ellipse/>
+                        <Image Source="/Icons/incoming.png" />
+                    </Grid>
+                    <StackPanel 
+                        Style="{StaticResource StackPanelMargin}">
+                        <TextBlock
+                            Text="Scheduled"
+                            Style="{StaticResource Title}"/>
+                        <TextBlock
+                            Style="{StaticResource Details}" >
+                            <Run Text="Track packages on their" />
+                            <LineBreak />
+                            <Run Text="way to you" />
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
+            </Button>
+
+            <Button
+                Style="{StaticResource MenuButton}"
+                Resources="{StaticResource RoundedCorners}"
+                Grid.Row="2"
+                Grid.Column="2"
                 Click="SettingsBtn_Click">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -155,35 +181,6 @@
                 </Grid>
             </Button>
 
-            <Button
-                Style="{StaticResource MenuButton}"
-                Resources="{StaticResource RoundedCorners}"
-                Click="ScheduledBtn_Click" 
-                Grid.Row="3"
-                Grid.Column="3">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="2*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        <Ellipse/>
-                        <Image Source="/Icons/incoming.png" />
-                    </Grid>
-                    <StackPanel 
-                        Style="{StaticResource StackPanelMargin}">
-                        <TextBlock
-                            Text="Scheduled"
-                            Style="{StaticResource Title}"/>
-                        <TextBlock
-                            Style="{StaticResource Details}" Width="210">
-                            <Run Text="Track packages on their" />
-                            <LineBreak />
-                            <Run Text="way to you" />
-                        </TextBlock>
-                    </StackPanel>
-                </Grid>
-            </Button>
 
         </Grid>
     </materialDesign:Card>

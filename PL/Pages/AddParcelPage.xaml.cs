@@ -18,8 +18,9 @@ namespace PL.Pages
         {
             _bl = ibl;
             _user = user;
-            InitializeComponent();
             personalId = $"{(uint)_user.username.GetHashCode()}";
+
+            InitializeComponent();
 
             NameComboBox.ItemsSource =
                 from customer in _bl.GetCustomers()

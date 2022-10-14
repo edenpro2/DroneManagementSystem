@@ -3,27 +3,28 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       DataContext="{Binding RelativeSource={RelativeSource Self}}"
-      TextElement.Foreground="{DynamicResource MaterialDesignBody}">
-
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      Height="972"
+      Width="1728">
     <Page.Resources>
-
         <Style x:Key="Header" TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="VerticalAlignment" Value="Top" />
             <Setter Property="FontFamily" Value="Segoe UI Variable Text" />
-            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontSize" Value="30" />
             <Setter Property="Foreground" Value="#FF666666" />
         </Style>
 
         <Style x:Key="CheckBoxAlign" TargetType="{x:Type CheckBox}">
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="BorderThickness" Value="1.5"/>
         </Style>
 
         <Style x:Key="CheckBoxText" TargetType="TextBlock">
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="FontFamily" Value="Segoe UI Variable Text" />
-            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontSize" Value="30" />
             <Setter Property="Foreground" Value="#FF444444" />
             <Setter Property="Margin" Value="15 0 0 0"/>
         </Style>
@@ -31,7 +32,8 @@
         <Style x:Key="Metadata" TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="FontFamily" Value="Segoe UI Variable Text" />
-            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontSize" Value="30" />
+            <Setter Property="FontWeight" Value="ExtraBlack" />
             <Setter Property="Margin" Value="0 8 0 0" />
             <Setter Property="Foreground" Value="#FF666666" />
         </Style>
@@ -39,341 +41,342 @@
         <Style x:Key="Details" TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="FontFamily" Value="Segoe UI Variable Text" />
-            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontSize" Value="30" />
             <Setter Property="Margin" Value="0 8 0 0" />
             <Setter Property="Foreground" Value="#FFB1B5B1" />
         </Style>
 
-        <DropShadowEffect
-            x:Key="DropShadowEffect"
+        <DropShadowEffect x:Key="DropShadowEffect"
             BlurRadius="17"
             Direction="-75"
             Color="#333333"
             ShadowDepth="5"
             Opacity="0.2" />
-        <Style TargetType="Border" x:Key="ShadowEffect">
+
+        <Style TargetType="{x:Type Border}" x:Key="ShadowEffect">
             <Setter Property="Effect" Value="{StaticResource DropShadowEffect}" />
         </Style>
 
     </Page.Resources>
 
     <!-- Start of Page -->
-    <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth0">
-        <Viewbox
-            Stretch="Uniform" 
-            HorizontalAlignment="Stretch" 
-            VerticalAlignment="Stretch">
-            <Grid
-               Margin="30">
+    <materialDesign:Card 
+        materialDesign:ShadowAssist.ShadowDepth="Depth0" >
+        <Grid>
+            <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="20" />
-                    <ColumnDefinition Width="3*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
- 
 
-                <Border
-                    Style="{StaticResource ShadowEffect}"
-                    Background="{StaticResource MaterialDesignPaper}"
-                    Grid.Column="3">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                <Canvas
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="635,0,0,0">
+                    <Canvas.Background>
+                        <ImageBrush 
+                            ImageSource="../Resources/vector_art1.jpg"
+                            Stretch="Uniform"/>
+                    </Canvas.Background>
+                </Canvas>
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="2*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                     
-                        <TextBlock
-                            Grid.Column="1"
-                            Grid.Row="1"
+                <!-- Form  -->
+                <Grid
+                    Grid.Column="0"
+                    Margin="50 100 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock
+                            Grid.Column="0"
+                            Grid.Row="0"
                             Text="Recipient Name" 
                             Style="{StaticResource Header}" />
 
-                        <ComboBox
-                            Grid.Column="3"
-                            Grid.Row="1"
+                    <ComboBox
+                            Grid.Column="1"
+                            Grid.Row="0"
                             x:Name="NameComboBox"
+                            FontSize="22"
                             VerticalAlignment="Top"/>
 
-                        <TextBlock
-                            Grid.Column="1"
+                    <TextBlock
+                            Grid.Column="0"
                             Grid.Row="2"
                             Text="Parcel Weight" 
                             Style="{StaticResource Header}" />
 
-                        <!-- PARCEL WEIGHT -->
-                        <StackPanel
-                            Grid.Column="3"
-                            Grid.Row="2">
-                            <DockPanel>
-                                <CheckBox x:Name="WeightCheckBox1">
-                                    <CheckBox.Style>
-                                        <Style TargetType="CheckBox" BasedOn="{StaticResource CheckBoxAlign}">
-                                            <Style.Triggers>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition
-                                                            Binding="{Binding IsChecked, ElementName=WeightCheckBox2}"
-                                                            Value="True" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="IsEnabled" Value="False" />
-                                                </MultiDataTrigger>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition
-                                                            Binding="{Binding IsChecked, ElementName=WeightCheckBox3}"
-                                                            Value="True" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="IsEnabled" Value="False" />
-                                                </MultiDataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </CheckBox.Style>
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <TextBlock Text="Light" Style="{StaticResource CheckBoxText}" />
-                            </DockPanel>
-
-                            <Separator Height="10" Visibility="Hidden" />
-
-                            <DockPanel>
-                                <CheckBox x:Name="WeightCheckBox2">
-                                    <CheckBox.Style>
-                                        <Style TargetType="CheckBox" BasedOn="{StaticResource CheckBoxAlign}">
-                                            <Style.Triggers>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition
-                                                            Binding="{Binding IsChecked, ElementName=WeightCheckBox1}"
-                                                            Value="True" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="IsEnabled" Value="False" />
-                                                </MultiDataTrigger>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition
-                                                            Binding="{Binding IsChecked, ElementName=WeightCheckBox3}"
-                                                            Value="True" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="IsEnabled" Value="False" />
-                                                </MultiDataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </CheckBox.Style>
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <TextBlock Text="Medium" Style="{StaticResource CheckBoxText}" />
-                            </DockPanel>
-
-                            <Separator Height="10" Visibility="Hidden" />
-
-                            <DockPanel>
-                                <CheckBox x:Name="WeightCheckBox3">
-                                    <CheckBox.Style>
-                                        <Style TargetType="CheckBox" BasedOn="{StaticResource CheckBoxAlign}">
-                                            <Style.Triggers>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition
-                                                            Binding="{Binding IsChecked, ElementName=WeightCheckBox2}"
-                                                            Value="True" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="IsEnabled" Value="False" />
-                                                </MultiDataTrigger>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition
-                                                            Binding="{Binding IsChecked, ElementName=WeightCheckBox1}"
-                                                            Value="True" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="IsEnabled" Value="False" />
-                                                </MultiDataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </CheckBox.Style>
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <TextBlock Text="Heavy" Style="{StaticResource CheckBoxText}" />
-                            </DockPanel>
-
-                        </StackPanel>
-
-                        <TextBlock
+                    <!-- PARCEL WEIGHT -->
+                    <StackPanel
                             Grid.Column="1"
+                            Grid.Row="2">
+                        <DockPanel>
+                            <CheckBox x:Name="WeightCheckBox1">
+                                <CheckBox.Style>
+                                    <Style TargetType="CheckBox" BasedOn="{StaticResource CheckBoxAlign}">
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition
+                                                            Binding="{Binding IsChecked, ElementName=WeightCheckBox2}"
+                                                            Value="True" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </MultiDataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition
+                                                            Binding="{Binding IsChecked, ElementName=WeightCheckBox3}"
+                                                            Value="True" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </CheckBox.Style>
+                                <CheckBox.LayoutTransform>
+                                    <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                                </CheckBox.LayoutTransform>
+                            </CheckBox>
+                            <TextBlock Text="Light" Style="{StaticResource CheckBoxText}" />
+                        </DockPanel>
+
+                        <Separator Height="10" Visibility="Hidden" />
+
+                        <DockPanel>
+                            <CheckBox x:Name="WeightCheckBox2">
+                                <CheckBox.Style>
+                                    <Style TargetType="CheckBox" BasedOn="{StaticResource CheckBoxAlign}">
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition
+                                                            Binding="{Binding IsChecked, ElementName=WeightCheckBox1}"
+                                                            Value="True" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </MultiDataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition
+                                                            Binding="{Binding IsChecked, ElementName=WeightCheckBox3}"
+                                                            Value="True" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </CheckBox.Style>
+                                <CheckBox.LayoutTransform>
+                                    <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                                </CheckBox.LayoutTransform>
+                            </CheckBox>
+                            <TextBlock Text="Medium" Style="{StaticResource CheckBoxText}" />
+                        </DockPanel>
+
+                        <Separator Height="10" Visibility="Hidden" />
+
+                        <DockPanel>
+                            <CheckBox x:Name="WeightCheckBox3">
+                                <CheckBox.Style>
+                                    <Style TargetType="CheckBox" BasedOn="{StaticResource CheckBoxAlign}">
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition
+                                                            Binding="{Binding IsChecked, ElementName=WeightCheckBox2}"
+                                                            Value="True" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </MultiDataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition
+                                                            Binding="{Binding IsChecked, ElementName=WeightCheckBox1}"
+                                                            Value="True" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </CheckBox.Style>
+                                <CheckBox.LayoutTransform>
+                                    <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                                </CheckBox.LayoutTransform>
+                            </CheckBox>
+                            <TextBlock Text="Heavy" Style="{StaticResource CheckBoxText}" />
+                        </DockPanel>
+
+                    </StackPanel>
+
+                    <TextBlock
+                            Grid.Column="0"
                             Grid.Row="4"
                             Text="Parcel Priority" 
                             Style="{StaticResource Header}"/>
 
 
-                        <!-- PARCEL PRIORITY -->
-                        <StackPanel
-                            Grid.Column="3"
-                            Grid.Row="4">
-                            <DockPanel>
-                                <CheckBox x:Name="PriorityCheckBox1">
-                                    <CheckBox.Style>
-                                        <Style TargetType="CheckBox" BasedOn="{StaticResource CheckBoxAlign}">
-                                            <Style.Triggers>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition
-                                                            Binding="{Binding IsChecked, ElementName=PriorityCheckBox2}"
-                                                            Value="True" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="IsEnabled" Value="False" />
-                                                </MultiDataTrigger>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition
-                                                            Binding="{Binding IsChecked, ElementName=PriorityCheckBox3}"
-                                                            Value="True" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="IsEnabled" Value="False" />
-                                                </MultiDataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </CheckBox.Style>
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <TextBlock Text="Regular" Style="{StaticResource CheckBoxText}" />
-                            </DockPanel>
-
-                            <Separator Height="10" Visibility="Hidden" />
-
-                            <DockPanel>
-                                <CheckBox x:Name="PriorityCheckBox2">
-                                    <CheckBox.Style>
-                                        <Style TargetType="CheckBox" BasedOn="{StaticResource CheckBoxAlign}">
-                                            <Style.Triggers>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition
-                                                            Binding="{Binding IsChecked, ElementName=PriorityCheckBox1}"
-                                                            Value="True" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="IsEnabled" Value="False" />
-                                                </MultiDataTrigger>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition
-                                                            Binding="{Binding IsChecked, ElementName=PriorityCheckBox3}"
-                                                            Value="True" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="IsEnabled" Value="False" />
-                                                </MultiDataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </CheckBox.Style>
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <TextBlock Text="Fast" Style="{StaticResource CheckBoxText}" />
-                            </DockPanel>
-
-                            <Separator Height="10" Visibility="Hidden" />
-
-                            <DockPanel>
-                                <CheckBox x:Name="PriorityCheckBox3">
-                                    <CheckBox.Style>
-                                        <Style TargetType="CheckBox" BasedOn="{StaticResource CheckBoxAlign}">
-                                            <Style.Triggers>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition
-                                                            Binding="{Binding IsChecked, ElementName=PriorityCheckBox2}"
-                                                            Value="True" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="IsEnabled" Value="False" />
-                                                </MultiDataTrigger>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition
-                                                            Binding="{Binding IsChecked, ElementName=PriorityCheckBox1}"
-                                                            Value="True" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="IsEnabled" Value="False" />
-                                                </MultiDataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </CheckBox.Style>
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <TextBlock Text="Emergency" Style="{StaticResource CheckBoxText}" />
-                            </DockPanel>
-
-                        </StackPanel>
-
-                        <!-- Meta Details -->
-                        <StackPanel
-                            Grid.Row="5"
-                            Grid.Column="1">
-                            <TextBlock Text="PERSONAL ID" Style="{StaticResource Metadata}" />
-                            <TextBlock Text="ORDER DATE" Style="{StaticResource Metadata}" />
-                            <TextBlock Text="TOTAL" Style="{StaticResource Metadata}" />
-                        </StackPanel>
-                        <StackPanel
-                            Grid.Row="5"
-                            Grid.Column="3">
-                            <TextBlock Text="{Binding personalId}" Style="{StaticResource Details}" />
-                            <TextBlock Text="{Binding currentTime}" Style="{StaticResource Details}" />
-                            <TextBlock Text="{Binding total}" Style="{StaticResource Details}" />
-                        </StackPanel>
-                        <!-- Meta Details -->
-
-
-                        <TextBlock
-                            Grid.Row="6"
+                    <!-- PARCEL PRIORITY -->
+                    <StackPanel
                             Grid.Column="1"
-                            Grid.ColumnSpan="3"
+                            Grid.Row="4">
+                        <DockPanel>
+                            <CheckBox x:Name="PriorityCheckBox1">
+                                <CheckBox.Style>
+                                    <Style TargetType="CheckBox" BasedOn="{StaticResource CheckBoxAlign}">
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition
+                                                            Binding="{Binding IsChecked, ElementName=PriorityCheckBox2}"
+                                                            Value="True" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </MultiDataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition
+                                                            Binding="{Binding IsChecked, ElementName=PriorityCheckBox3}"
+                                                            Value="True" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </CheckBox.Style>
+                                <CheckBox.LayoutTransform>
+                                    <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                                </CheckBox.LayoutTransform>
+                            </CheckBox>
+                            <TextBlock Text="Regular" Style="{StaticResource CheckBoxText}" />
+                        </DockPanel>
+
+                        <Separator Height="10" Visibility="Hidden" />
+
+                        <DockPanel>
+                            <CheckBox x:Name="PriorityCheckBox2">
+                                <CheckBox.Style>
+                                    <Style TargetType="CheckBox" BasedOn="{StaticResource CheckBoxAlign}">
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition
+                                                            Binding="{Binding IsChecked, ElementName=PriorityCheckBox1}"
+                                                            Value="True" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </MultiDataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition
+                                                            Binding="{Binding IsChecked, ElementName=PriorityCheckBox3}"
+                                                            Value="True" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </CheckBox.Style>
+                                <CheckBox.LayoutTransform>
+                                    <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                                </CheckBox.LayoutTransform>
+                            </CheckBox>
+                            <TextBlock Text="Fast" Style="{StaticResource CheckBoxText}" />
+                        </DockPanel>
+
+                        <Separator Height="10" Visibility="Hidden" />
+
+                        <DockPanel>
+                            <CheckBox x:Name="PriorityCheckBox3">
+                                <CheckBox.Style>
+                                    <Style TargetType="CheckBox" BasedOn="{StaticResource CheckBoxAlign}">
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition
+                                                            Binding="{Binding IsChecked, ElementName=PriorityCheckBox2}"
+                                                            Value="True" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </MultiDataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition
+                                                            Binding="{Binding IsChecked, ElementName=PriorityCheckBox1}"
+                                                            Value="True" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </CheckBox.Style>
+                                <CheckBox.LayoutTransform>
+                                    <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                                </CheckBox.LayoutTransform>
+                            </CheckBox>
+                            <TextBlock Text="Emergency" Style="{StaticResource CheckBoxText}" />
+                        </DockPanel>
+
+                    </StackPanel>
+
+                    <!-- Meta Details -->
+                    <StackPanel
+                            Grid.Row="6"
+                            Grid.Column="0">
+                        <TextBlock Text="Personal ID" Style="{StaticResource Metadata}" />
+                        <TextBlock Text="Order Date" Style="{StaticResource Metadata}" />
+                        <TextBlock Text="Total" Style="{StaticResource Metadata}" />
+                    </StackPanel>
+
+                    <StackPanel
+                            Grid.Row="6"
+                            Grid.Column="1">
+                        <TextBlock Text="{Binding personalId}" Style="{StaticResource Details}" />
+                        <TextBlock Text="{Binding currentTime}" Style="{StaticResource Details}" />
+                        <TextBlock Text="{Binding total}" Style="{StaticResource Details}" />
+                    </StackPanel>
+                    <!-- Meta Details -->
+
+
+                    <StackPanel
+                        Margin="30"
+                        Grid.Row="7"
+                        Grid.ColumnSpan="2" 
+                        Grid.Column="0">
+                        <TextBlock
                             x:Name="ErrorTextBlock"
-                            FontSize="16"
+                            FontSize="20"
                             Foreground="IndianRed"
                             FontWeight="SemiBold"
                             VerticalAlignment="Top"
                             HorizontalAlignment="Center" />
-
                         <Button
-                            Grid.Row="6"
-                            Grid.Column="1"
-                            Grid.ColumnSpan="3"
-                            Content="Continue"
+                            Margin="20"
+                            Content="Order"
                             HorizontalAlignment="Center"
-                            VerticalAlignment="Bottom"
-                            Width="185"
-                            Height="43"
-                            BorderBrush="{x:Null}"
-                            Background="#ff8c4933" 
-                            Click="ContinueBtn_Click" />
-                    </Grid>
-                </Border>
+                            Width="400"
+                            Height="80"
+                            BorderBrush="{x:Null}" 
+                            Background="IndianRed" 
+                            Click="ContinueBtn_Click"
+                            FontSize="28"/>
+                    </StackPanel>
+                </Grid>
 
             </Grid>
-        </Viewbox>
+        </Grid>
     </materialDesign:Card>
 </Page>

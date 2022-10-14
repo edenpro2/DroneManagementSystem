@@ -14,14 +14,14 @@ namespace PL.Pages
     {
         private readonly BlApi _bl;
         private Customer _customer;
-        private UserViewModel UserViewModel { get; }
+        public UserViewModel UserViewModel { get; }
 
         public SettingsPage(BlApi ibl, User user)
         {
-            InitializeComponent();
             _bl = ibl;
             _customer = _bl.SearchForCustomer(c => c.id == user.customerId);
             UserViewModel = new UserViewModel(user, _customer.phone, _customer.name, user.profilePic);
+            InitializeComponent();
         }
 
         private void ApplyBtn_Click(object sender, RoutedEventArgs e)

@@ -9,8 +9,8 @@
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         mc:Ignorable="d"
         Title="MainWindow" 
-        MinHeight="{Binding min_scr_height}" 
-        MinWidth="{Binding min_scr_width}"
+        MinHeight="{Binding MinScreenHeight}" 
+        MinWidth="{Binding MinScreenWidth}"
         d:MinHeight="700"
         d:MinWidth="1200"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -18,7 +18,7 @@
         AllowsTransparency="True"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen">
-
+ 
     <Window.Resources>
         <Style TargetType="{x:Type Separator}" BasedOn="{StaticResource Padding}">
             <Setter Property="Height" Value="15"/>
@@ -53,8 +53,7 @@
     </Window.Triggers>
 
     <materialDesign:Card
-        UniformCornerRadius="10"
-        materialDesign:ShadowAssist.ShadowDepth="Depth4">
+        UniformCornerRadius="10">
         <materialDesign:Card.Background>
             <ImageBrush ImageSource="/Resources/Wallpaper.jpg"/>
         </materialDesign:Card.Background>
@@ -110,14 +109,14 @@
 
                     <TextBox
                         x:Name="UsernameBox"
-                        Text="edenpro2"
+                        Text="admin"
                         materialDesign:HintAssist.Hint="Enter Username"/>
 
                     <Separator/>
 
                     <PasswordBox
                         x:Name="PassBox"
-                        Password="eden"
+                        Password="admin"
                         materialDesign:HintAssist.Hint="Enter Password"/>
 
                     <Separator/>
