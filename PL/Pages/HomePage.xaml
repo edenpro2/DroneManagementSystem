@@ -40,11 +40,12 @@
         </Style>
 
         <controls:DateProgressConverter x:Key="DateProgressConverter"/>
+        <controls:DateProgressConverter x:Key="BoldProgressConverter"/>
 
-        <Style x:Key="StackPanelMargin" TargetType="{x:Type StackPanel}">
-            <Setter Property="Margin" Value="10 0 0 0" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Grid.Column" Value="1" />
+        <Style x:Key="ProgressText" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Foreground" Value="#555555" />
+            <Setter Property="FontFamily" Value="Segoe UI Variable Text" />
         </Style>
 
         <Style TargetType="{x:Type Image}">
@@ -219,11 +220,12 @@
                                 Source="../Icons/package.png"
                                 Width="80"/>
                             <TextBlock
-                                d:Text="Order #44032"
-                                Text="{Binding Id, StringFormat={}{0:000000}}" 
                                 HorizontalAlignment="Center"
                                 FontSize="15"
-                                FontWeight="Bold"/>
+                                FontWeight="Bold">
+                                <Run Text="Order #" />
+                                <Run Text="{Binding Id, StringFormat={}{0:000000}}" />
+                            </TextBlock>
                         </StackPanel>
 
                         <StackPanel 
@@ -273,7 +275,22 @@
                                     Height="{Binding RelativeSource={RelativeSource Self}, Path=Width}"
                                     d:Fill="Gray"
                                     Fill="{Binding Delivered, Converter={StaticResource DateProgressConverter}}"/>
-
+                            </DockPanel>
+                            <DockPanel
+                                Margin="18 10 0 0">
+                                <TextBlock Text="Requested"
+                                    Style="{StaticResource ProgressText}"
+                                    FontWeight="{Binding Requested, Converter={StaticResource BoldProgressConverter}}"/>
+                                <TextBlock Text="Scheduled"
+                                    Margin="10 0 0 0"
+                                    Style="{StaticResource ProgressText}"
+                                    FontWeight="{Binding Scheduled, Converter={StaticResource BoldProgressConverter}}"/>
+                                <TextBlock Text="Collected"
+                                    Style="{StaticResource ProgressText}"
+                                    FontWeight="{Binding Collected, Converter={StaticResource BoldProgressConverter}}"/>
+                                <TextBlock Text="Delivered"
+                                    Style="{StaticResource ProgressText}"
+                                    FontWeight="{Binding Delivered, Converter={StaticResource BoldProgressConverter}}"/>
 
                             </DockPanel>
                         </StackPanel>
