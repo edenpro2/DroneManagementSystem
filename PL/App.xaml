@@ -2,7 +2,9 @@
     x:Class="PL.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
+    xmlns:themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
+    xmlns:controls="clr-namespace:PL.Controls"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
 
     <Application.Resources>
         <ResourceDictionary>
@@ -17,6 +19,18 @@
                     Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
+            <!-- Controls -->
+            <controls:EmployStatusConverter x:Key="EmployStatusConverter"/>
+            <controls:ChatAlignmentConverter x:Key="ChatAlignmentConverter"/>
+            <controls:BubbleColorConverter x:Key="BubbleColorConverter"/>
+            <controls:EmployStatusConverter x:Key="DateProgressConverter"/>
+
+            <Style x:Key="CardStyle" TargetType="{x:Type materialDesign:Card}">
+                <Setter Property="UniformCornerRadius" Value="10"/>
+                <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth1"/>
+                <Setter Property="materialDesign:ShadowAssist.ShadowEdges" Value="Bottom" />
+                <Setter Property="Background" Value="{StaticResource MaterialDesignPaper}" />
+            </Style>
 
             <Style x:Key="Padding" TargetType="{x:Type Separator}">
                 <Setter Property="Height" Value="20"/>
@@ -169,7 +183,6 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
-
         </ResourceDictionary>
 
     </Application.Resources>

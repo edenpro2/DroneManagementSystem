@@ -92,19 +92,7 @@
             <Setter Property="BorderBrush" Value="#FFD7E1E8"/>
         </Style>
 
-        <!--<Style x:Key="Watermark" TargetType="TextBlock" BasedOn="{StaticResource TextBoxLabel}">
-            <Setter Property="Text" Value="●●●●●●●●●●●●●●●●"/>
-            <Setter Property="Margin" Value="15"/>
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Style.Triggers>
-                <Trigger Property="IsKeyboardFocused" Value="True">
-                    <Setter Property="Text" Value="" />
-                </Trigger>
-                <EventTrigger RoutedEvent="" ></EventTrigger>
-            </Style.Triggers>
-        </Style>-->
-
-
+       
         <Style TargetType="Separator">
             <Setter Property="Height" Value="23"/>
             <Setter Property="Visibility" Value="Hidden"/>
@@ -142,9 +130,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
-        <controls:EmployStatusConverter x:Key="EmployStatusConverter"/>
-
+        
     </Page.Resources>
 
     <materialDesign:Card 
@@ -167,9 +153,8 @@
             </Grid.RowDefinitions>
 
 
-            <Border
-                Style="{StaticResource BorderShadowEffect}"
-                CornerRadius="5"
+            <materialDesign:Card
+                Style="{StaticResource CardStyle}"
                 Grid.Column="1"
                 Grid.Row="1"
                 Background="White">
@@ -269,11 +254,10 @@
                     </StackPanel>
                 </Grid>
 
-            </Border>
+            </materialDesign:Card>
 
-            <Border
-                Style="{StaticResource BorderShadowEffect}"
-                CornerRadius="5"
+            <materialDesign:Card
+                Style="{StaticResource CardStyle}"          
                 Grid.Column="3"
                 Grid.RowSpan="2"
                 Grid.Row="1"
@@ -392,7 +376,7 @@
                             </StackPanel>
                         </DockPanel>
 
-                         <!-- Row 2 -->
+                        <!-- Row 2 -->
 
                         <Separator/>
 
@@ -504,13 +488,13 @@
                                 <TextBlock 
                                     Text="Phone Number"
                                     Style="{StaticResource TextBoxLabel}"/>
-                               <DockPanel>
+                                <DockPanel>
                                     <ComboBox 
                                        BorderBrush="#FFD7E1E8"
                                        BorderThickness="1.5"
                                        Text="+1">
                                     </ComboBox>
-                                   <TextBox
+                                    <TextBox
                                        x:Name="PhoneBox"
                                        d:Text="9546582944"
                                        Width="190"
@@ -536,7 +520,6 @@
                                     BorderThickness="1.5"/>
                             </StackPanel>
                         </DockPanel>
-
 
                         <Separator/>
 
@@ -576,19 +559,8 @@
                             Content="Update billing info" BorderBrush="#FF217BF3" Background="#FF217BF3"/>
 
                     </StackPanel>
-
-
-
                 </Grid>
-
-
-            </Border>
-
-
-
-
+            </materialDesign:Card>
         </Grid>
-
     </materialDesign:Card>
-
 </Page>

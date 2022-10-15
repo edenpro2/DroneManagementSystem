@@ -170,10 +170,6 @@
                         </ScrollViewer>
                     </ControlTemplate>
                 </ItemsControl.Template>
-                <ItemsControl.Resources>
-                    <controls:ChatAlignmentConverter x:Key="ChatAlignmentConverter"/>
-                    <controls:BubbleColorConverter x:Key="BubbleColorConverter"/>
-                </ItemsControl.Resources>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border

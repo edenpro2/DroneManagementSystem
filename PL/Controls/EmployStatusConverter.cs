@@ -9,8 +9,7 @@ namespace PL.Controls
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var status = (bool)value;
-            return status ? "Employee" : "Customer";
+            return (bool)value ? "Employee" : "Customer";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

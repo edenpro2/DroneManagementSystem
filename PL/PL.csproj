@@ -26,9 +26,10 @@
 	</ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1054.31" />
-    <PackageReference Include="Svg" Version="3.4.0" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.6.1" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1370.28" />
+    <PackageReference Include="Svg" Version="3.4.3" />
+    <PackageReference Include="Syncfusion.SfProgressBar.WPF" Version="20.3.0.49" />
     <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
   </ItemGroup>
 

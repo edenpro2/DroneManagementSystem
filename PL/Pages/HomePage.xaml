@@ -14,13 +14,17 @@
       TextElement.Foreground="{DynamicResource MaterialDesignBody}">
 
     <Page.Resources>
+         
+        <Style x:Key="ProgressEllipse" TargetType="{x:Type Ellipse}">
+            <Setter Property="Grid.Row" Value="0"/>
+            <Setter Property="Width" Value="70"/>
+            <Setter Property="Height" Value="{Binding RelativeSource={RelativeSource Self}, Path=Width}"/>
+        </Style>
 
-        <Style x:Key="CardStyle" TargetType="{x:Type materialDesign:Card}">
-            <Setter Property="UniformCornerRadius" Value="5"/>
-            <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth1"/>
-            <Setter Property="materialDesign:ShadowAssist.ShadowEdges" Value="Bottom" />
-            <Setter Property="Background" Value="{StaticResource MaterialDesignPaper}" />
-            <Setter Property="Margin" Value="25"/>
+        <Style x:Key="ProgressRect" TargetType="{x:Type Rectangle}">
+            <Setter Property="Grid.Row" Value="0"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="15"/>
         </Style>
 
         <Style x:Key="MenuButton" TargetType="{x:Type Button}">
@@ -40,12 +44,14 @@
         </Style>
 
         <controls:DateProgressConverter x:Key="DateProgressConverter"/>
-        <controls:DateProgressConverter x:Key="BoldProgressConverter"/>
 
         <Style x:Key="ProgressText" TargetType="{x:Type TextBlock}">
-            <Setter Property="FontSize" Value="16" />
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="Grid.Row" Value="1" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Margin" Value="0 5 0 0" />
             <Setter Property="Foreground" Value="#555555" />
-            <Setter Property="FontFamily" Value="Segoe UI Variable Text" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
         </Style>
 
         <Style TargetType="{x:Type Image}">
@@ -81,6 +87,7 @@
 
             <!-- LEFT PANEL -->
             <materialDesign:Card 
+                Margin="25 25 25 60"
                 DataContext="{Binding CustomerUi.ViewModel}"
                 Grid.Column="0"
                 Style="{StaticResource CardStyle}">
@@ -205,6 +212,7 @@
 
                 <!-- STATUS -->
                 <materialDesign:Card
+                    Margin="25"
                     DataContext="{Binding LatestParcel}"
                     Grid.Row="1"
                     Style="{StaticResource CardStyle}">
@@ -237,64 +245,155 @@
                                 FontSize="20"
                                 FontWeight="Bold"
                                 Foreground="DarkSlateGray"/>
-                            <DockPanel 
-                                Margin="20 0 0 0"
-                                HorizontalAlignment="Left">
+                            <Grid Margin="15 0 0 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="74"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="74"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="74"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="74"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <!-- Progress -->
                                 <Ellipse
-                                    Width="70"
-                                    Height="{Binding RelativeSource={RelativeSource Self}, Path=Width}"
-                                    d:Fill="Gray"
-                                    Fill="{Binding Scheduled, Converter={StaticResource DateProgressConverter}}"/>
+                                    Style="{StaticResource ProgressEllipse}"                       
+                                    Grid.Column="0"
+                                    d:Fill="Gray">
+                                    <Ellipse.Fill>
+                                        <MultiBinding Converter="{StaticResource DateProgressConverter}">
+                                            <Binding Path="Requested"/>
+                                            <Binding Path="Delivered"/>
+                                        </MultiBinding>
+                                    </Ellipse.Fill>
+                                </Ellipse>
                                 <Rectangle
-                                    Width="100"
-                                    Height="15"
-                                    d:Fill="Gray"
-                                    Fill="{Binding Scheduled, Converter={StaticResource DateProgressConverter}}"/>
+                                    Style="{StaticResource ProgressRect}"
+                                    Grid.Column="1"
+                                    d:Fill="Gray">
+                                    <Rectangle.Fill>
+                                        <MultiBinding Converter="{StaticResource DateProgressConverter}">
+                                            <Binding Path="Scheduled"/>
+                                            <Binding Path="Delivered"/>
+                                        </MultiBinding>
+                                    </Rectangle.Fill>
+                                </Rectangle>
                                 <Ellipse
-                                    Width="70"
-                                    Height="{Binding RelativeSource={RelativeSource Self}, Path=Width}"
-                                    d:Fill="Gray"
-                                    Fill="{Binding Scheduled, Converter={StaticResource DateProgressConverter}}"/>
+                                    Style="{StaticResource ProgressEllipse}"                       
+                                    Grid.Column="2"
+                                    d:Fill="Gray">
+                                    <Ellipse.Fill>
+                                        <MultiBinding Converter="{StaticResource DateProgressConverter}">
+                                            <Binding Path="Scheduled"/>
+                                            <Binding Path="Delivered"/>
+                                        </MultiBinding>
+                                    </Ellipse.Fill>
+                                </Ellipse>
                                 <Rectangle
-                                    Width="100"
-                                    Height="15"
-                                    d:Fill="Gray"
-                                    Fill="{Binding Collected, Converter={StaticResource DateProgressConverter}}"/>
+                                    Style="{StaticResource ProgressRect}"
+                                    Grid.Column="3"
+                                    d:Fill="Gray">
+                                    <Rectangle.Fill>
+                                        <MultiBinding Converter="{StaticResource DateProgressConverter}">
+                                            <Binding Path="Collected"/>
+                                            <Binding Path="Delivered"/>
+                                        </MultiBinding>
+                                    </Rectangle.Fill>
+                                </Rectangle>
                                 <Ellipse
-                                    Width="70"
-                                    Height="{Binding RelativeSource={RelativeSource Self}, Path=Width}"
-                                    d:Fill="Gray"
-                                    Fill="{Binding Collected, Converter={StaticResource DateProgressConverter}}"/>
+                                    Style="{StaticResource ProgressEllipse}"                 
+                                    Grid.Column="4"
+                                    d:Fill="Gray">
+                                    <Ellipse.Fill>
+                                        <MultiBinding Converter="{StaticResource DateProgressConverter}">
+                                            <Binding Path="Collected"/>
+                                            <Binding Path="Delivered"/>
+                                        </MultiBinding>
+                                    </Ellipse.Fill>
+                                </Ellipse>
                                 <Rectangle
-                                    Width="100"
-                                    Height="15"
-                                    d:Fill="Gray"
-                                    Fill="{Binding Delivered, Converter={StaticResource DateProgressConverter}}"/>
+                                    Style="{StaticResource ProgressRect}"  
+                                    Grid.Column="5"
+                                    d:Fill="Gray">
+                                    <Rectangle.Fill>
+                                        <MultiBinding Converter="{StaticResource DateProgressConverter}">
+                                            <Binding Path="Delivered"/>
+                                            <Binding Path="Delivered"/>
+                                        </MultiBinding>
+                                    </Rectangle.Fill>
+                                </Rectangle>
                                 <Ellipse
-                                    Width="70"
-                                    Height="{Binding RelativeSource={RelativeSource Self}, Path=Width}"
-                                    d:Fill="Gray"
-                                    Fill="{Binding Delivered, Converter={StaticResource DateProgressConverter}}"/>
-                            </DockPanel>
-                            <DockPanel
-                                Margin="18 10 0 0">
-                                <TextBlock Text="Requested"
-                                    Style="{StaticResource ProgressText}"
-                                    FontWeight="{Binding Requested, Converter={StaticResource BoldProgressConverter}}"/>
-                                <TextBlock Text="Scheduled"
-                                    Margin="10 0 0 0"
-                                    Style="{StaticResource ProgressText}"
-                                    FontWeight="{Binding Scheduled, Converter={StaticResource BoldProgressConverter}}"/>
-                                <TextBlock Text="Collected"
-                                    Style="{StaticResource ProgressText}"
-                                    FontWeight="{Binding Collected, Converter={StaticResource BoldProgressConverter}}"/>
-                                <TextBlock Text="Delivered"
-                                    Style="{StaticResource ProgressText}"
-                                    FontWeight="{Binding Delivered, Converter={StaticResource BoldProgressConverter}}"/>
-
-                            </DockPanel>
+                                    Style="{StaticResource ProgressEllipse}"  
+                                    Grid.Column="6"
+                                    d:Fill="Gray">
+                                    <Ellipse.Fill>
+                                        <MultiBinding Converter="{StaticResource DateProgressConverter}">
+                                            <Binding Path="Delivered"/>
+                                            <Binding Path="Delivered"/>
+                                        </MultiBinding>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <!-- Progress Text -->
+                                <TextBlock 
+                                    Text="Requested"
+                                    Grid.Column="0"
+                                    Style="{StaticResource ProgressText}">
+                                    <TextBlock.Foreground>
+                                        <MultiBinding Converter="{StaticResource DateProgressConverter}">
+                                            <Binding Path="Requested"/>
+                                            <Binding Path="Delivered"/>
+                                        </MultiBinding>
+                                    </TextBlock.Foreground>
+                                </TextBlock>
+                                <TextBlock 
+                                    Text="Scheduled"
+                                    Grid.Column="2"
+                                    Style="{StaticResource ProgressText}">
+                                    <TextBlock.Foreground>
+                                        <MultiBinding Converter="{StaticResource DateProgressConverter}">
+                                            <Binding Path="Scheduled"/>
+                                            <Binding Path="Delivered"/>
+                                        </MultiBinding>
+                                    </TextBlock.Foreground>
+                                </TextBlock>
+                                <TextBlock 
+                                    Text="Collected"
+                                    Grid.Column="4"
+                                    Style="{StaticResource ProgressText}">
+                                    <TextBlock.Foreground>
+                                        <MultiBinding Converter="{StaticResource DateProgressConverter}">
+                                            <Binding Path="Collected"/>
+                                            <Binding Path="Delivered"/>
+                                        </MultiBinding>
+                                    </TextBlock.Foreground>
+                                </TextBlock>
+                                <TextBlock 
+                                    Text="Delivered"       
+                                    Grid.Column="6"
+                                    Style="{StaticResource ProgressText}">
+                                    <TextBlock.Foreground>
+                                        <MultiBinding Converter="{StaticResource DateProgressConverter}">
+                                            <Binding Path="Delivered"/>
+                                            <Binding Path="Delivered"/>
+                                        </MultiBinding>
+                                    </TextBlock.Foreground>
+                                </TextBlock>
+                            </Grid>
+                            
                         </StackPanel>
                     </Grid>
+                </materialDesign:Card>
+
+                <materialDesign:Card
+                    Margin="25 0 25 60"
+                    DataContext="{Binding LatestParcel}"
+                    Grid.Row="2"
+                    Style="{StaticResource CardStyle}">
+                    
                 </materialDesign:Card>
 
             </Grid>

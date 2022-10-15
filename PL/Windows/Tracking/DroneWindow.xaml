@@ -116,8 +116,8 @@
                 Grid.Column="1"
                 Grid.Row="1">
 
-                <Border
-                    Style="{StaticResource ButtonBorder}">
+                <materialDesign:Card
+                    Style="{StaticResource CardStyle}">
                     <StackPanel Margin="10 0 0 0">
                         <TextBlock
                             Text="Drone Information"
@@ -177,9 +177,10 @@
                         </DockPanel>
 
                     </StackPanel>
-                </Border>
+                </materialDesign:Card>
 
-                <Border Style="{StaticResource ButtonBorder}">
+                <materialDesign:Card 
+                    Style="{StaticResource CardStyle}">
                     <StackPanel Margin="10 0 0 0">
                         <TextBlock
                             x:Name="ErrorBox"
@@ -196,7 +197,7 @@
                             HorizontalAlignment="Left"
                             Visibility="Visible" />
                     </StackPanel>
-                </Border>
+                </materialDesign:Card>
 
 
                 <Button
