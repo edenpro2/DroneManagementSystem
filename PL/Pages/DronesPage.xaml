@@ -4,11 +4,9 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      xmlns:local="clr-namespace:PL.Pages"
       mc:Ignorable="d"
-      MinHeight="600"
-      MinWidth="1200"
-      Title="DronesPage"
+      Height="606"
+      Width="1150"
       DataContext="{Binding RelativeSource={RelativeSource Self}}"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
       Background="{x:Null}">
@@ -25,7 +23,7 @@
     </Page.Resources>
 
     <materialDesign:Card
-        materialDesign:ShadowAssist.ShadowDepth="Depth0" 
+        materialDesign:ShadowAssist.ShadowEdges="None" 
         Background="#f2f3f7">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -34,12 +32,12 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="139*" />
+                <RowDefinition Height="13*" />
                 <RowDefinition Height="40" />
                 <RowDefinition Height="17" />
                 <RowDefinition Height="27" />
-                <RowDefinition Height="369*" />
-                <RowDefinition Height="10*" />
+                <RowDefinition Height="36*" />
+                <RowDefinition Height="40" />
             </Grid.RowDefinitions>
 
             <StackPanel
@@ -134,12 +132,12 @@
  
             <ListBox
                 x:Name="DronesListBox"
-                d:ItemsSource="{d:SampleData ItemCount=6}"
+                d:ItemsSource="{d:SampleData ItemCount=10}"
                 ItemsSource="{Binding DronesViewModel.Filtered}"
                 HorizontalContentAlignment="Stretch"
                 Grid.Column="1"
                 Grid.Row="4"
-                ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                ScrollViewer.VerticalScrollBarVisibility="Auto"
                 MouseDoubleClick="DronesListBox_Click">
                 <ListBox.Template>
                     <ControlTemplate>
@@ -184,8 +182,6 @@
                         </DockPanel>
                     </ControlTemplate>
                 </ListBox.Template>
-       
-
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem" BasedOn="{StaticResource PageListBoxItem}"/>
                 </ListBox.ItemContainerStyle>

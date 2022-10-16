@@ -1,44 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using System.Reflection.Metadata;
 using static System.Math;
-using Newtonsoft.Json;
 namespace DalFacade.DO
 {
     public static class Randomize
     {
-        #region Names
-
-        private static readonly string[] DroneModels =
-        {
-            "Silver Arrow Micro-V", "IAI Skylark", "IAI General",
-            "IAI Harpy", "IAI I-View", "IAI Panther", "IAI Ranger", "IAI Heron"
-        };
-
-        private const string LastNames = "lastnames.json";
-        private const string FirstNames = "firstnames.json";
-
-
+        #region JsonFiles
+        private const string FirstNameJson = "firstnames.json";
+        private const string LastNameJson = "lastnames.json";
         #endregion
-        //TODO: Patch
-        public static List<string> LoadTextFile(string filename)
-        {
-            var txtFileLoc1 = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.Parent.FullName + $"\\{filename}";
-            var txtFileLoc2 = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName + $"\\{filename}";
-            var txtFileLoc3 = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + $"\\{filename}";
 
-            string jsonFile;
-
-            if (File.Exists(txtFileLoc1))
-                jsonFile = File.ReadAllText(txtFileLoc1);
-            else if (File.Exists(txtFileLoc2))
-                jsonFile = File.ReadAllText(txtFileLoc2);
-            else  
-                jsonFile = File.ReadAllText(txtFileLoc3);
-
-            return JsonConvert.DeserializeObject<List<string>>(jsonFile);
-        }
+        #region Lists
+        private static readonly List<string> FirstNames = FileReader.LoadJson(FirstNameJson);
+        private static readonly List<string> LastNames = FileReader.LoadJson(LastNameJson);
+        private static readonly List<string> ModelNames = FileReader.GetFileNames("Resources\\Models");
+        #endregion
 
         /// <summary>
         /// Chooses a random model name from the list of drone models
@@ -47,7 +25,7 @@ namespace DalFacade.DO
         /// <returns> model name </returns>
         public static string Model(Random rand)
         {
-            return DroneModels[rand.Next(DroneModels.Length)];
+            return ModelNames.ElementAt(rand.Next(ModelNames.Count));
         }
 
         /// <summary>
@@ -71,9 +49,7 @@ namespace DalFacade.DO
         /// <returns> random name and surname</returns>
         public static string Name(Random rand)
         {
-            return
-                LoadTextFile(FirstNames)[rand.Next(LoadTextFile(FirstNames).Count)] + " " +
-                LoadTextFile(LastNames)[rand.Next(LoadTextFile(LastNames).Count)];
+            return FirstNames.ElementAt(rand.Next(FirstNames.Count)) + " " + LastNames.ElementAt(rand.Next(LastNames.Count));
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using DalFacade.DO;
+﻿using DalFacade;
+using DalFacade.DO;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -164,16 +165,8 @@ namespace DalObject
             }
 
             #region Chats creator
-            var txtFileLoc1 = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName + @"\RandomText.txt";
-            var txtFileLoc2 = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\RandomText.txt";
-
-            string text;
-
-            if (File.Exists(txtFileLoc1))
-                text = File.ReadAllText(txtFileLoc1);
-            else if (File.Exists(txtFileLoc2))
-                text = File.ReadAllText(txtFileLoc2);
-            else throw new Exception("Unhandled event. No text file present");
+            
+            var text = File.ReadAllText(FileReader.GetFilePath("RandomText.txt"));
 
             var lines = text.Split(new[] { "OBI-WAN", "ANAKIN", "COUNT-DOOKU", "PALPATINE", "DROID" },
                     StringSplitOptions.TrimEntries).ToList();

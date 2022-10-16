@@ -43,8 +43,6 @@
             <Setter Property="Margin" Value="0 10 0 0" />
         </Style>
 
-        <controls:DateProgressConverter x:Key="DateProgressConverter"/>
-
         <Style x:Key="ProgressText" TargetType="{x:Type TextBlock}">
             <Setter Property="TextAlignment" Value="Center"/>
             <Setter Property="Grid.Row" Value="1" />

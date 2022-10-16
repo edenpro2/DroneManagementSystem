@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace PL.Windows.Tracking
 {
-    public partial class DroneWindow
+    public partial class DroneTrackingWindow : Window
     {
         private BackgroundWorker? Worker { get; set; }
         private bool _simulationRunning;
@@ -24,7 +24,7 @@ namespace PL.Windows.Tracking
             Worker.ProgressChanged += Worker_ProgressChanged;
             Worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
             _simulationRunning = true;
-            ProgressBox.Text = "Starting simulator...";
+            //ProgressBox.Text = "Starting simulator...";
             Worker.RunWorkerAsync();
         }
 
@@ -33,9 +33,11 @@ namespace PL.Windows.Tracking
             while (!_shouldStop)
             {
                 Thread.Sleep(Time);
-                var (drone, progress) = _bl.DroneSimulator(ViewModel.Drone);
+                var (drone, progress, currentDistance, totalDistance) = _bl.DroneSimulator(ViewModel.Drone, totalDist);
                 ViewModel.Drone = drone;
-                Dispatcher.Invoke(() => { ProgressBox.Text = progress; });
+                currentDist = currentDistance;
+                totalDist = totalDistance;
+                //Dispatcher.Invoke(() => { ProgressBox.Text = progress; });
                 Worker?.ReportProgress(1);
             }
 

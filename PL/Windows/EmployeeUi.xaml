@@ -7,7 +7,10 @@
       xmlns:controls="clr-namespace:PL.Controls"
       DataContext="{Binding RelativeSource={RelativeSource Self}}"
       mc:Ignorable="d"
-      MinHeight="830" MinWidth="1300"
+      d:MinHeight="691"
+      d:MinWidth="1229"
+      MinHeight="{Binding MinScreenHeight}"
+      MinWidth="{Binding MinScreenWidth}"
       Title="EmployeeUI"
       AllowsTransparency="True"
       WindowStartupLocation="CenterScreen"
@@ -63,26 +66,32 @@
         UniformCornerRadius="10"
         Background="{DynamicResource MaterialDesignPaper}"
         materialDesign:ShadowAssist.ShadowDepth="Depth5">
+        
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30" />
-                <ColumnDefinition Width="20*" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="30" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="35" />
-                <RowDefinition Height="506*" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
                 <RowDefinition Height="60" />
             </Grid.RowDefinitions>
 
-            <Border
+            <Viewbox                
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch" 
+                ClipToBounds="True"
+                Stretch="UniformToFill"
                 Grid.Row="1"
                 Grid.Column="1">
                 <Frame
+                    materialDesign:ShadowAssist.ShadowEdges="None"
                     x:Name="PagesNavigation"
                     NavigationUIVisibility="Hidden"
                     Background="{DynamicResource MaterialDesignBackground}" />
-            </Border>
+            </Viewbox>
 
             <DockPanel
                 Grid.Column="1"
@@ -177,7 +186,7 @@
                     FontSize="10" />
                 <controls:WindowControls
                     x:Name="CustomButtons"
-                    Margin="0 5 5 0"/>
+                    Margin="10 0"/>
             </DockPanel>
 
         </Grid>

@@ -10,17 +10,20 @@ namespace BL
 {
     public partial class Bl
     {
-        public Tuple<Drone, string> DroneSimulator(Drone d)
+        public Tuple<Drone, string, double, double> DroneSimulator(Drone d, double distanceToTarget)
         {
             var drone = d;
             var progress = "";
+            var currentDistance = 0.0;
+
             switch (drone.status)
             {
-                // ______________________________________________________________________________________________________
                 case Free:
                     try // Drone status set to delivery if no exceptions
                     {
                         drone = AssignDroneToParcel(drone);
+                        var parcel = GetParcels(p => p.active).First(p => p.droneId == drone.id);
+                        distanceToTarget = Distance(Location(drone), Location(parcel));
                     }
                     catch (Exception ex)
                     {
@@ -155,8 +158,13 @@ namespace BL
                     }
             }
 
+            var package = GetParcels(p => p.active).FirstOrDefault(p => p.droneId == drone.id);
+            if (!package.Equals(default))
+                currentDistance = Distance(Location(drone), Location(package));
+            else currentDistance = distanceToTarget;
+
             UpdateDrone(drone);
-            return new Tuple<Drone, string>(drone, progress);
+            return new Tuple<Drone, string, double, double>(drone, progress, currentDistance, distanceToTarget);
         }
     }
 }

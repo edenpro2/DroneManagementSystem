@@ -20,10 +20,12 @@
             </ResourceDictionary.MergedDictionaries>
 
             <!-- Controls -->
-            <controls:EmployStatusConverter x:Key="EmployStatusConverter"/>
+            <controls:DateProgressConverter x:Key="DateProgressConverter"/>
             <controls:ChatAlignmentConverter x:Key="ChatAlignmentConverter"/>
             <controls:BubbleColorConverter x:Key="BubbleColorConverter"/>
-            <controls:EmployStatusConverter x:Key="DateProgressConverter"/>
+            <controls:EmployStatusConverter x:Key="EmployStatusConverter"/>
+            <controls:DroneProgressConverter x:Key="DroneProgressConverter"/>
+
 
             <Style x:Key="CardStyle" TargetType="{x:Type materialDesign:Card}">
                 <Setter Property="UniformCornerRadius" Value="10"/>

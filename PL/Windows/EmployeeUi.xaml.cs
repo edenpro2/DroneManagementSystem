@@ -12,15 +12,16 @@ namespace PL.Windows
     {
         private readonly BlApi _bl;
         public UserViewModel ViewModel { get; }
+        public static double MinScreenHeight => PLMethods.MinScreenHeight(0.9);
+        public static double MinScreenWidth => PLMethods.MinScreenWidth(0.9);
 
         public EmployeeUi(BlApi ibl, User user)
         {
             _bl = ibl;
             var customer = _bl.SearchForCustomer(c => c.id == user.customerId);
             ViewModel = new UserViewModel(user, customer.phone, customer.name, user.profilePic);
-            InitializeComponent();
-            //Set custom controls reference to this window
             CustomButtons = new WindowControls(this);
+            InitializeComponent();
             PagesNavigation.Navigate(new DronesPage(_bl));
         }
 

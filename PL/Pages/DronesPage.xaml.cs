@@ -2,6 +2,7 @@
 using DalFacade.DO;
 using PL.ViewModels;
 using PL.Windows;
+using PL.Windows.Tracking;
 using System;
 using System.Collections;
 using System.Collections.ObjectModel;
@@ -72,7 +73,7 @@ namespace PL.Pages
             var selectedDrone = (Drone)DronesListBox.SelectedItem;
 
             var droneDetailsWindow =
-                new DroneWindow(_bl, selectedDrone, DronesViewModel);
+                new DroneTrackingWindow(_bl, selectedDrone, DronesViewModel);
 
             droneDetailsWindow.ShowDialog();
             DronesViewModel = droneDetailsWindow.GetValue();

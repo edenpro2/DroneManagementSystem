@@ -110,6 +110,4 @@ namespace BL.BO
             return closest;
         }
     }
-
-
 }
