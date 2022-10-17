@@ -11,28 +11,32 @@ using System.Linq;
 
 namespace PL.Windows.Tracking
 {
-    public partial class DroneTrackingWindow : Window
+    public partial class DroneTrackingWindow 
     {
+        public static double MinScreenHeight => PLMethods.MinScreenHeight(0.9);
+        public static double MinScreenWidth => PLMethods.MinScreenWidth(0.9);
+
         private readonly BlApi _bl;
         public MapViewModel MapUri { get; } = new();
 
         private readonly DronesViewModel _dronesViewModel;
-        public static double MinScreenHeight => PLMethods.MinScreenHeight(0.9);
-        public static double MinScreenWidth => PLMethods.MinScreenWidth(0.9);
-        public static DroneViewModel ViewModel { get; set; }
+        public DroneViewModel ViewModel { get; set; }
+        public ParcelViewModel Parcel { get; set; }
+ 
+        public double totalDist { get; set; } 
+        public double currentDist { get; set; }
 
-        public static Parcel Parcel {get;set;}
-
-        public double totalDist { get; set; } = 0.0;
-        public double currentDist { get; set; } = 0.0;
+        public bool IsEllipse => true;
+        public bool IsRect => false;
 
         public DroneTrackingWindow(BlApi bl, Drone drone, DronesViewModel drones)
         {
             _bl = bl;
             ViewModel = new DroneViewModel(drone);
             _dronesViewModel = drones;
-            Parcel = _bl.GetParcels(p => p.active && p.droneId == ViewModel.Drone.id).ToList().FirstOrDefault();
+            Parcel = new ParcelViewModel(_bl, _bl.GetParcels().FirstOrDefault(p => p.active && p.droneId == ViewModel.Drone.id));
             InitializeComponent();
+            UpdateContent();
             CustomButtons = new WindowControls(this);
         }
 
@@ -41,13 +45,13 @@ namespace PL.Windows.Tracking
             var lat = location.latitude - location.latitude % 0.0001;
             var lon = location.longitude - location.longitude % 0.0001;
 
-            return new Uri($"https://www.openstreetmap.org/?mlat={lat}&amp;mlon={lon}#map=11/{lat}/{lon}&amp;layers=N");
+            return new Uri($"https://www.openstreetmap.org/?mlat={lat}&amp;mlon={lon}#map=15/{lat}/{lon}");
         }
 
         private void UpdateContent()
         {
             ViewModel.Drone = _bl.SearchForDrone(d => d.id == ViewModel.Drone.id);
-            Parcel = _bl.SearchForParcel(p => p.active && p.droneId == ViewModel.Drone.id);
+            Parcel = new ParcelViewModel(_bl, _bl.GetParcels().FirstOrDefault(p => p.active && p.droneId == ViewModel.Drone.id));
             var loc = _bl.Location(ViewModel.Drone);
             MapUri.Uri = NewMapUri(loc);
         }
@@ -66,6 +70,7 @@ namespace PL.Windows.Tracking
                 ViewModel.Drone = _bl.SendDroneToCharge(ViewModel.Drone);
                 _dronesViewModel.Update(ViewModel.Drone);
                 ErrorBox.Text = "";
+                UpdateContent();
             }
             catch (Exception ex)
             {
@@ -82,8 +87,6 @@ namespace PL.Windows.Tracking
                         break;
                 }
             }
-
-            UpdateContent();
         }
 
         private void ReleaseBtn_Click(object sender, RoutedEventArgs e)
@@ -105,6 +108,7 @@ namespace PL.Windows.Tracking
                 ViewModel.Drone = _bl.DroneReleaseAndCharge(ViewModel.Drone, hours);
                 _dronesViewModel.Update(ViewModel.Drone);
                 ErrorBox.Text = "";
+                UpdateContent();
             }
             catch (Exception ex)
             {
@@ -115,8 +119,6 @@ namespace PL.Windows.Tracking
                         break;
                 }
             }
-
-            UpdateContent();
         }
 
         private void AssignBtn_Click(object sender, RoutedEventArgs e)
@@ -126,6 +128,7 @@ namespace PL.Windows.Tracking
                 ViewModel.Drone = _bl.AssignDroneToParcel(ViewModel.Drone);
                 _dronesViewModel.Update(ViewModel.Drone);
                 ErrorBox.Text = "";
+                UpdateContent();
             }
             catch (Exception ex)
             {
@@ -139,9 +142,6 @@ namespace PL.Windows.Tracking
                         break;
                 }
             }
-
-
-            UpdateContent();
         }
 
         private void CollectBtn_Click(object sender, RoutedEventArgs e)
@@ -151,6 +151,7 @@ namespace PL.Windows.Tracking
                 ViewModel.Drone = _bl.CollectParcelByDrone(ViewModel.Drone);
                 _dronesViewModel.Update(ViewModel.Drone);
                 ErrorBox.Text = "";
+                UpdateContent();
             }
             catch (Exception ex)
             {
@@ -164,8 +165,6 @@ namespace PL.Windows.Tracking
                         break;
                 }
             }
-
-            UpdateContent();
         }
 
         private void DeliverButton_Click(object sender, RoutedEventArgs e)
@@ -175,6 +174,7 @@ namespace PL.Windows.Tracking
                 ViewModel.Drone = _bl.DeliverByDrone(ViewModel.Drone);
                 _dronesViewModel.Update(ViewModel.Drone);
                 ErrorBox.Text = "";
+                UpdateContent();
             }
             catch (Exception ex)
             {
@@ -185,8 +185,6 @@ namespace PL.Windows.Tracking
                         break;
                 }
             }
-
-            UpdateContent();
         }
     }
 }

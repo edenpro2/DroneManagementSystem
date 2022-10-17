@@ -166,7 +166,7 @@ namespace DalObject
 
             #region Chats creator
             
-            var text = File.ReadAllText(FileReader.GetFilePath("RandomText.txt"));
+            var text = File.ReadAllText(FileReader.GetFilePath("RandomText.txt", new List<string>{".txt"}));
 
             var lines = text.Split(new[] { "OBI-WAN", "ANAKIN", "COUNT-DOOKU", "PALPATINE", "DROID" },
                     StringSplitOptions.TrimEntries).ToList();

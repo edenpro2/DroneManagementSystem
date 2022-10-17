@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata;
 using static System.Math;
 namespace DalFacade.DO
 {
@@ -15,7 +14,7 @@ namespace DalFacade.DO
         #region Lists
         private static readonly List<string> FirstNames = FileReader.LoadJson(FirstNameJson);
         private static readonly List<string> LastNames = FileReader.LoadJson(LastNameJson);
-        private static readonly List<string> ModelNames = FileReader.GetFileNames("Resources\\Models");
+        private static readonly List<string> ModelNames = FileReader.GetFileNames("Resources\\Models", new List<string>() { ".jpg", ".png"});
         #endregion
 
         /// <summary>

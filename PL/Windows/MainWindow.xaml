@@ -76,7 +76,7 @@
                 Grid.Row="1"
                 Background="{StaticResource MaterialDesignLightBackground}"
                 UniformCornerRadius="10"
-                materialDesign:ShadowAssist.ShadowDepth="Depth4" >
+                materialDesign:ElevationAssist.Elevation="Dp4" >
                 <StackPanel>
 
                     <Separator Height="50"/>

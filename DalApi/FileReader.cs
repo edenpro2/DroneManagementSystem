@@ -8,20 +8,24 @@ namespace DalFacade
 {
     public static class FileReader
     {
-        //TODO: Needs automation
-        public static string GetFilePath(string filename)
+        public static string GetFilePath(string filename, List<string> extensions)
         {
-            var txtFileLoc1 = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.Parent.FullName + $"\\{filename}";
-            var txtFileLoc2 = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName + $"\\{filename}";
-            var txtFileLoc3 = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + $"\\{filename}";
+            var Loc1 = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.Parent.FullName;
+            var Loc2 = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName;
+            var Loc3 = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
 
-            if (File.Exists(txtFileLoc1))
-                return txtFileLoc1;
-            else if (File.Exists(txtFileLoc2))
-                return txtFileLoc2;
+            var plPath = "";
 
-            return txtFileLoc3;
+            if (Loc1.Contains("PL"))
+                plPath = Loc1;
+            else if (Loc2.Contains("PL"))
+                plPath = Loc2;
+            else plPath = Loc3;
 
+            return Directory
+                .GetFiles(plPath, "*.*", SearchOption.AllDirectories)
+                .Where(f => extensions.IndexOf(Path.GetExtension(f)) >= 0)
+                .First(f => f.Contains(filename));
         }
 
         public static string GetFolderPath(string foldername)
@@ -32,30 +36,25 @@ namespace DalFacade
 
             if (Directory.Exists(folderLoc1))
                 return folderLoc1;
-            else if (Directory.Exists(folderLoc2))
-                return folderLoc2;
 
-            return folderLoc3;
+            return Directory.Exists(folderLoc2) ? folderLoc2 : folderLoc3;
         }
-        public static List<string> GetFileNames(string directory)
+        public static List<string> GetFileNames(string directory, List<string> extensions)
         {
-            return 
-                Directory.GetFiles(GetFolderPath(directory)).
-                Select(file => Path.GetFileNameWithoutExtension(file))
+            return Directory.GetFiles(GetFolderPath(directory), "*.*", SearchOption.AllDirectories)
+                .Where(f => extensions.IndexOf(Path.GetExtension(f)) >= 0)
+                .Select(Path.GetFileNameWithoutExtension)
                 .ToList();
         }
 
         public static List<string> LoadJson(string filename)
         {
-            if (filename.EndsWith(".json"))
-                return JsonConvert.DeserializeObject<List<string>>(File.ReadAllText(GetFilePath(filename)));
-
-            throw new Exception($"{filename} is not json");
+            return JsonConvert.DeserializeObject<List<string>>(File.ReadAllText(GetFilePath(filename, new List<string> { ".json" })));
         }
 
         public static List<string> LoadTxt(string filename)
         {
-            return File.ReadAllLines(GetFilePath(filename)).ToList();
+            return File.ReadAllLines(GetFilePath(filename, new List<string>{".txt"})).ToList();
         }
     }
 }

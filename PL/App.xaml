@@ -19,6 +19,11 @@
                     Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
+            <XmlNamespaceMapping
+                x:Key="sys" 
+                Prefix="sys" 
+                Uri="clr-namespace:System;assembly=mscorlib"/>
+
             <!-- Controls -->
             <controls:DateProgressConverter x:Key="DateProgressConverter"/>
             <controls:ChatAlignmentConverter x:Key="ChatAlignmentConverter"/>

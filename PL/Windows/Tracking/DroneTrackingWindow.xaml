@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:Syncfusion="http://schemas.syncfusion.com/wpf"
+        xmlns:SyncFusion="http://schemas.syncfusion.com/wpf"
         xmlns:controls="clr-namespace:PL.Controls"
+        xmlns:wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         MinHeight="{Binding MinScreenHeight}"
@@ -17,6 +18,7 @@
         WindowStyle="None"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
+         
         <Style TargetType="{x:Type materialDesign:Card}" BasedOn="{StaticResource CardStyle}" >
             <Setter Property="Background" Value="White" />
             <Setter Property="Margin" Value="25" />
@@ -26,9 +28,9 @@
         <Style x:Key="CardButton" TargetType="{x:Type materialDesign:Card}" >
             <Setter Property="Background" Value="White" />
             <Setter Property="materialDesign:ShadowAssist.ShadowEdges" Value="All" />
-            <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth2" />
-            <Setter Property="Height" Value="85" />
-            <Setter Property="Width" Value="200" />
+            <Setter Property="materialDesign:ElevationAssist.Elevation" Value="Dp2" />
+            <Setter Property="Height" Value="130" />
+            <Setter Property="Width" Value="296" />
         </Style>
 
         <Style TargetType="{x:Type DockPanel}" x:Key="DetailsDP">
@@ -40,46 +42,14 @@
             <Setter Property="HorizontalAlignment" Value="Center" />
         </Style>
 
-        <Style x:Key="DroneTitle" TargetType="{x:Type TextBlock}">
-            <Setter Property="Foreground" Value="#FFB2B2B3" />
-            <Setter Property="FontSize" Value="18" />
-            <Setter Property="FontFamily" Value="Netflix Sans" />
-            <Setter Property="VerticalAlignment" Value="Top" />
-            <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="Margin" Value="0 15 0 0" />
-        </Style>
-
-        <Style x:Key="InfoHeader" TargetType="{x:Type TextBlock}">
-            <Setter Property="FontSize" Value="18" />
-            <Setter Property="FontFamily" Value="Netflix Sans Medium" />
-            <Setter Property="Foreground" Value="#FF413940" />
-            <Setter Property="VerticalAlignment" Value="Top" />
-            <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="Margin" Value="0 15 0 0" />
-        </Style>
-
-        <Style x:Key="InfoDetails" TargetType="{x:Type TextBlock}">
-            <Setter Property="FontSize" Value="18" />
-            <Setter Property="FontFamily" Value="Netflix Sans Light" />
-            <Setter Property="Foreground" Value="#FFB2B2B3" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="Margin" Value="0 15 0 0" />
-        </Style>
 
         <Style x:Key="ActionHeader" TargetType="{x:Type TextBlock}">
-            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontSize" Value="24" />
             <Setter Property="FontFamily" Value="Inter" />
-            <Setter Property="FontWeight" Value="ExtraBold"/>
+            <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Foreground" Value="#F2222222" />
             <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Margin" Value="-5 0 0 0" />
-        </Style>
-
-        <Style x:Key="ButtonBorder" TargetType="{x:Type Border}">
-            <Setter Property="Background" Value="White" />
-            <Setter Property="BorderThickness" Value="2" />
-            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Margin" Value="5 0 0 0" />
         </Style>
 
         <Style x:Key="ActionButton" TargetType="{x:Type Button}">
@@ -87,7 +57,7 @@
             <Setter Property="BorderBrush" Value="White" />
         </Style>
 
-        <Style TargetType="{x:Type Image}">
+        <Style x:Key="ButtonIcon" TargetType="{x:Type Image}">
             <Setter Property="Width" Value="50" />
             <Setter Property="Stretch" Value="Uniform" />
             <Setter Property="HorizontalAlignment" Value="Left" />
@@ -105,9 +75,6 @@
             <Setter Property="Width" Value="90"/>
             <Setter Property="Height" Value="15"/>
         </Style>
-        <Style x:Key="Gradient" TargetType="{x:Type GradientStop}">
-            <Setter Property="Color" Value="DarkBlue"/>
-        </Style>
         <Style x:Key="ProgressText" TargetType="{x:Type TextBlock}">
             <Setter Property="TextAlignment" Value="Center"/>
             <Setter Property="Grid.Row" Value="1" />
@@ -121,12 +88,11 @@
     </Window.Resources>
 
     <materialDesign:Card
-        DataContext="{Binding DroneViewModel}"
         Margin="0"
         Background="{StaticResource MaterialDesignPaper}"
         UniformCornerRadius="5"
-        materialDesign:ShadowAssist.ShadowDepth="Depth1">
-        <!-- Viewbox 
+        materialDesign:ElevationAssist.Elevation ="Dp1">
+        <!-- ViewBox 
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch" 
             ClipToBounds="True"
@@ -138,7 +104,8 @@
             </Grid.ColumnDefinitions>
 
             <!-- LEFT PANEL -->
-            <Grid>
+            <Grid
+                DataContext="{Binding ViewModel}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*" />
                     <RowDefinition Height="*" />
@@ -150,9 +117,16 @@
                             <ColumnDefinition Width="1.9*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-
-                        <StackPanel>
-                            <DockPanel Margin="15">
+                        
+                        <Grid Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="2.2*" />
+                                <RowDefinition Height="1.5*" />
+                            </Grid.RowDefinitions>
+                            <DockPanel
+                                Grid.Row="0"
+                                Margin="20">
                                 <TextBlock
                                     d:Text="DJI Avata"
                                     Text="{Binding Drone.model}"
@@ -168,54 +142,56 @@
                                     FontWeight="SemiBold"/>
                             </DockPanel>
 
-                            <Grid>
-                                <Image 
-                                    d:Source="/Resources/Models/DJI Avata.png"
-                                    Source="{Binding ModelImg}"
-                                    Margin="0 0 0 0"
-                                    VerticalAlignment="Top"
-                                    HorizontalAlignment="Center"
-                                    Width="280"/>
-                                <DockPanel
-                                    Margin="0 200 0 0">
-                                    <Syncfusion:SfCircularProgressBar
-                                        x:Name="CustomContentProgressBarLevel"
-                                        Progress="{Binding Drone.battery}"
-                                        Width="120"
-                                        Height="120"
-                                        ProgressColor="#4578d1" TrackColor="#d9d9d9" >
-                                        <Syncfusion:SfCircularProgressBar.ProgressContent>
-                                            <StackPanel Margin="0 -10 0 0">
-                                                <Image 
-                                                    RenderTransformOrigin="0.5,0.5"
-                                                    Source="/Resources/bolt.png"
-                                                    Width="20">
-                                                    <Image.LayoutTransform>
-                                                        <TransformGroup>
-                                                            <ScaleTransform ScaleY="1" ScaleX="-1"/>
-                                                            <SkewTransform AngleY="0" AngleX="0"/>
-                                                            <RotateTransform Angle="0"/>
-                                                            <TranslateTransform/>
-                                                        </TransformGroup>
-                                                    </Image.LayoutTransform>
-                                                </Image>
-                                                <TextBlock 
-                                                    d:Text="10%"
-                                                    Text="{Binding Progress,StringFormat={}{0}%}" 
-                                                    TextAlignment="Center"
-                                                    DataContext ="{x:Reference CustomContentProgressBarLevel}" />
-                                                <TextBlock 
-                                                    Text="Battery"
-                                                    Foreground="#bdbdbd"/>
-                                            </StackPanel>
-                                        </Syncfusion:SfCircularProgressBar.ProgressContent>
-                                    </Syncfusion:SfCircularProgressBar>
-                                </DockPanel>
-                               
-                            </Grid>
-                        </StackPanel>
+                            <Image 
+                                Grid.Row="1"
+                                d:Source="/Resources/Models/DJI Avata.png"
+                                Source="{Binding ModelImg}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Stretch="Uniform"
+                                Width="400"/>
 
-                        <!-- Drone Details Pane -->
+                            <DockPanel Grid.Row="2">
+                                <SyncFusion:SfCircularProgressBar
+                                    VerticalAlignment="Center"
+                                    x:Name="CustomContentProgressBarLevel"
+                                    Progress="{Binding Drone.battery}"
+                                    Width="120"
+                                    Height="120"
+                                    ProgressColor="#4578d1" TrackColor="#d9d9d9" >
+                                    <SyncFusion:SfCircularProgressBar.ProgressContent>
+                                        <StackPanel>
+                                            <Image 
+                                                Margin="0"
+                                                RenderTransformOrigin="0.5,0.5"
+                                                Source="/Resources/bolt.png"
+                                                HorizontalAlignment="Center"
+                                                Width="18">
+                                                <Image.LayoutTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleY="1" ScaleX="-1"/>
+                                                        <SkewTransform AngleY="0" AngleX="0"/>
+                                                        <RotateTransform Angle="0"/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Image.LayoutTransform>
+                                            </Image>
+                                            <TextBlock 
+                                                d:Text="10%"
+                                                Text="{Binding Progress,StringFormat={}{0}%}" 
+                                                TextAlignment="Center"
+                                                DataContext ="{x:Reference CustomContentProgressBarLevel}" />
+                                            <TextBlock 
+                                                Text="Battery"
+                                                Foreground="#bdbdbd"/>
+                                        </StackPanel>
+                                    </SyncFusion:SfCircularProgressBar.ProgressContent>
+                                </SyncFusion:SfCircularProgressBar>
+                            </DockPanel>
+                        </Grid>
+
+
+                            <!-- Drone Details Pane -->
                         <Border 
                             CornerRadius="10"
                             Background="#f6f6f6"
@@ -330,7 +306,9 @@
                                 <materialDesign:Card 
                                     Style="{StaticResource CardButton}">
                                     <DockPanel Style="{StaticResource ButtonDetailsDP}">
-                                        <Image Source="/Icons/charge.png" />
+                                        <Image 
+                                            Style="{StaticResource ButtonIcon}"
+                                            Source="/Icons/charge.png" />
                                         <TextBlock
                                             Text="Charge Drone"
                                             Style="{StaticResource ActionHeader}" />
@@ -349,7 +327,9 @@
                                 <materialDesign:Card 
                                     Style="{StaticResource CardButton}">
                                     <DockPanel Style="{StaticResource ButtonDetailsDP}">
-                                        <Image Source="/Icons/release.png" />
+                                        <Image 
+                                            Style="{StaticResource ButtonIcon}"
+                                            Source="/Icons/release.png" />
                                         <TextBlock
                                             Text="Release Drone"
                                             Style="{StaticResource ActionHeader}" />
@@ -367,7 +347,9 @@
                                 <materialDesign:Card 
                                     Style="{StaticResource CardButton}">
                                     <DockPanel Style="{StaticResource ButtonDetailsDP}">
-                                        <Image Source="/Icons/assign.png" />
+                                        <Image
+                                            Style="{StaticResource ButtonIcon}"
+                                            Source="/Icons/assign.png" />
                                         <TextBlock
                                             Text="Assign Parcel"
                                             Style="{StaticResource ActionHeader}" />
@@ -385,7 +367,9 @@
                                 <materialDesign:Card 
                                     Style="{StaticResource CardButton}">
                                     <DockPanel Style="{StaticResource ButtonDetailsDP}">
-                                        <Image Source="/Icons/collect.png" />
+                                        <Image 
+                                            Style="{StaticResource ButtonIcon}"
+                                            Source="/Icons/collect.png" />
                                         <TextBlock
                                             Text="Collect Parcel"
                                             Style="{StaticResource ActionHeader}" />
@@ -403,7 +387,9 @@
                                 <materialDesign:Card 
                                     Style="{StaticResource CardButton}">
                                     <DockPanel Style="{StaticResource ButtonDetailsDP}">
-                                        <Image Source="/Icons/deliver.png" />
+                                        <Image
+                                            Style="{StaticResource ButtonIcon}"
+                                            Source="/Icons/deliver.png" />
                                         <TextBlock
                                             Text="Deliver Parcel"
                                             Style="{StaticResource ActionHeader}" />
@@ -421,7 +407,9 @@
                                 <materialDesign:Card 
                                     Style="{StaticResource CardButton}">
                                     <DockPanel Style="{StaticResource ButtonDetailsDP}">
-                                        <Image Source="/Icons/drone.png" />
+                                        <Image
+                                            Style="{StaticResource ButtonIcon}"
+                                            Source="/Icons/drone.png" />
                                         <TextBlock
                                             Text="  Simulation"
                                             Style="{StaticResource ActionHeader}" />
@@ -491,7 +479,8 @@
                                             <MultiBinding Converter="{StaticResource DroneProgressConverter}">
                                                 <Binding Path="currentDist"/>
                                                 <Binding Path="totalDist"/>
-                                                <Binding Path="Parcel.requested" />
+                                                <Binding Path="Parcel.Requested" />
+                                                <Binding Path="IsEllipse"  />
                                             </MultiBinding>
                                         </GradientStop.Offset>
                                     </GradientStop>
@@ -499,6 +488,7 @@
                                 </LinearGradientBrush>
                             </Ellipse.Fill>
                         </Ellipse>
+
                         <Rectangle
                             Style="{StaticResource ProgressRect}"
                             Grid.Column="1"
@@ -512,71 +502,132 @@
                                             <MultiBinding Converter="{StaticResource DroneProgressConverter}">
                                                 <Binding Path="currentDist"/>
                                                 <Binding Path="totalDist"/>
-                                                <Binding Path="Parcel.requested" />
+                                                <Binding Path="Parcel.Scheduled" />
+                                                <Binding Path="IsRect"  />
                                             </MultiBinding>
                                         </GradientStop.Offset>
                                     </GradientStop>
                                     <GradientStop Color="Gray" Offset="1"/>
                                 </LinearGradientBrush>
-
                             </Rectangle.Fill>
                         </Rectangle>
+
                         <Ellipse
                             Style="{StaticResource ProgressEllipse}"                       
                             Grid.Column="2"
                             d:Fill="Gray">
                             <Ellipse.Fill>
-                                <MultiBinding Converter="{StaticResource DateProgressConverter}">
-                                    <Binding Path="Scheduled"/>
-                                    <Binding Path="Delivered"/>
-                                </MultiBinding>
+                                <LinearGradientBrush StartPoint="0,1">
+                                    <GradientStop 
+                                        Color="#204585" 
+                                        d:Offset="0.1">
+                                        <GradientStop.Offset>
+                                            <MultiBinding Converter="{StaticResource DroneProgressConverter}">
+                                                <Binding Path="currentDist"/>
+                                                <Binding Path="totalDist"/>
+                                                <Binding Path="Parcel.Scheduled" />
+                                                <Binding Path="IsEllipse"  />
+                                            </MultiBinding>
+                                        </GradientStop.Offset>
+                                    </GradientStop>
+                                    <GradientStop Color="Gray" Offset="1"/>
+                                </LinearGradientBrush>
                             </Ellipse.Fill>
                         </Ellipse>
+
                         <Rectangle
-                                    Style="{StaticResource ProgressRect}"
-                                    Grid.Column="3"
-                                    d:Fill="Gray">
+                            Style="{StaticResource ProgressRect}"
+                            Grid.Column="3"
+                            d:Fill="Gray">
                             <Rectangle.Fill>
-                                <MultiBinding Converter="{StaticResource DateProgressConverter}">
-                                    <Binding Path="Collected"/>
-                                    <Binding Path="Delivered"/>
-                                </MultiBinding>
+                                <LinearGradientBrush StartPoint="0,1">
+                                    <GradientStop 
+                                        Color="#204585" 
+                                        d:Offset="0.1">
+                                        <GradientStop.Offset>
+                                            <MultiBinding Converter="{StaticResource DroneProgressConverter}">
+                                                <Binding Path="currentDist"/>
+                                                <Binding Path="totalDist"/>
+                                                <Binding Path="Parcel.Collected" />
+                                                <Binding Path="IsRect"  />
+                                            </MultiBinding>
+                                        </GradientStop.Offset>
+                                    </GradientStop>
+                                    <GradientStop Color="Gray" Offset="1"/>
+                                </LinearGradientBrush>
                             </Rectangle.Fill>
                         </Rectangle>
+
                         <Ellipse
-                                    Style="{StaticResource ProgressEllipse}"                 
-                                    Grid.Column="4"
-                                    d:Fill="Gray">
+                            Style="{StaticResource ProgressEllipse}"                 
+                            Grid.Column="4"
+                            d:Fill="Gray">
                             <Ellipse.Fill>
-                                <MultiBinding Converter="{StaticResource DateProgressConverter}">
-                                    <Binding Path="Collected"/>
-                                    <Binding Path="Delivered"/>
-                                </MultiBinding>
+                                <LinearGradientBrush StartPoint="0,1">
+                                    <GradientStop 
+                                        Color="#204585" 
+                                        d:Offset="0.1">
+                                        <GradientStop.Offset>
+                                            <MultiBinding Converter="{StaticResource DroneProgressConverter}">
+                                                <Binding Path="currentDist"/>
+                                                <Binding Path="totalDist"/>
+                                                <Binding Path="Parcel.Collected" />
+                                                <Binding Path="IsEllipse"  />
+                                            </MultiBinding>
+                                        </GradientStop.Offset>
+                                    </GradientStop>
+                                    <GradientStop Color="Gray" Offset="1"/>
+                                </LinearGradientBrush>
                             </Ellipse.Fill>
                         </Ellipse>
+
                         <Rectangle
-                                    Style="{StaticResource ProgressRect}"  
-                                    Grid.Column="5"
-                                    d:Fill="Gray">
+                            Style="{StaticResource ProgressRect}"  
+                            Grid.Column="5"
+                            d:Fill="Gray">
                             <Rectangle.Fill>
-                                <MultiBinding Converter="{StaticResource DateProgressConverter}">
-                                    <Binding Path="Delivered"/>
-                                    <Binding Path="Delivered"/>
-                                </MultiBinding>
+                                <LinearGradientBrush StartPoint="0,1">
+                                    <GradientStop 
+                                        Color="#204585" 
+                                        d:Offset="0.1">
+                                        <GradientStop.Offset>
+                                            <MultiBinding Converter="{StaticResource DroneProgressConverter}">
+                                                <Binding Path="currentDist"/>
+                                                <Binding Path="totalDist"/>
+                                                <Binding Path="Parcel.Delivered" />
+                                                <Binding Path="IsRect"  />
+                                            </MultiBinding>
+                                        </GradientStop.Offset>
+                                    </GradientStop>
+                                    <GradientStop Color="Gray" Offset="1"/>
+                                </LinearGradientBrush>
                             </Rectangle.Fill>
                         </Rectangle>
+
                         <Ellipse
                             Style="{StaticResource ProgressEllipse}"  
                             Margin="-26 0 0 0"
                             Grid.Column="6"
                             d:Fill="Gray">
                             <Ellipse.Fill>
-                                <MultiBinding Converter="{StaticResource DateProgressConverter}">
-                                    <Binding Path="Delivered"/>
-                                    <Binding Path="Delivered"/>
-                                </MultiBinding>
+                                <LinearGradientBrush StartPoint="0,1">
+                                    <GradientStop 
+                                        Color="#204585" 
+                                        d:Offset="0.1">
+                                        <GradientStop.Offset>
+                                            <MultiBinding Converter="{StaticResource DroneProgressConverter}">
+                                                <Binding Path="currentDist"/>
+                                                <Binding Path="totalDist"/>
+                                                <Binding Path="Parcel.Delivered" />
+                                                <Binding Path="IsEllipse"  />
+                                            </MultiBinding>
+                                        </GradientStop.Offset>
+                                    </GradientStop>
+                                    <GradientStop Color="Gray" Offset="1"/>
+                                </LinearGradientBrush>
                             </Ellipse.Fill>
                         </Ellipse>
+
                         <!-- Progress Text -->
                         <TextBlock 
                             Text="Requested"
@@ -584,33 +635,36 @@
                             Style="{StaticResource ProgressText}">
                             <TextBlock.Foreground>
                                 <MultiBinding Converter="{StaticResource DateProgressConverter}">
-                                    <Binding Path="Requested"/>
-                                    <Binding Path="Delivered"/>
+                                    <Binding Path="Parcel.Requested"/>
+                                    <Binding Path="Parcel.Delivered"/>
                                 </MultiBinding>
                             </TextBlock.Foreground>
                         </TextBlock>
+
                         <TextBlock 
                             Text="Scheduled"
                             Grid.Column="2"
                             Style="{StaticResource ProgressText}">
                             <TextBlock.Foreground>
                                 <MultiBinding Converter="{StaticResource DateProgressConverter}">
-                                    <Binding Path="Scheduled"/>
-                                    <Binding Path="Delivered"/>
+                                    <Binding Path="Parcel.Scheduled"/>
+                                    <Binding Path="Parcel.Delivered"/>
                                 </MultiBinding>
                             </TextBlock.Foreground>
                         </TextBlock>
+
                         <TextBlock 
                             Text="Collected"
                             Grid.Column="4"
                             Style="{StaticResource ProgressText}">
                             <TextBlock.Foreground>
                                 <MultiBinding Converter="{StaticResource DateProgressConverter}">
-                                    <Binding Path="Collected"/>
-                                    <Binding Path="Delivered"/>
+                                    <Binding Path="Parcel.Collected"/>
+                                    <Binding Path="Parcel.Delivered"/>
                                 </MultiBinding>
                             </TextBlock.Foreground>
                         </TextBlock>
+
                         <TextBlock 
                             Text="Delivered"       
                             Grid.Column="6"
@@ -618,8 +672,8 @@
                             Margin="-25 -10 0 0">
                             <TextBlock.Foreground>
                                 <MultiBinding Converter="{StaticResource DateProgressConverter}">
-                                    <Binding Path="Delivered"/>
-                                    <Binding Path="Delivered"/>
+                                    <Binding Path="Parcel.Delivered"/>
+                                    <Binding Path="Parcel.Delivered"/>
                                 </MultiBinding>
                             </TextBlock.Foreground>
                         </TextBlock>
@@ -627,27 +681,17 @@
                 </materialDesign:Card>
 
                 <materialDesign:Card Grid.Row="1">
-                    <Rectangle 
-                        Width="100"
-                        Height="20">
-                        <Rectangle.Fill>
-                            <LinearGradientBrush StartPoint="0,1">
-                                <GradientStop 
-                                    Color="DarkBlue" 
-                                    d:Offset="0.1">
-                                    <GradientStop.Offset>
-                                        <MultiBinding Converter="{StaticResource DroneProgressConverter}">
-                                            <Binding Path="currDist"/>
-                                            <Binding Path="totalDist"/>
-                                            <Binding Path="Parcel.requested" />
-                                        </MultiBinding>
-                                    </GradientStop.Offset>
-                                </GradientStop>
-                                <GradientStop Color="Gray" Offset="1"/>
-                            </LinearGradientBrush>
+                    <wpf:WebView2
+                        Margin="7"
+                        Source="{Binding MapUri.Uri}"
+                        ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                        ScrollViewer.CanContentScroll="False"
+                        ZoomFactor="0.7"
+                        materialDesign:ScrollBarAssist.ButtonsVisibility="Hidden"/>
+                </materialDesign:Card>
 
-                        </Rectangle.Fill>
-                    </Rectangle>
+                <materialDesign:Card Grid.Row="2">
+
                 </materialDesign:Card>
             </Grid>
 

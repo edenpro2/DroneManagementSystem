@@ -65,7 +65,7 @@
     <materialDesign:Card
         UniformCornerRadius="10"
         Background="{DynamicResource MaterialDesignPaper}"
-        materialDesign:ShadowAssist.ShadowDepth="Depth5">
+        materialDesign:ElevationAssist.Elevation="Dp5">
         
         <Grid>
             <Grid.ColumnDefinitions>
