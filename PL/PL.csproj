@@ -25,11 +25,20 @@
 		</Content>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Remove="Windows\Tracking\DroneWindow.xaml.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Page Remove="Windows\Tracking\DroneWindow.xaml" />
+	</ItemGroup>
+
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="MaterialDesignThemes" Version="4.6.1" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1370.28" />
     <PackageReference Include="Svg" Version="3.4.3" />
-    <PackageReference Include="Syncfusion.SfProgressBar.WPF" Version="20.3.0.49" />
     <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
   </ItemGroup>
 
@@ -41,22 +50,6 @@
     <Reference Include="Microsoft.Web.WebView2.Wpf">
       <HintPath>..\..\..\..\.nuget\packages\microsoft.web.webview2\1.0.1054.31\lib\net45\Microsoft.Web.WebView2.Wpf.dll</HintPath>
     </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Windows\ParcelWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Windows\ParcelWindow.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Windows\MainWindow.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
   </ItemGroup>
 
 </Project>

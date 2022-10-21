@@ -1,51 +1,38 @@
 ﻿using DalFacade.DO;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using DalFacade;
-using static DalFacade.DO.DegreeConverter;
+using System.Collections.ObjectModel;
 
 namespace PL.ViewModels
 {
-    public class DroneViewModel : INotifyPropertyChanged
+    public class DroneViewModel : ViewModelBase
     {
-        public string Dms { get; private set; }
-
-        private Drone _drone;
-
-        public Drone Drone
+        private ObservableCollection<Drone> _drones;
+        public ObservableCollection<Drone> Drones
         {
-            get => _drone;
+            get => _drones;
             set
             {
-                _drone = value;
-                if (_drone.location != null)
-                {
-                    var loc = (Location)_drone.location;
-                    Dms = CoordinatesToSexagesimal(loc.longitude, loc.latitude);
-                }
+                _drones = value;
                 OnPropertyChanged();
             }
         }
 
-        public string ModelImg { get; }
-
-        public DroneViewModel(Drone drone)
+        private ObservableCollection<Drone> _filtered;
+        public ObservableCollection<Drone> Filtered
         {
-            _drone = drone;
-            Dms = "";
-            ModelImg = FileReader.GetFilePath(drone.model, new List<string> {".png", ".jpg"});
+            get => _filtered;
+            set
+            {
+                _filtered = value;
+                OnPropertyChanged();
+            }
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        public DroneViewModel(IEnumerable<Drone> droneList)
         {
-            var handler = PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            _filtered = _drones = new ObservableCollection<Drone>(droneList);
         }
+
+        public void Update(Drone drone) => _drones.Insert(drone.Id, drone);
     }
 }

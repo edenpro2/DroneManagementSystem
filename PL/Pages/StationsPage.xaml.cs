@@ -17,7 +17,7 @@ namespace PL.Pages
         public StationsPage(BlApi ibl)
         {
             _bl = ibl;
-            stationsViewModel = ibl.GetStations(s => s.active).Select(s => new StationViewModel(s)).ToList();
+            stationsViewModel = ibl.GetStations(s => s.Active).Select(s => new StationViewModel(s)).ToList();
             InitializeComponent();
         }
 

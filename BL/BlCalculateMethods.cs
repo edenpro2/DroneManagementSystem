@@ -2,12 +2,37 @@
 using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using BL.BO;
 using static BL.BO.GIS;
 
 namespace BL
 {
     public partial class Bl
     {
+        private int MinForTripToStation(Drone drone)
+        {
+            var station = this.ClosestAvailableStation(drone);
+            return (int)CalcPowerConsumption(drone, station);
+        }
+
+        private int MinForDelivery(Drone drone, Parcel parcel)
+        {
+            var target = GetCustomers(c => c.Active).First(c => c.Id == parcel.TargetId);
+            var total = (int)CalcPowerConsumption(drone, target);
+            drone.Location = Location(target);
+            total += MinForTripToStation(drone);
+            return total;
+        }
+
+        private int MinForCollection(Drone drone, Parcel parcel)
+        {
+            var sender = GetCustomers(c => c.Active).First(c => c.Id == parcel.SenderId);
+            var total = (int)CalcPowerConsumption(drone, sender);
+            drone.Location = Location(sender);
+            total += MinForDelivery(drone, parcel);
+            return total;
+        }
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public double CalcPowerConsumption(Drone drone, object o)
         {
@@ -29,12 +54,12 @@ namespace BL
 
             var rate = 0.0;
 
-            if (drone.location == null)
+            if (drone.Location == null)
             {
                 return rate;
             }
 
-            switch (drone.status)
+            switch (drone.Status)
             {
                 case DroneStatuses.Free:
                     rate = ConsumptionWhenFree();
@@ -45,7 +70,7 @@ namespace BL
                 default:
                     try
                     {
-                        var weight = GetParcels(p => p.active).FirstOrDefault(p => p.droneId == drone.id).weight;
+                        var weight = GetParcels(p => p.Active).First(p => p.DroneId == drone.Id).Weight;
 
                         switch (weight)
                         {
@@ -75,7 +100,7 @@ namespace BL
         private bool CanDroneMakeTrip(Drone drone, Parcel parcel)
         {
             var consumption = MinForCollection(drone, parcel);
-            return drone.battery - consumption > 0;
+            return drone.Battery - consumption > 0;
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]

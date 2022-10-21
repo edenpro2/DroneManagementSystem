@@ -41,16 +41,16 @@ namespace PL.Windows
             }
 
             // search for customer with s
-            var customer = _bl.GetCustomers().FirstOrDefault(c => c.phone == PhoneBox.Text && c.name == UserBox.Text);
+            var customer = _bl.GetCustomers().FirstOrDefault(c => c.Phone == PhoneBox.Text && c.Name == UserBox.Text);
 
             // if customer doesn't exist, create a new one
-            if (customer.phone == default)
+            if (customer.Phone == default)
             {
                 _bl.CreateCustomer(NameBox.Text, PhoneBox.Text);
             }
 
-            customer = _bl.GetCustomers().FirstOrDefault(c => c.phone == PhoneBox.Text && c.name == UserBox.Text);
-            user = new User(customer.id, UserBox.Text, PassBox.Password, EmailBox.Text, AddressBox.Text);
+            customer = _bl.GetCustomers().FirstOrDefault(c => c.Phone == PhoneBox.Text && c.Name == UserBox.Text);
+            user = new User(customer.Id, UserBox.Text, PassBox.Password, EmailBox.Text, AddressBox.Text);
 
             _bl.AddUser(user);
             Close();

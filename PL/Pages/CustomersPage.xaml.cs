@@ -2,42 +2,32 @@
 using PL.ViewModels;
 using PL.Windows;
 using PL.Windows.Tracking;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using DalFacade.DO;
 
 namespace PL.Pages
 {
     public partial class CustomersPage
     {
         private readonly BlApi _bl;
-        public List<CustomerViewModel> customersViewModel { get; }
-        //public List<CustomerViewModel> filtered { get; private set; }
-
+        public CustomerViewModel CustomerViewModel { get; }
+      
         public CustomersPage(BlApi ibl)
         {
             _bl = ibl;
-            customersViewModel = ibl.GetCustomers(c => c.active).Select(c => new CustomerViewModel(c)).ToList();
+            CustomerViewModel = new CustomerViewModel(ibl.GetCustomers(c => c.Active));
             InitializeComponent();
         }
 
         private void CustomerListBox_Click(object sender, MouseButtonEventArgs e)
         {
             if (CustomerListBox.SelectedItems.Count != 1)
-            {
                 return;
-            }
 
-            var droneDetailsWindow = new CustomerWindow((CustomerViewModel)CustomerListBox.SelectedItem);
-            droneDetailsWindow.ShowDialog();
+            new CustomerWindow((Customer)CustomerListBox.SelectedItem).ShowDialog();
         }
 
-        private void DisplayAsMap_Click(object sender, RoutedEventArgs e)
-        {
-            var map = new Map(_bl, "customer");
-            map.Show();
-
-        }
+        private void DisplayAsMap_Click(object sender, RoutedEventArgs e) => new Map(_bl, "customer").Show();
     }
 }

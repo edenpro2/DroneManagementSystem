@@ -10,21 +10,20 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using DroneWindow = PL.Windows.Tracking.DroneWindow;
 
 namespace PL.Pages
 {
     public partial class DronesPage
     {
         private readonly BlApi _bl;
-        public DronesViewModel DronesViewModel { get; private set; }
+        public DroneViewModel DroneViewModel { get; private set; }
         public IEnumerable Statuses { get; } = Enum.GetValues(typeof(DroneStatuses));
         public IEnumerable Weights { get; } = Enum.GetValues(typeof(WeightCategories));
 
         public DronesPage(BlApi ibl)
         {
             _bl = ibl;
-            DronesViewModel = new DronesViewModel(_bl.GetDrones(d => d.active));
+            DroneViewModel = new DroneViewModel(_bl.GetDrones(d => d.Active));
             InitializeComponent();
         }
 
@@ -40,17 +39,17 @@ namespace PL.Pages
 
         private void FilterDrones()
         {
-            DronesViewModel.Filtered = DronesViewModel.Drones;
+            DroneViewModel.Filtered = DroneViewModel.Drones;
 
             if (StatusComboBox.SelectedItem != null)
             {
                 var cbStatus = (DroneStatuses)StatusComboBox.SelectedItem;
-                DronesViewModel.Filtered = new ObservableCollection<Drone>(DronesViewModel.Filtered.Where(drone => drone.status == cbStatus));
+                DroneViewModel.Filtered = new ObservableCollection<Drone>(DroneViewModel.Filtered.Where(drone => drone.Status == cbStatus));
             }
             if (WeightComboBox.SelectedItem != null)
             {
                 var cbWeight = (WeightCategories)WeightComboBox.SelectedItem;
-                DronesViewModel.Filtered = new ObservableCollection<Drone>(DronesViewModel.Filtered.Where(drone => drone.maxWeight == cbWeight));
+                DroneViewModel.Filtered = new ObservableCollection<Drone>(DroneViewModel.Filtered.Where(drone => drone.MaxWeight == cbWeight));
             }
         }
 
@@ -63,8 +62,8 @@ namespace PL.Pages
         {
             NewDroneWindow newDroneWindow = new(_bl);
             newDroneWindow.ShowDialog();
-            DronesViewModel.Drones = new ObservableCollection<Drone>(_bl.GetDrones());
-            DronesListBox.ItemsSource = DronesViewModel.Drones;
+            DroneViewModel.Drones = new ObservableCollection<Drone>(_bl.GetDrones());
+            DronesListBox.ItemsSource = DroneViewModel.Drones;
             ClearSelButton_Click(sender, e);
         }
 
@@ -73,11 +72,11 @@ namespace PL.Pages
             var selectedDrone = (Drone)DronesListBox.SelectedItem;
 
             var droneDetailsWindow =
-                new DroneTrackingWindow(_bl, selectedDrone, DronesViewModel);
+                new DroneTrackingWindow(_bl, selectedDrone, DroneViewModel);
 
             droneDetailsWindow.ShowDialog();
-            DronesViewModel = droneDetailsWindow.GetValue();
-            DronesListBox.ItemsSource = DronesViewModel.Drones;
+            DroneViewModel = droneDetailsWindow.GetValue();
+            DronesListBox.ItemsSource = DroneViewModel.Drones;
             ClearSelButton_Click(sender, e);
         }
 

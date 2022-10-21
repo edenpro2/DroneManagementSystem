@@ -16,7 +16,7 @@ namespace PL.Pages
         {
             personalChats = new ChatsViewModel(customers, ref allChats, user);
             this.user = user;
-            UserList = customers.Select(c => c.name).ToList();
+            UserList = customers.Select(c => c.Name).ToList();
             InitializeComponent();
         }
 
@@ -28,7 +28,7 @@ namespace PL.Pages
             set
             {
                 _searchText = value;
-                OnPropertyChanged("SearchText");
+                OnPropertyChanged();
                 OnPropertyChanged("MyFilteredItems");
             }
         }

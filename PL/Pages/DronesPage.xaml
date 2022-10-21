@@ -133,7 +133,7 @@
             <ListBox
                 x:Name="DronesListBox"
                 d:ItemsSource="{d:SampleData ItemCount=10}"
-                ItemsSource="{Binding DronesViewModel.Filtered}"
+                ItemsSource="{Binding DroneViewModel.Filtered}"
                 HorizontalContentAlignment="Stretch"
                 Grid.Column="1"
                 Grid.Row="4"
@@ -199,19 +199,19 @@
                             <TextBlock
                                 Grid.Column="0"
                                 Margin="5 0 0 0"
-                                Text="{Binding id}"/>
+                                Text="{Binding Id}"/>
                             <TextBlock
                                 Grid.Column="1"
-                                Text="{Binding model}"/>
+                                Text="{Binding Model}"/>
                             <TextBlock
                                 Grid.Column="2"
-                                Text="{Binding status}"/>
+                                Text="{Binding Status}"/>
                             <TextBlock
                                 Grid.Column="3"
-                                Text="{Binding maxWeight}"/>
+                                Text="{Binding MaxWeight}"/>
                             <TextBlock
                                 Grid.Column="4"
-                                Text="{Binding battery, StringFormat={}{0:0.##} %}"/>
+                                Text="{Binding Battery, StringFormat={}{0:0.##} %}"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

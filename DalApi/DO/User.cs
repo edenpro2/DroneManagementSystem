@@ -3,33 +3,117 @@ using System.Xml.Serialization;
 
 namespace DalFacade.DO
 {
-    [Serializable]
     [XmlRoot]
-    public class User
+    public class User : ViewModelBase
     {
-        public int customerId { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
-        public string email { get; set; }
-        public string address { get; set; }
-        public string profilePic { get; set; }
-        public bool active { get; set; }
-        public bool isEmployee { get; set; }
-
-        public User()
+        private int _customerId;
+        public int customerId
         {
-            customerId = -1;
-            username = "";
-            password = "";
-            email = "";
-            address = "";
-            profilePic = "";
-            active = false;
-            isEmployee = false;
+            get => _customerId;
+            set
+            {
+                if (value == _customerId)
+                    return;
+
+                _customerId = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _username;
+        public string username
+        {
+            get => _username;
+            set
+            {
+                if (value == _username)
+                    return;
+
+                _username = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _password;
+        public string password
+        {
+            get => _password;
+            set
+            {
+                if (value == _password)
+                    return;
+
+                _password = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _email;
+        public string email
+        {
+            get => _email;
+            set
+            {
+                if (value == _email)
+                    return;
+
+                _email = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _address;
+        public string address
+        {
+            get => _address;
+            set
+            {
+                if (value == _address)
+                    return;
+
+                _address = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _profilePic;
+        public string profilePic
+        {
+            get => _profilePic;
+            set
+            {
+                if (value == _profilePic)
+                    return;
+
+                _profilePic = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool _active;
+        public bool active
+        {
+            get => _active;
+            set
+            {
+                if (value == _active)
+                    return;
+
+                _active = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool _isEmployee;
+        public bool isEmployee
+        {
+            get => _isEmployee;
+            set
+            {
+                if (value == _isEmployee)
+                    return;
+
+                _isEmployee = value;
+                OnPropertyChanged();
+            }
         }
 
-        public User(int customerId = -1, string user = "", string pass = "", string mail = "",
-            string personalAddress = "", bool employed = false)
+        public User() {}
+
+        public User(int customerId = -1, string user = "", string pass = "", string mail = "", string personalAddress = "", bool employed = false)
         {
             this.customerId = customerId;
             username = user;

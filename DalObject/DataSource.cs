@@ -73,6 +73,8 @@ namespace DalObject
                     Randomize.Model(rand),
                     (WeightCategories)rand.Next(3));
 
+                // Search for image related to model
+                drone.ModelImg = FileReader.GetFilePath(drone.Model, new List<string> { ".png", ".jpg" });
                 Drones.Add(drone);
             }
 
@@ -84,8 +86,8 @@ namespace DalObject
                     Config.StationId++,
                     rand.Next(MaxStationName),
                     Station.MaxChargeSlots,
-                    location.latitude,
-                    location.longitude)); 
+                    location.Latitude,
+                    location.Longitude)); 
             }
 
             for (var i = 0; i < CUSTOMER_MAX - 1; ++i)
@@ -96,8 +98,8 @@ namespace DalObject
                     Config.CustomerId++,
                     Randomize.Name(rand),
                     Randomize.Phone(rand),
-                    location.latitude,
-                    location.longitude)); 
+                    location.Latitude,
+                    location.Longitude)); 
             }
 
             #endregion
@@ -115,17 +117,17 @@ namespace DalObject
             string name;
 
             Users = Customers
-                .Where(c => c.active)
+                .Where(c => c.Active)
                 .Select(c => new User(
-                    c.id,
-                    name = new string(c.name.Where(l => !char.IsWhiteSpace(l)).ToArray()) +
+                    c.Id,
+                    name = new string(c.Name.Where(l => !char.IsWhiteSpace(l)).ToArray()) +
                            rand.Next(100),
-                    c.phone,
+                    c.Phone,
                     name.ToLower() + "@gmail.com"))
                 .ToList();
 
             // Easy admin account for quick login
-            User eden = Users[Config.CustomerId - 1];
+            var eden = Users[Config.CustomerId - 1];
             eden.isEmployee = true;
             eden.username = "admin";
             eden.password = "admin";
@@ -136,15 +138,15 @@ namespace DalObject
             {
                 DateTime scheduled = default,
                          pickedUp = default,
-                         delivered = default;
+                         delivered = default,
+                         requested = Randomize.Date(rand);
 
-                DateTime requested = Randomize.Date(rand);
-                int senderId = Customers[rand.Next(Customers.Count)].id;
+                int senderId = Customers[rand.Next(Customers.Count)].Id;
                 int targetId;
 
                 do
                 {
-                    targetId = Customers[rand.Next(Customers.Count)].id;
+                    targetId = Customers[rand.Next(Customers.Count)].Id;
                 } while (targetId == senderId);
 
                 Parcels.Add(new Parcel
@@ -186,8 +188,8 @@ namespace DalObject
                     var user1 = users[i];
                     var user2 = users[i + 1];
 
-                    var name1 = Customers.First(c => c.id == user1.customerId).name;
-                    var name2 = Customers.First(c => c.id == user2.customerId).name;
+                    var name1 = Customers.First(c => c.Id == user1.customerId).Name;
+                    var name2 = Customers.First(c => c.Id == user2.customerId).Name;
 
                     if (j % 2 == 0)
                     {

@@ -3,7 +3,6 @@ using BL;
 using BLAPI;
 using DalFacade.DO;
 using PL.Controls;
-using PL.Windows.Tracking;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,7 +13,7 @@ namespace PL.Windows
 {
     public partial class MainWindow
     {
-        private static readonly BlApi bl = BlFactory.GetBl();
+        private static readonly BlApi Bl = BlFactory.GetBl();
         private BackgroundWorker? _bgThread;
         private static User? _user;
         public static double MinScreenHeight => PLMethods.MinScreenHeight(0.9);
@@ -45,7 +44,7 @@ namespace PL.Windows
         private void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
         {
             _bgThread?.ReportProgress(1);
-            Dispatcher.Invoke(() => _user = bl.GetUsers(u => u.username == UsernameBox.Text).FirstOrDefault());
+            Dispatcher.Invoke(() => _user = Bl.GetUsers(u => u.username == UsernameBox.Text).FirstOrDefault());
         }
 
         private void BackgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
@@ -73,7 +72,7 @@ namespace PL.Windows
             }
             else
             {
-                new CustomerUi(bl, _user).Show();
+                new CustomerUi(Bl, _user).Show();
                 Close();
             }
         }
@@ -96,7 +95,7 @@ namespace PL.Windows
 
         private void EmployeeBtn_Click(object sender, RoutedEventArgs e)
         {
-            var empLoginWindow = new EmployeeLoginWindow(bl);
+            var empLoginWindow = new EmployeeLoginWindow(Bl);
 
             if (!(bool)empLoginWindow.ShowDialog())
                 return;
@@ -106,14 +105,14 @@ namespace PL.Windows
             if (_user == null)
                 return;
 
-            new EmployeeUi(bl, _user).Show();
+            new EmployeeUi(Bl, _user).Show();
             Close();
         }
 
         private void RegBtn_Click(object sender, RoutedEventArgs e)
         {
             ErrorTextBlock.Text = "";
-            RegistrationWindow regWindow = new(bl);
+            RegistrationWindow regWindow = new(Bl);
             regWindow.ShowDialog();
         }
 

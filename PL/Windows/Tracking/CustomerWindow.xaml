@@ -59,7 +59,7 @@
     <materialDesign:Card
         UniformCornerRadius="10"
         Background="{DynamicResource MaterialDesignPaper}"
-        materialDesign:ShadowAssist.ShadowDepth="Depth4">
+        materialDesign:ElevationAssist.Elevation="Dp4">
 
         <Grid>
             <Grid.ColumnDefinitions>
@@ -107,19 +107,20 @@
                         <StackPanel Margin="147,100,0,0"
                                     DataContext="{Binding ViewModel}">
                             <TextBlock
-                                Text="{Binding Customer.id}"
+                                Text="{Binding Id}"
                                 Style="{StaticResource InfoDetails}" />
                             <TextBlock
-                                Text="{Binding Customer.name}"
+                                Text="{Binding Name}"
                                 Style="{StaticResource InfoDetails}" />
                             <TextBlock
-                                Text="{Binding Customer.phone}"
+                                Text="{Binding Phone}"
                                 Style="{StaticResource InfoDetails}" />
                             <TextBlock
-                                Text="{Binding Customer.active}"
+                                Text="{Binding Active}"
                                 Style="{StaticResource InfoDetails}" />
+                            <!-- Todo: Fix -->
                             <TextBlock
-                                Text="{Binding Dms}"
+                                Text="{Binding Dms}" 
                                 Style="{StaticResource InfoDetails}" />
                         </StackPanel>
 
@@ -133,7 +134,7 @@
                     CornerRadius="3" 
                     Margin="2 0 0 0">
                     <wpf:WebView2
-                        Source="{Binding MapUri.Uri}"
+                        Source="{Binding MapUrl.Uri}"
                         ScrollViewer.VerticalScrollBarVisibility="Disabled"
                         ScrollViewer.CanContentScroll="False"
                         materialDesign:ScrollBarAssist.ButtonsVisibility="Hidden" />

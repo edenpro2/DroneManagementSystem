@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
-
+using static DalFacade.FileReader;
 
 namespace DALXML
 {
@@ -14,14 +14,13 @@ namespace DALXML
         private static readonly Lazy<DalXml> _instance = new(() => new DalXml());
         public static DalXml Instance => _instance.Value;
 
-        private const string Dir = @"../../../../data/";
-
-        private const string DronesFilePath = Dir + "Drones.xml";
-        private const string StationsFilePath = Dir + "Stations.xml";
-        private const string CustomersFilePath = Dir + "Customers.xml";
-        private const string ParcelsFilePath = Dir + "Parcels.xml";
-        private const string UsersFilePath = Dir + "Users.xml";
-        private const string ChatsFilePath = Dir + "Chats.xml";
+        private static readonly string Dir = GetFolderPath("Data", PathOption.CreateDirectory);
+        private static readonly string DronesFilePath = Dir + "\\Drones.xml";
+        private static readonly string StationsFilePath = Dir + "\\Stations.xml";
+        private static readonly string CustomersFilePath = Dir + "\\Customers.xml";
+        private static readonly string ParcelsFilePath = Dir + "\\Parcels.xml";
+        private static readonly string UsersFilePath = Dir + "\\Users.xml";
+        private static readonly string ChatsFilePath = Dir + "\\Chats.xml";
 
         internal static class Config
         {
@@ -36,14 +35,6 @@ namespace DALXML
 
             internal static int ParcelId;
             internal static int CustomerId;
-        }
-
-        static DalXml()
-        {
-            if (!Directory.Exists(Dir))
-            {
-                Directory.CreateDirectory(Dir);
-            }
         }
 
         private DalXml()

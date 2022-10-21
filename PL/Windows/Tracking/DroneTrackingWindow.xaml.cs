@@ -1,74 +1,97 @@
-﻿using PL.Controls;
+﻿using BL;
+using BLAPI;
+using DalFacade.DO;
+using PL.Controls;
+using PL.ViewModels;
+using System;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
-using PL.ViewModels;
-using DalFacade.DO;
-using BL.BO;
-using BLAPI;
-using System;
-using BL;
-using System.Linq;
+using System.Windows.Media;
+using LiveCharts.Wpf;
+
+#pragma warning disable CS8602 // All null values initialized in constructor
 
 namespace PL.Windows.Tracking
 {
-    public partial class DroneTrackingWindow 
+    public partial class DroneTrackingWindow : INotifyPropertyChanged
     {
+        #region Properties
         public static double MinScreenHeight => PLMethods.MinScreenHeight(0.9);
         public static double MinScreenWidth => PLMethods.MinScreenWidth(0.9);
+        public SolidColorBrush CustomFill { get; } = new (Color.FromRgb(68, 110, 189));
+        public bool IsChecked { get; set; }
+        public MapUri MapUrl { get; } = new();
+        private readonly DroneViewModel _drones;
+        private BlApi _bl;
 
-        private readonly BlApi _bl;
-        public MapViewModel MapUri { get; } = new();
-
-        private readonly DronesViewModel _dronesViewModel;
-        public DroneViewModel ViewModel { get; set; }
-        public ParcelViewModel Parcel { get; set; }
- 
-        public double totalDist { get; set; } 
-        public double currentDist { get; set; }
-
-        public bool IsEllipse => true;
-        public bool IsRect => false;
-
-        public DroneTrackingWindow(BlApi bl, Drone drone, DronesViewModel drones)
+        private Drone? _viewModel;
+        public Drone? ViewModel
         {
-            _bl = bl;
-            ViewModel = new DroneViewModel(drone);
-            _dronesViewModel = drones;
-            Parcel = new ParcelViewModel(_bl, _bl.GetParcels().FirstOrDefault(p => p.active && p.droneId == ViewModel.Drone.id));
-            InitializeComponent();
-            UpdateContent();
-            CustomButtons = new WindowControls(this);
+            get=>_viewModel;
+            set
+            {
+                _viewModel = value;
+                OnPropertyChanged();
+            }
         }
 
-        private static Uri? NewMapUri(Location location)
+        private Parcel? _parcel = new();
+        public Parcel? Parcel
         {
-            var lat = location.latitude - location.latitude % 0.0001;
-            var lon = location.longitude - location.longitude % 0.0001;
+            get => _parcel;
+            set
+            {
+                _parcel = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region Gauge
+        public Func<double, string> Formatter { get; set; }
+        #endregion
+
+        public DroneTrackingWindow(BlApi bl, Drone drone, DroneViewModel drones)
+        {
+            Parcel = bl.GetParcels(p => p.Active).FirstOrDefault(p => p.DroneId == drone.Id);
+            _bl = bl;
+            ViewModel = drone;
+            InitializeComponent();
+            UpdateContent();
+            IconRadioBtn = new IconButton();
+            _drones = drones;
+            CustomButtons = new WindowControls(this);
+            StepProgressBar = new StepProgressBar(Parcel);
+        }
+
+        private static Uri NewMapUri(Location location)
+        {
+            var lat = location.Latitude - location.Latitude % 0.0001;
+            var lon = location.Longitude - location.Longitude % 0.0001;
 
             return new Uri($"https://www.openstreetmap.org/?mlat={lat}&amp;mlon={lon}#map=15/{lat}/{lon}");
         }
 
         private void UpdateContent()
         {
-            ViewModel.Drone = _bl.SearchForDrone(d => d.id == ViewModel.Drone.id);
-            Parcel = new ParcelViewModel(_bl, _bl.GetParcels().FirstOrDefault(p => p.active && p.droneId == ViewModel.Drone.id));
-            var loc = _bl.Location(ViewModel.Drone);
-            MapUri.Uri = NewMapUri(loc);
+            ViewModel = _bl.SearchForDrone(d => d.Id == ViewModel.Id);
+            Parcel = _bl.GetParcels().FirstOrDefault(p => p.Active && p.DroneId == ViewModel.Id);
+            MapUrl.Uri = NewMapUri(_bl.Location(ViewModel));
         }
 
-        private void Window_MouseLeftBtnDown(object sender, MouseButtonEventArgs e)
-        {
-            DragMove();
-        }
+        private void MouseLeftBtnDown(object sender, MouseButtonEventArgs e) => DragMove();
 
-        internal DronesViewModel GetValue() => _dronesViewModel;
+        internal DroneViewModel GetValue() => _drones;
 
         private void ChargeBtn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                ViewModel.Drone = _bl.SendDroneToCharge(ViewModel.Drone);
-                _dronesViewModel.Update(ViewModel.Drone);
+                ViewModel = _bl.SendDroneToCharge(ViewModel);
+                _drones.Update(ViewModel);
                 ErrorBox.Text = "";
                 UpdateContent();
             }
@@ -92,7 +115,6 @@ namespace PL.Windows.Tracking
         private void ReleaseBtn_Click(object sender, RoutedEventArgs e)
         {
             //Todo: implement number of hours
-
             const int hours = 1;
             //try
             //{
@@ -105,8 +127,8 @@ namespace PL.Windows.Tracking
 
             try
             {
-                ViewModel.Drone = _bl.DroneReleaseAndCharge(ViewModel.Drone, hours);
-                _dronesViewModel.Update(ViewModel.Drone);
+                ViewModel = _bl.DroneReleaseAndCharge(ViewModel, hours);
+                _drones.Update(ViewModel);
                 ErrorBox.Text = "";
                 UpdateContent();
             }
@@ -125,8 +147,8 @@ namespace PL.Windows.Tracking
         {
             try
             {
-                ViewModel.Drone = _bl.AssignDroneToParcel(ViewModel.Drone);
-                _dronesViewModel.Update(ViewModel.Drone);
+                ViewModel = _bl.AssignDroneToParcel(ViewModel);
+                _drones.Update(ViewModel);
                 ErrorBox.Text = "";
                 UpdateContent();
             }
@@ -148,8 +170,8 @@ namespace PL.Windows.Tracking
         {
             try
             {
-                ViewModel.Drone = _bl.CollectParcelByDrone(ViewModel.Drone);
-                _dronesViewModel.Update(ViewModel.Drone);
+                ViewModel = _bl.CollectParcelByDrone(ViewModel);
+                _drones.Update(ViewModel);
                 ErrorBox.Text = "";
                 UpdateContent();
             }
@@ -171,8 +193,8 @@ namespace PL.Windows.Tracking
         {
             try
             {
-                ViewModel.Drone = _bl.DeliverByDrone(ViewModel.Drone);
-                _dronesViewModel.Update(ViewModel.Drone);
+                ViewModel = _bl.DeliverByDrone(ViewModel);
+                _drones.Update(ViewModel);
                 ErrorBox.Text = "";
                 UpdateContent();
             }
@@ -186,5 +208,16 @@ namespace PL.Windows.Tracking
                 }
             }
         }
+
+        #region INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #endregion
     }
 }

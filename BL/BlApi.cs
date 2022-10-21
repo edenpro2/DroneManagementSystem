@@ -95,7 +95,7 @@ namespace BLAPI
         #endregion
 
         #region Simulator Methods
-        public Tuple<Drone, string, double, double> DroneSimulator(Drone drone, double totalDistance);
+        public Tuple<Drone, string> DroneSimulator(Drone drone);
         #endregion
     }
 }

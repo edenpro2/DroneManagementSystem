@@ -19,8 +19,8 @@ namespace PL.Pages
         public SettingsPage(BlApi ibl, User user)
         {
             _bl = ibl;
-            _customer = _bl.SearchForCustomer(c => c.id == user.customerId);
-            UserViewModel = new UserViewModel(user, _customer.phone, _customer.name, user.profilePic);
+            _customer = _bl.SearchForCustomer(c => c.Id == user.customerId);
+            UserViewModel = new UserViewModel(user, _customer.Phone, _customer.Name, user.profilePic);
             InitializeComponent();
         }
 
@@ -63,7 +63,7 @@ namespace PL.Pages
             // update each field
             user.username = username;
             user.email = email;
-            _customer.name = name;
+            _customer.Name = name;
 
             _bl.UpdateCustomer(_customer);
             _bl.UpdateUser(user);
@@ -85,7 +85,7 @@ namespace PL.Pages
 
             //To read the content : Get the filename from the OpenFileDialog.
 
-            if ((bool)fileDialog.ShowDialog())
+            if ((bool) fileDialog.ShowDialog())
             {
                 var filePath = fileDialog.FileName;
 
@@ -119,7 +119,7 @@ namespace PL.Pages
             // update each field
             if (success)
             {
-                _customer.phone = phoneNumber.ToString();
+                _customer.Phone = phoneNumber.ToString();
             }
             else
             {

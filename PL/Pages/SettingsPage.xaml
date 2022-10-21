@@ -4,9 +4,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      xmlns:viewModels="clr-namespace:PL.ViewModels"
       xmlns:themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
-      xmlns:controls="clr-namespace:PL.Controls"
       mc:Ignorable="d"
       MinHeight="720" 
       MinWidth="1340"
@@ -134,7 +132,7 @@
     </Page.Resources>
 
     <materialDesign:Card 
-        materialDesign:ShadowAssist.ShadowDepth="Depth0"
+        materialDesign:ElevationAssist.Elevation="Dp0"
         Background="#d1d9de">
 
         <Grid>
@@ -305,8 +303,7 @@
                             BorderThickness="0"
                             FontWeight="Medium"
                             VerticalAlignment="Bottom"
-                            HorizontalAlignment="Left">
-                        </RadioButton>
+                            HorizontalAlignment="Left" />
 
                         <Separator Width="30"/>
 
@@ -318,8 +315,7 @@
                             BorderThickness="0"
                             FontWeight="Medium"
                             VerticalAlignment="Bottom"
-                            HorizontalAlignment="Left">
-                        </RadioButton>
+                            HorizontalAlignment="Left" />
 
                     </DockPanel>
 
@@ -492,8 +488,7 @@
                                     <ComboBox 
                                        BorderBrush="#FFD7E1E8"
                                        BorderThickness="1.5"
-                                       Text="+1">
-                                    </ComboBox>
+                                       Text="+1" />
                                     <TextBox
                                        x:Name="PhoneBox"
                                        d:Text="9546582944"

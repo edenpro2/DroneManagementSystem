@@ -1,8 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿#nullable enable
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 
 namespace DalFacade
 {
@@ -22,39 +24,63 @@ namespace DalFacade
                 plPath = Loc2;
             else plPath = Loc3;
 
-            return Directory
-                .GetFiles(plPath, "*.*", SearchOption.AllDirectories)
-                .Where(f => extensions.IndexOf(Path.GetExtension(f)) >= 0)
-                .First(f => f.Contains(filename));
+
+            return
+                Directory.GetFiles(plPath, "*.*", SearchOption.AllDirectories)
+                    .Where(f => extensions.IndexOf(Path.GetExtension(f)) >= 0)
+                    .First(f => f.Contains(Path.GetFileNameWithoutExtension(filename)));
         }
 
-        public static string GetFolderPath(string foldername)
+        public enum PathOption
         {
-            var folderLoc1 = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.Parent.FullName + $"\\{foldername}";
-            var folderLoc2 = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName + $"\\{foldername}";
-            var folderLoc3 = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + $"\\{foldername}";
-
-            if (Directory.Exists(folderLoc1))
-                return folderLoc1;
-
-            return Directory.Exists(folderLoc2) ? folderLoc2 : folderLoc3;
-        }
-        public static List<string> GetFileNames(string directory, List<string> extensions)
-        {
-            return Directory.GetFiles(GetFolderPath(directory), "*.*", SearchOption.AllDirectories)
-                .Where(f => extensions.IndexOf(Path.GetExtension(f)) >= 0)
-                .Select(Path.GetFileNameWithoutExtension)
-                .ToList();
+            CreateDirectory,
+            SearchOnly
         }
 
-        public static List<string> LoadJson(string filename)
+        public static string? GetFolderPath(string folder, PathOption pathOption = PathOption.SearchOnly, SearchOption searchOption = SearchOption.AllDirectories)
         {
-            return JsonConvert.DeserializeObject<List<string>>(File.ReadAllText(GetFilePath(filename, new List<string> { ".json" })));
+            var projectDirectory = Directory.GetParent(Environment.CurrentDirectory)?.Parent?.Parent?.Parent?.Parent?.FullName;
+
+            if (projectDirectory!.Contains(folder))
+                return projectDirectory;
+
+            var dir =
+                Directory.GetDirectories(projectDirectory, "*", searchOption)
+                    .FirstOrDefault(sub => sub.EndsWith(folder));
+
+            if (dir == null)
+            {
+                dir = projectDirectory + $"\\{folder}";
+                Directory.CreateDirectory(dir);
+            }
+
+            return dir;
         }
 
-        public static List<string> LoadTxt(string filename)
+        public static IList<string?> GetFileNames(string directory, List<string> extensions, SearchOption option)
         {
-            return File.ReadAllLines(GetFilePath(filename, new List<string>{".txt"})).ToList();
+            var dir = GetFolderPath(directory);
+
+            return
+                Directory.GetFiles(dir, "*.*", option)
+                    .Where(f => extensions.IndexOf(Path.GetExtension(f)) >= 0)
+                    .Select(Path.GetFileNameWithoutExtension)
+                    .ToList();
+        }
+
+        public static IList<string> LoadJson(string filename)
+        {
+            var dir = GetFilePath(filename, new List<string> {".json"});
+
+            if (dir == null)
+                throw new NullReferenceException("The directory was null - filename might be wrong");
+
+            return JsonConvert.DeserializeObject<List<string>>(File.ReadAllText(dir)).ToList();
+        }
+
+        public static IEnumerable<string> LoadTxt(string filename)
+        {
+            return File.ReadAllLines(GetFilePath(filename, new List<string> {".txt"})).ToList();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace PL.Controls
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             values = values.ToArray();
-            var currDist = ToDouble(values[0]);
+            var currentDist = ToDouble(values[0]);
             var totalDist = ToDouble(values[1]);
             var date = ToDateTime(values[2]);
             var type = ToBoolean(values[3]);
@@ -23,7 +23,7 @@ namespace PL.Controls
             if (type)
                 return 1.0;
 
-            return currDist / totalDist;
+            return currentDist / totalDist;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

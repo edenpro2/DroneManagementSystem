@@ -8,28 +8,28 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteDrone(Drone drone)
         {
-            drone.active = false;
+            drone.Active = false;
             UpdateDrone(drone);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteStation(Station station)
         {
-            station.active = false;
+            station.Active = false;
             UpdateStation(station);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteCustomer(Customer customer)
         {
-            customer.active = false;
+            customer.Active = false;
             UpdateCustomer(customer);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteParcel(Parcel parcel)
         {
-            parcel.active = false;
+            parcel.Active = false;
             UpdateParcel(parcel);
         }
 

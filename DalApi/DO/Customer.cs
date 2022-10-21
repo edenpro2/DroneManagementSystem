@@ -1,53 +1,119 @@
-﻿using System.Xml.Serialization;
-using static DalFacade.DO.DegreeConverter;
+﻿using System;
+using System.Xml.Serialization;
 
 namespace DalFacade.DO
 {
     [XmlRoot]
-    public struct Customer
+    public class Customer : ViewModelBase
     {
-        [XmlAttribute]
-        public int id { get; set; }
-        [XmlElement]
-        public string name { get; set; }
-        [XmlElement]
-        public string phone { get; set; }
-        [XmlAttribute]
-        public double latitude { get; set; }
-        [XmlAttribute]
-        public double longitude { get; set; }
-        [XmlAttribute]
-        public bool active { get; set; }
+        private int _id;
 
-        // Constructor
-        public Customer(int Id, string name, string phone, double lat, double lon) : this()
+        [XmlAttribute]
+        public int Id
         {
-            id = Id;
-            this.name = name;
-            this.phone = phone;
-            latitude = lat;
-            longitude = lon;
-            active = true;
+            get => _id;
+            set
+            {
+                _id = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _name;
+
+        [XmlAttribute]
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                _name = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _phone;
+
+        [XmlAttribute]
+        public string Phone
+        {
+            get => _phone;
+            set
+            {
+                _phone = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private double _latitude;
+
+        [XmlAttribute]
+        public double Latitude
+        {
+            get => _latitude;
+            set
+            {
+                _latitude = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private double _longitude;
+
+        [XmlAttribute]
+        public double Longitude
+        {
+            get => _longitude;
+            set
+            {
+                _longitude = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _active;
+
+        [XmlAttribute]
+        public bool Active
+        {
+            get => _active;
+            set
+            {
+                _active = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // Parameter-less Ctor
+        public Customer() { }
+
+        // Constructor 
+        public Customer(int id = -1, string name = "", string phone = "", double lat = 0.0, double lon = 0.0)
+        {
+            Id = id;
+            Name = name;
+            Phone = phone;
+            Latitude = lat;
+            Longitude = lon;
+            Active = true;
         }
 
         // Copy Constructor 
         public Customer(Customer source)
         {
-            id = source.id;
-            name = source.name;
-            phone = source.phone;
-            latitude = source.latitude;
-            longitude = source.longitude;
-            active = source.active;
+            Id = source.Id;
+            Name = source.Name;
+            Phone = source.Phone;
+            Latitude = source.Latitude;
+            Longitude = source.Longitude;
+            Active = source.Active;
         }
 
-        public override string ToString()
-        {
-            return
-                "Id: " + id + '\n' +
-                "Name: " + name + '\n' +
-                "Phone: " + phone + '\n' +
-                CoordinatesToSexagesimal(longitude, latitude) + '\n';
-        }
+        public override string ToString() =>
+            $"{nameof(Id)}: {Id}\n" +
+            $"{nameof(Name)}: {Name}\n" +
+            $"{nameof(Phone)}: {Phone:(###)-###-####}\n" +
+            $"Location: {new Location(Latitude, Longitude).ToSexagesimal()}\n" +
+            $"{nameof(Active)}: {Active}";
     }
 }

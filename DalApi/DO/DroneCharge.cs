@@ -3,25 +3,43 @@
 namespace DalFacade.DO
 {
     [XmlRoot]
-    public struct DroneCharge
+    public class DroneCharge : ViewModelBase
     {
-        [XmlAttribute]
-        public int droneId { get; set; }
-        [XmlAttribute]
-        public int stationId { get; set; }
+        private int _droneId;
+        [XmlAttribute] public int DroneId
+        {
+            get => _droneId;
+            set
+            {
+                _droneId = value;
+                OnPropertyChanged();
+            }
+        }
+        private int _stationId;
+        [XmlAttribute] public int StationId
+        {
+            get => _stationId;
+            set
+            {
+                _stationId = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public DroneCharge() {}
 
         // Constructor
-        public DroneCharge(int droneId, int stationId)
+        public DroneCharge(int droneId = -1, int stationId = -1)
         {
-            this.droneId = droneId;
-            this.stationId = stationId;
+            DroneId = droneId;
+            StationId = stationId;
         }
 
         public override string ToString()
         {
             return
-                "Drone id: " + droneId + '\n' +
-                "Station id: " + stationId + '\n';
+                "Drone id: " + DroneId + '\n' +
+                "Station id: " + StationId + '\n';
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace PL.ViewModels
 {
-    public sealed class MapViewModel : INotifyPropertyChanged
+    public class MapUri : INotifyPropertyChanged
     {
         private Uri? _uri;
         public Uri? Uri
@@ -12,11 +12,10 @@ namespace PL.ViewModels
             get => _uri;
             set
             {
-                if (_uri != value)
-                {
-                    _uri = value;
-                    OnPropertyChanged();
-                }
+                if (_uri == value) return;
+
+                _uri = value;
+                OnPropertyChanged();
             }
         }
 

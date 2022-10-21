@@ -15,7 +15,7 @@ namespace PL.ViewModels
             set
             {
                 _chat = value;
-                OnPropertyChanged("_chat");
+                OnPropertyChanged(nameof(_chat));
             }
         }
 
@@ -27,7 +27,7 @@ namespace PL.ViewModels
             set
             {
                 _receiver = value;
-                OnPropertyChanged("_receiver");
+                OnPropertyChanged(nameof(_receiver));
             }
         }
 
@@ -39,7 +39,7 @@ namespace PL.ViewModels
             set
             {
                 _recName = value;
-                OnPropertyChanged("_recName");
+                OnPropertyChanged(nameof(_recName));
             }
         }
 

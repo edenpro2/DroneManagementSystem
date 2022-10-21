@@ -10,20 +10,17 @@ namespace BL
 {
     public partial class Bl
     {
-        public Tuple<Drone, string, double, double> DroneSimulator(Drone d, double distanceToTarget)
+        public Tuple<Drone, string> DroneSimulator(Drone d)
         {
             var drone = d;
             var progress = "";
-            var currentDistance = 0.0;
 
-            switch (drone.status)
+            switch (drone.Status)
             {
                 case Free:
                     try // Drone status set to delivery if no exceptions
                     {
                         drone = AssignDroneToParcel(drone);
-                        var parcel = GetParcels(p => p.active).First(p => p.droneId == drone.id);
-                        distanceToTarget = Distance(Location(drone), Location(parcel));
                     }
                     catch (Exception ex)
                     {
@@ -31,9 +28,9 @@ namespace BL
                         {
                             case BlNoMatchingParcels:
                                 // If non-full battery, drone status will be maintenance, so send it to closest station
-                                if (drone.battery < 100)
+                                if (drone.Battery < 100)
                                 {
-                                    drone.status = Maintenance;
+                                    drone.Status = Maintenance;
                                     progress = "Will be sent to nearest charging port";
                                 }
                                 else progress = "Currently idle";
@@ -50,7 +47,7 @@ namespace BL
                     // Drone is at a station:
                     if (Location(drone).Equals(Location(station)))
                     {
-                        switch (drone.battery)
+                        switch (drone.Battery)
                         {
                             case < 100:
                                 drone = UpdateBattery(drone);
@@ -70,7 +67,7 @@ namespace BL
                         if (Distance(Location(drone), Location(station)) > this.Speed(drone))
                         {
                             drone = UpdateBattery(drone);
-                            drone.location = this.CalculateLocation(drone, Location(station));
+                            drone.Location = this.CalculateLocation(drone, Location(station));
                             progress = "On its way to nearest charging port";
                         }
                         // Drone is right next to station
@@ -104,15 +101,15 @@ namespace BL
 
                     try
                     {
-                        var parcel = GetParcels(p => p.active).First(p => p.droneId == drone.id);
+                        var parcel = GetParcels(p => p.Active).First(p => p.DroneId == drone.Id);
                         if (!CanDroneMakeTrip(drone, parcel))
-                            progress = $"Parcel (id {parcel.id}) assigned to drone, but not enough battery to make trip";
+                            progress = $"Parcel (id {parcel.Id}) assigned to drone, but not enough battery to make trip";
 
                         if (WaitingForDrone(parcel))
                         {
                             if (Distance(Location(drone), Location(parcel)) > this.Speed(drone))
                             {
-                                drone.location = this.CalculateLocation(drone, Location(parcel));
+                                drone.Location = this.CalculateLocation(drone, Location(parcel));
                                 drone = UpdateBattery(drone);
                                 progress = "Drone on its way to collect parcel";
                             }
@@ -125,10 +122,10 @@ namespace BL
                         }
                         else if (InTransit(parcel))
                         {
-                            var customer = GetCustomers(c => c.active).First(c => c.id == parcel.targetId);
+                            var customer = GetCustomers(c => c.Active).First(c => c.Id == parcel.TargetId);
                             if (Distance(Location(drone), Location(customer)) > this.Speed(drone))
                             {
-                                drone.location = this.CalculateLocation(drone, Location(customer));
+                                drone.Location = this.CalculateLocation(drone, Location(customer));
                                 drone = UpdateBattery(drone);
                                 progress = "Delivering parcel to addressee";
                             }
@@ -146,25 +143,20 @@ namespace BL
                         switch (exception)
                         {
                             case BlNotEnoughBatteryException:
-                                drone.status = Maintenance;
+                                drone.Status = Maintenance;
                                 progress =
                                     "Drone was in delivery, but doesn't have enough battery (now in maintenance)";
                                 break;
                             case BlNoMatchingParcels:
-                                drone.status = Maintenance;
+                                drone.Status = Maintenance;
                                 break;
                         }
                         break;
                     }
             }
 
-            var package = GetParcels(p => p.active).FirstOrDefault(p => p.droneId == drone.id);
-            if (!package.Equals(default))
-                currentDistance = Distance(Location(drone), Location(package));
-            else currentDistance = distanceToTarget;
-
             UpdateDrone(drone);
-            return new Tuple<Drone, string, double, double>(drone, progress, currentDistance, distanceToTarget);
+            return new Tuple<Drone, string>(drone, progress);
         }
     }
 }

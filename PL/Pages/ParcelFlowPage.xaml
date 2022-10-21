@@ -12,7 +12,7 @@
       TextElement.Foreground="{DynamicResource MaterialDesignBody}">
 
      
-    <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth0">
+    <materialDesign:Card materialDesign:ElevationAssist.Elevation="Dp0">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
@@ -51,8 +51,7 @@
                     Foreground="#FF6D7484" 
                     TextWrapping="WrapWithOverflow"
                     Opacity="0.8" 
-                    Margin="0,40,0,0">
-                </TextBlock>
+                    Margin="0,40,0,0" />
             </StackPanel>
 
             <DockPanel
@@ -64,8 +63,7 @@
                     Style="{StaticResource FilterPanel}"
                     Click="AllOrders_Click"
                     IsChecked="True"
-                    Content="All Orders">
-                </RadioButton>
+                    Content="All Orders" />
 
                 <Separator Visibility="Hidden" Width="8"/>
 
@@ -73,8 +71,7 @@
                     x:Name="CompletedBtn"
                     Style="{StaticResource FilterPanel}"
                     Click="Completed_Click"
-                    Content="Completed">
-                </RadioButton>
+                    Content="Completed" />
 
                 <Separator Visibility="Hidden" Width="8"/>
 
@@ -82,8 +79,7 @@
                     x:Name="OngoingBtn"
                     Style="{StaticResource FilterPanel}"
                     Click="Ongoing_Click"
-                    Content="Ongoing">
-                </RadioButton>
+                    Content="Ongoing" />
 
                 <Separator Visibility="Hidden" Width="8"/>
 
@@ -91,8 +87,7 @@
                     x:Name="PendingBtn"
                     Style="{StaticResource FilterPanel}"
                     Click="Pending_Click"
-                    Content="Pending">
-                </RadioButton>
+                    Content="Pending" />
 
             </DockPanel>
 
@@ -250,7 +245,7 @@
                                 <Border.Background>
                                     <ImageBrush
                                         Stretch="Uniform"
-                                        ImageSource="{Binding Status}"/>
+                                        ImageSource="{Binding StatusIcon}"/>
                                 </Border.Background>
                             </Border>
                         </Grid>

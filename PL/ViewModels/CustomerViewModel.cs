@@ -1,46 +1,26 @@
-﻿using DalFacade.DO;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using static DalFacade.DO.DegreeConverter;
+﻿using System.Collections.Generic;
+using DalFacade.DO;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace PL.ViewModels
 {
-    public class CustomerViewModel : INotifyPropertyChanged
+    public class CustomerViewModel : ViewModelBase 
     {
-        private Customer _customer;
-        public Customer Customer
+        private ObservableCollection<Customer> _customers;
+        public ObservableCollection<Customer> Customers
         {
-            get => _customer;
+            get => _customers;
             set
             {
-                _customer = value;
+                _customers = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _dms;
-        public string Dms
+        public CustomerViewModel(IEnumerable<Customer> customers)
         {
-            get => _dms;
-            set
-            {
-                _dms = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public CustomerViewModel(Customer customer)
-        {
-            _customer = customer;
-            _dms = CoordinatesToSexagesimal(customer.longitude, customer.latitude);
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            var handler = PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            Customers = new ObservableCollection<Customer>(customers);
         }
     }
 }

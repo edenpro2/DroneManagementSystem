@@ -12,7 +12,7 @@ namespace DALXML
         public void UpdateStation(Station station)
         {
             var stations = GetStations().ToList();
-            stations[station.id] = station;
+            stations[station.Id] = station;
             UpdateStationList(stations);
         }
 
@@ -20,7 +20,7 @@ namespace DALXML
         public void UpdateCustomer(Customer customer)
         {
             var customers = GetCustomers().ToList();
-            customers[customer.id] = customer;
+            customers[customer.Id] = customer;
             UpdateCustomerList(customers);
         }
 
@@ -28,7 +28,7 @@ namespace DALXML
         public void UpdateParcel(Parcel parcel)
         {
             var parcels = GetParcels().ToList();
-            parcels[parcel.id] = parcel;
+            parcels[parcel.Id] = parcel;
             UpdateParcelList(parcels);
 
         }

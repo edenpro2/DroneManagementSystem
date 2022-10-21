@@ -56,7 +56,7 @@ namespace PL.ViewModels
 
         public UserViewModel(User user, string phone, string name, string pic)
         {
-            User = user;
+            _user = user;
             _phone = phone;
             _name = name;
             _profilePic = pic;

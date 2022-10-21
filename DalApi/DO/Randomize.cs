@@ -1,7 +1,10 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using static System.Math;
+
 namespace DalFacade.DO
 {
     public static class Randomize
@@ -12,9 +15,9 @@ namespace DalFacade.DO
         #endregion
 
         #region Lists
-        private static readonly List<string> FirstNames = FileReader.LoadJson(FirstNameJson);
-        private static readonly List<string> LastNames = FileReader.LoadJson(LastNameJson);
-        private static readonly List<string> ModelNames = FileReader.GetFileNames("Resources\\Models", new List<string>() { ".jpg", ".png"});
+        private static readonly IList<string?> ModelNames = FileReader.GetFileNames("Resources\\Models", new List<string> { ".jpg", ".png" }, SearchOption.TopDirectoryOnly);
+        private static readonly IList<string> FirstNames = FileReader.LoadJson(FirstNameJson);
+        private static readonly IList<string> LastNames = FileReader.LoadJson(LastNameJson);
         #endregion
 
         /// <summary>
@@ -24,7 +27,7 @@ namespace DalFacade.DO
         /// <returns> model name </returns>
         public static string Model(Random rand)
         {
-            return ModelNames.ElementAt(rand.Next(ModelNames.Count));
+            return ModelNames[rand.Next(ModelNames.Count)];
         }
 
         /// <summary>
@@ -58,7 +61,13 @@ namespace DalFacade.DO
         /// <returns>random phone number</returns>
         public static string Phone(Random rand)
         {
-            return "0" + rand.Next(7) + rand.Next(10000000, 99999999);
+            var list = new List<int>
+            {
+                239, 305, 321, 352, 386, 407, 561, 727, 754, 772, 786, 813, 850, 863, 904, 941, 954
+            };
+            var areaCodes = list.Select(num => num.ToString()).ToList();
+
+            return areaCodes[rand.Next(areaCodes.Count)] + rand.Next(1000000, 9999999);
         }
 
         /// <summary>
@@ -70,6 +79,35 @@ namespace DalFacade.DO
         public static Station Station(List<Station> stationList, Random rand)
         {
             return stationList[rand.Next(stationList.Count)];
+        }
+
+        /// <summary>
+        /// Get a random status where bound is the max status to choose from (max 3)
+        /// </summary>
+        /// <example>
+        /// GetRandomStatus(rand, 2) => returns free or maintenance
+        /// </example>
+        /// <param name="rand"></param>
+        /// <param name="bound"></param>
+        /// <returns></returns>
+        public static DroneStatuses GetRandomStatus(Random rand, short bound)
+        {
+            return (DroneStatuses)rand.Next(bound);
+        }
+
+        /// <summary>
+        /// Returns a free, active drone
+        /// </summary>
+        /// <param name="rand"></param>
+        /// <param name="parcel"></param>
+        /// <returns></returns>
+        public static Drone? GetFreeRandomDrone(Random rand, IEnumerable<Drone> drones)
+        {
+            return drones.
+                Where(d => d.Active).
+                Where(d => d.Status is DroneStatuses.Free or null).
+                OrderBy(_ => rand.Next()).
+                FirstOrDefault();
         }
 
         /// <summary>
@@ -200,8 +238,8 @@ namespace DalFacade.DO
             var x = w * Cos(t);
             var y = w * Sin(t);
 
-            var y0 = randomLocation.latitude;
-            var x0 = randomLocation.longitude;
+            var y0 = randomLocation.Latitude;
+            var x0 = randomLocation.Longitude;
 
             // Adjust the x-coordinate for the shrinking of the east-west distances
             var newX = x / Cos(y0 * PI / 180);
@@ -212,6 +250,5 @@ namespace DalFacade.DO
             return new(foundLatitude, foundLongitude);
 
         }
-
     }
 }

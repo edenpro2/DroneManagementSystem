@@ -1,8 +1,9 @@
-﻿using BLAPI;
-using DalFacade.DO;
-using PL.ViewModels;
+﻿using PL.ViewModels;
 using PL.Windows;
 using System.Windows;
+using System.Windows.Media;
+using PL.Controls;
+using DalFacade.DO;
 
 namespace PL.Pages
 {
@@ -10,14 +11,17 @@ namespace PL.Pages
     {
         public CustomerUi CustomerUi { get; set; }
 
-        public ParcelViewModel LatestParcel { get; set; } 
+        public Parcel LatestParcel { get; set; }
 
-        public HomePage(ParcelViewModel parcelvm, CustomerUi customerUi)
+        public SolidColorBrush CustomFill { get; } = new(Color.FromRgb(204, 85, 61));
+
+        public HomePage(Parcel parcelVm, CustomerUi customerUi)
         {
-            LatestParcel = parcelvm;
+            LatestParcel = parcelVm;
             CustomerUi = customerUi;
+            ProgressBar = new StepProgressBar(LatestParcel);
+            Test = new TestControl(LatestParcel);
             InitializeComponent();
-            DataContext = this;
         }
 
         private void NewParcelBtn_Click(object sender, RoutedEventArgs e)

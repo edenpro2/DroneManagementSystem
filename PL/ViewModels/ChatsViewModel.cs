@@ -17,7 +17,7 @@ namespace PL.ViewModels
             set
             {
                 _chatViewModels = value;
-                OnPropertyChanged("_chatViewModels");
+                OnPropertyChanged(nameof(_chatViewModels));
             }
         }
 
@@ -35,13 +35,13 @@ namespace PL.ViewModels
                 // if user2 = current sender
                 if (chat.user2.customerId == user.customerId)
                 {
-                    name = customers.First(u => u.id == chat.user1.customerId).name;
+                    name = customers.First(u => u.Id == chat.user1.customerId).Name;
                     _chatViewModels.Add(new ChatViewModel(chat, chat.user1, name));
                 }
                 // if user1 = current sender
                 else
                 {
-                    name = customers.First(u => u.id == chat.user2.customerId).name;
+                    name = customers.First(u => u.Id == chat.user2.customerId).Name;
                     _chatViewModels.Add(new ChatViewModel(chat, chat.user2, name));
                 }
             }

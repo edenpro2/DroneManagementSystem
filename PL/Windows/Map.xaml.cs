@@ -1,11 +1,12 @@
 ﻿using BLAPI;
 using PL.Controls;
 using System;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using DalFacade;
+using DalFacade.DO;
 using Image = System.Windows.Controls.Image;
 
 namespace PL.Windows
@@ -21,30 +22,18 @@ namespace PL.Windows
             Width = 1300;
             CustomButtons = new WindowControls(this);
 
-            var parentDir1 = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)?.Parent?.Parent?.Parent?.Parent;
-            var parentDir2 = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)?.Parent?.Parent?.Parent;
-
-            string resources;
-            string icons;
-
-            if (File.Exists($"{parentDir1}\\Resources"))
-            {
-                resources = parentDir1 + "\\Resources\\";
-                icons = parentDir1 + "\\Icons\\";
-            }
-
-            resources = parentDir2 + "\\Resources\\";
-            icons = parentDir2 + "\\Icons\\";
+            var resources = FileReader.GetFolderPath("\\Resources");
+            var icons = FileReader.GetFolderPath("\\Icons");
 
             switch (type.ToLower())
             {
-                case "drone":
+                case nameof(Drone):
                     var drones = ibl.GetDrones();
                     foreach (var drone in drones)
                     {
                         var icon = new Image
                         {
-                            Source = new BitmapImage(new Uri($"{resources}drone.png")),
+                            Source = new BitmapImage(new Uri($"{resources}\\drone.png")),
                             Width = 20,
                             Height = 20
                         };
@@ -52,13 +41,13 @@ namespace PL.Windows
                         AddIcon(icon, drone);
                     }
                     break;
-                case "station":
+                case nameof(Station):
                     var stations = ibl.GetStations();
                     foreach (var station in stations)
                     {
                         var icon = new Image
                         {
-                            Source = new BitmapImage(new Uri($"{resources}warehouse3d.png")),
+                            Source = new BitmapImage(new Uri($"{resources}\\warehouse3d.png")),
                             Width = 30,
                             Height = 30
                         };
@@ -66,13 +55,13 @@ namespace PL.Windows
                         AddIcon(icon, station);
                     }
                     break;
-                case "customer":
+                case nameof(Customer):
                     var customers = ibl.GetCustomers();
                     foreach (var customer in customers)
                     {
                         var icon = new Image
                         {
-                            Source = new BitmapImage(new Uri($"{resources}account.jpg")),
+                            Source = new BitmapImage(new Uri($"{resources}\\account.jpg")),
                             Width = 30,
                             Height = 30
                         };
@@ -80,13 +69,13 @@ namespace PL.Windows
                         AddIcon(icon, customer);
                     }
                     break;
-                case "parcel":
+                case nameof(Parcel):
                     var parcels = ibl.GetParcels();
                     foreach (var parcel in parcels)
                     {
                         var icon = new Image
                         {
-                            Source = new BitmapImage(new Uri($"{icons}package.png")),
+                            Source = new BitmapImage(new Uri($"{icons}\\package.png")),
                             Width = 30,
                             Height = 30
                         };
@@ -102,17 +91,17 @@ namespace PL.Windows
             CanvasMap.Children.Add(icon);
 
             var loc = _bl.Location(o);
-            var latitude = loc.latitude;
-            var longitude = loc.longitude;
+            var latitude = loc.Latitude;
+            var longitude = loc.Longitude;
 
-            var width = pixelX(longitude, MapScrollView.Width);
-            var height = pixelY(latitude, MapScrollView.Height);
+            var width = PixelX(longitude, MapScrollView.Width);
+            var height = PixelY(latitude, MapScrollView.Height);
 
             Canvas.SetLeft(icon, width);
             Canvas.SetTop(icon, height);
         }
 
-        private double pixelX(double targetLong, double width)
+        private static double PixelX(double targetLong, double width)
         {
             const double minLong = -87.852252;
             const double maxLong = -79.182916;
@@ -123,7 +112,7 @@ namespace PL.Windows
             return ((a) / (b)) * (width - 1);
         }
 
-        private double pixelY(double targetLat, double height)
+        private static double PixelY(double targetLat, double height)
         {
             const double minLat = 31.089027;
             const double maxLat = 24.614693;

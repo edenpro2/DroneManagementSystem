@@ -175,10 +175,10 @@
                     BorderThickness="1"
                     CornerRadius="3">
                     <wpf:WebView2
-                            Source="{Binding MapUri.Uri}"
-                            ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                            ScrollViewer.CanContentScroll="False"
-                            materialDesign:ScrollBarAssist.ButtonsVisibility="Hidden"/>
+                        Source="{Binding MapUrl.Uri}"
+                        ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                        ScrollViewer.CanContentScroll="False"
+                        materialDesign:ScrollBarAssist.ButtonsVisibility="Hidden"/>
                 </Border>
 
             </DockPanel>

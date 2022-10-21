@@ -13,7 +13,7 @@
       Background="{x:Null}">
  
     <materialDesign:Card
-        materialDesign:ShadowAssist.ShadowDepth="Depth0" Background="#f2f3f7">
+        materialDesign:ElevationAssist.Elevation="Dp0" Background="#f2f3f7">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -95,16 +95,16 @@
 
                             <TextBlock
                                 Grid.Column="0"
-                                Text="{Binding Station.id}"
+                                Text="{Binding Station.Id}"
                                 TextAlignment="Left" 
                                 Margin="10,0,0,0" />
                             <TextBlock
                                 Grid.Column="1"
-                                Text="{Binding Station.name}"
+                                Text="{Binding Station.Name}"
                                 TextAlignment="Left" />
                             <TextBlock
                                 Grid.Column="2"
-                                Text="{Binding Station.openSlots}"
+                                Text="{Binding Station.OpenSlots}"
                                 TextAlignment="Left" />
                             <TextBlock
                                 Grid.Column="3"

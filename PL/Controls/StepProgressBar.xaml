@@ -1,0 +1,183 @@
+﻿<UserControl
+    x:Class="PL.Controls.StepProgressBar"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:controls="clr-namespace:PL.Controls"
+    mc:Ignorable="d"
+    d:DesignHeight="170" d:DesignWidth="1000">
+    <UserControl.Resources>
+        <Style x:Key="ProgressEllipse" TargetType="{x:Type Ellipse}">
+            <Setter Property="Grid.Row" Value="0" />
+            <Setter Property="Fill" Value="#cccccc" />
+            <Setter Property="Width" Value="55" />
+            <Setter Property="Height" Value="{Binding RelativeSource={RelativeSource Self}, Path=Width}" />
+        </Style>
+
+        <Style x:Key="ProgressRect" TargetType="{x:Type Rectangle}">
+            <Setter Property="Grid.Row" Value="0" />
+            <Setter Property="Width" Value="110" />
+            <Setter Property="Height" Value="20" />
+            <Setter Property="Margin" Value="-11.5 0 " />
+        </Style>
+
+        <Style x:Key="ProgressText" TargetType="{x:Type TextBlock}">
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="Grid.Row" Value="1" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Margin" Value="0 5 0 0" />
+            <Setter Property="Foreground" Value="#555555" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
+        </Style>
+    </UserControl.Resources>
+
+    <!-- DataContext for User control (unlike Window/Page) -->
+    <Grid
+        Background="Transparent">
+        <Viewbox
+            VerticalAlignment="Stretch"
+            HorizontalAlignment="Stretch"
+            Stretch="Uniform">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="74" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="74" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="74" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="74" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- Progress -->
+                <Ellipse
+                    DataContext="{Binding RelativeSource={RelativeSource AncestorType=controls:StepProgressBar}, Path=ViewModel}"
+                    x:Name="RequestNode"
+                    Grid.Column="0"
+                    d:Fill="Gray">
+                    <Ellipse.Style>
+                        <Style BasedOn="{StaticResource ProgressEllipse}" TargetType="{x:Type Ellipse}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsRequested}" Value="True">
+                                    <Setter Property="Fill"
+                                            Value="{Binding RelativeSource={RelativeSource AncestorType=controls:StepProgressBar}, Path=Fill}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsDelivered}" Value="True">
+                                    <Setter Property="Fill"
+                                            Value="{Binding RelativeSource={RelativeSource AncestorType=controls:StepProgressBar}, Path=CompletedFill}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Ellipse.Style>
+                </Ellipse>
+
+                <Rectangle
+                    Style="{StaticResource ProgressRect}"
+                    Grid.Column="1"
+                    d:Fill="Gray"
+                    Fill="{Binding Fill, ElementName=ScheduleNode}" />
+
+                <Ellipse
+                    DataContext="{Binding RelativeSource={RelativeSource AncestorType=controls:StepProgressBar}, Path=ViewModel}"
+                    x:Name="ScheduleNode"
+                    Grid.Column="2"
+                    d:Fill="Gray">
+                    <Ellipse.Style>
+                        <Style BasedOn="{StaticResource ProgressEllipse}" TargetType="{x:Type Ellipse}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsScheduled}" Value="True">
+                                    <Setter Property="Fill"
+                                            Value="{Binding RelativeSource={RelativeSource AncestorType=controls:StepProgressBar}, Path=Fill}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsDelivered}" Value="True">
+                                    <Setter Property="Fill"
+                                            Value="{Binding RelativeSource={RelativeSource AncestorType=controls:StepProgressBar}, Path=CompletedFill}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Ellipse.Style>
+                </Ellipse>
+
+                <Rectangle
+                    Style="{StaticResource ProgressRect}"
+                    Grid.Column="3"
+                    d:Fill="Gray"
+                    Fill="{Binding Fill, ElementName=CollectedNode}" />
+
+                <Ellipse
+                    DataContext="{Binding RelativeSource={RelativeSource AncestorType=controls:StepProgressBar}, Path=ViewModel}"
+                    x:Name="CollectedNode"
+                    Grid.Column="4"
+                    d:Fill="Gray">
+                    <Ellipse.Style>
+                        <Style BasedOn="{StaticResource ProgressEllipse}" TargetType="{x:Type Ellipse}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsCollected}" Value="True">
+                                    <Setter Property="Fill"
+                                            Value="{Binding RelativeSource={RelativeSource AncestorType=controls:StepProgressBar}, Path=Fill}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsDelivered}" Value="True">
+                                    <Setter Property="Fill"
+                                            Value="{Binding RelativeSource={RelativeSource AncestorType=controls:StepProgressBar}, Path=CompletedFill}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Ellipse.Style>
+                </Ellipse>
+
+                <Rectangle
+                    Style="{StaticResource ProgressRect}"
+                    Grid.Column="5"
+                    d:Fill="Gray"
+                    Fill="{Binding Fill, ElementName=DeliveryNode}" />
+
+                <Ellipse
+                    DataContext="{Binding RelativeSource={RelativeSource AncestorType=controls:StepProgressBar}, Path=ViewModel}"
+                    x:Name="DeliveryNode"
+                    Grid.Column="6"
+                    d:Fill="Gray">
+                    <Ellipse.Style>
+                        <Style BasedOn="{StaticResource ProgressEllipse}" TargetType="{x:Type Ellipse}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsDelivered}" Value="True">
+                                    <Setter Property="Fill"
+                                            Value="{Binding RelativeSource={RelativeSource AncestorType=controls:StepProgressBar}, Path=CompletedFill}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Ellipse.Style>
+                </Ellipse>
+
+                <!-- Progress Text -->
+                <TextBlock
+                    Text="Requested"
+                    Grid.Column="0"
+                    Foreground="{Binding ElementName=RequestNode, Path=Fill}"
+                    Style="{StaticResource ProgressText}" />
+                <TextBlock
+                    Text="Scheduled"
+                    Grid.Column="2"
+                    Foreground="{Binding ElementName=ScheduleNode, Path=Fill}"
+                    Style="{StaticResource ProgressText}" />
+                <TextBlock
+                    Text="Collected"
+                    Grid.Column="4"
+                    Foreground="{Binding ElementName=CollectedNode, Path=Fill}"
+                    Style="{StaticResource ProgressText}" />
+                <TextBlock
+                    Text="Delivered"
+                    Grid.Column="6"
+                    Foreground="{Binding ElementName=DeliveryNode, Path=Fill}"
+                    Style="{StaticResource ProgressText}" />
+            </Grid>
+
+        </Viewbox>
+
+
+    </Grid>
+</UserControl>

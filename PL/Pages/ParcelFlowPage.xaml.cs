@@ -20,17 +20,17 @@ namespace PL.Pages
                 case "sent":
                     Header = SentHeader;
                     Intro = SentIntro;
-                    parcels = new ParcelsViewModel(ibl.GetParcels(p => p.senderId == user.customerId).Select(p => new ParcelViewModel(ibl, p)));
+                    parcels = new ParcelsViewModel(ibl.GetParcels(p => p.SenderId == user.customerId));
                     break;
                 case "received":
                     Header = ReceivedHeader;
                     Intro = ReceivedIntro;
-                    parcels = new ParcelsViewModel(ibl.GetParcels(p => p.targetId == user.customerId).Select(p => new ParcelViewModel(ibl, p)));
+                    parcels = new ParcelsViewModel(ibl.GetParcels(p => p.TargetId == user.customerId));
                     break;
                 default:
                     Header = SentHeader;
                     Intro = SentIntro;
-                    parcels = new ParcelsViewModel(ibl.GetParcels(p => p.senderId == user.customerId).Select(p => new ParcelViewModel(ibl, p)));
+                    parcels = new ParcelsViewModel(ibl.GetParcels(p => p.SenderId == user.customerId));
                     break;
             }
 
@@ -44,17 +44,17 @@ namespace PL.Pages
 
         private void Completed_Click(object sender, RoutedEventArgs e)
         {
-            parcels.Filtered = new ObservableCollection<ParcelViewModel>(parcels.Parcels.Where(p => p.Delivered != default));
+            parcels.Filtered = new ObservableCollection<Parcel>(parcels.Parcels.Where(p => p.Delivered != default));
         }
 
         private void Ongoing_Click(object sender, RoutedEventArgs e)
         {
-            parcels.Filtered = new ObservableCollection<ParcelViewModel>(parcels.Parcels.Where(p => p.Delivered == default && p.Requested != default));
+            parcels.Filtered = new ObservableCollection<Parcel>(parcels.Parcels.Where(p => p.Delivered == default && p.Requested != default));
         }
 
         private void Pending_Click(object sender, RoutedEventArgs e)
         {
-            parcels.Filtered = new ObservableCollection<ParcelViewModel>(parcels.Parcels.Where(p => p.Scheduled == default));
+            parcels.Filtered = new ObservableCollection<Parcel>(parcels.Parcels.Where(p => p.Scheduled == default));
         }
 
         private const string SentHeader = "Sent Parcels";

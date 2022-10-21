@@ -19,17 +19,19 @@
                     Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <XmlNamespaceMapping
-                x:Key="sys" 
-                Prefix="sys" 
-                Uri="clr-namespace:System;assembly=mscorlib"/>
+            <ResourceDictionary x:Key="RoundedCorners">
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </ResourceDictionary>
 
             <!-- Controls -->
-            <controls:DateProgressConverter x:Key="DateProgressConverter"/>
             <controls:ChatAlignmentConverter x:Key="ChatAlignmentConverter"/>
             <controls:BubbleColorConverter x:Key="BubbleColorConverter"/>
             <controls:EmployStatusConverter x:Key="EmployStatusConverter"/>
-            <controls:DroneProgressConverter x:Key="DroneProgressConverter"/>
+            <controls:StepProgressBar x:Key="StepProgressBar"/>
+            <controls:IsDateDefaultConverter x:Key="IsDateDefaultConverter"/>
+            <controls:IconButton x:Key="IconButton"/>
 
 
             <Style x:Key="CardStyle" TargetType="{x:Type materialDesign:Card}">
@@ -46,11 +48,12 @@
 
             <DropShadowEffect
                 x:Key="BDropShadowEffect"
-                BlurRadius="17"
-                Direction="-75"
+                BlurRadius="5"
+                Direction="270"
                 Color="#333333"
-                ShadowDepth="5"
-                Opacity="0.2" />
+                ShadowDepth="3"
+                Opacity="0.5" />
+
             <Style TargetType="Border" x:Key="BorderShadowEffect">
                 <Setter Property="Effect" Value="{StaticResource BDropShadowEffect}" />
             </Style>
@@ -155,8 +158,7 @@
                                 Background="MidnightBlue" 
                                 IsChecked="{TemplateBinding IsChecked}" 
                                 RenderMouseOver="{TemplateBinding IsMouseOver}" 
-                                RenderPressed="{TemplateBinding IsPressed}">
-                                </themes:BulletChrome>
+                                RenderPressed="{TemplateBinding IsPressed}" />
                             </StackPanel>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsChecked" Value="True" >

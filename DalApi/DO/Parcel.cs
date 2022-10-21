@@ -1,65 +1,179 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 
 namespace DalFacade.DO
 {
     [XmlRoot]
-    public struct Parcel
+    public class Parcel : ViewModelBase
     {
-        [XmlAttribute]
-        public int id { get; set; }
-        [XmlAttribute]
-        public int senderId { get; set; }
-        [XmlAttribute]
-        public int targetId { get; set; }
-        [XmlAttribute]
-        public int droneId { get; set; }
-        [XmlAttribute]
-        public WeightCategories weight { get; set; }
-        [XmlAttribute]
-        public Priorities priority { get; set; }
-        [XmlElement]
-        public DateTime requested { get; set; }
-        [XmlElement]
-        public DateTime scheduled { get; set; }
-        [XmlElement]
-        public DateTime collected { get; set; }
-        [XmlElement]
-        public DateTime delivered { get; set; }
-        [XmlAttribute]
-        public bool active { get; set; }
+        private int _id;
+        [XmlAttribute] public int Id
+        {
+            get => _id;
+            set
+            {
+                _id = value;
+                OnPropertyChanged();
+            }
+        }
+        private int _senderId;
+        [XmlAttribute] public int SenderId
+        {
+            get => _senderId;
+            set
+            {
+                _senderId = value;
+                OnPropertyChanged();
+            }
+        }
+        private int _targetId;
+        [XmlAttribute] public int TargetId
+        {
+            get => _targetId;
+            set
+            {
+                _targetId = value;
+                OnPropertyChanged();
+            }
+        }
+        private int _droneId;
+        [XmlAttribute] public int DroneId
+        {
+            get => _droneId;
+            set
+            {
+                _droneId = value;
+                OnPropertyChanged();
+            }
+        }
+        private WeightCategories _weight;
+        [XmlAttribute] public WeightCategories Weight
+        {
+            get => _weight;
+            set
+            {
+                _weight = value;
+                OnPropertyChanged();
+            }
+        }
+        private Priorities _priority;
+        [XmlAttribute] public Priorities Priority
+        {
+            get => _priority;
+            set
+            {
+                _priority = value;
+                OnPropertyChanged();
+            }
+        }
+        private DateTime _requested;
+        [XmlElement] public DateTime Requested
+        {
+            get => _requested;
+            set
+            {
+                _requested = value;
+                OnPropertyChanged();
+            }
+        }
+        private DateTime _scheduled;
+        [XmlElement] public DateTime Scheduled
+        {
+            get => _scheduled;
+            set
+            {
+                _scheduled = value;
+                OnPropertyChanged();
+            }
+        }
+        private DateTime _collected;
+        [XmlElement] public DateTime Collected
+        {
+            get => _collected;
+            set
+            {
+                _collected = value;
+                OnPropertyChanged();
+            }
+        }
+        private DateTime _delivered;
+        [XmlElement] public DateTime Delivered
+        {
+            get => _delivered;
+            set
+            {
+                _delivered = value;
+                OnPropertyChanged();
+            }
+        }
 
+        private string _statusIcon;
+        [XmlAttribute] public string StatusIcon
+        {
+            get => _statusIcon;
+            set
+            {
+                if (_statusIcon == value) return;
+                _statusIcon = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _active;
+        [XmlAttribute] public bool Active
+        {
+            get => _active;
+            set
+            {
+                _active = value;
+                OnPropertyChanged();
+            }
+        }
+        public new event PropertyChangedEventHandler PropertyChanged;
+
+        protected new void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            if (Delivered != default)
+                StatusIcon = "../Icons/status4.png";
+            else if (Collected != default)
+                StatusIcon = "../Icons/status3.png";
+            else if (Scheduled != default)
+                StatusIcon = "../Icons/status2.png";
+            else StatusIcon = "../Icons/status1.png";
+
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+ 
+
+        public Parcel() { }
 
         public Parcel(int id = -1, int senderId = -1, int targetId = -1, int droneId = -1,
             WeightCategories weight = WeightCategories.Light, Priorities priority = Priorities.Regular,
             DateTime requested = default, DateTime scheduled = default, DateTime collected = default,
-            DateTime delivered = default) : this()
+            DateTime delivered = default)
         {
-            this.id = id;
-            this.senderId = senderId;
-            this.targetId = targetId;
-            this.droneId = droneId;
-            this.weight = weight;
-            this.priority = priority;
-            this.requested = requested;
-            this.scheduled = scheduled;
-            this.collected = collected;
-            this.delivered = delivered;
-            active = true;
+            Id = id;
+            SenderId = senderId;
+            TargetId = targetId;
+            DroneId = droneId;
+            Weight = weight;
+            Priority = priority;
+            Requested = requested;
+            Scheduled = scheduled;
+            Collected = collected;
+            Delivered = delivered;
+            StatusIcon = "";
+            Active = true;
         }
 
         public override string ToString()
         {
-            return "Id: " + id + '\n' +
-                    "Sender: " + senderId + '\n' +
-                    "Target: " + targetId + '\n' +
-                    "Drone: " + droneId + '\n' +
-                    "Weight: " + weight + '\n' +
-                    "Priority: " + priority + '\n' +
-                    "Requested: " + requested + '\n' +
-                    "Scheduled: " + scheduled + '\n' +
-                    "Collected: " + collected + '\n' +
-                    "Delivered: " + delivered + '\n';
+            return "Id: " + Id + '\n' + "Sender: " + SenderId + '\n' + "Target: " + TargetId + '\n' + "Drone: " +
+                   DroneId + '\n' + "Weight: " + Weight + '\n' + "Priority: " + Priority + '\n' + "Requested: " +
+                   Requested + '\n' + "Scheduled: " + Scheduled + '\n' + "Collected: " + Collected + '\n' +
+                   "Delivered: " + Delivered + '\n' + "Active:" + Active;
         }
     }
 }

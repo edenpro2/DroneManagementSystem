@@ -14,10 +14,10 @@ namespace BL.BO
         /// <returns>Distance of object at loc1 from loc2</returns>
         public static double Distance(Location loc1, Location loc2)
         {
-            var lat1 = loc1.latitude;
-            var lat2 = loc2.latitude;
-            var lon1 = loc1.longitude;
-            var lon2 = loc2.longitude;
+            var lat1 = loc1.Latitude;
+            var lat2 = loc2.Latitude;
+            var lon1 = loc1.Longitude;
+            var lon2 = loc2.Longitude;
 
             var dLat = ToRadians(lat2 - lat1);
             var dLon = ToRadians(lon2 - lon1);
@@ -41,10 +41,10 @@ namespace BL.BO
         /// <returns></returns>
         public static double Speed(this Bl bl, Drone drone)
         {
-            if (drone.status == DroneStatuses.Delivery)
+            if (drone.Status == DroneStatuses.Delivery)
             {
-                var parcel = bl.GetParcels(p => p.active).First(p => p.droneId == drone.id);
-                if (parcel.collected != default && parcel.delivered == default)
+                var parcel = bl.GetParcels(p => p.Active).First(p => p.DroneId == drone.Id);
+                if (parcel.Collected != default && parcel.Delivered == default)
                 {
                     return (double)Speeds.Loaded;
                 }
@@ -82,7 +82,7 @@ namespace BL.BO
         /// <returns>Direction of drone</returns>
         private static double Bearing(Location loc1, Location loc2)
         {
-            double lat1 = loc1.latitude, long1 = loc1.longitude, lat2 = loc2.latitude, long2 = loc2.longitude;
+            double lat1 = loc1.Latitude, long1 = loc1.Longitude, lat2 = loc2.Latitude, long2 = loc2.Longitude;
 
             //Convert input values to radians   
             lat1 = ToRadians(lat1);
@@ -117,8 +117,8 @@ namespace BL.BO
             var distRatioSine = Sin(distRatio);
             var distRatioCosine = Cos(distRatio);
 
-            var startLatRad = ToRadians(droneStartPoint.latitude);
-            var startLonRad = ToRadians(droneStartPoint.longitude);
+            var startLatRad = ToRadians(droneStartPoint.Latitude);
+            var startLonRad = ToRadians(droneStartPoint.Longitude);
 
             var startLatCos = Cos(startLatRad);
             var startLatSin = Sin(startLatRad);
@@ -131,8 +131,8 @@ namespace BL.BO
 
             return new Location
             {
-                latitude = ToDegrees(endLatRads),
-                longitude = ToDegrees(endLonRads)
+                Latitude = ToDegrees(endLatRads),
+                Longitude = ToDegrees(endLonRads)
             };
         }
     }

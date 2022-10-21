@@ -18,8 +18,8 @@ namespace PL.Windows
         public EmployeeUi(BlApi ibl, User user)
         {
             _bl = ibl;
-            var customer = _bl.SearchForCustomer(c => c.id == user.customerId);
-            ViewModel = new UserViewModel(user, customer.phone, customer.name, user.profilePic);
+            var customer = _bl.SearchForCustomer(c => c.Id == user.customerId);
+            ViewModel = new UserViewModel(user, customer.Phone, customer.Name, user.profilePic);
             CustomButtons = new WindowControls(this);
             InitializeComponent();
             PagesNavigation.Navigate(new DronesPage(_bl));

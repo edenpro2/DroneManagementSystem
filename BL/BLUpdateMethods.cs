@@ -20,7 +20,7 @@ namespace BL
 
             for (var i = 0; i < drones.Count; i++)
             {
-                if (drones[i].id == drone.id)
+                if (drones[i].Id == drone.Id)
                 {
                     drones[i] = drone;
                     UpdateDroneList(drones);
@@ -99,7 +99,7 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone ReceiveDroneForCharging(Drone drone)
         {
-            if (drone.status is not Maintenance)
+            if (drone.Status is not Maintenance)
                 throw new BlDroneNotMaintainedException();
 
             var closestStation = this.ClosestAvailableStation(drone);
@@ -111,11 +111,11 @@ namespace BL
 
             lock (DalApi)
             {
-                closestStation.openSlots--;
-                closestStation.ports.Add(new DroneCharge(closestStation.id, drone.id));
+                closestStation.OpenSlots--;
+                closestStation.Ports.Add(new DroneCharge(closestStation.Id, drone.Id));
                 UpdateStation(closestStation);
 
-                drone.location = closestLocation;
+                drone.Location = closestLocation;
                 UpdateDrone(drone);
 
                 return drone;
@@ -132,7 +132,7 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone SendDroneToCharge(Drone drone)
         {
-            if (drone.status is not Free)
+            if (drone.Status is not Free)
                 throw new BlDroneNotFreeException();
 
             var closestStation = this.ClosestAvailableStation(drone);
@@ -142,11 +142,11 @@ namespace BL
 
             lock (DalApi)
             {
-                closestStation.openSlots--;
-                closestStation.ports.Add(new DroneCharge(closestStation.id, drone.id));
+                closestStation.OpenSlots--;
+                closestStation.Ports.Add(new DroneCharge(closestStation.Id, drone.Id));
                 UpdateStation(closestStation);
 
-                drone.status = Maintenance;
+                drone.Status = Maintenance;
                 UpdateDrone(drone);
 
                 return drone;
@@ -163,10 +163,10 @@ namespace BL
         {
             var total = _droneChargeRate * hours;
 
-            if (drone.battery + total > 100)
-                drone.battery = 100;
+            if (drone.Battery + total > 100)
+                drone.Battery = 100;
             else
-                drone.battery += total;
+                drone.Battery += total;
 
             UpdateDrone(drone);
             return drone;
@@ -182,7 +182,7 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone DroneReleaseAndCharge(Drone drone, int hours)
         {
-            if (drone.status is not Maintenance)
+            if (drone.Status is not Maintenance)
                 throw new BlDroneNotMaintainedException();
 
             var droneLocation = Location(drone);
@@ -191,19 +191,19 @@ namespace BL
             {
                 var batteryAfterCharge = _droneChargeRate * hours;
 
-                if (drone.battery + batteryAfterCharge > 100)
-                    drone.battery = 100;
+                if (drone.Battery + batteryAfterCharge > 100)
+                    drone.Battery = 100;
                 else
-                    drone.battery += batteryAfterCharge;
+                    drone.Battery += batteryAfterCharge;
 
-                drone.status = Free;
+                drone.Status = Free;
 
                 UpdateDrone(drone);
 
                 // Get station with same location as drone
                 var station = GetStations().First(s => Location(s).Equals(droneLocation));
-                station.openSlots++;
-                station.ports.Remove(station.ports.Find(p => p.droneId == drone.id));
+                station.OpenSlots++;
+                station.Ports.Remove(station.Ports.Find(p => p.DroneId == drone.Id));
                 UpdateStation(station);
 
                 return drone;
@@ -219,20 +219,20 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone DroneRelease(Drone drone)
         {
-            if (drone.status is not Maintenance)
+            if (drone.Status is not Maintenance)
                 throw new BlDroneNotMaintainedException();
 
             lock (DalApi)
             {
-                drone.status = Free;
+                drone.Status = Free;
                 UpdateDrone(drone);
 
                 // Delete droneCharge
                 var station = this.GetClosestStation(drone);
-                if (station.ports.Exists(p => p.droneId == drone.id))
+                if (station.Ports.Exists(p => p.DroneId == drone.Id))
                 {
-                    station.openSlots++;
-                    station.ports.Remove(station.ports.First(p => p.droneId == drone.id));
+                    station.OpenSlots++;
+                    station.Ports.Remove(station.Ports.First(p => p.DroneId == drone.Id));
                     UpdateStation(station);
                 }
 
@@ -251,23 +251,23 @@ namespace BL
         public Drone AssignDroneToParcel(Drone drone)
         {
             // can't assign if not free
-            if (drone.status is not Free)
+            if (drone.Status is not Free)
                 throw new BlDroneNotFreeException();
 
             // look for the highest priority parcel and closest available drone 
             var parcel = BestMatchingParcel(drone);
 
             // if parcel not found will be automatically default
-            if (parcel.Equals(default) || parcel.active is false)
+            if (parcel.Equals(default) || parcel.Active is false)
                 throw new BlNoMatchingParcels();
 
             lock (DalApi)
             {
                 // update both parcel and drone
-                parcel.droneId = drone.id;
-                parcel.scheduled = DateTime.Now;
+                parcel.DroneId = drone.Id;
+                parcel.Scheduled = DateTime.Now;
                 UpdateParcel(parcel);
-                drone.status = Delivery;
+                drone.Status = Delivery;
                 UpdateDrone(drone);
 
                 return drone;
@@ -284,9 +284,9 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone CollectParcelByDrone(Drone drone)
         {
-            var parcel = GetParcels(p => p.active).FirstOrDefault(p => p.droneId == drone.id);
+            var parcel = GetParcels(p => p.Active).FirstOrDefault(p => p.DroneId == drone.Id);
 
-            if (parcel.requested == default)
+            if (parcel.Requested == default)
                 throw new BlNotFoundException();
 
             if (!WaitingForDrone(parcel))
@@ -296,10 +296,10 @@ namespace BL
             {
                 var parcelLocation = Location(parcel);
 
-                drone.location = parcelLocation;
+                drone.Location = parcelLocation;
                 UpdateDrone(drone);
 
-                parcel.collected = DateTime.Now;
+                parcel.Collected = DateTime.Now;
                 UpdateParcel(parcel);
 
                 return drone;
@@ -315,21 +315,21 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone DeliverByDrone(Drone drone)
         {
-            var parcel = GetParcels(p => p.active).FirstOrDefault(p => p.droneId == drone.id);
+            var parcel = GetParcels(p => p.Active).FirstOrDefault(p => p.DroneId == drone.Id);
 
-            if (parcel.delivered != default || parcel.active == false)
+            if (parcel.Delivered != default || parcel.Active == false)
             {
                 throw new BlNotBeingDeliveredException();
             }
 
             lock (DalApi)
             {
-                drone.status = Free;
-                drone.location = Location(SearchForCustomer(c => c.id == parcel.targetId));
+                drone.Status = Free;
+                drone.Location = Location(SearchForCustomer(c => c.Id == parcel.TargetId));
                 UpdateDrone(drone);
 
-                parcel.delivered = DateTime.Now;
-                parcel.active = false;
+                parcel.Delivered = DateTime.Now;
+                parcel.Active = false;
                 UpdateParcel(parcel);
 
                 return drone;
@@ -345,11 +345,11 @@ namespace BL
         public Drone UpdateBattery(Drone drone)
         {
             double change;
-            var id = drone.id;
-            switch (drone.status)
+            var id = drone.Id;
+            switch (drone.Status)
             {
                 case Delivery:
-                    var parcel = GetParcels(p => p.active).First(p => p.droneId == id);
+                    var parcel = GetParcels(p => p.Active).First(p => p.DroneId == id);
 
                     // drone hasn't collected parcel yet
                     if (WaitingForDrone(parcel) || NotAssignedToDrone(parcel))
@@ -360,7 +360,7 @@ namespace BL
                     // drone is delivering parcel
                     else
                     {
-                        switch (parcel.weight)
+                        switch (parcel.Weight)
                         {
                             case WeightCategories.Light:
                                 change = -ConsumptionWhenLight();
@@ -383,9 +383,9 @@ namespace BL
                         change = _droneChargeRate;
 
                         // if overflow detected, change is adjusted
-                        if (drone.battery + change > 100)
+                        if (drone.Battery + change > 100)
                         {
-                            change = 100 - drone.battery;
+                            change = 100 - drone.Battery;
                         }
                     }
                     // drone is on it's way to station (hence it's free)
@@ -412,7 +412,7 @@ namespace BL
                     throw new ArgumentOutOfRangeException();
             }
 
-            drone.battery += change;
+            drone.Battery += change;
             return drone;
         }
 
@@ -421,11 +421,11 @@ namespace BL
             lock (DalApi)
             {
                 return
-                    GetParcels(p => p.active)
+                    GetParcels(p => p.Active)
                     .Where(p => NotAssignedToDrone(p))
-                    .Where(p => p.weight <= drone.maxWeight)
-                    .OrderByDescending(p => p.priority)
-                    .ThenByDescending(p => p.weight)
+                    .Where(p => p.Weight <= drone.MaxWeight)
+                    .OrderByDescending(p => p.Priority)
+                    .ThenByDescending(p => p.Weight)
                     .ThenBy(p => Distance(Location(p), Location(drone)))
                     .FirstOrDefault(p => CanDroneMakeTrip(drone, p));
             }

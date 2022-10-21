@@ -7,13 +7,13 @@
       mc:Ignorable="d"
       MinHeight="600"
       MinWidth="1200"
-      Title="CustomersPage"
       DataContext="{Binding RelativeSource={RelativeSource Self}}"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
       Background="{x:Null}">
  
     <materialDesign:Card
-        materialDesign:ShadowAssist.ShadowDepth="Depth0" Background="#f2f3f7">
+        materialDesign:ElevationAssist.Elevation ="Dp0" 
+        Background="#f2f3f7">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -28,7 +28,6 @@
                 <RowDefinition Height="369*" />
                 <RowDefinition Height="10*" />
             </Grid.RowDefinitions>
-
 
             <StackPanel
                 Grid.Column="1"
@@ -55,12 +54,11 @@
                 HorizontalAlignment="Left"
                 Background="Gray"
                 BorderBrush="Gray"/>
-
              
             <ListBox
                 x:Name="CustomerListBox"
                 d:ItemsSource="{d:SampleData ItemCount=6}"
-                ItemsSource="{Binding customersViewModel}"
+                ItemsSource="{Binding CustomerViewModel.Customers}"
                 HorizontalContentAlignment="Stretch"
                 MouseDoubleClick="CustomerListBox_Click"
                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
@@ -120,16 +118,17 @@
                             <TextBlock
                                 Grid.Column="0"
                                 Margin="5 0 0 0"
-                                Text="{Binding Customer.id}"/>
+                                Text="{Binding Id}"/>
                             <TextBlock
                                 Grid.Column="1"
-                                Text="{Binding Customer.name}"/>
+                                Text="{Binding Name}"/>
                             <TextBlock
                                 Grid.Column="2"
-                                Text="{Binding Customer.phone}"/>
+                                Text="{Binding Phone}"/>
+                            <!-- Todo: Fix -->
                             <TextBlock
                                 Grid.Column="3"
-                                Text="{Binding Dms}"/>
+                                Text="{Binding DMS}"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

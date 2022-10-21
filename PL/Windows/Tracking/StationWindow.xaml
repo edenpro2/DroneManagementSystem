@@ -88,22 +88,22 @@
 
                         <StackPanel Margin="147,100,0,0" DataContext="{Binding ViewModel}">
                             <TextBlock
-                                Text="{Binding Station.id}"
+                                Text="{Binding Station.Id}"
                                 Style="{StaticResource InfoDetails}"/>
                             <TextBlock
-                                Text="{Binding Station.name}"
+                                Text="{Binding Station.Name}"
                                 Margin="0,15,0,0"
                                 Style="{StaticResource InfoDetails}"/>
                             <TextBlock
-                                Text="{Binding Station.openSlots}"
+                                Text="{Binding Station.OpenSlots}"
                                 Margin="0,15,0,0"
                                 Style="{StaticResource InfoDetails}" />
                             <TextBlock
-                                Text="{Binding Station.ports.Capacity}"
+                                Text="{Binding Station.Ports.Capacity}"
                                 Margin="0,15,0,0"
                                 Style="{StaticResource InfoDetails}" />
                             <TextBlock
-                                Text="{Binding Station.active}"
+                                Text="{Binding Station.Active}"
                                 Margin="0,15,0,0"
                                 Style="{StaticResource InfoDetails}" />
                             <TextBlock
@@ -121,7 +121,7 @@
                 BorderThickness="1"
                 CornerRadius="3" Margin="5 0 0 0">
                     <wpf:WebView2
-                        Source="{Binding MapUri.Uri}"
+                        Source="{Binding MapUrl.Uri}"
                         ScrollViewer.VerticalScrollBarVisibility="Disabled"
                         ScrollViewer.CanContentScroll="False"
                         materialDesign:ScrollBarAssist.ButtonsVisibility="Hidden"/>

@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:controls="clr-namespace:PL.Controls"
       mc:Ignorable="d"
       MinHeight="720" 
       MinWidth="1340"
@@ -32,7 +31,7 @@
                 </Grid.Background>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="20"/>
-                    <ColumnDefinition MinWidth="211" Width="*" x:Name="col"/>
+                    <ColumnDefinition MinWidth="211" Width="*" x:Name="Col"/>
                     <ColumnDefinition Width="20"/>
                 </Grid.ColumnDefinitions>
 
@@ -49,8 +48,8 @@
 
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <TextBox
                             Grid.Row="1"
@@ -117,7 +116,7 @@
                                 </Ellipse>
                                 <StackPanel 
                                    Margin="10 0 0 0"
-                                   Width="{Binding ElementName=col, Path=MinWidth}"
+                                   Width="{Binding ElementName=Col, Path=MinWidth}"
                                    VerticalAlignment="Center">
                                     <DockPanel HorizontalAlignment="Stretch" >
                                         <TextBlock 
@@ -136,14 +135,14 @@
                                            HorizontalAlignment="Right"
                                            VerticalAlignment="Center"
                                            d:Text="10:30 AM"
-                                           Text="{Binding Chat.LastMessage.sentTime, StringFormat={}{0:hh:mm tt}}"/>
+                                           Text="{Binding Chat.LastMessage.SentTime, StringFormat={}{0:hh:mm tt}}"/>
                                     </DockPanel>
                                     <TextBlock
                                        Margin="0 5 0 0"
                                        d:Text="Hello there. General kenobi"
                                        FontSize="12"
                                        FontFamily="Helvetica" 
-                                       Text="{Binding Chat.LastMessage.text}" 
+                                       Text="{Binding Chat.LastMessage.Text}" 
                                        Foreground="#DD3E3E3E"/>
                                 </StackPanel>
 
@@ -184,8 +183,7 @@
                                     d:Text="Hello There. General Kenobi"
                                     FontFamily="Helvetica"
                                     FontSize="24"
-                                    Text="{Binding text}">
-                                </TextBlock>
+                                    Text="{Binding Text}" />
                                 <TextBlock
                                     TextWrapping="Wrap"
                                     Margin="0 0 0 5"
@@ -194,9 +192,8 @@
                                     FontSize="14"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Bottom"
-                                    Text="{Binding sentTime, StringFormat={}{0:hh:mm tt}}" 
-                                    Foreground="#666666">
-                                </TextBlock>
+                                    Text="{Binding SentTime, StringFormat={}{0:hh:mm tt}}" 
+                                    Foreground="#666666" />
                                 <TextBlock
                                     TextWrapping="Wrap"
                                     VerticalAlignment="Bottom"
@@ -205,7 +202,7 @@
                             <Border.HorizontalAlignment>
                                 <MultiBinding Converter="{StaticResource ChatAlignmentConverter}">
                                     <Binding 
-                                        Path="senderId"/>
+                                        Path="SenderId"/>
                                     <Binding 
                                         Path="user.customerId" 
                                         RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Page}"/>
@@ -214,7 +211,7 @@
                             <Border.Background>
                                 <MultiBinding Converter="{StaticResource BubbleColorConverter}">
                                     <Binding 
-                                        Path="senderId"/>
+                                        Path="SenderId"/>
                                     <Binding 
                                         Path="user.customerId" 
                                         RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Page}"/>

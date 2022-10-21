@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL.Windows"
         xmlns:controls="clr-namespace:PL.Controls"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
@@ -20,7 +19,7 @@
 
     <materialDesign:Card 
         Margin="10"
-        materialDesign:ShadowAssist.ShadowDepth="Depth4"
+        materialDesign:ElevationAssist.Elevation="Dp4"
         UniformCornerRadius="10">
         <Grid>
             <Grid.RowDefinitions>
@@ -54,8 +53,7 @@
                 x:Name="CustomButtons"
                 Margin="10"
                 Grid.Row="0"
-                Grid.Column="0">
-            </controls:WindowControls>
+                Grid.Column="0" />
 
         </Grid>
     </materialDesign:Card>

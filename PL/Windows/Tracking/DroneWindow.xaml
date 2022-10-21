@@ -15,8 +15,7 @@
     MinWidth="1200"
     AllowsTransparency="True"
     WindowStyle="None"
-    WindowStartupLocation="CenterScreen"
-    MouseLeftButtonDown="Window_MouseLeftBtnDown">
+    WindowStartupLocation="CenterScreen">
 
     <!-- Styles -->
     <Window.Resources>

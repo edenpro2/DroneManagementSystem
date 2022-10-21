@@ -124,7 +124,7 @@
                     <Button
                         Style="{StaticResource MaterialDesignFlatMidBgButton}"
                         x:Name="LoginButton"
-                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                        materialDesign:ElevationAssist.Elevation="Dp1"
                         Height="53"
                         Width="450"
                         materialDesign:ButtonAssist.CornerRadius="5"
@@ -216,8 +216,7 @@
                 x:Name="CustomButtons"
                 Margin="10"
                 Grid.Row="0"
-                Grid.Column="2">
-            </controls:WindowControls>
+                Grid.Column="2" />
 
         </Grid>
     </materialDesign:Card>

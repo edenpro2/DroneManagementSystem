@@ -1,45 +1,126 @@
-﻿using System.Xml.Serialization;
+﻿#nullable enable
+using System.Xml.Serialization;
 
-#nullable enable
 namespace DalFacade.DO
 {
     [XmlRoot]
-    public struct Drone
+    public class Drone : ViewModelBase
     {
-        [XmlAttribute]
-        public int id { get; set; }
-        [XmlElement]
-        public string model { get; set; }
-        [XmlElement]
-        public WeightCategories maxWeight { get; set; }
-        [XmlElement]
-        public DroneStatuses? status { get; set; }
-        [XmlElement]
-        public double battery { get; set; }
-        [XmlElement]
-        public Location? location { get; set; }
-        [XmlAttribute]
-        public bool active { get; set; }
+        private int _id;
+        [XmlAttribute] public int Id
+        {
+            get => _id;
+            set
+            {
+                _id = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _model;
+        [XmlElement] public string Model
+        {
+            get => _model;
+            set
+            {
+                _model = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private WeightCategories _maxWeight;
+        [XmlElement] public WeightCategories MaxWeight
+        {
+            get => _maxWeight;
+            set
+            {
+                _maxWeight = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private DroneStatuses? _status;
+        [XmlElement] public DroneStatuses? Status
+        {
+            get => _status;
+            set
+            {
+                _status = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private double _battery;
+        [XmlElement] public double Battery
+        {
+            get => _battery;
+            set
+            {
+                _battery = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Location? _location;
+        [XmlElement] public Location? Location
+        {
+            get => _location;
+            set
+            {
+                _location = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _modelImg;
+        [XmlAttribute] public string ModelImg
+        {
+            get => _modelImg;
+            set
+            {
+                _modelImg = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _active;
+        [XmlAttribute] public bool Active
+        {
+            get => _active;
+            set
+            {
+                _active = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // Parameter-less Ctor
+        public Drone() {}
 
         // Constructor
-        public Drone(int id = -1, string model = "", WeightCategories maxWeight = WeightCategories.Medium,
-            DroneStatuses? status = null, double battery = 0.0, Location? location = null) : this()
+        public Drone(int id = -1, string model = "", WeightCategories maxWeight = WeightCategories.Medium, DroneStatuses? status = null, double battery = 0.0, Location? location = null) 
         {
-            this.id = id;
-            this.model = model;
-            this.maxWeight = maxWeight;
-            this.status = status;
-            this.battery = battery;
-            this.location = location;
-            active = true;
+            Id = id;
+            Model = model;
+            MaxWeight = maxWeight;
+            Status = status;
+            Battery = battery;
+            Location = location;
+            ModelImg = "";
+            Active = true;
         }
 
         public override string ToString()
         {
             return
-                "Id: " + id + '\n' +
-                "Model: " + model + '\n' +
-                "Max Weight: " + maxWeight + '\n';
+                $"{nameof(Id)}: {Id}\n" +
+                $"{nameof(Model)}: {Model}\n" +
+                $"{nameof(MaxWeight)}: {MaxWeight}\n" +
+                $"{nameof(Status)}: {Status}\n" +
+                $"{nameof(Battery)}: {Battery:0:0.##}\n" +
+                $"{nameof(Location)}: {Location?.ToSexagesimal()}\n" +
+                $"{nameof(ModelImg)}: {ModelImg}\n" +
+                $"{nameof(Active)}: {Active}";
         }
     }
 }

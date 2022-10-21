@@ -24,9 +24,9 @@ namespace PL.Pages
 
             NameComboBox.ItemsSource =
                 from customer in _bl.GetCustomers()
-                where customer.active
-                where customer.id != user.customerId
-                select customer.name;
+                where customer.Active
+                where customer.Id != user.customerId
+                select customer.Name;
         }
 
         private void ContinueBtn_Click(object sender, RoutedEventArgs e)
@@ -46,7 +46,7 @@ namespace PL.Pages
             else
             {
                 ErrorTextBlock.Text = "";
-                var targetId = _bl.SearchForCustomer(c => c.name == (string)NameComboBox.SelectedItem).id;
+                var targetId = _bl.SearchForCustomer(c => c.Name == (string)NameComboBox.SelectedItem).Id;
 
                 WeightCategories weight;
                 Priorities priority;
@@ -83,6 +83,7 @@ namespace PL.Pages
                 currentTime = DateTime.Now.ToShortDateString();
                 WeightCheckBox1.IsChecked = WeightCheckBox2.IsChecked = WeightCheckBox3.IsChecked = false;
                 PriorityCheckBox1.IsChecked = PriorityCheckBox2.IsChecked = PriorityCheckBox3.IsChecked = false;
+                
             }
         }
     }

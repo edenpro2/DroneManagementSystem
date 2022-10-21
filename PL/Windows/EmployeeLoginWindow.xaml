@@ -47,7 +47,7 @@
         Margin="10"
         Background="{StaticResource MaterialDesignLightBackground}"
         UniformCornerRadius="10"
-        materialDesign:ShadowAssist.ShadowDepth="Depth4">
+        materialDesign:ElevationAssist.Elevation="Dp4">
         <Grid>
             <StackPanel>
                  
@@ -106,7 +106,7 @@
 
                 <Button
                     Style="{StaticResource MaterialDesignFlatMidBgButton}"
-                    materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                    materialDesign:ElevationAssist.Elevation="Dp2"
                     Height="53"
                     Width="550"
                     materialDesign:ButtonAssist.CornerRadius="5"

@@ -11,23 +11,23 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(Drone drone)
         {
-            if (_drones.FirstOrDefault(d => d.id == drone.id).Equals(default))
+            if (_drones.FirstOrDefault(d => d.Id == drone.Id).Equals(default))
             {
                 throw new BlAlreadyExistsException();
             }
 
             var station = Randomize.Station((List<Station>)GetStations(), new Random());
-            AddDrone(drone, station.id);
+            AddDrone(drone, station.Id);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(Drone drone, int stationId)
         {
             // random battery, status in maintenance and location at the station
-            drone.battery = new Random().Next(20, 40);
-            drone.status = DroneStatuses.Maintenance;
-            var station = SearchForStation(s => s.id == stationId);
-            drone.location = new Location(station.latitude, station.longitude);
+            drone.Battery = new Random().Next(20, 40);
+            drone.Status = DroneStatuses.Maintenance;
+            var station = SearchForStation(s => s.Id == stationId);
+            drone.Location = new Location(station.Latitude, station.Longitude);
             _drones.Add(drone);
         }
 

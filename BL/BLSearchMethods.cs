@@ -44,20 +44,20 @@ namespace BL
             switch (obj)
             {
                 case Drone drone:
-                    return drone.location != null ? new Location((Location)drone.location) : new Location();
+                    return drone.Location != null ? new Location((Location)drone.Location) : new Location();
                 case Station station:
-                    return new Location(station.latitude, station.longitude);
+                    return new Location(station.Latitude, station.Longitude);
                 case Customer customer:
-                    return new Location(customer.latitude, customer.longitude);
+                    return new Location(customer.Latitude, customer.Longitude);
                 // parcel is with sender 
                 case Parcel parcel when WaitingForDrone(parcel):
-                    return Location(SearchForCustomer(c => c.id == parcel.senderId));
+                    return Location(SearchForCustomer(c => c.Id == parcel.SenderId));
                 // parcel is with drone
                 case Parcel parcel when InTransit(parcel):
-                    return Location(SearchForDrone(d => d.id == parcel.droneId));
+                    return Location(SearchForDrone(d => d.Id == parcel.DroneId));
                 // parcel is with receiver
                 case Parcel parcel when AlreadyDelivered(parcel):
-                    return Location(SearchForCustomer(c => c.id == parcel.targetId));
+                    return Location(SearchForCustomer(c => c.Id == parcel.TargetId));
                 default:
                     return new Location();
             }

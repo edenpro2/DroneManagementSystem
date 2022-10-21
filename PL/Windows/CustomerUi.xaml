@@ -6,7 +6,6 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:controls="clr-namespace:PL.Controls"
-      xmlns:pages="clr-namespace:PL.Pages"
       mc:Ignorable="d"
       AllowsTransparency="True"
       Title="CustomerUI"
@@ -68,7 +67,7 @@
         UniformCornerRadius="10"
         Background="{DynamicResource MaterialDesignPaper}"
         Margin="10"
-        materialDesign:ShadowAssist.ShadowDepth="Depth4">
+        materialDesign:ElevationAssist.Elevation="Dp4">
 
         <Grid>
             <Grid.ColumnDefinitions>

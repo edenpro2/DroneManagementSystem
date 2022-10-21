@@ -152,40 +152,46 @@ namespace PL.ViewModels
             }
         }
 
-        public string Status { get; }
+        public string StatusIcon { get; }
+
+        public ParcelViewModel()
+        {
+            _dms = "";
+            StatusIcon = "";
+        }
 
         public ParcelViewModel(BlApi ibl, Parcel parcel)
         {
-            _id = parcel.id;
-            _senderId = parcel.senderId;
-            _targetId = parcel.targetId;
-            _priority = parcel.priority;
-            _droneId = parcel.droneId;
-            _weight = parcel.weight;
-            _requested = parcel.requested;
-            _scheduled = parcel.scheduled;
-            _collected = parcel.collected;
-            _delivered = parcel.delivered;
-            _active = parcel.active;
-            if (parcel.delivered != default)
+            _id = parcel.Id;
+            _senderId = parcel.SenderId;
+            _targetId = parcel.TargetId;
+            _priority = parcel.Priority;
+            _droneId = parcel.DroneId;
+            _weight = parcel.Weight;
+            _requested = parcel.Requested;
+            _scheduled = parcel.Scheduled;
+            _collected = parcel.Collected;
+            _delivered = parcel.Delivered;
+            _active = parcel.Active;
+            if (parcel.Delivered != default)
             {
-                Status = "../Icons/status4.png";
+                StatusIcon = "../Icons/status4.png";
             }
-            else if (parcel.collected != default)
+            else if (parcel.Collected != default)
             {
-                Status = "../Icons/status3.png";
+                StatusIcon = "../Icons/status3.png";
             }
-            else if (parcel.scheduled != default)
+            else if (parcel.Scheduled != default)
             {
-                Status = "../Icons/status2.png";
+                StatusIcon = "../Icons/status2.png";
             }
             else
             {
-                Status = "../Icons/status1.png";
+                StatusIcon = "../Icons/status1.png";
             }
 
             var loc = ibl.Location(parcel);
-            _dms = DegreeConverter.CoordinatesToSexagesimal(loc.longitude, loc.latitude);
+            _dms = loc.ToSexagesimal();
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -195,5 +201,13 @@ namespace PL.ViewModels
             var handler = PropertyChanged;
             handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        #region Converter
+        public bool IsRequested => Requested != default;
+        public bool IsScheduled => Scheduled != default;
+        public bool IsCollected => Collected != default;
+        public bool IsDelivered => Delivered != default;
+        #endregion
+
     }
 }

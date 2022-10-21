@@ -46,22 +46,11 @@
             <Setter Property="Foreground" Value="#FFB1B5B1" />
         </Style>
 
-        <DropShadowEffect x:Key="DropShadowEffect"
-            BlurRadius="17"
-            Direction="-75"
-            Color="#333333"
-            ShadowDepth="5"
-            Opacity="0.2" />
-
-        <Style TargetType="{x:Type Border}" x:Key="ShadowEffect">
-            <Setter Property="Effect" Value="{StaticResource DropShadowEffect}" />
-        </Style>
-
     </Page.Resources>
 
     <!-- Start of Page -->
     <materialDesign:Card 
-        materialDesign:ShadowAssist.ShadowDepth="Depth0" >
+        materialDesign:ElevationAssist.Elevation="Dp0" >
         <Grid>
             <Grid>
                 <Grid.ColumnDefinitions>

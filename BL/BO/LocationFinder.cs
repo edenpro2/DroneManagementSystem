@@ -55,7 +55,7 @@ namespace BL.BO
 
             foreach (var station in stations)
             {
-                var stationLoc = new Location(station.latitude, station.longitude);
+                var stationLoc = new Location(station.Latitude, station.Longitude);
                 var current = Distance(stationLoc, location);
 
                 if (current >= minDistance && !firstIteration)
@@ -94,10 +94,10 @@ namespace BL.BO
 
             foreach (var station in stations)
             {
-                var stationLoc = new Location(station.latitude, station.longitude);
+                var stationLoc = new Location(station.Latitude, station.Longitude);
                 var current = Distance(stationLoc, objectLoc);
 
-                if ((current >= minDistance || station.openSlots - 1 < 0) && !firstIteration)
+                if ((current >= minDistance || station.OpenSlots - 1 < 0) && !firstIteration)
                 {
                     continue;
                 }

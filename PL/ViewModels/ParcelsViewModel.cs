@@ -2,16 +2,17 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using DalFacade.DO;
 
 namespace PL.ViewModels
 {
     public class ParcelsViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<ParcelViewModel> _parcels;
+        private ObservableCollection<Parcel> _parcels;
 
-        private ObservableCollection<ParcelViewModel> _filtered;
+        private ObservableCollection<Parcel> _filtered;
 
-        public ObservableCollection<ParcelViewModel> Parcels
+        public ObservableCollection<Parcel> Parcels
         {
             get => _parcels;
             set
@@ -21,7 +22,7 @@ namespace PL.ViewModels
             }
         }
 
-        public ObservableCollection<ParcelViewModel> Filtered
+        public ObservableCollection<Parcel> Filtered
         {
             get => _filtered;
             set
@@ -31,17 +32,16 @@ namespace PL.ViewModels
             }
         }
 
-        public ParcelsViewModel(IEnumerable<ParcelViewModel> parcelList)
+        public ParcelsViewModel(IEnumerable<Parcel> parcelList)
         {
-            _filtered = _parcels = new ObservableCollection<ParcelViewModel>(parcelList);
+            _filtered = _parcels = new ObservableCollection<Parcel>(parcelList);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
         private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
-            var handler = PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

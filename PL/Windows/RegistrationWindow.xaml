@@ -32,7 +32,7 @@
         Margin="10"
         UniformCornerRadius="10"
         Background="{DynamicResource MaterialDesignPaper}"
-        materialDesign:ShadowAssist.ShadowDepth="Depth4">
+        materialDesign:ElevationAssist.Elevation="Dp4">
 
         <StackPanel>
 
@@ -111,7 +111,7 @@
 
             <Button
                 Style="{StaticResource MaterialDesignFlatMidBgButton}"
-                materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                materialDesign:ElevationAssist.Elevation="Dp1"
                 Height="53"
                 Width="800"
                 materialDesign:ButtonAssist.CornerRadius="10"
