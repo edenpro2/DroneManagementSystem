@@ -9,15 +9,13 @@ namespace PL.Windows.Tracking
 {
     public partial class ParcelWindow
     {
-        public ParcelViewModel ViewModel { get; }
+        public Parcel ViewModel { get; }
         public MapUri MapUrl { get; } = new();
 
-        public ParcelWindow(BlApi bl, ParcelViewModel pvm)
+        public ParcelWindow(BlApi bl, Parcel parcel)
         {
-            ViewModel = pvm;
-            CustomButtons = new WindowControls(this);
-            var loc = bl.Location(bl.SearchForDrone(d => pvm.Id == d.Id));
-            MapUrl.Uri = NewMapUri(new Location(loc.Latitude, loc.Longitude));
+            ViewModel = parcel;
+            MapUrl.Uri = NewMapUri(bl.LocationOf(parcel));
             InitializeComponent();
         }
 

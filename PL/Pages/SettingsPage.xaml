@@ -5,10 +5,11 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
+      xmlns:pages="clr-namespace:PL.Pages"
       mc:Ignorable="d"
       MinHeight="720" 
       MinWidth="1340"
-      DataContext="{Binding RelativeSource={RelativeSource Self}, Path=UserViewModel}"
+      DataContext="{Binding RelativeSource={RelativeSource Self}, Path=User}"
       Title="SettingsPage"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}">
 
@@ -134,7 +135,6 @@
     <materialDesign:Card 
         materialDesign:ElevationAssist.Elevation="Dp0"
         Background="#d1d9de">
-
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="160"/>
@@ -174,7 +174,7 @@
                         Grid.Row="1">
                         <TextBlock
                             d:Text="John Smith"
-                            Text="{Binding Name}"
+                            Text="{Binding Customer.Name}"
                             FontSize="24"
                             Foreground="#333333" 
                             FontWeight="Bold"
@@ -189,7 +189,7 @@
                                 FontWeight="SemiBold"/>
                             <TextBlock
                                 d:Text="jsmithofficial"
-                                Text="{Binding User.username}"
+                                Text="{Binding Username}"
                                 FontSize="12"
                                 Foreground="#333333" 
                                 FontWeight="SemiBold"/>
@@ -202,7 +202,7 @@
                             <Ellipse.Fill>
                                 <ImageBrush 
                                     d:ImageSource="../Resources/account.jpg"  
-                                    ImageSource="{Binding User.profilePic}" 
+                                    ImageSource="{Binding ProfilePic}" 
                                     Opacity="0.6" 
                                     Stretch="UniformToFill"/>
                             </Ellipse.Fill>
@@ -319,8 +319,6 @@
 
                     </DockPanel>
 
-
-
                     <StackPanel 
                         Grid.Row="1"
                         Grid.Column="1">
@@ -337,7 +335,6 @@
                             </Style>
                         </StackPanel.Style>
 
-
                         <!-- Row 1 -->
 
                         <Separator/>
@@ -352,7 +349,7 @@
                                 <TextBox
                                     x:Name="NameBox"
                                     d:Text="John Smith"
-                                    Text="{Binding Name, Mode=OneTime}"
+                                    Text="{Binding Customer.Name}"
                                     BorderBrush="#FFD7E1E8"
                                     BorderThickness="1.5"/>
                             </StackPanel>
@@ -366,7 +363,7 @@
                                 <TextBox
                                     x:Name="UsernameBox"
                                     d:Text="jsmithoffical"
-                                    Text="{Binding User.username, Mode=OneTime}"
+                                    Text="{Binding Username}"
                                     BorderBrush="#FFD7E1E8"
                                     BorderThickness="1.5"/>
                             </StackPanel>
@@ -416,7 +413,7 @@
                                 <TextBox
                                     x:Name="EmailBox"
                                     d:Text="johnsmith99@gmail.com"
-                                    Text="{Binding User.email, Mode=OneTime}"
+                                    Text="{Binding Email}"
                                     BorderBrush="#FFD7E1E8"
                                     BorderThickness="1.5"/>
                             </StackPanel>
@@ -429,7 +426,7 @@
                                     Style="{StaticResource TextBoxLabel}"/>
                                 <TextBox
                                     x:Name="ConfirmEmailBox"
-                                    DataContext="{Binding ElementName=EmailBox, Mode=OneTime}"
+                                    DataContext="{Binding ElementName=EmailBox}"
                                     Text="{Binding Text}"
                                     BorderBrush="#FFD7E1E8"
                                     BorderThickness="1.5"/>
@@ -439,9 +436,9 @@
                         <Separator Height="20"/>
 
                         <TextBlock
-                            x:Name="InfoErrorBlock"
+                            Text="{Binding InfoErrorMessage, RelativeSource={RelativeSource AncestorType=pages:SettingsPage}}"
+                            Foreground="{Binding InfoErrorColor, RelativeSource={RelativeSource AncestorType=pages:SettingsPage}}"
                             FontSize="10"
-                            Foreground="IndianRed"
                             FontWeight="SemiBold"
                             VerticalAlignment="Bottom"
                             HorizontalAlignment="Left" />
@@ -454,10 +451,10 @@
                             Height="40"
                             VerticalAlignment="Bottom"
                             HorizontalAlignment="Left"
-                            Content="Update info" BorderBrush="#FF217BF3" Background="#FF217BF3"/>
-
+                            Content="Update info" 
+                            BorderBrush="#FF217BF3"
+                            Background="#FF217BF3"/>
                     </StackPanel>
-
 
                     <!-- Billing View -->
 
@@ -493,7 +490,7 @@
                                        x:Name="PhoneBox"
                                        d:Text="9546582944"
                                        Width="190"
-                                       Text="{Binding Phone}"
+                                       Text="{Binding Customer.Phone}"
                                        BorderBrush="#FFD7E1E8"
                                        BorderThickness="1.5"/>
                                 </DockPanel>
@@ -509,7 +506,7 @@
                                     IsReadOnly="True"
                                     Foreground="#bb222222"
                                     Background="#11444444"
-                                    Text="{Binding User.isEmployee,
+                                    Text="{Binding IsEmployee,
                                     Converter={StaticResource EmployStatusConverter }}"
                                     BorderBrush="#FFD7E1E8"
                                     BorderThickness="1.5"/>
@@ -526,24 +523,24 @@
                             <TextBox
                                 x:Name="AddressBox"
                                 d:Text="11050 Minneapolis Dr."
-                                Text="{Binding User.address, Mode=OneTime}"
+                                Text="{Binding Address}"
                                 BorderBrush="#FFD7E1E8"
                                 BorderThickness="1.5"/>
                         </StackPanel>
 
-
                         <Separator Height="20"/>
 
                         <TextBlock
-                            x:Name="BillingErrorBox"
+                            Text="{Binding BillingErrorMessage, RelativeSource={RelativeSource AncestorType=pages:SettingsPage}}"
+                            Foreground="{Binding BillingErrorColor, RelativeSource={RelativeSource AncestorType=pages:SettingsPage}}"
                             FontSize="10"
-                            Foreground="IndianRed"
                             FontWeight="SemiBold"
                             VerticalAlignment="Bottom"
-                            HorizontalAlignment="Left" />
+                            HorizontalAlignment="Left">
+                            
+                        </TextBlock>
 
                         <Separator Height="10"/>
-
 
                         <Button 
                             Click="UpdateBillingBtn_Click"
@@ -551,7 +548,9 @@
                             Height="40"
                             VerticalAlignment="Bottom"
                             HorizontalAlignment="Left"
-                            Content="Update billing info" BorderBrush="#FF217BF3" Background="#FF217BF3"/>
+                            Content="Update billing info" 
+                            BorderBrush="#FF217BF3" 
+                            Background="#FF217BF3"/>
 
                     </StackPanel>
                 </Grid>

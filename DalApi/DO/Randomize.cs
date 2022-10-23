@@ -76,9 +76,25 @@ namespace DalFacade.DO
         /// <param name="stationList"></param>
         /// <param name="rand"></param>
         /// <returns> Random station </returns>
-        public static Station Station(List<Station> stationList, Random rand)
+        public static Station Station(IEnumerable<Station> stationList, Random rand)
         {
-            return stationList[rand.Next(stationList.Count)];
+            return stationList
+                .OrderBy(_ => rand.Next())
+                .First();
+        }
+
+        /// <summary>
+        /// Returns a random station
+        /// </summary>
+        /// <param name="stationList"></param>
+        /// <param name="rand"></param>
+        /// <returns> Random station </returns>
+        public static Station OpenStation(IEnumerable<Station> stationList, Random rand)
+        {
+            return stationList
+                .Where(stn => stn.OpenSlots > 0)
+                .OrderBy(_ => rand.Next())
+                .First();
         }
 
         /// <summary>

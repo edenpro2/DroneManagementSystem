@@ -4,7 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
     xmlns:controls="clr-namespace:PL.Controls"
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:converters="clr-namespace:PL.Converters">
 
     <Application.Resources>
         <ResourceDictionary>
@@ -26,13 +27,15 @@
             </ResourceDictionary>
 
             <!-- Controls -->
-            <controls:ChatAlignmentConverter x:Key="ChatAlignmentConverter"/>
-            <controls:BubbleColorConverter x:Key="BubbleColorConverter"/>
-            <controls:EmployStatusConverter x:Key="EmployStatusConverter"/>
             <controls:StepProgressBar x:Key="StepProgressBar"/>
-            <controls:IsDateDefaultConverter x:Key="IsDateDefaultConverter"/>
             <controls:IconButton x:Key="IconButton"/>
 
+            <!-- Converters -->
+            <converters:ChatAlignmentConverter x:Key="ChatAlignmentConverter"/>
+            <converters:BubbleColorConverter x:Key="BubbleColorConverter"/>
+            <converters:EmployStatusConverter x:Key="EmployStatusConverter"/>
+            <converters:DmsConverter x:Key="DmsConverter"/>
+            <converters:IsDateDefaultConverter x:Key="IsDateDefaultConverter"/>
 
             <Style x:Key="CardStyle" TargetType="{x:Type materialDesign:Card}">
                 <Setter Property="UniformCornerRadius" Value="10"/>

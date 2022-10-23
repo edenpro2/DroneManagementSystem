@@ -131,7 +131,7 @@
 
             <!-- Window Controls -->
             <controls:WindowControls
-                x:Name="CustomButtons"
+                Window="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
                 Margin="2"
                 Grid.Row="0"
                 Grid.Column="1"

@@ -42,7 +42,7 @@ namespace DALXML
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<User> GetEmployees()
         {
-            return GetUsers().Where(u => u.isEmployee);
+            return GetUsers().Where(u => u.IsEmployee);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]

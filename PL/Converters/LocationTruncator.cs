@@ -2,19 +2,18 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace PL.Controls
+namespace PL.Converters
 {
-    [ValueConversion(typeof(DateTime), typeof(bool))]
-    public class IsDateDefaultConverter : IValueConverter
+    public class LocationTruncator : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (DateTime) value == default;
+            return (double)value - (double)value % 0.0001;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return DateTime.Now;
+            throw new NotImplementedException();
         }
     }
 }

@@ -11,8 +11,8 @@ namespace PL.Windows
 
         public NewDroneWindow(BlApi bl)
         {
-            InitializeComponent();
             _bl = bl;
+            InitializeComponent();
             WeightComboBox.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
 

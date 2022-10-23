@@ -9,28 +9,26 @@ namespace BL
 {
     public partial class Bl
     {
-        private int MinForTripToStation(Drone drone)
+        // Minimum for collection + min for delivery + min for trip to closest station after delivery
+        private double MinForCollection(Drone drone, Parcel parcel)
+        {
+            var min = CalcPowerConsumption(drone, parcel);
+            min += MinForDelivery(drone, parcel);
+            return min;
+        }
+
+        // Minimum for delivery + min for trip to closest station after delivery
+        private double MinForDelivery(Drone drone, Parcel parcel)
+        {
+            var min = CalcPowerConsumption(drone, parcel);
+            min += MinForTripToStation(drone);
+            return min;
+        }
+
+        private double MinForTripToStation(Drone drone)
         {
             var station = this.ClosestAvailableStation(drone);
-            return (int)CalcPowerConsumption(drone, station);
-        }
-
-        private int MinForDelivery(Drone drone, Parcel parcel)
-        {
-            var target = GetCustomers(c => c.Active).First(c => c.Id == parcel.TargetId);
-            var total = (int)CalcPowerConsumption(drone, target);
-            drone.Location = Location(target);
-            total += MinForTripToStation(drone);
-            return total;
-        }
-
-        private int MinForCollection(Drone drone, Parcel parcel)
-        {
-            var sender = GetCustomers(c => c.Active).First(c => c.Id == parcel.SenderId);
-            var total = (int)CalcPowerConsumption(drone, sender);
-            drone.Location = Location(sender);
-            total += MinForDelivery(drone, parcel);
-            return total;
+            return CalcPowerConsumption(drone, station);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -40,13 +38,13 @@ namespace BL
             switch (o)
             {
                 case Station station:
-                    targetLocation = Location(station);
+                    targetLocation = LocationOf(station);
                     break;
                 case Customer customer:
-                    targetLocation = Location(customer);
+                    targetLocation = LocationOf(customer);
                     break;
                 case Parcel parcel:
-                    targetLocation = Location(parcel);
+                    targetLocation = LocationOf(parcel);
                     break;
                 default:
                     return 0.0;
@@ -92,8 +90,7 @@ namespace BL
                     break;
             }
 
-            var distance = Distance(Location(drone), targetLocation);
-            return rate * distance;
+            return rate * Distance(LocationOf(drone), targetLocation);
         }
 
         // Helper function

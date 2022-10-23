@@ -8,7 +8,7 @@ using PL.ViewModels;
 namespace PL.Controls
 {
     /// <summary>
-    ///     User-control shows the current progress of the drone/parcel
+    /// User-control shows the current progress of the drone/parcel
     /// </summary>
     public partial class StepProgressBar : INotifyPropertyChanged
     {
@@ -17,13 +17,6 @@ namespace PL.Controls
         // Default Constructor 
         public StepProgressBar()
         {
-            InitializeComponent();
-        }
-
-        // Constructor
-        public StepProgressBar(Parcel parcel)
-        {
-            ViewModel = parcel;
             InitializeComponent();
         }
 

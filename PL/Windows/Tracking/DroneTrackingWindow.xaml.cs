@@ -1,7 +1,6 @@
 ﻿using BL;
 using BLAPI;
 using DalFacade.DO;
-using PL.Controls;
 using PL.ViewModels;
 using System;
 using System.ComponentModel;
@@ -10,7 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using LiveCharts.Wpf;
+using ScottPlot;
 
 #pragma warning disable CS8602 // All null values initialized in constructor
 
@@ -19,22 +18,43 @@ namespace PL.Windows.Tracking
     public partial class DroneTrackingWindow : INotifyPropertyChanged
     {
         #region Properties
-        public static double MinScreenHeight => PLMethods.MinScreenHeight(0.9);
-        public static double MinScreenWidth => PLMethods.MinScreenWidth(0.9);
+        public static double MinScreenHeight { get; } = PLMethods.MinScreenHeight(0.9);
+        public static double MinScreenWidth { get; } = PLMethods.MinScreenWidth(0.9);
         public SolidColorBrush CustomFill { get; } = new (Color.FromRgb(68, 110, 189));
         public bool IsChecked { get; set; }
-        public MapUri MapUrl { get; } = new();
-        private readonly DroneViewModel _drones;
-        private BlApi _bl;
+        private readonly DroneViewModel _droneViewModel;
+        private readonly BlApi _bl;
+        private double[] batteries = new double[1000];
+        private double[] seconds = new double[1000];
+        private double elapsedTime;
+        private const int Delta = 10;
 
-        private Drone? _viewModel;
-        public Drone? ViewModel
+        public WpfPlot BatteryPlot { get; set; } = new();
+
+        private Uri _uri;
+        public Uri Uri
+        {
+            get => _uri;
+            set
+            {
+                _uri = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Drone _viewModel;
+        public Drone ViewModel
         {
             get=>_viewModel;
             set
             {
                 _viewModel = value;
                 OnPropertyChanged();
+                var lat = TruncateLocation(_viewModel.Location.Latitude);
+                var lon = TruncateLocation(_viewModel.Location.Longitude);
+                Uri = new Uri($"https://www.openstreetmap.org/?mlat={lat}&amp;mlon={lon}#map=12/{lat}/{lon}");
+                batteries = batteries.Append(_viewModel.Battery).ToArray();
+                seconds = seconds.Append(elapsedTime++).ToArray();
             }
         }
 
@@ -50,48 +70,42 @@ namespace PL.Windows.Tracking
         }
         #endregion
 
-        #region Gauge
-        public Func<double, string> Formatter { get; set; }
-        #endregion
-
-        public DroneTrackingWindow(BlApi bl, Drone drone, DroneViewModel drones)
+        public DroneTrackingWindow(BlApi bl, Drone drone, DroneViewModel droneViewModel)
         {
-            Parcel = bl.GetParcels(p => p.Active).FirstOrDefault(p => p.DroneId == drone.Id);
             _bl = bl;
             ViewModel = drone;
+            _droneViewModel = droneViewModel;
+            BatteryPlot.Plot.XAxis.Label("Time (seconds)");
+            BatteryPlot.Plot.YAxis.Label("Battery (%)");
+            BatteryPlot.Plot.Grid(lineStyle: LineStyle.Dot);
+            BatteryPlot.Plot.Style(ScottPlot.Style.Seaborn);
+            BatteryPlot.Plot.SetAxisLimitsY(0,100);
+
             InitializeComponent();
             UpdateContent();
-            IconRadioBtn = new IconButton();
-            _drones = drones;
-            CustomButtons = new WindowControls(this);
-            StepProgressBar = new StepProgressBar(Parcel);
         }
 
-        private static Uri NewMapUri(Location location)
-        {
-            var lat = location.Latitude - location.Latitude % 0.0001;
-            var lon = location.Longitude - location.Longitude % 0.0001;
-
-            return new Uri($"https://www.openstreetmap.org/?mlat={lat}&amp;mlon={lon}#map=15/{lat}/{lon}");
-        }
+        private static double TruncateLocation(double val) => val - val % 0.0001;
 
         private void UpdateContent()
         {
-            ViewModel = _bl.SearchForDrone(d => d.Id == ViewModel.Id);
             Parcel = _bl.GetParcels().FirstOrDefault(p => p.Active && p.DroneId == ViewModel.Id);
-            MapUrl.Uri = NewMapUri(_bl.Location(ViewModel));
+            BatteryPlot.Plot.AddScatter(seconds, batteries);
+            BatteryPlot.Plot.AddFill(seconds, batteries, 0, System.Drawing.Color.FromArgb(255, 66, 88, 255));
+            BatteryPlot.Plot.SetAxisLimitsX(elapsedTime - Delta, elapsedTime + Delta);
+            BatteryPlot.Refresh();
         }
 
         private void MouseLeftBtnDown(object sender, MouseButtonEventArgs e) => DragMove();
 
-        internal DroneViewModel GetValue() => _drones;
+        internal DroneViewModel GetValue() => _droneViewModel;
 
         private void ChargeBtn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 ViewModel = _bl.SendDroneToCharge(ViewModel);
-                _drones.Update(ViewModel);
+                _droneViewModel.Update(ViewModel);
                 ErrorBox.Text = "";
                 UpdateContent();
             }
@@ -128,7 +142,7 @@ namespace PL.Windows.Tracking
             try
             {
                 ViewModel = _bl.DroneReleaseAndCharge(ViewModel, hours);
-                _drones.Update(ViewModel);
+                _droneViewModel.Update(ViewModel);
                 ErrorBox.Text = "";
                 UpdateContent();
             }
@@ -148,7 +162,7 @@ namespace PL.Windows.Tracking
             try
             {
                 ViewModel = _bl.AssignDroneToParcel(ViewModel);
-                _drones.Update(ViewModel);
+                _droneViewModel.Update(ViewModel);
                 ErrorBox.Text = "";
                 UpdateContent();
             }
@@ -171,7 +185,7 @@ namespace PL.Windows.Tracking
             try
             {
                 ViewModel = _bl.CollectParcelByDrone(ViewModel);
-                _drones.Update(ViewModel);
+                _droneViewModel.Update(ViewModel);
                 ErrorBox.Text = "";
                 UpdateContent();
             }
@@ -194,7 +208,7 @@ namespace PL.Windows.Tracking
             try
             {
                 ViewModel = _bl.DeliverByDrone(ViewModel);
-                _drones.Update(ViewModel);
+                _droneViewModel.Update(ViewModel);
                 ErrorBox.Text = "";
                 UpdateContent();
             }

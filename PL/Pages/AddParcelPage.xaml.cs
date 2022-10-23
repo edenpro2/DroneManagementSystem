@@ -18,14 +18,14 @@ namespace PL.Pages
         {
             _bl = ibl;
             _user = user;
-            personalId = $"{(uint)_user.username.GetHashCode()}";
+            personalId = $"{(uint)_user.Username.GetHashCode()}";
 
             InitializeComponent();
 
             NameComboBox.ItemsSource =
                 from customer in _bl.GetCustomers()
                 where customer.Active
-                where customer.Id != user.customerId
+                where customer.Id != user.Customer.Id
                 select customer.Name;
         }
 
@@ -77,7 +77,7 @@ namespace PL.Pages
                     priority = Priorities.Emergency;
                 }
 
-                _bl.CreateParcel(_user.customerId, targetId, weight, priority);
+                _bl.CreateParcel(_user.Customer.Id, targetId, weight, priority);
 
                 NameComboBox.SelectedItem = null;
                 currentTime = DateTime.Now.ToShortDateString();

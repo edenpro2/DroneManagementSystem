@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 
-namespace PL.Controls
+namespace PL.Converters
 {
     [ValueConversion(typeof(int[]), typeof(HorizontalAlignment))]
     public class ChatAlignmentConverter : IMultiValueConverter
@@ -18,7 +18,7 @@ namespace PL.Controls
             if (senderId == userId)
                 return HorizontalAlignment.Right;
 
-            else return HorizontalAlignment.Left;
+            return HorizontalAlignment.Left;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

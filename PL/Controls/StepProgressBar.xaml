@@ -63,11 +63,11 @@
                     <Ellipse.Style>
                         <Style BasedOn="{StaticResource ProgressEllipse}" TargetType="{x:Type Ellipse}">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsRequested}" Value="True">
+                                <DataTrigger Binding="{Binding Requested, Converter={StaticResource IsDateDefaultConverter}}" Value="False">
                                     <Setter Property="Fill"
                                             Value="{Binding RelativeSource={RelativeSource AncestorType=controls:StepProgressBar}, Path=Fill}" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding IsDelivered}" Value="True">
+                                <DataTrigger Binding="{Binding Delivered, Converter={StaticResource IsDateDefaultConverter}}" Value="False">
                                     <Setter Property="Fill"
                                             Value="{Binding RelativeSource={RelativeSource AncestorType=controls:StepProgressBar}, Path=CompletedFill}" />
                                 </DataTrigger>
@@ -90,11 +90,11 @@
                     <Ellipse.Style>
                         <Style BasedOn="{StaticResource ProgressEllipse}" TargetType="{x:Type Ellipse}">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsScheduled}" Value="True">
+                                <DataTrigger Binding="{Binding Scheduled, Converter={StaticResource IsDateDefaultConverter}}" Value="False">
                                     <Setter Property="Fill"
                                             Value="{Binding RelativeSource={RelativeSource AncestorType=controls:StepProgressBar}, Path=Fill}" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding IsDelivered}" Value="True">
+                                <DataTrigger Binding="{Binding Delivered, Converter={StaticResource IsDateDefaultConverter}}" Value="False">
                                     <Setter Property="Fill"
                                             Value="{Binding RelativeSource={RelativeSource AncestorType=controls:StepProgressBar}, Path=CompletedFill}" />
                                 </DataTrigger>
@@ -117,11 +117,11 @@
                     <Ellipse.Style>
                         <Style BasedOn="{StaticResource ProgressEllipse}" TargetType="{x:Type Ellipse}">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsCollected}" Value="True">
+                                <DataTrigger Binding="{Binding Collected, Converter={StaticResource IsDateDefaultConverter}}" Value="False">
                                     <Setter Property="Fill"
                                             Value="{Binding RelativeSource={RelativeSource AncestorType=controls:StepProgressBar}, Path=Fill}" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding IsDelivered}" Value="True">
+                                <DataTrigger Binding="{Binding Delivered, Converter={StaticResource IsDateDefaultConverter}}" Value="False">
                                     <Setter Property="Fill"
                                             Value="{Binding RelativeSource={RelativeSource AncestorType=controls:StepProgressBar}, Path=CompletedFill}" />
                                 </DataTrigger>
@@ -144,7 +144,7 @@
                     <Ellipse.Style>
                         <Style BasedOn="{StaticResource ProgressEllipse}" TargetType="{x:Type Ellipse}">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsDelivered}" Value="True">
+                                <DataTrigger Binding="{Binding Delivered, Converter={StaticResource IsDateDefaultConverter}}" Value="False">
                                     <Setter Property="Fill"
                                             Value="{Binding RelativeSource={RelativeSource AncestorType=controls:StepProgressBar}, Path=CompletedFill}" />
                                 </DataTrigger>

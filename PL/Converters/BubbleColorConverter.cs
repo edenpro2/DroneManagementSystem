@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace PL.Controls
+namespace PL.Converters
 {
     [ValueConversion(typeof(int[]), typeof(SolidBrush))]
     public class BubbleColorConverter : IMultiValueConverter

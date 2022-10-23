@@ -45,7 +45,7 @@ namespace BL
                     var station = this.ClosestAvailableStation(drone);
 
                     // Drone is at a station:
-                    if (Location(drone).Equals(Location(station)))
+                    if (LocationOf(drone).Equals(LocationOf(station)))
                     {
                         switch (drone.Battery)
                         {
@@ -64,10 +64,10 @@ namespace BL
                     else // On its way to a station:
                     {
                         // Drone isn't at station yet
-                        if (Distance(Location(drone), Location(station)) > this.Speed(drone))
+                        if (Distance(LocationOf(drone), LocationOf(station)) > this.Speed(drone))
                         {
                             drone = UpdateBattery(drone);
-                            drone.Location = this.CalculateLocation(drone, Location(station));
+                            drone.Location = this.CalculateLocation(drone, LocationOf(station));
                             progress = "On its way to nearest charging port";
                         }
                         // Drone is right next to station
@@ -103,13 +103,16 @@ namespace BL
                     {
                         var parcel = GetParcels(p => p.Active).First(p => p.DroneId == drone.Id);
                         if (!CanDroneMakeTrip(drone, parcel))
+                        {
                             progress = $"Parcel (id {parcel.Id}) assigned to drone, but not enough battery to make trip";
+                            break;
+                        }
 
                         if (WaitingForDrone(parcel))
                         {
-                            if (Distance(Location(drone), Location(parcel)) > this.Speed(drone))
+                            if (Distance(LocationOf(drone), LocationOf(parcel)) > this.Speed(drone))
                             {
-                                drone.Location = this.CalculateLocation(drone, Location(parcel));
+                                drone.Location = this.CalculateLocation(drone, LocationOf(parcel));
                                 drone = UpdateBattery(drone);
                                 progress = "Drone on its way to collect parcel";
                             }
@@ -123,9 +126,9 @@ namespace BL
                         else if (InTransit(parcel))
                         {
                             var customer = GetCustomers(c => c.Active).First(c => c.Id == parcel.TargetId);
-                            if (Distance(Location(drone), Location(customer)) > this.Speed(drone))
+                            if (Distance(LocationOf(drone), LocationOf(customer)) > this.Speed(drone))
                             {
-                                drone.Location = this.CalculateLocation(drone, Location(customer));
+                                drone.Location = this.CalculateLocation(drone, LocationOf(customer));
                                 drone = UpdateBattery(drone);
                                 progress = "Delivering parcel to addressee";
                             }
@@ -144,8 +147,7 @@ namespace BL
                         {
                             case BlNotEnoughBatteryException:
                                 drone.Status = Maintenance;
-                                progress =
-                                    "Drone was in delivery, but doesn't have enough battery (now in maintenance)";
+                                progress = "Drone was in delivery, but doesn't have enough battery (now in maintenance)";
                                 break;
                             case BlNoMatchingParcels:
                                 drone.Status = Maintenance;
@@ -156,6 +158,7 @@ namespace BL
             }
 
             UpdateDrone(drone);
+
             return new Tuple<Drone, string>(drone, progress);
         }
     }

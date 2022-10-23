@@ -8,7 +8,6 @@ namespace BLAPI
     {
         #region Add Methods
         public void AddDrone(Drone drone);
-        public void AddDrone(Drone drone, int stationId);
         public void AddStation(Station station);
         public void AddCustomer(Customer customer);
         public void AddParcel(Parcel parcel);
@@ -31,7 +30,7 @@ namespace BLAPI
 
         #region Calculation Methods
         public double CalcPowerConsumption(Drone drone, object o);
-        public Location Location(object obj);
+        public Location LocationOf(object obj);
         #endregion
 
         #region List Methods

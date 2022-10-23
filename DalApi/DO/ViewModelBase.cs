@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-#nullable enable
 
 namespace DalFacade.DO
 {

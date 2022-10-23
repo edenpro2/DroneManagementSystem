@@ -9,12 +9,12 @@ namespace PL.Pages
 {
     public partial class ChatsPage : INotifyPropertyChanged
     {
-        public ChatsViewModel personalChats { get; set; }
+        public Chat PersonalChat { get; set; }
         public User user { get; set; }
 
         public ChatsPage(List<Customer> customers, IEnumerable<Chat> allChats, User user)
         {
-            personalChats = new ChatsViewModel(customers, ref allChats, user);
+            //PersonalChat = new ChatsViewModel(customers, ref allChats, user);
             this.user = user;
             UserList = customers.Select(c => c.Name).ToList();
             InitializeComponent();
@@ -29,7 +29,6 @@ namespace PL.Pages
             {
                 _searchText = value;
                 OnPropertyChanged();
-                OnPropertyChanged("MyFilteredItems");
             }
         }
 

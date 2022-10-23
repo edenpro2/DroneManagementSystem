@@ -39,25 +39,25 @@ namespace BL
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public Location Location(object obj)
+        public Location LocationOf(object obj)
         {
             switch (obj)
             {
                 case Drone drone:
-                    return drone.Location != null ? new Location((Location)drone.Location) : new Location();
+                    return drone.Location ?? new Location();
                 case Station station:
                     return new Location(station.Latitude, station.Longitude);
                 case Customer customer:
                     return new Location(customer.Latitude, customer.Longitude);
                 // parcel is with sender 
                 case Parcel parcel when WaitingForDrone(parcel):
-                    return Location(SearchForCustomer(c => c.Id == parcel.SenderId));
+                    return LocationOf(SearchForCustomer(c => c.Id == parcel.SenderId));
                 // parcel is with drone
                 case Parcel parcel when InTransit(parcel):
-                    return Location(SearchForDrone(d => d.Id == parcel.DroneId));
+                    return LocationOf(SearchForDrone(d => d.Id == parcel.DroneId));
                 // parcel is with receiver
                 case Parcel parcel when AlreadyDelivered(parcel):
-                    return Location(SearchForCustomer(c => c.Id == parcel.TargetId));
+                    return LocationOf(SearchForCustomer(c => c.Id == parcel.TargetId));
                 default:
                     return new Location();
             }

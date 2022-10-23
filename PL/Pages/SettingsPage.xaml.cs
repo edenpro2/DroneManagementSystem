@@ -2,7 +2,6 @@
 using BLAPI;
 using DalFacade.DO;
 using Microsoft.Win32;
-using PL.ViewModels;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -13,21 +12,23 @@ namespace PL.Pages
     public partial class SettingsPage
     {
         private readonly BlApi _bl;
-        private Customer _customer;
-        public UserViewModel UserViewModel { get; }
+        public User User { get; set; }
+        public string InfoErrorMessage { get; set; }
+        public string BillingErrorMessage { get; set; }
+        public SolidColorBrush InfoErrorColor { get; set; }
+        public SolidColorBrush BillingErrorColor { get; set; }
 
         public SettingsPage(BlApi ibl, User user)
         {
             _bl = ibl;
-            _customer = _bl.SearchForCustomer(c => c.Id == user.customerId);
-            UserViewModel = new UserViewModel(user, _customer.Phone, _customer.Name, user.profilePic);
+            User = user;
             InitializeComponent();
         }
 
         private void ApplyBtn_Click(object sender, RoutedEventArgs e)
         {
-            InfoErrorBlock.Text = "";
-            InfoErrorBlock.Foreground = Brushes.Tomato;
+            InfoErrorMessage = "";
+            InfoErrorColor = Brushes.Tomato;
             var name = NameBox.Text;
             var username = UsernameBox.Text;
             var password = PasswordBox.Password;
@@ -37,41 +38,40 @@ namespace PL.Pages
 
             if (password != confirmPass)
             {
-                InfoErrorBlock.Text = "Passwords do not match";
+                InfoErrorMessage = "Passwords do not match";
                 return;
             }
 
-            var user = UserViewModel.User;
+            var user = User;
 
             if (password.Length > 0)
             {
-                user.password = password;
+                user.Password = password;
             }
 
             if (email != confirmEmail)
             {
-                InfoErrorBlock.Text = "Emails do not match";
+                InfoErrorMessage = "Emails do not match";
                 return;
             }
 
             if (!UserVerification.CheckEmail(email))
             {
-                InfoErrorBlock.Text = "Email not valid";
+                InfoErrorMessage = "Email not valid";
                 return;
             }
 
             // update each field
-            user.username = username;
-            user.email = email;
-            _customer.Name = name;
+            user.Username = username;
+            user.Email = email;
+            User.Customer.Name = name;
 
-            _bl.UpdateCustomer(_customer);
+            _bl.UpdateCustomer(User.Customer);
             _bl.UpdateUser(user);
-            UserViewModel.User = user;
-            UserViewModel.Name = name;
+            User = user;
 
-            InfoErrorBlock.Foreground = Brushes.Green;
-            InfoErrorBlock.Text = "Successfully updated";
+            InfoErrorColor = Brushes.Green;
+            InfoErrorMessage = "Successfully updated";
         }
 
 
@@ -85,57 +85,54 @@ namespace PL.Pages
 
             //To read the content : Get the filename from the OpenFileDialog.
 
-            if ((bool) fileDialog.ShowDialog())
-            {
-                var filePath = fileDialog.FileName;
+            if (!(bool)fileDialog.ShowDialog())
+                return;
 
-                if (new FileInfo(filePath).Length > 52_428_800) // > 50 Mb
-                {
-                    InfoErrorBlock.Text = "File too large";
-                    return;
-                }
-                var user = UserViewModel.User;
-                user.profilePic = filePath;
-                UserViewModel.User = user;
-                _bl.UpdateUser(user);
-                InfoErrorBlock.Text = "";
+            var filePath = fileDialog.FileName;
+
+            if (new FileInfo(filePath).Length > 52_428_800) // > 50 Mb
+            {
+                InfoErrorMessage = "File too large";
+                return;
             }
+            var user = User;
+            user.ProfilePic = filePath;
+            _bl.UpdateUser(user);
+            User = user;
+            InfoErrorMessage = "";
         }
 
         private void UpdateBillingBtn_Click(object sender, RoutedEventArgs e)
         {
-            BillingErrorBox.Text = "";
-            BillingErrorBox.Foreground = Brushes.Tomato;
+            BillingErrorMessage = "";
+            BillingErrorColor = Brushes.Tomato;
 
-            var enumerable = PhoneBox.Text.Where(c => c != ' ').ToArray();
+            var user = User;
 
-            var phone = new string(enumerable);
-
-            var address = AddressBox.Text;
-            var user = UserViewModel.User;
-
+            var phone = PhoneBox.Text.Where(c => c != ' ').ToArray().ToString();
             var success = long.TryParse(phone, out var phoneNumber);
+            var address = AddressBox.Text;
 
             // update each field
             if (success)
             {
-                _customer.Phone = phoneNumber.ToString();
+                User.Customer.Phone = phoneNumber.ToString();
             }
             else
             {
-                BillingErrorBox.Text = "Phone is not valid";
+                BillingErrorMessage = "Phone is not valid";
                 return;
             }
 
-            user.address = address;
+            user.Address = address;
 
-            _bl.UpdateCustomer(_customer);
+            _bl.UpdateCustomer(User.Customer);
             _bl.UpdateUser(user);
-            UserViewModel.User = user;
-            UserViewModel.Phone = phoneNumber.ToString();
+            User = user;
+            User.Customer.Phone = phoneNumber.ToString();
 
-            BillingErrorBox.Foreground = Brushes.Green;
-            BillingErrorBox.Text = "Successfully updated";
+            BillingErrorColor = Brushes.Green;
+            BillingErrorMessage = "Successfully updated";
         }
     }
 }

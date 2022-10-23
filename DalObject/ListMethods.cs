@@ -41,7 +41,7 @@ namespace DalObject
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<User> GetEmployees()
         {
-            return DataSource.Users.FindAll(u => u.isEmployee);
+            return DataSource.Users.FindAll(u => u.IsEmployee);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]

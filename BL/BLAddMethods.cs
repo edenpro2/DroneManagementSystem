@@ -1,8 +1,6 @@
-﻿using DalFacade.DO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Runtime.CompilerServices;
+using DalFacade.DO;
 
 namespace BL
 {
@@ -11,23 +9,12 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(Drone drone)
         {
-            if (_drones.FirstOrDefault(d => d.Id == drone.Id).Equals(default))
-            {
-                throw new BlAlreadyExistsException();
-            }
-
-            var station = Randomize.Station((List<Station>)GetStations(), new Random());
-            AddDrone(drone, station.Id);
-        }
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void AddDrone(Drone drone, int stationId)
-        {
+            // random station with open slot
+            var station = Randomize.OpenStation(GetStations(), new Random());
             // random battery, status in maintenance and location at the station
-            drone.Battery = new Random().Next(20, 40);
+            drone.Battery = new Random(Guid.NewGuid().GetHashCode()).Next(20, 40);
             drone.Status = DroneStatuses.Maintenance;
-            var station = SearchForStation(s => s.Id == stationId);
-            drone.Location = new Location(station.Latitude, station.Longitude);
+            drone.Location = LocationOf(station);
             _drones.Add(drone);
         }
 

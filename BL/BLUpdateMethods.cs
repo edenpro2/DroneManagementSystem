@@ -1,4 +1,5 @@
-﻿using DalFacade.DO;
+﻿#nullable enable
+using DalFacade.DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,7 +60,8 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDroneList(List<Drone> drones)
         {
-            DalApi.UpdateDroneList(_drones = drones);
+            _drones = drones;
+            DalApi.UpdateDroneList(drones);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -107,7 +109,7 @@ namespace BL
             if (closestStation.Equals(default))
                 throw new BlNoOpenSlotsException();
 
-            var closestLocation = Location(closestStation);
+            var closestLocation = LocationOf(closestStation);
 
             lock (DalApi)
             {
@@ -185,7 +187,7 @@ namespace BL
             if (drone.Status is not Maintenance)
                 throw new BlDroneNotMaintainedException();
 
-            var droneLocation = Location(drone);
+            var droneLocation = LocationOf(drone);
 
             lock (DalApi)
             {
@@ -201,7 +203,7 @@ namespace BL
                 UpdateDrone(drone);
 
                 // Get station with same location as drone
-                var station = GetStations().First(s => Location(s).Equals(droneLocation));
+                var station = GetStations().First(s => LocationOf(s).Equals(droneLocation));
                 station.OpenSlots++;
                 station.Ports.Remove(station.Ports.Find(p => p.DroneId == drone.Id));
                 UpdateStation(station);
@@ -258,7 +260,7 @@ namespace BL
             var parcel = BestMatchingParcel(drone);
 
             // if parcel not found will be automatically default
-            if (parcel.Equals(default) || parcel.Active is false)
+            if (parcel is null || parcel.Active is false)
                 throw new BlNoMatchingParcels();
 
             lock (DalApi)
@@ -286,7 +288,7 @@ namespace BL
         {
             var parcel = GetParcels(p => p.Active).FirstOrDefault(p => p.DroneId == drone.Id);
 
-            if (parcel.Requested == default)
+            if (parcel is null || parcel.Requested == default)
                 throw new BlNotFoundException();
 
             if (!WaitingForDrone(parcel))
@@ -294,7 +296,7 @@ namespace BL
 
             lock (DalApi)
             {
-                var parcelLocation = Location(parcel);
+                var parcelLocation = LocationOf(parcel);
 
                 drone.Location = parcelLocation;
                 UpdateDrone(drone);
@@ -317,7 +319,7 @@ namespace BL
         {
             var parcel = GetParcels(p => p.Active).FirstOrDefault(p => p.DroneId == drone.Id);
 
-            if (parcel.Delivered != default || parcel.Active == false)
+            if (parcel is null || parcel.Delivered != default || parcel.Active == false)
             {
                 throw new BlNotBeingDeliveredException();
             }
@@ -325,7 +327,7 @@ namespace BL
             lock (DalApi)
             {
                 drone.Status = Free;
-                drone.Location = Location(SearchForCustomer(c => c.Id == parcel.TargetId));
+                drone.Location = LocationOf(SearchForCustomer(c => c.Id == parcel.TargetId));
                 UpdateDrone(drone);
 
                 parcel.Delivered = DateTime.Now;
@@ -354,7 +356,7 @@ namespace BL
                     // drone hasn't collected parcel yet
                     if (WaitingForDrone(parcel) || NotAssignedToDrone(parcel))
                     {
-                        change = -ConsumptionWhenFree();
+                        change = - ConsumptionWhenFree();
                     }
 
                     // drone is delivering parcel
@@ -363,13 +365,13 @@ namespace BL
                         switch (parcel.Weight)
                         {
                             case WeightCategories.Light:
-                                change = -ConsumptionWhenLight();
+                                change = - ConsumptionWhenLight();
                                 break;
                             case WeightCategories.Medium:
-                                change = -ConsumptionWhenMid();
+                                change = - ConsumptionWhenMid();
                                 break;
                             case WeightCategories.Heavy:
-                                change = -ConsumptionWhenHeavy();
+                                change = - ConsumptionWhenHeavy();
                                 break;
                             default:
                                 throw new ArgumentOutOfRangeException();
@@ -378,7 +380,7 @@ namespace BL
                     break;
                 case Maintenance:
                     // drone is at the station (negate change)
-                    if (Location(drone).Equals(Location(this.GetClosestStation(drone))))
+                    if (LocationOf(drone).Equals(LocationOf(this.GetClosestStation(drone))))
                     {
                         change = _droneChargeRate;
 
@@ -391,20 +393,20 @@ namespace BL
                     // drone is on it's way to station (hence it's free)
                     else
                     {
-                        change = -ConsumptionWhenFree();
+                        change = - ConsumptionWhenFree();
                     }
 
                     break;
                 case Free:
                     // drone is at station (idle state)
-                    if (Location(drone).Equals(Location(this.GetClosestStation(drone))))
+                    if (LocationOf(drone).Equals(LocationOf(this.GetClosestStation(drone))))
                     {
                         change = 0;
                     }
                     // drone is on it's way to station (and free)
                     else
                     {
-                        change = -ConsumptionWhenFree();
+                        change = - ConsumptionWhenFree();
                     }
 
                     break;
@@ -426,7 +428,7 @@ namespace BL
                     .Where(p => p.Weight <= drone.MaxWeight)
                     .OrderByDescending(p => p.Priority)
                     .ThenByDescending(p => p.Weight)
-                    .ThenBy(p => Distance(Location(p), Location(drone)))
+                    .ThenBy(p => Distance(LocationOf(p), LocationOf(drone)))
                     .FirstOrDefault(p => CanDroneMakeTrip(drone, p));
             }
         }

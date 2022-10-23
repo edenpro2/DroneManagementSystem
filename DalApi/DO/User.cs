@@ -1,26 +1,12 @@
-﻿using System;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 
 namespace DalFacade.DO
 {
     [XmlRoot]
     public class User : ViewModelBase
     {
-        private int _customerId;
-        public int customerId
-        {
-            get => _customerId;
-            set
-            {
-                if (value == _customerId)
-                    return;
-
-                _customerId = value;
-                OnPropertyChanged();
-            }
-        }
         private string _username;
-        public string username
+        [XmlAttribute]public string Username
         {
             get => _username;
             set
@@ -33,7 +19,7 @@ namespace DalFacade.DO
             }
         }
         private string _password;
-        public string password
+        [XmlAttribute] public string Password
         {
             get => _password;
             set
@@ -46,7 +32,7 @@ namespace DalFacade.DO
             }
         }
         private string _email;
-        public string email
+        [XmlAttribute] public string Email
         {
             get => _email;
             set
@@ -59,7 +45,7 @@ namespace DalFacade.DO
             }
         }
         private string _address;
-        public string address
+        [XmlAttribute] public string Address
         {
             get => _address;
             set
@@ -72,7 +58,7 @@ namespace DalFacade.DO
             }
         }
         private string _profilePic;
-        public string profilePic
+        [XmlAttribute] public string ProfilePic
         {
             get => _profilePic;
             set
@@ -85,7 +71,7 @@ namespace DalFacade.DO
             }
         }
         private bool _active;
-        public bool active
+        [XmlAttribute] public bool Active
         {
             get => _active;
             set
@@ -98,7 +84,7 @@ namespace DalFacade.DO
             }
         }
         private bool _isEmployee;
-        public bool isEmployee
+        [XmlAttribute] public bool IsEmployee
         {
             get => _isEmployee;
             set
@@ -110,36 +96,47 @@ namespace DalFacade.DO
                 OnPropertyChanged();
             }
         }
+        private Customer _customer;
+        [XmlElement] public Customer Customer
+        {
+            get => _customer;
+            set
+            {
+                _customer = value;
+                OnPropertyChanged();
+            }
+        }
 
         public User() {}
 
-        public User(int customerId = -1, string user = "", string pass = "", string mail = "", string personalAddress = "", bool employed = false)
+        public User(ref Customer customer, string user = "", string pass = "", string mail = "", string personalAddress = "", bool employed = false)
         {
-            this.customerId = customerId;
-            username = user;
-            password = pass;
-            email = mail;
-            address = personalAddress;
-            active = true;
-            isEmployee = employed;
-            profilePic = "../Resources/account.jpg";
+            Customer = customer;
+            Username = user;
+            Password = pass;
+            Email = mail;
+            Address = personalAddress;
+            Active = true;
+            IsEmployee = employed;
+            ProfilePic = "../Resources/account.jpg";
         }
 
         public User(User user)
         {
-            customerId = user.customerId;
-            username = user.username;
-            password = user.password;
-            email = user.email;
-            address = user.address;
-            profilePic = user.profilePic;
-            active = user.active;
-            isEmployee = user.isEmployee;
+            Customer = user.Customer;
+            Username = user.Username;
+            Password = user.Password;
+            Email = user.Email;
+            Address = user.Address;
+            ProfilePic = user.ProfilePic;
+            Active = user.Active;
+            IsEmployee = user.IsEmployee;
+            Customer = new Customer();
         }
 
         public override string ToString()
         {
-            return $"user:{username} \n email:{email} \n id:{customerId}";
+            return $"user:{Username} \n email:{Email} \n id:{Customer.Id}";
         }
     }
 }

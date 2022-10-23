@@ -105,7 +105,7 @@
                 Grid.Column="1"
                 Grid.Row="5"
                 d:ItemsSource="{d:SampleData ItemCount=7}"
-                ItemsSource="{Binding parcels.Filtered}">
+                ItemsSource="{Binding Parcel.Filtered}">
                 <ListBox.Template>
                     <ControlTemplate>
                         <DockPanel LastChildFill="True">

@@ -11,8 +11,8 @@
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         MinHeight="{Binding MinScreenHeight}"
         MinWidth="{Binding MinScreenWidth}"
-        Height="691"
-        Width="1229"
+        d:Height="691"
+        d:Width="1229"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         AllowsTransparency="True"
         WindowStyle="None"
@@ -23,10 +23,6 @@
         <Style TargetType="{x:Type materialDesign:Card}" BasedOn="{StaticResource CardStyle}" >
             <Setter Property="Background" Value="White" />
             <Setter Property="materialDesign:ShadowAssist.ShadowEdges" Value="All" />
-        </Style>
-
-        <Style TargetType="{x:Type DockPanel}" x:Key="DetailsDp">
-            <Setter Property="Margin" Value="0 5 0 0" />
         </Style>
 
         <Style TargetType="{x:Type DockPanel}" x:Key="ButtonDetailsDp">
@@ -79,12 +75,9 @@
         Background="{StaticResource MaterialDesignPaper}"
         UniformCornerRadius="5"
         materialDesign:ElevationAssist.Elevation ="Dp1">
-        <!-- ViewBox 
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch" 
-            ClipToBounds="True"
-            Stretch="UniformToFill"> -->
-        <Grid>
+        
+        <Grid
+            Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1.25*" />
                 <ColumnDefinition Width="*"/>
@@ -95,7 +88,7 @@
                 DataContext="{Binding ViewModel}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*" />
-                    <RowDefinition Height="*" x:Name="RowLeft" />
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
                 <materialDesign:Card 
@@ -110,8 +103,8 @@
                         <Grid Grid.Column="0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
-                                <RowDefinition Height="2.2*" Name="RowDef"/>
-                                <RowDefinition Height="1.5*" />
+                                <RowDefinition Height="5*" />
+                                <RowDefinition Height="2*" />
                             </Grid.RowDefinitions>
                             <DockPanel
                                 Grid.Row="0"
@@ -134,7 +127,7 @@
                             <Image 
                                 Margin="20"
                                 Grid.Row="1"
-                                d:Source="/Resources/Models/IAI Harop UAV.png"
+                                d:Source="/Resources/Models/Dji Avata.png"
                                 Source="{Binding ModelImg}"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
@@ -142,12 +135,13 @@
 
                             <Grid Grid.Row="2">
                                 <lvc:Gauge 
-                                    Width="90"
-                                    Margin="5"
+                                    Width="95"
                                     Uses360Mode="True"
                                     From="0" To="100" 
+                                    Foreground="{x:Null}"
+                                    LabelsVisibility="Hidden"
+                                    Value="{Binding Battery}"
                                     d:Value="92"
-                                    Value="{Binding Battery, StringFormat={}{0:00}%}"
                                     InnerRadius="40">
                                     <lvc:Gauge.GaugeRenderTransform>
                                         <TransformGroup>
@@ -166,8 +160,9 @@
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center">
                                         <Image 
+                                            Margin="0 0 0 5"
                                             Source="/Resources/bolt.png"
-                                            Width="22" 
+                                            Width="20" 
                                             RenderTransformOrigin="0.5,0.5">
                                             <Image.RenderTransform>
                                                 <TransformGroup>
@@ -178,14 +173,15 @@
                                                 </TransformGroup>
                                             </Image.RenderTransform>
                                         </Image>
-                                        <!--<TextBlock
+                                        <TextBlock
                                             HorizontalAlignment="Center"
                                             FontFamily="Inter"
-                                            FontWeight="SemiBold"
+                                            FontWeight="Bold"
                                             Foreground="#227ec7"
-                                            d:Text="70%"
-                                            Text="{Binding RelativeSource={RelativeSource AncestorType=lvc:Gauge}, Path=Value, StringFormat={}{0:F2}%}"/>-->
+                                            d:Text="92%"
+                                            Text="{Binding Battery, StringFormat={}{0:##.##}%}"/>
                                         <TextBlock
+                                            Margin="0 2 0 0"
                                             HorizontalAlignment="Center"
                                             FontFamily="Inter"
                                             FontWeight="SemiBold"
@@ -398,7 +394,6 @@
                             Grid.Column="2"
                             Grid.Row="1"
                             Margin="5"
-                            x:Name="IconRadioBtn"
                             Click="SimulatorBtn_Click"
                             Title="Simulation"
                             d:IconSource="/Icons/start.png">
@@ -432,7 +427,6 @@
                 <materialDesign:Card Margin="25 25 25 0">
                     <controls:StepProgressBar
                         Margin="30"
-                        x:Name="StepProgressBar"
                         Fill="{Binding CustomFill}"
                         ViewModel="{Binding Parcel}"/>
                 </materialDesign:Card>
@@ -442,7 +436,7 @@
                     Margin="25 25 25 0">
                     <wpf:WebView2
                         Margin="7"
-                        Source="{Binding MapUrl.Uri}"
+                        Source="{Binding Uri}"
                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
                         ScrollViewer.CanContentScroll="False"
                         ZoomFactor="0.7"
@@ -452,49 +446,56 @@
                 <materialDesign:Card
                     Grid.Row="2"
                     Margin="25 30 25 29" >
-                    <StackPanel Margin="10">
-                        <DockPanel>
-                            <TextBlock
-                                Text="Warning"
-                                FontFamily="Inter"
-                                FontSize="14"
-                                Foreground="#333333"
-                                FontWeight="Bold"
-                                HorizontalAlignment="Left" />
-                            <TextBlock
-                                Margin="4 0 0 0"
-                                x:Name="ErrorBox"
-                                FontFamily="Inter"
-                                FontSize="14"
-                                Foreground="Tomato"
-                                FontWeight="SemiBold"
-                                HorizontalAlignment="Left" />
-                        </DockPanel>
-                        <DockPanel>
-                            <TextBlock
-                                Text="Progress"
-                                FontSize="14"
-                                FontFamily="Inter"
-                                Foreground="#333333"
-                                FontWeight="Bold"
-                                HorizontalAlignment="Left"
-                                Visibility="Visible" />
-                            <TextBlock
-                                Margin="4 0 0 0"
-                                x:Name="ProgressBox"
-                                FontSize="14"
-                                FontFamily="Inter"
-                                Foreground="#766ccc"
-                                FontWeight="SemiBold"
-                                HorizontalAlignment="Left"
-                                Visibility="Visible" />
-                        </DockPanel>
-                    </StackPanel>
+                    <Grid>
+                        <StackPanel Margin="10">
+                            <DockPanel>
+                                <TextBlock
+                                    Text="Warning"
+                                    FontFamily="Inter"
+                                    FontSize="14"
+                                    Foreground="#333333"
+                                    FontWeight="Bold"
+                                    HorizontalAlignment="Left" />
+                                <TextBlock
+                                    Margin="4 0 0 0"
+                                    x:Name="ErrorBox"
+                                    FontFamily="Inter"
+                                    FontSize="14"
+                                    Foreground="Tomato"
+                                    FontWeight="SemiBold"
+                                    HorizontalAlignment="Left" />
+                            </DockPanel>
+                            <DockPanel>
+                                <TextBlock
+                                    Text="Progress"
+                                    FontSize="14"
+                                    FontFamily="Inter"
+                                    Foreground="#333333"
+                                    FontWeight="Bold"
+                                    HorizontalAlignment="Left"
+                                    Visibility="Visible" />
+                                <TextBlock
+                                    Margin="4 0 0 0"
+                                    x:Name="ProgressBox"
+                                    FontSize="14"
+                                    FontFamily="Inter"
+                                    Foreground="#766ccc"
+                                    FontWeight="SemiBold"
+                                    HorizontalAlignment="Left"
+                                    Visibility="Visible" />
+                            </DockPanel>
+                        </StackPanel>
+                        <WpfPlot 
+                            Name="Plotter"
+                            Margin="5 45 5 5" 
+                            Content="{Binding BatteryPlot}">
+                        </WpfPlot>
+                    </Grid>
                 </materialDesign:Card>
             </Grid>
 
             <controls:WindowControls
-                x:Name="CustomButtons"
+                Window="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
                 Grid.Column="0"
@@ -503,9 +504,6 @@
                 Margin="0"/>
 
         </Grid>
-
-        <!--
-        </Viewbox> -->
         
     </materialDesign:Card>
 

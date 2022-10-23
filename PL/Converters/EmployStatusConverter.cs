@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace PL.Controls
+namespace PL.Converters
 {
     [ValueConversion(typeof(bool), typeof(string))]
     public class EmployStatusConverter : IValueConverter

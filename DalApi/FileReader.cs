@@ -26,7 +26,8 @@ namespace DalFacade
 
 
             return
-                Directory.GetFiles(plPath, "*.*", SearchOption.AllDirectories)
+                Directory
+                    .GetFiles(plPath, "*.*", SearchOption.AllDirectories)
                     .Where(f => extensions.IndexOf(Path.GetExtension(f)) >= 0)
                     .First(f => f.Contains(Path.GetFileNameWithoutExtension(filename)));
         }
@@ -37,10 +38,11 @@ namespace DalFacade
             SearchOnly
         }
 
-        public static string? GetFolderPath(string folder, PathOption pathOption = PathOption.SearchOnly, SearchOption searchOption = SearchOption.AllDirectories)
+        public static string GetFolderPath(string folder, PathOption pathOption = PathOption.SearchOnly, SearchOption searchOption = SearchOption.AllDirectories)
         {
             var projectDirectory = Directory.GetParent(Environment.CurrentDirectory)?.Parent?.Parent?.Parent?.Parent?.FullName;
 
+            //Todo: Fix
             if (projectDirectory!.Contains(folder))
                 return projectDirectory;
 

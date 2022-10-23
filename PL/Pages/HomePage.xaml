@@ -74,13 +74,13 @@
                     <TextBlock 
                         Style="{StaticResource LeftPanelText}"
                         d:Text="Eden Amiga"
-                        Text="{Binding Name}"
+                        Text="{Binding Customer.Name}"
                         FontSize="24"
                         FontWeight="Bold"/>
                     <TextBlock 
                         Style="{StaticResource LeftPanelText}"
                         d:Text="edenamiga56@gmail.com"
-                        Text="{Binding User.email }"
+                        Text="{Binding Email }"
                         Width="200"
                         FontSize="14"
                         TextWrapping="Wrap"
@@ -220,7 +220,6 @@
                                 FontWeight="Bold"
                                 Foreground="LightSlateGray"/>
                             <controls:StepProgressBar
-                                x:Name="ProgressBar"
                                 Width="610"
                                 Grid.Row="1"
                                 ViewModel="{Binding LatestParcel}"

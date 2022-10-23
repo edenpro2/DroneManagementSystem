@@ -108,12 +108,12 @@ namespace BL.BO
         /// <returns></returns>
         public static Location CalculateLocation(this Bl bl, Drone drone, Location dest)
         {
-            var droneStartPoint = bl.Location(drone);
-            var distance = bl.Speed(drone); //Distance(droneStartPoint, dest);
-            var bearing = Bearing(bl.Location(drone), dest);
+            var droneStartPoint = bl.LocationOf(drone);
+            var distanceCoveredPerHour = bl.Speed(drone); //Distance(droneStartPoint, dest);
+            var bearing = Bearing(bl.LocationOf(drone), dest);
 
             const double radius = 6371.01;
-            var distRatio = distance / radius;
+            var distRatio = distanceCoveredPerHour / radius;
             var distRatioSine = Sin(distRatio);
             var distRatioCosine = Cos(distRatio);
 
@@ -129,11 +129,12 @@ namespace BL.BO
                              + Atan2(Sin(bearing) * distRatioSine * startLatCos,
                                  distRatioCosine - startLatSin * Sin(endLatRads));
 
-            return new Location
-            {
-                Latitude = ToDegrees(endLatRads),
-                Longitude = ToDegrees(endLonRads)
-            };
+            var d =  new Location(
+                ToDegrees(endLatRads),
+                ToDegrees(endLonRads)
+            );
+
+            return d;
         }
     }
 }

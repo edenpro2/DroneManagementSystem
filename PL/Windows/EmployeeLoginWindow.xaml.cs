@@ -32,8 +32,8 @@ namespace PL.Windows
             }
             else
             {
-                var user = _bl.GetUsers(u => u.active).FirstOrDefault(u => u.username == username);
-                if (user?.password == password)
+                var user = _bl.GetUsers(u => u.Active).FirstOrDefault(u => u.Username == username);
+                if (user?.Password == password)
                 {
                     _user = user;
                     DialogResult = true;

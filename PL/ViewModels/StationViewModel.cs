@@ -1,46 +1,25 @@
-﻿using DalFacade.DO;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using DalFacade.DO;
 
 namespace PL.ViewModels
 {
-    public class StationViewModel : INotifyPropertyChanged
+    public class StationViewModel : ViewModelBase
     {
-        private string _dms;
-        private Station _station;
-
-        public Station Station
+        private ObservableCollection<Station> _stations;
+        public ObservableCollection<Station> Stations
         {
-            get => _station;
+            get => _stations;
             set
             {
-                _station = value;
+                _stations = value;
                 OnPropertyChanged();
             }
         }
 
-        public string Dms
+        public StationViewModel(IEnumerable<Station> stations)
         {
-            get => _dms;
-            set
-            {
-                _dms = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public StationViewModel(Station station)
-        {
-            _station = station;
-            _dms = new Location(station.Latitude, station.Longitude).ToSexagesimal();
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            var handler = PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            Stations = new ObservableCollection<Station>(stations);
         }
     }
 }

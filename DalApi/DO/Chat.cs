@@ -52,7 +52,7 @@ namespace DalFacade.DO
 
         public override string ToString()
         {
-            return $"Created on {createdOn}, between {user1.username} and {user2.username}";
+            return $"Created on {createdOn}, between {user1.Username} and {user2.Username}";
         }
     }
 }

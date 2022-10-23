@@ -16,7 +16,6 @@ namespace PL.Windows.Tracking
         public CustomerWindow(Customer customer)
         {
             ViewModel = customer;
-            CustomButtons = new WindowControls(this);
             MapUrl.Uri = NewMapUri(new Location(ViewModel.Latitude, ViewModel.Longitude));
             InitializeComponent();
         }

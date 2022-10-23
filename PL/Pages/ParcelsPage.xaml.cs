@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using BLAPI;
+using DalFacade.DO;
 using PL.ViewModels;
 using PL.Windows;
 using PL.Windows.Tracking;
@@ -11,16 +10,13 @@ namespace PL.Pages
 {
     public partial class ParcelsPage
     {
-        public List<ParcelViewModel> parcelsViewModel { get; }
+        public ParcelViewModel ParcelViewModel { get; }
         private static BlApi _bl;
 
         public ParcelsPage(BlApi ibl)
         {
             _bl = ibl;
-            parcelsViewModel =
-                ibl.GetParcels()
-                    .Select(p => new ParcelViewModel(_bl, p)).ToList();
-
+            ParcelViewModel = new ParcelViewModel(ibl.GetParcels());
             InitializeComponent();
         }
 
@@ -29,14 +25,12 @@ namespace PL.Pages
             if (ParcelListBox.SelectedItems.Count != 1)
                 return;
 
-            var droneDetailsWindow = new ParcelWindow(_bl, (ParcelViewModel) ParcelListBox.SelectedItem);
-            droneDetailsWindow.ShowDialog();
+            new ParcelWindow(_bl, (Parcel)ParcelListBox.SelectedItem).ShowDialog();
         }
 
         private void DisplayAsMap_Click(object sender, RoutedEventArgs e)
         {
-            var map = new Map(_bl, "parcel");
-            map.Show();
+            new Map(_bl, "parcel").Show();
         }
     }
 }

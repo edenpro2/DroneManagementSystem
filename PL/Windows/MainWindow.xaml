@@ -213,10 +213,10 @@
             </materialDesign:PopupBox>
 
             <controls:WindowControls
-                x:Name="CustomButtons"
                 Margin="10"
                 Grid.Row="0"
-                Grid.Column="2" />
+                Grid.Column="2"
+                Window="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
 
         </Grid>
     </materialDesign:Card>

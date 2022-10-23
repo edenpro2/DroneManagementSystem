@@ -119,19 +119,20 @@ namespace DalObject
             Users = Customers
                 .Where(c => c.Active)
                 .Select(c => new User(
-                    c.Id,
+                    ref c,
                     name = new string(c.Name.Where(l => !char.IsWhiteSpace(l)).ToArray()) +
                            rand.Next(100),
                     c.Phone,
                     name.ToLower() + "@gmail.com"))
                 .ToList();
 
-            // Easy admin account for quick login
+            #region Admin account
             var eden = Users[Config.CustomerId - 1];
-            eden.isEmployee = true;
-            eden.username = "admin";
-            eden.password = "admin";
+            eden.IsEmployee = true;
+            eden.Username = "admin";
+            eden.Password = "admin";
             Users[Config.CustomerId - 1] = eden;
+            #endregion
 
 
             for (var i = 0; i < PARCEL_MAX; ++i)
@@ -188,16 +189,16 @@ namespace DalObject
                     var user1 = users[i];
                     var user2 = users[i + 1];
 
-                    var name1 = Customers.First(c => c.Id == user1.customerId).Name;
-                    var name2 = Customers.First(c => c.Id == user2.customerId).Name;
+                    var name1 = Customers.First(c => c.Id == user1.Customer.Id).Name;
+                    var name2 = Customers.First(c => c.Id == user2.Customer.Id).Name;
 
                     if (j % 2 == 0)
                     {
-                        msg = new Message(lines[startPos + j], user1.customerId, user2.customerId, name1, name2);
+                        msg = new Message(lines[startPos + j], user1.Customer.Id, user2.Customer.Id, name1, name2);
                     }
                     else
                     {
-                        msg = new Message(lines[startPos + j], user2.customerId, user1.customerId, name2, name1);
+                        msg = new Message(lines[startPos + j], user2.Customer.Id, user1.Customer.Id, name2, name1);
                     }
 
                     chat.SendMessage(msg);

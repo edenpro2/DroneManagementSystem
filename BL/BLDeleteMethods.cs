@@ -36,7 +36,7 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteUser(User user)
         {
-            user.active = false;
+            user.Active = false;
             UpdateUser(user);
         }
     }

@@ -81,7 +81,7 @@
             <ListBox
                 x:Name="ParcelListBox"
                 d:ItemsSource="{d:SampleData ItemCount=6}"
-                ItemsSource="{Binding parcelsViewModel}"
+                ItemsSource="{Binding ParcelViewModel.Filtered}"
                 HorizontalContentAlignment="Stretch"
                 Grid.Column="1"
                 ScrollViewer.VerticalScrollBarVisibility="Disabled"

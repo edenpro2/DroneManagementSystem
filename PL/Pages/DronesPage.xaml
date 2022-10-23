@@ -60,11 +60,14 @@
                 Grid.Row="1"
                 HorizontalAlignment="Right">
                 <Button 
+                    x:Name="ClearSelectionBtn"
                     BorderThickness="0" 
                     Click="ClearSelButton_Click" 
                     Height="29">
                     <Button.Background>
-                        <ImageBrush ImageSource="/Icons/filter.png" Stretch="Uniform" />
+                        <ImageBrush 
+                            ImageSource="/Icons/filter.png" 
+                            Stretch="Uniform" />
                     </Button.Background>
                 </Button>
                 <Grid>

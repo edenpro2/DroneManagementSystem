@@ -8,14 +8,13 @@ namespace PL.Windows.Tracking
 {
     public partial class StationWindow
     {
-        public StationViewModel ViewModel { get; }
+        public Station ViewModel { get; }
         public MapUri MapUrl { get; } = new();
 
-        public StationWindow(StationViewModel svm)
+        public StationWindow(Station station)
         {
-            ViewModel = svm;
-            CustomButtons = new WindowControls(this);
-            MapUrl.Uri = NewMapUri(new Location(svm.Station.Latitude, svm.Station.Longitude));
+            ViewModel = station;
+            MapUrl.Uri = NewMapUri(new Location(ViewModel.Latitude, ViewModel.Longitude));
             InitializeComponent();
         }
 

@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 namespace DalFacade.DO
 {
     [XmlRoot]
-    public class Location : ViewModelBase
+    public class Location : ViewModelBase, IEquatable<Location>
     {
         private double _latitude;
 
@@ -48,6 +48,11 @@ namespace DalFacade.DO
         {
             Latitude = source.Latitude;
             Longitude = source.Longitude;
+        }
+
+        public bool Equals(Location other)
+        {
+            return Latitude == other.Latitude && Longitude == other.Longitude;
         }
 
         public override string ToString()

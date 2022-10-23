@@ -74,7 +74,7 @@
             <ListBox
                 x:Name="StationListBox"
                 d:ItemsSource="{d:SampleData ItemCount=6}"
-                ItemsSource="{Binding stationsViewModel}"
+                ItemsSource="{Binding StationViewModel.Stations}"
                 HorizontalContentAlignment="Stretch"
                 Grid.Column="1"
                 Grid.Row="4"
@@ -95,21 +95,27 @@
 
                             <TextBlock
                                 Grid.Column="0"
-                                Text="{Binding Station.Id}"
+                                Text="{Binding Id}"
                                 TextAlignment="Left" 
                                 Margin="10,0,0,0" />
                             <TextBlock
                                 Grid.Column="1"
-                                Text="{Binding Station.Name}"
+                                Text="{Binding Name}"
                                 TextAlignment="Left" />
                             <TextBlock
                                 Grid.Column="2"
-                                Text="{Binding Station.OpenSlots}"
+                                Text="{Binding OpenSlots}"
                                 TextAlignment="Left" />
                             <TextBlock
                                 Grid.Column="3"
-                                Text="{Binding Dms}"
-                                TextAlignment="Left" />
+                                TextAlignment="Left" >
+                                <TextBlock.Text>
+                                    <MultiBinding Converter="{StaticResource DmsConverter}" >
+                                        <Binding Path="Latitude"/>
+                                        <Binding Path="Longitude"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

@@ -20,11 +20,11 @@ namespace BL.BO
             switch (obj)
             {
                 case Drone drone:
-                    location = bl.Location(drone);
+                    location = bl.LocationOf(drone);
                     return GetClosestStation(stations, location);
 
                 case Customer customer:
-                    location = bl.Location(customer);
+                    location = bl.LocationOf(customer);
                     return GetClosestStation(stations, location);
 
                 case Location loc:
@@ -90,7 +90,7 @@ namespace BL.BO
             var minDistance = 0.0;
             var firstIteration = true;
             var closest = new Station();
-            var objectLoc = bl.Location(drone);
+            var objectLoc = bl.LocationOf(drone);
 
             foreach (var station in stations)
             {

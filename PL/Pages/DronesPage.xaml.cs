@@ -29,7 +29,7 @@ namespace PL.Pages
 
         private void DisplayAsMap_Click(object sender, RoutedEventArgs e)
         {
-            new Map(_bl, "drone").Show();
+            new Map(_bl, nameof(Drone)).Show();
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -46,11 +46,13 @@ namespace PL.Pages
                 var cbStatus = (DroneStatuses)StatusComboBox.SelectedItem;
                 DroneViewModel.Filtered = new ObservableCollection<Drone>(DroneViewModel.Filtered.Where(drone => drone.Status == cbStatus));
             }
-            if (WeightComboBox.SelectedItem != null)
-            {
-                var cbWeight = (WeightCategories)WeightComboBox.SelectedItem;
-                DroneViewModel.Filtered = new ObservableCollection<Drone>(DroneViewModel.Filtered.Where(drone => drone.MaxWeight == cbWeight));
-            }
+
+            if (WeightComboBox.SelectedItem == null)
+                return;
+
+            var cbWeight = (WeightCategories)WeightComboBox.SelectedItem;
+            DroneViewModel.Filtered = new ObservableCollection<Drone>(DroneViewModel.Filtered.Where(drone => drone.MaxWeight == cbWeight));
+            
         }
 
         private void ClearSelButton_Click(object sender, RoutedEventArgs e)
@@ -60,8 +62,7 @@ namespace PL.Pages
 
         private void AddDroneButton_Click(object sender, RoutedEventArgs e)
         {
-            NewDroneWindow newDroneWindow = new(_bl);
-            newDroneWindow.ShowDialog();
+            new NewDroneWindow(_bl).ShowDialog();
             DroneViewModel.Drones = new ObservableCollection<Drone>(_bl.GetDrones());
             DronesListBox.ItemsSource = DroneViewModel.Drones;
             ClearSelButton_Click(sender, e);
@@ -70,14 +71,10 @@ namespace PL.Pages
         private void DronesListBox_Click(object sender, MouseButtonEventArgs e)
         {
             var selectedDrone = (Drone)DronesListBox.SelectedItem;
-
-            var droneDetailsWindow =
-                new DroneTrackingWindow(_bl, selectedDrone, DroneViewModel);
-
+            var droneDetailsWindow = new DroneTrackingWindow(_bl, selectedDrone, DroneViewModel);
             droneDetailsWindow.ShowDialog();
             DroneViewModel = droneDetailsWindow.GetValue();
-            DronesListBox.ItemsSource = DroneViewModel.Drones;
-            ClearSelButton_Click(sender, e);
+            FilterDrones();
         }
 
 

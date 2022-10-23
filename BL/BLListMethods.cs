@@ -9,6 +9,7 @@ namespace BL
     public partial class Bl
     {
         #region Filtered lists
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> GetDrones(Predicate<Drone> predicate)
         {
@@ -41,6 +42,7 @@ namespace BL
         #endregion
 
         #region Default lists
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> GetDrones()
         {

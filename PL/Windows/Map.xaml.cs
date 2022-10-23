@@ -20,12 +20,11 @@ namespace PL.Windows
             _bl = ibl;
             Height = 1000;
             Width = 1300;
-            CustomButtons = new WindowControls(this);
 
             var resources = FileReader.GetFolderPath("\\Resources");
             var icons = FileReader.GetFolderPath("\\Icons");
 
-            switch (type.ToLower())
+            switch (type)
             {
                 case nameof(Drone):
                     var drones = ibl.GetDrones();
@@ -90,7 +89,7 @@ namespace PL.Windows
         {
             CanvasMap.Children.Add(icon);
 
-            var loc = _bl.Location(o);
+            var loc = _bl.LocationOf(o);
             var latitude = loc.Latitude;
             var longitude = loc.Longitude;
 

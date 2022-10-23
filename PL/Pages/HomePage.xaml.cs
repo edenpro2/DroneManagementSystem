@@ -1,5 +1,4 @@
-﻿using PL.ViewModels;
-using PL.Windows;
+﻿using PL.Windows;
 using System.Windows;
 using System.Windows.Media;
 using PL.Controls;
@@ -19,7 +18,6 @@ namespace PL.Pages
         {
             LatestParcel = parcelVm;
             CustomerUi = customerUi;
-            ProgressBar = new StepProgressBar(LatestParcel);
             Test = new TestControl(LatestParcel);
             InitializeComponent();
         }

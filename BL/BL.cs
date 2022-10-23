@@ -45,7 +45,7 @@ namespace BL
             {
                 var drone = Randomize.GetFreeRandomDrone(rand, _drones);
 
-                // if drone isn't active, skip it
+                // if drone isn't active, skip it (or no free drone found)
                 if (drone == null || drone.Active == false)
                     break;
 
@@ -62,9 +62,9 @@ namespace BL
                         parcel.Delivered = parcel.Collected.AddDays(rand.Next(2));
                         parcel.Active = false;
                         // Set location to target 
-                        drone.Location = Location(customers.First(c => c.Id == parcel.TargetId));
+                        drone.Location = LocationOf(customers.First(c => c.Id == parcel.TargetId));
                         drone.Status = DroneStatuses.Free;
-                        drone.Battery = rand.Next(MinForTripToStation(drone), 101);
+                        drone.Battery = rand.Next((int)MinForTripToStation(drone), 101);
                         break;
 
                     // Collected
@@ -73,9 +73,9 @@ namespace BL
                         parcel.Scheduled = parcel.Requested.AddHours(rand.Next(72));
                         parcel.Collected = parcel.Scheduled.AddDays(rand.Next(4));
                         // Set location to sender 
-                        drone.Location = Location(customers.First(c => c.Id == parcel.SenderId));
+                        drone.Location = LocationOf(customers.First(c => c.Id == parcel.SenderId));
                         drone.Status = DroneStatuses.Delivery;
-                        drone.Battery = rand.Next(MinForDelivery(drone, parcel), 101);
+                        drone.Battery = rand.Next((int)MinForDelivery(drone, parcel), 101);
                         break;
 
                     // Scheduled
@@ -83,9 +83,9 @@ namespace BL
                         // Set date sequence
                         parcel.Scheduled = parcel.Requested.AddHours(rand.Next(72));
                         // Set location to closest station to sender 
-                        drone.Location = Location(this.GetClosestStation(customers.First(c => c.Id == parcel.SenderId)));
+                        drone.Location = LocationOf(this.GetClosestStation(customers.First(c => c.Id == parcel.SenderId)));
                         drone.Status = DroneStatuses.Delivery;
-                        drone.Battery = rand.Next(MinForCollection(drone, parcel), 101);
+                        drone.Battery = rand.Next((int)MinForCollection(drone, parcel), 101);
                         break;
                 }
 
@@ -94,7 +94,7 @@ namespace BL
             }
 
             // Only drones that aren't in delivery will be processed 
-            foreach (var d in _drones.Where(d => d.Status != DroneStatuses.Delivery))
+            foreach (var d in _drones.Where(d => d.Status is null or not DroneStatuses.Delivery))
             {
                 // randomize status
                 d.Status = Randomize.GetRandomStatus(rand, 2);
@@ -108,14 +108,14 @@ namespace BL
                         freeStation.OpenSlots--;
                         freeStation.Ports.Add(new DroneCharge(d.Id, freeStation.Id));
                         UpdateStation(freeStation);
-                        d.Location = Location(freeStation);
+                        d.Location = LocationOf(freeStation);
                         d.Battery = rand.Next(MinUnassignedBattery, 101);
                         break;
 
                     // Drone is currently free, so its battery should be somewhat high and location at some random customer
                     case DroneStatuses.Free:
                         d.Battery = rand.Next(MinUnassignedBattery, 101);
-                        d.Location = Location(customers[rand.Next(customers.Count)]);
+                        d.Location = LocationOf(customers[rand.Next(customers.Count)]);
                         break;
                 }
 
@@ -130,8 +130,7 @@ namespace BL
                     p.StatusIcon = "../Icons/status3.png";
                 else if (p.Scheduled != default)
                     p.StatusIcon = "../Icons/status2.png";
-                else
-                    p.StatusIcon = "../Icons/status1.png";
+                else p.StatusIcon = "../Icons/status1.png";
 
                 UpdateParcel(p);
             }

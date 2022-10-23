@@ -294,13 +294,13 @@
                         <StackPanel 
                             Margin="8 0 0 0">
                             <Label
-                                Content="{Binding ViewModel.Name}"
+                                Content="{Binding ViewModel.Customer.Name}"
                                 Foreground="{DynamicResource TextPrimaryColor}"
                                 FontSize="14"
                                 FontWeight="SemiBold"
                                 Margin="8 0 0 0" />
                             <Label
-                                Content="{Binding ViewModel.User.email}"
+                                Content="{Binding ViewModel.Email}"
                                 Foreground="{DynamicResource PrimaryGrayColor}"
                                 FontSize="11"
                                 HorizontalAlignment="Left"
@@ -329,7 +329,7 @@
                         Margin="5 0 0 0"
                         FontSize="10" />
                     <controls:WindowControls
-                        x:Name="CustomButtons"
+                        Window="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
                         Padding="10" />
                 </DockPanel>
 

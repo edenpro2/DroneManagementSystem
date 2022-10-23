@@ -2,33 +2,32 @@
 using PL.ViewModels;
 using PL.Windows;
 using PL.Windows.Tracking;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using DalFacade.DO;
 
 namespace PL.Pages
 {
     public partial class StationsPage
     {
         private readonly BlApi _bl;
-        public List<StationViewModel> stationsViewModel { get; }
+        public StationViewModel StationViewModel { get; }
 
         public StationsPage(BlApi ibl)
         {
             _bl = ibl;
-            stationsViewModel = ibl.GetStations(s => s.Active).Select(s => new StationViewModel(s)).ToList();
+            StationViewModel = new StationViewModel(ibl.GetStations(s => s.Active));
             InitializeComponent();
         }
 
         private void StationListBox_Click(object sender, MouseButtonEventArgs e)
         {
-            new StationWindow((StationViewModel)StationListBox.SelectedItem).ShowDialog();
+            new StationWindow((Station)StationListBox.SelectedItem).ShowDialog();
         }
 
         private void DisplayAsMap_Click(object sender, RoutedEventArgs e)
         {
-            new Map(_bl, "station").Show();
+            new Map(_bl, nameof(Station)).Show();
         }
     }
 }

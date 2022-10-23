@@ -67,7 +67,7 @@
                     Grid.Row="2"
                     Grid.Column="1"
                     d:ItemsSource="{d:SampleData ItemCount=7}"
-                    ItemsSource="{Binding personalChats.ChatViewModels}">
+                    ItemsSource="{Binding PersonalChat.ChatViewModels}">
                     <ListBox.Template>
                         <ControlTemplate>
                             <ScrollViewer
@@ -110,7 +110,7 @@
                                     <Ellipse.Fill>
                                         <ImageBrush
                                            Stretch="UniformToFill"
-                                           ImageSource="{Binding Receiver.profilePic}"
+                                           ImageSource="{Binding Receiver.ProfilePic}"
                                            d:ImageSource="/Icons/uicustomers.png"/>
                                     </Ellipse.Fill>
                                 </Ellipse>
@@ -158,7 +158,7 @@
                 HorizontalAlignment="Stretch"
                 HorizontalContentAlignment="Stretch"
                 d:ItemsSource="{d:SampleData ItemCount=7}"
-                ItemsSource="{Binding personalChats.ChatViewModels[0].Chat.messages}">
+                ItemsSource="{Binding PersonalChat.ChatViewModels[0].Chat.messages}">
                 <ItemsControl.Template>
                     <ControlTemplate>
                         <ScrollViewer

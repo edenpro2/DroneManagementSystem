@@ -164,7 +164,7 @@
                     </Ellipse.Fill>
                 </Ellipse>
                 <TextBlock
-                    Text="{Binding ViewModel.Name}"
+                    Text="{Binding ViewModel.Customer.Name}"
                     FontFamily="Segoe UI Variable Text"
                     FontSize="14"
                     VerticalAlignment="Center"
@@ -185,7 +185,7 @@
                     Margin="5 0 15 0"
                     FontSize="10" />
                 <controls:WindowControls
-                    x:Name="CustomButtons"
+                    Window="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
                     Margin="10 0"/>
             </DockPanel>
 

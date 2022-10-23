@@ -50,7 +50,7 @@
             </ScrollViewer>
 
             <controls:WindowControls
-                x:Name="CustomButtons"
+                Window="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
                 Margin="10"
                 Grid.Row="0"
                 Grid.Column="0" />

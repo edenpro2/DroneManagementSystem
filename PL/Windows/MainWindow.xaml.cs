@@ -5,9 +5,11 @@ using DalFacade.DO;
 using PL.Controls;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Markup;
 
 namespace PL.Windows
 {
@@ -22,7 +24,6 @@ namespace PL.Windows
         public MainWindow()
         {
             InitializeComponent();
-            CustomButtons = new WindowControls(this);
         }
 
         private void LoginBtn_Click(object sender, RoutedEventArgs e)
@@ -44,7 +45,7 @@ namespace PL.Windows
         private void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
         {
             _bgThread?.ReportProgress(1);
-            Dispatcher.Invoke(() => _user = Bl.GetUsers(u => u.username == UsernameBox.Text).FirstOrDefault());
+            Dispatcher.Invoke(() => _user = Bl.GetUsers(u => u.Username == UsernameBox.Text).FirstOrDefault());
         }
 
         private void BackgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
@@ -60,12 +61,12 @@ namespace PL.Windows
 
         private void Login()
         {
-            if (_user == null || _user.username == null)
+            if (_user == null || _user.Username == null)
             {
                 ErrorTextBlock.Text = "User not found. If you are new, try registering";
                 ChangeButtonState();
             }
-            else if (_user.password == null || !_user.password.Equals(PassBox.Password))
+            else if (_user.Password == null || !_user.Password.Equals(PassBox.Password))
             {
                 ErrorTextBlock.Text = "Wrong username or password";
                 ChangeButtonState();

@@ -37,7 +37,7 @@ namespace DalObject
             var users = GetUsers().ToList();
             for (var i = 0; i < users.Capacity; i++)
             {
-                if (users[i].customerId == user.customerId)
+                if (users[i].Customer.Id == user.Customer.Id)
                 {
                     users[i] = user;
                     UpdateUserList(users);

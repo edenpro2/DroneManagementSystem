@@ -1,44 +1,81 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
+using System.Runtime.CompilerServices;
 
 namespace PL.Controls
 {
-    public partial class WindowControls
+    public partial class WindowControls : INotifyPropertyChanged
     {
-        private static DependencyObject _windowObject = new();
-
-        private static Window Window => (Window)_windowObject;
-
-        private static DependencyObject _prevWindow = new();
-
-        public WindowControls(DependencyObject window)
-        {
-            _prevWindow = _windowObject;
-            _windowObject = window;
-            InitializeComponent();
-        }
-
         public WindowControls()
         {
             InitializeComponent();
+            // Set Previous to Current
+            PreviousWindow = Window;
         }
+
+        #region PreviousWindow
+
+        private static readonly DependencyProperty PreviousWindowProperty =
+            DependencyProperty.Register(nameof(PreviousWindow), typeof(Window), typeof(WindowControls));
+
+        public Window PreviousWindow
+        {
+            get => (Window)GetValue(PreviousWindowProperty);
+            set
+            {
+                SetValue(PreviousWindowProperty, value);
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region Window
+
+        public Window Window
+        {
+            get => (Window)GetValue(WindowProperty);
+            set
+            {
+                SetValue(WindowProperty, value);
+                OnPropertyChanged();
+            }
+        }
+
+        public static readonly DependencyProperty WindowProperty =
+            DependencyProperty.Register(nameof(Window), typeof(Window), typeof(WindowControls));
+
+        #endregion
+
+        #region Events
 
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
         {
-            var window = Window;
-            window.Close();
-            _windowObject = _prevWindow;
+            Window.Close();
+            Window = PreviousWindow;
         }
 
         private void RestoreBtn_Click(object sender, RoutedEventArgs e)
         {
-            var window = Window;
-            window.WindowState = (window.WindowState == WindowState.Normal) ? WindowState.Maximized : WindowState.Normal;
+            Window.WindowState = (Window.WindowState == WindowState.Normal) ? WindowState.Maximized : WindowState.Normal;
         }
 
         private void MinimizeBtn_Click(object sender, RoutedEventArgs e)
         {
-            var window = Window;
-            window.WindowState = WindowState.Minimized;
+            Window.WindowState = WindowState.Minimized;
         }
+
+        #endregion
+
+        #region PropertyChangedHandling
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #endregion
     }
 }

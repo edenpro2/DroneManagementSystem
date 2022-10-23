@@ -13,21 +13,17 @@ namespace PL.Windows
 
         public RegistrationWindow(BlApi database)
         {
-            InitializeComponent();
             _bl = database;
+            InitializeComponent();
         }
 
-        /// <summary>
-        /// When someone registers, the function will check if user exists. If not, it will create a new user
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // When someone registers, the function will check if user exists. If not, it will create a new user
         private void continueButton_Click(object sender, RoutedEventArgs e)
         {
             // check if user is already in the system
-            var user = _bl.GetUsers().FirstOrDefault(u => u.username == UserBox.Text);
+            var user = _bl.GetUsers().FirstOrDefault(u => u.Username == UserBox.Text);
 
-            if (user.username != default)
+            if (user != default)
             {
                 ErrorBox.Text = "User already exists";
                 return;
@@ -44,28 +40,19 @@ namespace PL.Windows
             var customer = _bl.GetCustomers().FirstOrDefault(c => c.Phone == PhoneBox.Text && c.Name == UserBox.Text);
 
             // if customer doesn't exist, create a new one
-            if (customer.Phone == default)
+            if (customer == default)
             {
                 _bl.CreateCustomer(NameBox.Text, PhoneBox.Text);
+                customer = _bl.GetCustomers().First(c => c.Phone == PhoneBox.Text && c.Name == NameBox.Text);
             }
 
-            customer = _bl.GetCustomers().FirstOrDefault(c => c.Phone == PhoneBox.Text && c.Name == UserBox.Text);
-            user = new User(customer.Id, UserBox.Text, PassBox.Password, EmailBox.Text, AddressBox.Text);
-
-            _bl.AddUser(user);
+            _bl.AddUser(new User(ref customer, UserBox.Text, PassBox.Password, EmailBox.Text, AddressBox.Text));
             Close();
         }
 
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
-        {
-            base.OnMouseLeftButtonDown(e);
-            DragMove();
-        }
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e) => DragMove();
 
-        private void returnButton_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
+        private void returnButton_Click(object sender, RoutedEventArgs e) => Close();
 
         private void OnEnterPressed(object sender, KeyEventArgs e)
         {
