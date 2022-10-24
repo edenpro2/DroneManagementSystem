@@ -1,4 +1,4 @@
-﻿using BLAPI;
+﻿using BL;
 using DalFacade.DO;
 using System;
 using System.Linq;
@@ -83,7 +83,7 @@ namespace PL.Pages
                 currentTime = DateTime.Now.ToShortDateString();
                 WeightCheckBox1.IsChecked = WeightCheckBox2.IsChecked = WeightCheckBox3.IsChecked = false;
                 PriorityCheckBox1.IsChecked = PriorityCheckBox2.IsChecked = PriorityCheckBox3.IsChecked = false;
-                
+
             }
         }
     }

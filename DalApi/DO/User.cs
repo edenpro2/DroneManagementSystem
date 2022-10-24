@@ -6,7 +6,8 @@ namespace DalFacade.DO
     public class User : ViewModelBase
     {
         private string _username;
-        [XmlAttribute]public string Username
+        [XmlAttribute]
+        public string Username
         {
             get => _username;
             set
@@ -19,7 +20,8 @@ namespace DalFacade.DO
             }
         }
         private string _password;
-        [XmlAttribute] public string Password
+        [XmlAttribute]
+        public string Password
         {
             get => _password;
             set
@@ -32,7 +34,8 @@ namespace DalFacade.DO
             }
         }
         private string _email;
-        [XmlAttribute] public string Email
+        [XmlAttribute]
+        public string Email
         {
             get => _email;
             set
@@ -45,7 +48,8 @@ namespace DalFacade.DO
             }
         }
         private string _address;
-        [XmlAttribute] public string Address
+        [XmlAttribute]
+        public string Address
         {
             get => _address;
             set
@@ -58,7 +62,8 @@ namespace DalFacade.DO
             }
         }
         private string _profilePic;
-        [XmlAttribute] public string ProfilePic
+        [XmlAttribute]
+        public string ProfilePic
         {
             get => _profilePic;
             set
@@ -71,7 +76,8 @@ namespace DalFacade.DO
             }
         }
         private bool _active;
-        [XmlAttribute] public bool Active
+        [XmlAttribute]
+        public bool Active
         {
             get => _active;
             set
@@ -84,7 +90,8 @@ namespace DalFacade.DO
             }
         }
         private bool _isEmployee;
-        [XmlAttribute] public bool IsEmployee
+        [XmlAttribute]
+        public bool IsEmployee
         {
             get => _isEmployee;
             set
@@ -97,7 +104,8 @@ namespace DalFacade.DO
             }
         }
         private Customer _customer;
-        [XmlElement] public Customer Customer
+        [XmlElement]
+        public Customer Customer
         {
             get => _customer;
             set
@@ -107,7 +115,7 @@ namespace DalFacade.DO
             }
         }
 
-        public User() {}
+        public User() { }
 
         public User(ref Customer customer, string user = "", string pass = "", string mail = "", string personalAddress = "", bool employed = false)
         {

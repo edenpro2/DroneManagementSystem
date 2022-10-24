@@ -4,7 +4,7 @@ using static System.Math;
 
 namespace BL.BO
 {
-    public static class GIS
+    public static class GeoInfoSystem
     {
         /// <summary>
         /// Calculates the distance between two locations in kilometers
@@ -129,7 +129,7 @@ namespace BL.BO
                              + Atan2(Sin(bearing) * distRatioSine * startLatCos,
                                  distRatioCosine - startLatSin * Sin(endLatRads));
 
-            var d =  new Location(
+            var d = new Location(
                 ToDegrees(endLatRads),
                 ToDegrees(endLonRads)
             );

@@ -33,6 +33,7 @@
     </UserControl.Resources>
 
     <!-- DataContext for User control (unlike Window/Page) -->
+    <!-- ReSharper disable all Xaml.MissingGridIndex (grid index set in style) -->
     <Grid
         Background="Transparent">
         <Viewbox

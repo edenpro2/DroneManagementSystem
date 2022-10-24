@@ -7,7 +7,8 @@ namespace DalFacade.DO
     public class Message : ViewModelBase
     {
         private DateTime _sentTime;
-        [XmlElement(DataType = "date")] public DateTime SentTime
+        [XmlElement(DataType = "date")]
+        public DateTime SentTime
         {
             get => _sentTime;
             set
@@ -18,7 +19,8 @@ namespace DalFacade.DO
         }
 
         private string _text;
-        [XmlAttribute] public string Text
+        [XmlAttribute]
+        public string Text
         {
             get => _text;
             set
@@ -29,7 +31,8 @@ namespace DalFacade.DO
         }
 
         private int _senderId;
-        [XmlAttribute] public int SenderId
+        [XmlAttribute]
+        public int SenderId
         {
             get => _senderId;
             set
@@ -40,7 +43,8 @@ namespace DalFacade.DO
         }
 
         private int _recipientId;
-        [XmlAttribute] public int RecipientId
+        [XmlAttribute]
+        public int RecipientId
         {
             get => _recipientId;
             set
@@ -51,7 +55,8 @@ namespace DalFacade.DO
         }
 
         private string _senderName;
-        [XmlAttribute] public string SenderName
+        [XmlAttribute]
+        public string SenderName
         {
             get => _senderName;
             set
@@ -62,7 +67,8 @@ namespace DalFacade.DO
         }
 
         private string _recipientName;
-        [XmlAttribute] public string RecipientName
+        [XmlAttribute]
+        public string RecipientName
         {
             get => _recipientName;
             set
@@ -72,7 +78,7 @@ namespace DalFacade.DO
             }
         }
 
-        public Message() {}
+        public Message() { }
 
         public Message(string msg = "", int sender = -1, int recipient = -1, string sName = "", string rName = "")
         {

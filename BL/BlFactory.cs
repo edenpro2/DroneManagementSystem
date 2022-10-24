@@ -1,6 +1,4 @@
-﻿using BLAPI;
-
-namespace BL
+﻿namespace BL
 {
     public static class BlFactory
     {

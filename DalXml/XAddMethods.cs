@@ -44,7 +44,7 @@ namespace DALXML
         public void CreateCustomer(string name, string phone)
         {
             var loc = Randomize.LocationInRadius();
-            AddCustomer(new Customer(Config.CustomerId++, name, phone, loc.Latitude, loc.Longitude));
+            AddCustomer(new Customer(Config.CustomerId++, name, phone, loc));
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]

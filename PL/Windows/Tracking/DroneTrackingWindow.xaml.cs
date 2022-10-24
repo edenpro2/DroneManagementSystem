@@ -1,43 +1,53 @@
 ﻿using BL;
-using BLAPI;
 using DalFacade.DO;
-using PL.ViewModels;
+using PL.Controls;
 using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using ScottPlot;
+using DalFacade;
+using static System.Web.HttpUtility;
 
 #pragma warning disable CS8602 // All null values initialized in constructor
 
 namespace PL.Windows.Tracking
 {
-    public partial class DroneTrackingWindow : INotifyPropertyChanged
+    public partial class DroneTrackingWindow
     {
         #region Properties
-        public static double MinScreenHeight { get; } = PLMethods.MinScreenHeight(0.9);
-        public static double MinScreenWidth { get; } = PLMethods.MinScreenWidth(0.9);
-        public SolidColorBrush CustomFill { get; } = new (Color.FromRgb(68, 110, 189));
+        public static double MinScreenHeight => PLMethods.MinScreenHeight(0.80);
+        public static double MinScreenWidth => PLMethods.MinScreenWidth(0.80);
+        public SolidColorBrush CustomFill { get; } = new(Color.FromRgb(68, 110, 189));
         public bool IsChecked { get; set; }
-        private readonly DroneViewModel _droneViewModel;
         private readonly BlApi _bl;
-        private double[] batteries = new double[1000];
-        private double[] seconds = new double[1000];
-        private double elapsedTime;
-        private const int Delta = 10;
+        public string ProgressMessage { get; private set; }
+        public string ErrorMessage { get; private set; }
+        public BatteryChartPlotter BatteryPlotter { get; } = new();
 
-        public WpfPlot BatteryPlot { get; set; } = new();
+        public FileReader.NominatimJson Details { get; set; }
 
-        private Uri _uri;
-        public Uri Uri
+        private Uri _addressUrl;
+        public Uri AddressUrl
         {
-            get => _uri;
+            get => _addressUrl;
             set
             {
-                _uri = value;
+                _addressUrl = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Uri _mapUrl;
+        public Uri MapUrl
+        {
+            get => _mapUrl;
+            set
+            {
+                _mapUrl = value;
                 OnPropertyChanged();
             }
         }
@@ -45,16 +55,14 @@ namespace PL.Windows.Tracking
         private Drone _viewModel;
         public Drone ViewModel
         {
-            get=>_viewModel;
+            get => _viewModel;
             set
             {
                 _viewModel = value;
                 OnPropertyChanged();
-                var lat = TruncateLocation(_viewModel.Location.Latitude);
-                var lon = TruncateLocation(_viewModel.Location.Longitude);
-                Uri = new Uri($"https://www.openstreetmap.org/?mlat={lat}&amp;mlon={lon}#map=12/{lat}/{lon}");
-                batteries = batteries.Append(_viewModel.Battery).ToArray();
-                seconds = seconds.Append(elapsedTime++).ToArray();
+                //var lat = TruncateLocation(_viewModel.Location.Latitude);
+                //var lon = TruncateLocation(_viewModel.Location.Longitude);
+                //MapUrl = new Uri($"https://www.openstreetmap.org/?mlat={lat}&amp;mlon={lon}#map=12/{lat}/{lon}");
             }
         }
 
@@ -70,17 +78,10 @@ namespace PL.Windows.Tracking
         }
         #endregion
 
-        public DroneTrackingWindow(BlApi bl, Drone drone, DroneViewModel droneViewModel)
+        public DroneTrackingWindow(BlApi bl, Drone drone)
         {
             _bl = bl;
             ViewModel = drone;
-            _droneViewModel = droneViewModel;
-            BatteryPlot.Plot.XAxis.Label("Time (seconds)");
-            BatteryPlot.Plot.YAxis.Label("Battery (%)");
-            BatteryPlot.Plot.Grid(lineStyle: LineStyle.Dot);
-            BatteryPlot.Plot.Style(ScottPlot.Style.Seaborn);
-            BatteryPlot.Plot.SetAxisLimitsY(0,100);
-
             InitializeComponent();
             UpdateContent();
         }
@@ -90,39 +91,23 @@ namespace PL.Windows.Tracking
         private void UpdateContent()
         {
             Parcel = _bl.GetParcels().FirstOrDefault(p => p.Active && p.DroneId == ViewModel.Id);
-            BatteryPlot.Plot.AddScatter(seconds, batteries);
-            BatteryPlot.Plot.AddFill(seconds, batteries, 0, System.Drawing.Color.FromArgb(255, 66, 88, 255));
-            BatteryPlot.Plot.SetAxisLimitsX(elapsedTime - Delta, elapsedTime + Delta);
-            BatteryPlot.Refresh();
+            BatteryPlotter.Update(_viewModel.Battery);
+            GetQuery(ViewModel.Location);
+            ErrorMessage = "";
         }
 
         private void MouseLeftBtnDown(object sender, MouseButtonEventArgs e) => DragMove();
-
-        internal DroneViewModel GetValue() => _droneViewModel;
 
         private void ChargeBtn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                ViewModel = _bl.SendDroneToCharge(ViewModel);
-                _droneViewModel.Update(ViewModel);
-                ErrorBox.Text = "";
+                _bl.SendDroneToCharge(ViewModel);
                 UpdateContent();
             }
             catch (Exception ex)
             {
-                switch (ex)
-                {
-                    case BlDroneNotFreeException:
-                        ErrorBox.Text = "Drone is currently not free";
-                        break;
-                    case BlNoOpenSlotsException:
-                        ErrorBox.Text = "No open slots found";
-                        break;
-                    case BlNotEnoughBatteryException:
-                        ErrorBox.Text = "Not enough battery for trip";
-                        break;
-                }
+                ErrorMessage = ex.Message;
             }
         }
 
@@ -141,19 +126,12 @@ namespace PL.Windows.Tracking
 
             try
             {
-                ViewModel = _bl.DroneReleaseAndCharge(ViewModel, hours);
-                _droneViewModel.Update(ViewModel);
-                ErrorBox.Text = "";
+                _bl.DroneReleaseAndCharge(ViewModel, hours);
                 UpdateContent();
             }
             catch (Exception ex)
             {
-                switch (ex)
-                {
-                    case BlDroneNotMaintainedException:
-                        ErrorBox.Text = "Drone is currently not in maintenance";
-                        break;
-                }
+                ErrorMessage = ex.Message;
             }
         }
 
@@ -161,22 +139,12 @@ namespace PL.Windows.Tracking
         {
             try
             {
-                ViewModel = _bl.AssignDroneToParcel(ViewModel);
-                _droneViewModel.Update(ViewModel);
-                ErrorBox.Text = "";
+                _bl.AssignDroneToParcel(ViewModel);
                 UpdateContent();
             }
             catch (Exception ex)
             {
-                switch (ex)
-                {
-                    case BlDroneNotFreeException:
-                        ErrorBox.Text = "Drone is currently not free";
-                        break;
-                    default:
-                        ErrorBox.Text = "No parcels awaiting collection";
-                        break;
-                }
+                ErrorMessage = ex.Message;
             }
         }
 
@@ -184,22 +152,12 @@ namespace PL.Windows.Tracking
         {
             try
             {
-                ViewModel = _bl.CollectParcelByDrone(ViewModel);
-                _droneViewModel.Update(ViewModel);
-                ErrorBox.Text = "";
+                _bl.CollectParcelByDrone(ViewModel);
                 UpdateContent();
             }
             catch (Exception ex)
             {
-                switch (ex)
-                {
-                    case BlNotFoundException:
-                        ErrorBox.Text = "No collected parcel assigned to current drone";
-                        break;
-                    case BlNoMatchingParcels:
-                        ErrorBox.Text = "No uncollected parcel found";
-                        break;
-                }
+                ErrorMessage = ex.Message;
             }
         }
 
@@ -207,19 +165,12 @@ namespace PL.Windows.Tracking
         {
             try
             {
-                ViewModel = _bl.DeliverByDrone(ViewModel);
-                _droneViewModel.Update(ViewModel);
-                ErrorBox.Text = "";
+                _bl.DeliverByDrone(ViewModel);
                 UpdateContent();
             }
             catch (Exception ex)
             {
-                switch (ex)
-                {
-                    case BlNotBeingDeliveredException:
-                        ErrorBox.Text = "No undelivered parcel found";
-                        break;
-                }
+                ErrorMessage = ex.Message;
             }
         }
 

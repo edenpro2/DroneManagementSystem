@@ -11,50 +11,41 @@ namespace DalFacade
 
         #region Return-list methods
 
-        /// <summary>Returns a list of stations</summary>
-        /// <returns>IEnumerable&lt;Station&gt;</returns>
+        /// <summary>Returns a shallow copy list of stations</summary>
         public IEnumerable<Station> GetStations();
 
-        /// <summary>Returns a list of drones</summary>
-        /// <returns>IEnumerable&lt;Drone&gt;</returns>
+        /// <summary>Returns a shallow copy list of drones</summary>
         public IEnumerable<Drone> GetDrones();
 
-        /// <summary>Returns a list of customers</summary>
-        /// <returns>IEnumerable&lt;Customer&gt;</returns>
+        /// <summary>Returns a shallow copy list of customers</summary>
         public IEnumerable<Customer> GetCustomers();
 
-        /// <summary>Returns a list of parcels</summary>
-        /// <returns>IEnumerable&lt;Parcel&gt;</returns>
+        /// <summary>Returns a shallow copy list of parcels</summary>
         public IEnumerable<Parcel> GetParcels();
 
-        /// <summary>Returns a list of users</summary>
-        /// <returns>IEnumerable&lt;User&gt;</returns>
+        /// <summary>Returns a shallow copy list of users</summary>
         public IEnumerable<User> GetUsers();
 
-        /// <summary>Returns a list of employees</summary>
-        /// <returns>IEnumerable&lt;User&gt;</returns>
+        /// <summary>Returns a shallow copy list of employees</summary>
         public IEnumerable<User> GetEmployees();
 
+        /// <summary>Returns a shallow copy list of chats</summary>
         public IEnumerable<Chat> GetChats();
 
-        /// <summary>Returns a list of parcels based on predicate</summary>
+        /// <summary>Returns a list of parcels based on a predicate</summary>
         /// <param name="predicate" />
-        /// <returns>IEnumerable&lt;Parcel&gt;</returns>
         public IEnumerable<Station> GetStations(Predicate<Station> predicate);
 
-        /// <summary>Returns a list of customers based on predicate</summary>
+        /// <summary>Returns a list of customers based on a predicate</summary>
         /// <param name="predicate" />
-        /// <returns>IEnumerable&lt;Customer&gt;</returns>
         public IEnumerable<Customer> GetCustomers(Predicate<Customer> predicate);
 
-        /// <summary>Returns a list of parcels based on predicate</summary>
+        /// <summary>Returns a list of parcels based on a predicate</summary>
         /// <param name="predicate" />
-        /// <returns>IEnumerable&lt;Parcel&gt;</returns>
         public IEnumerable<Parcel> GetParcels(Predicate<Parcel> predicate);
 
-        /// <summary>Returns a list of users based on predicate</summary>
+        /// <summary>Returns a list of users based on a predicate</summary>
         /// <param name="predicate" />
-        /// <returns>IEnumerable&lt;User&gt;</returns>
         public IEnumerable<User> GetUsers(Predicate<User> predicate);
 
         #endregion
@@ -125,7 +116,5 @@ namespace DalFacade
         public void UpdateParcelList(List<Parcel> parcels);
         public void UpdateUserList(List<User> users);
         #endregion
-
-
     }
 }

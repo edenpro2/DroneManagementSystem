@@ -25,7 +25,7 @@ namespace DalFacade.DO
         /// </summary>
         /// <param name="rand"> random seed </param>
         /// <returns> model name </returns>
-        public static string Model(Random rand)
+        public static string? Model(Random rand)
         {
             return ModelNames[rand.Next(ModelNames.Count)];
         }
@@ -115,7 +115,7 @@ namespace DalFacade.DO
         /// Returns a free, active drone
         /// </summary>
         /// <param name="rand"></param>
-        /// <param name="parcel"></param>
+        /// <param name="drones"></param>
         /// <returns></returns>
         public static Drone? GetFreeRandomDrone(Random rand, IEnumerable<Drone> drones)
         {

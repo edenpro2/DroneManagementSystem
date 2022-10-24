@@ -1,9 +1,11 @@
-﻿using DalFacade.DO;
+﻿#nullable enable
+using BL.BO;
+using DalFacade.DO;
 using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using BL.BO;
-using static BL.BO.GIS;
+using static BL.BO.BlPredicates;
+using static BL.BO.GeoInfoSystem;
 
 namespace BL
 {
@@ -122,6 +124,18 @@ namespace BL
         public double ConsumptionWhenHeavy()
         {
             return _droneConsumptionRates[3];
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        private Parcel? BestMatchingParcel(Drone drone)
+        {
+            return GetParcels(p => p.Active)
+                .Where(p => NotAssignedToDrone(p))
+                .Where(p => p.Weight <= drone.MaxWeight)
+                .OrderByDescending(p => p.Priority)
+                .ThenByDescending(p => p.Weight)
+                .ThenBy(p => Distance(LocationOf(p), LocationOf(drone)))
+                .FirstOrDefault(p => CanDroneMakeTrip(drone, p));
         }
     }
 }

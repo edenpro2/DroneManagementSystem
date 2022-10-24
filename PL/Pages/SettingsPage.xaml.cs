@@ -1,5 +1,5 @@
 ﻿using BL.BO;
-using BLAPI;
+using BL;
 using DalFacade.DO;
 using Microsoft.Win32;
 using System.IO;
@@ -13,8 +13,8 @@ namespace PL.Pages
     {
         private readonly BlApi _bl;
         public User User { get; set; }
-        public string InfoErrorMessage { get; set; }
-        public string BillingErrorMessage { get; set; }
+        public string? InfoErrorMessage { get; set; } = null;
+        public string BillingErrorMessage { get; set; } = "";
         public SolidColorBrush InfoErrorColor { get; set; }
         public SolidColorBrush BillingErrorColor { get; set; }
 
@@ -27,14 +27,12 @@ namespace PL.Pages
 
         private void ApplyBtn_Click(object sender, RoutedEventArgs e)
         {
-            InfoErrorMessage = "";
-            InfoErrorColor = Brushes.Tomato;
+            InfoErrorMessage = null;
             var name = NameBox.Text;
             var username = UsernameBox.Text;
             var password = PasswordBox.Password;
             var confirmPass = ConfirmPasswordBox.Password;
             var email = EmailBox.Text;
-            var confirmEmail = ConfirmEmailBox.Text;
 
             if (password != confirmPass)
             {
@@ -49,12 +47,6 @@ namespace PL.Pages
                 user.Password = password;
             }
 
-            if (email != confirmEmail)
-            {
-                InfoErrorMessage = "Emails do not match";
-                return;
-            }
-
             if (!UserVerification.CheckEmail(email))
             {
                 InfoErrorMessage = "Email not valid";
@@ -66,12 +58,16 @@ namespace PL.Pages
             user.Email = email;
             User.Customer.Name = name;
 
-            _bl.UpdateCustomer(User.Customer);
-            _bl.UpdateUser(user);
-            User = user;
+            if (User != user)
+            {
+                _bl.UpdateCustomer(User.Customer);
+                _bl.UpdateUser(user);
+                User = user;
+                InfoErrorMessage = "Successfully updated";
+                return;
+            }
 
-            InfoErrorColor = Brushes.Green;
-            InfoErrorMessage = "Successfully updated";
+            InfoErrorMessage = "Nothing updated";
         }
 
 
@@ -99,7 +95,7 @@ namespace PL.Pages
             user.ProfilePic = filePath;
             _bl.UpdateUser(user);
             User = user;
-            InfoErrorMessage = "";
+            InfoErrorMessage = null;
         }
 
         private void UpdateBillingBtn_Click(object sender, RoutedEventArgs e)

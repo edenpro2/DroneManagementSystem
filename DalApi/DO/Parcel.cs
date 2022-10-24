@@ -9,7 +9,8 @@ namespace DalFacade.DO
     public class Parcel : ViewModelBase
     {
         private int _id;
-        [XmlAttribute] public int Id
+        [XmlAttribute]
+        public int Id
         {
             get => _id;
             set
@@ -19,7 +20,8 @@ namespace DalFacade.DO
             }
         }
         private int _senderId;
-        [XmlAttribute] public int SenderId
+        [XmlAttribute]
+        public int SenderId
         {
             get => _senderId;
             set
@@ -29,7 +31,8 @@ namespace DalFacade.DO
             }
         }
         private int _targetId;
-        [XmlAttribute] public int TargetId
+        [XmlAttribute]
+        public int TargetId
         {
             get => _targetId;
             set
@@ -39,7 +42,8 @@ namespace DalFacade.DO
             }
         }
         private int _droneId;
-        [XmlAttribute] public int DroneId
+        [XmlAttribute]
+        public int DroneId
         {
             get => _droneId;
             set
@@ -49,7 +53,8 @@ namespace DalFacade.DO
             }
         }
         private WeightCategories _weight;
-        [XmlAttribute] public WeightCategories Weight
+        [XmlAttribute]
+        public WeightCategories Weight
         {
             get => _weight;
             set
@@ -59,7 +64,8 @@ namespace DalFacade.DO
             }
         }
         private Priorities _priority;
-        [XmlAttribute] public Priorities Priority
+        [XmlAttribute]
+        public Priorities Priority
         {
             get => _priority;
             set
@@ -69,48 +75,61 @@ namespace DalFacade.DO
             }
         }
         private DateTime _requested;
-        [XmlElement] public DateTime Requested
+        [XmlElement]
+        public DateTime Requested
         {
             get => _requested;
             set
             {
                 _requested = value;
+                if (_requested != default)
+                    StatusIcon = "../Icons/status1.png";
                 OnPropertyChanged();
             }
         }
         private DateTime _scheduled;
-        [XmlElement] public DateTime Scheduled
+        [XmlElement]
+        public DateTime Scheduled
         {
             get => _scheduled;
             set
             {
                 _scheduled = value;
+                if (_scheduled != default)
+                    StatusIcon = "../Icons/status2.png";
                 OnPropertyChanged();
             }
         }
         private DateTime _collected;
-        [XmlElement] public DateTime Collected
+        [XmlElement]
+        public DateTime Collected
         {
             get => _collected;
             set
             {
                 _collected = value;
+                if (_collected != default)
+                    StatusIcon = "../Icons/status3.png";
                 OnPropertyChanged();
             }
         }
         private DateTime _delivered;
-        [XmlElement] public DateTime Delivered
+        [XmlElement]
+        public DateTime Delivered
         {
             get => _delivered;
             set
             {
                 _delivered = value;
+                if (_delivered != default)
+                    StatusIcon = "../Icons/status4.png";
                 OnPropertyChanged();
             }
         }
 
         private string _statusIcon;
-        [XmlAttribute] public string StatusIcon
+        [XmlAttribute]
+        public string StatusIcon
         {
             get => _statusIcon;
             set
@@ -122,7 +141,8 @@ namespace DalFacade.DO
         }
 
         private bool _active;
-        [XmlAttribute] public bool Active
+        [XmlAttribute]
+        public bool Active
         {
             get => _active;
             set
@@ -135,17 +155,9 @@ namespace DalFacade.DO
 
         protected new void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            if (Delivered != default)
-                StatusIcon = "../Icons/status4.png";
-            else if (Collected != default)
-                StatusIcon = "../Icons/status3.png";
-            else if (Scheduled != default)
-                StatusIcon = "../Icons/status2.png";
-            else StatusIcon = "../Icons/status1.png";
-
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
- 
+
 
         public Parcel() { }
 

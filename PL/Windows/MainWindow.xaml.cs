@@ -1,105 +1,74 @@
-﻿#pragma warning disable CS8629  
-using BL;
-using BLAPI;
+﻿using BL;
 using DalFacade.DO;
-using PL.Controls;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Markup;
 
 namespace PL.Windows
 {
     public partial class MainWindow
     {
-        private static readonly BlApi Bl = BlFactory.GetBl();
-        private BackgroundWorker? _bgThread;
-        private static User? _user;
-        public static double MinScreenHeight => PLMethods.MinScreenHeight(0.9);
+        #region Properties
         public static double MinScreenWidth => PLMethods.MinScreenWidth(0.9);
+        public static double MinScreenHeight => PLMethods.MinScreenHeight(0.9);
+        private static readonly BlApi Bl = BlFactory.GetBl();
+        private static User? _user;
+        private BackgroundWorker? _altThread;
+        public string ErrorMessage { get; private set; } = "";
+        #endregion
 
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+        public MainWindow() => InitializeComponent();
 
         private void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
-            _bgThread = new BackgroundWorker();
-
             // Disable login 
             ChangeButtonState();
-            _bgThread.WorkerReportsProgress = true;
-            _bgThread.WorkerSupportsCancellation = true;
-            _bgThread.DoWork += BackgroundWorker_DoWork;
-            _bgThread.ProgressChanged += BackgroundWorker_ProgressChanged;
-            _bgThread.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
 
-            // Start the background worker.
-            _bgThread.RunWorkerAsync();
+            _altThread = new BackgroundWorker();
+            _altThread.WorkerSupportsCancellation = true;
+            _altThread.DoWork += BackgroundWorker_DoWork;
+            _altThread.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
+            _altThread.RunWorkerAsync();
         }
 
         private void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
         {
-            _bgThread?.ReportProgress(1);
             Dispatcher.Invoke(() => _user = Bl.GetUsers(u => u.Username == UsernameBox.Text).FirstOrDefault());
-        }
-
-        private void BackgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
-        {
-            Gif.Visibility = Visibility.Visible;
         }
 
         private void BackgroundWorker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
         {
             Task.Delay(1500).ContinueWith(_ => { Dispatcher.Invoke(Login); });
-            _bgThread?.CancelAsync();
+            _altThread?.CancelAsync();
         }
 
         private void Login()
         {
-            if (_user == null || _user.Username == null)
-            {
-                ErrorTextBlock.Text = "User not found. If you are new, try registering";
-                ChangeButtonState();
-            }
-            else if (_user.Password == null || !_user.Password.Equals(PassBox.Password))
-            {
-                ErrorTextBlock.Text = "Wrong username or password";
-                ChangeButtonState();
-            }
-            else
-            {
-                new CustomerUi(Bl, _user).Show();
-                Close();
-            }
-        }
+            ChangeButtonState();
 
-        private void ChangeButtonState()
-        {
-            if (LoginButton.IsEnabled)
+            if (_user?.Username == null)
             {
-                LoginButton.IsEnabled = false;
-                Gif.Visibility = Visibility.Visible;
-                LoginButton.Content = "";
+                ErrorMessage = "User not found. If you are new, try registering";
+                return;
             }
-            else
+
+            if (_user.Password == null || !_user.Password.Equals(PassBox.Password))
             {
-                Gif.Visibility = Visibility.Hidden;
-                LoginButton.Content = "Login";
-                LoginButton.IsEnabled = true;
+                ErrorMessage = "Wrong username or password";
+                return;
             }
+
+            new CustomerUi(Bl, _user).Show();
+            Close();
         }
 
         private void EmployeeBtn_Click(object sender, RoutedEventArgs e)
         {
             var empLoginWindow = new EmployeeLoginWindow(Bl);
 
-            if (!(bool)empLoginWindow.ShowDialog())
-                return;
+            empLoginWindow.ShowDialog();
 
             _user = empLoginWindow.GetValue();
 
@@ -112,16 +81,11 @@ namespace PL.Windows
 
         private void RegBtn_Click(object sender, RoutedEventArgs e)
         {
-            ErrorTextBlock.Text = "";
-            RegistrationWindow regWindow = new(Bl);
-            regWindow.ShowDialog();
+            ErrorMessage = "";
+            new RegistrationWindow(Bl).ShowDialog();
         }
-
-        private void DevBtn_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO: Expansion
-        }
-
+        private void DevBtn_Click(object sender, RoutedEventArgs e) { }
+        private void ChangeButtonState() => LoginButton.IsEnabled = !LoginButton.IsEnabled;
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e) => DragMove();
     }
 }

@@ -7,7 +7,8 @@ namespace DalFacade.DO
     public class Drone : ViewModelBase
     {
         private int _id;
-        [XmlAttribute] public int Id
+        [XmlAttribute]
+        public int Id
         {
             get => _id;
             set
@@ -17,8 +18,9 @@ namespace DalFacade.DO
             }
         }
 
-        private string _model;
-        [XmlElement] public string Model
+        private string _model = "";
+        [XmlElement]
+        public string Model
         {
             get => _model;
             set
@@ -29,7 +31,8 @@ namespace DalFacade.DO
         }
 
         private WeightCategories _maxWeight;
-        [XmlElement] public WeightCategories MaxWeight
+        [XmlElement]
+        public WeightCategories MaxWeight
         {
             get => _maxWeight;
             set
@@ -40,7 +43,8 @@ namespace DalFacade.DO
         }
 
         private DroneStatuses? _status;
-        [XmlElement] public DroneStatuses? Status
+        [XmlElement]
+        public DroneStatuses? Status
         {
             get => _status;
             set
@@ -51,7 +55,8 @@ namespace DalFacade.DO
         }
 
         private double _battery;
-        [XmlElement] public double Battery
+        [XmlElement]
+        public double Battery
         {
             get => _battery;
             set
@@ -62,7 +67,8 @@ namespace DalFacade.DO
         }
 
         private Location? _location;
-        [XmlElement] public Location? Location
+        [XmlElement]
+        public Location? Location
         {
             get => _location;
             set
@@ -72,8 +78,9 @@ namespace DalFacade.DO
             }
         }
 
-        private string _modelImg;
-        [XmlAttribute] public string ModelImg
+        private string _modelImg = "";
+        [XmlAttribute]
+        public string ModelImg
         {
             get => _modelImg;
             set
@@ -84,7 +91,8 @@ namespace DalFacade.DO
         }
 
         private bool _active;
-        [XmlAttribute] public bool Active
+        [XmlAttribute]
+        public bool Active
         {
             get => _active;
             set
@@ -95,10 +103,10 @@ namespace DalFacade.DO
         }
 
         // Parameter-less Ctor
-        public Drone() {}
+        public Drone() { }
 
         // Constructor
-        public Drone(int id = -1, string model = "", WeightCategories maxWeight = WeightCategories.Medium, DroneStatuses? status = null, double battery = 0.0, Location? location = null) 
+        public Drone(int id = -1, string model = "", WeightCategories maxWeight = WeightCategories.Medium, DroneStatuses? status = null, double battery = 0.0, Location? location = null)
         {
             Id = id;
             Model = model;

@@ -1,4 +1,4 @@
-﻿using BLAPI;
+﻿using BL;
 using DalFacade.DO;
 using System.Linq;
 using System.Windows;
@@ -10,6 +10,7 @@ namespace PL.Windows
     public partial class RegistrationWindow
     {
         private readonly BlApi _bl;
+        public string ErrorMessage { get; private set; } = "";
 
         public RegistrationWindow(BlApi database)
         {
@@ -25,14 +26,14 @@ namespace PL.Windows
 
             if (user != default)
             {
-                ErrorBox.Text = "User already exists";
+                ErrorMessage = "User already exists";
                 return;
             }
 
             // now check if email is valid
             if (CheckEmail(EmailBox.Text) == false)
             {
-                ErrorBox.Text = "Email not valid";
+                ErrorMessage = "Email not valid";
                 return;
             }
 

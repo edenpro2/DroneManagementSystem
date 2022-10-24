@@ -1,7 +1,7 @@
-﻿using System;
+﻿using DalFacade.DO;
+using System;
 using System.Globalization;
 using System.Windows.Data;
-using DalFacade.DO;
 
 namespace PL.Converters
 {

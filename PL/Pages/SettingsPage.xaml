@@ -14,53 +14,10 @@
       TextElement.Foreground="{DynamicResource MaterialDesignBody}">
 
     <Page.Resources>
-        <Style x:Key="BorderDetails" TargetType="Border">
-            <Setter Property="Height" Value="80" />
-            <Setter Property="CornerRadius" Value="5" />
-            <Setter Property="BorderBrush" Value="#FFEDEDED" />
-            <Setter Property="BorderThickness" Value="2" />
-            <Setter Property="Margin" Value="0 15 0 0 " />
-        </Style>
-
-        <Style x:Key="PersonalInfo" TargetType="{x:Type TextBlock}">
-            <Setter Property="FontSize" Value="26"/>
-            <Setter Property="Foreground" Value="#333333" />
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="HorizontalAlignment" Value="Center" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-        </Style>
-
-        <Style x:Key="Details" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="24"/>
-            <Setter Property="Foreground" Value="#333333" />
-            <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-        </Style>
-
-        <Style x:Key="TextBoxDetails" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="0,3,0,3"/>
-            <Setter Property="Height" Value="64" />
-            <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignDivider}"/>
-            <Setter Property="FontSize" Value="22"/>
-            <Setter Property="Width" Value="400" />
-        </Style>
-
-        <Style x:Key="PassBoxDetails" TargetType="PasswordBox" 
-               BasedOn="{StaticResource MaterialDesignOutlinedPasswordBox}">
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignDivider}"/>
-            <Setter Property="Margin" Value="0,3,0,3"/>
-            <Setter Property="Height" Value="64" />
-            <Setter Property="FontSize" Value="22"/>
-            <Setter Property="Width" Value="400" />
-        </Style>
-
         <Style x:Key="TextBoxLabel" TargetType="{x:Type TextBlock}">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Foreground" Value="#333333"/>
             <Setter Property="FontWeight" Value="Medium"/>
-
         </Style>
 
         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
@@ -403,45 +360,42 @@
 
                         <Separator/>
 
-                        <DockPanel>
-                            <StackPanel
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Left">
-                                <TextBlock 
-                                    Text="Email Address"
-                                    Style="{StaticResource TextBoxLabel}"/>
-                                <TextBox
-                                    x:Name="EmailBox"
-                                    d:Text="johnsmith99@gmail.com"
-                                    Text="{Binding Email}"
-                                    BorderBrush="#FFD7E1E8"
-                                    BorderThickness="1.5"/>
-                            </StackPanel>
-
-                            <StackPanel
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Right">
-                                <TextBlock 
-                                    Text="Confirm Email Address"
-                                    Style="{StaticResource TextBoxLabel}"/>
-                                <TextBox
-                                    x:Name="ConfirmEmailBox"
-                                    DataContext="{Binding ElementName=EmailBox}"
-                                    Text="{Binding Text}"
-                                    BorderBrush="#FFD7E1E8"
-                                    BorderThickness="1.5"/>
-                            </StackPanel>
-                        </DockPanel>
+                        <StackPanel
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left">
+                            <TextBlock 
+                                Text="Email Address"
+                                Style="{StaticResource TextBoxLabel}"/>
+                            <TextBox
+                                x:Name="EmailBox"
+                                d:Text="johnsmith99@gmail.com"
+                                Text="{Binding Email}"
+                                BorderBrush="#FFD7E1E8"
+                                BorderThickness="1.5"/>
+                        </StackPanel>
 
                         <Separator Height="20"/>
 
                         <TextBlock
                             Text="{Binding InfoErrorMessage, RelativeSource={RelativeSource AncestorType=pages:SettingsPage}}"
-                            Foreground="{Binding InfoErrorColor, RelativeSource={RelativeSource AncestorType=pages:SettingsPage}}"
                             FontSize="10"
                             FontWeight="SemiBold"
                             VerticalAlignment="Bottom"
-                            HorizontalAlignment="Left" />
+                            HorizontalAlignment="Left">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding InfoErrorMessage, RelativeSource={RelativeSource AncestorType=pages:SettingsPage}}" Value="Successfully updated">
+                                            <Setter Property="Foreground" Value="Green"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding InfoErrorMessage, RelativeSource={RelativeSource AncestorType=pages:SettingsPage}}" Value="{x:Null}">
+                                            <Setter Property="Foreground" Value="{x:Null}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
 
                         <Separator Height="10"/>
 

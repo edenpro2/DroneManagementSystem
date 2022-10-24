@@ -1,6 +1,6 @@
 ﻿using DalFacade.DO;
 using System.Collections.Generic;
-using static BL.BO.GIS;
+using static BL.BO.GeoInfoSystem;
 
 namespace BL.BO
 {
@@ -31,7 +31,7 @@ namespace BL.BO
                     return GetClosestStation(stations, loc);
 
                 default:
-                    throw new EmptyParameterException();
+                    throw new EmptyParameterException(obj.GetType());
             }
         }
 
@@ -46,7 +46,7 @@ namespace BL.BO
         {
             if (stations == null)
             {
-                throw new EmptyParameterException();
+                throw new EmptyParameterException(typeof(IEnumerable<Station>));
             }
 
             var minDistance = 0.0;
@@ -84,7 +84,7 @@ namespace BL.BO
 
             if (stations == null)
             {
-                throw new EmptyParameterException();
+                throw new EmptyParameterException(typeof(IEnumerable<Station>));
             }
 
             var minDistance = 0.0;

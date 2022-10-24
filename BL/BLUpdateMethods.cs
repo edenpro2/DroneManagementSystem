@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using static BL.BO.BlPredicates;
-using static BL.BO.GIS;
 using static BL.BO.LocationFinder;
 using static DalFacade.DO.DroneStatuses;
 
@@ -107,7 +106,7 @@ namespace BL
             var closestStation = this.ClosestAvailableStation(drone);
 
             if (closestStation.Equals(default))
-                throw new BlNoOpenSlotsException();
+                throw new BlNoOpenSlotsException(closestStation);
 
             var closestLocation = LocationOf(closestStation);
 
@@ -125,10 +124,10 @@ namespace BL
         }
 
         /// <summary>
-        /// Drone is sent to charge at closest station (location unchanged)
+        /// Drone is sent to charge at closest station (location is set to closest station)
         /// </summary>
         /// <param name="drone"></param>
-        /// <returns></returns>
+        /// <returns>Drone</returns>
         /// <exception cref="BlDroneNotFreeException"></exception>
         /// <exception cref="BlNoOpenSlotsException"></exception>
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -140,7 +139,7 @@ namespace BL
             var closestStation = this.ClosestAvailableStation(drone);
 
             if (closestStation.Equals(default))
-                throw new BlNoOpenSlotsException();
+                throw new BlNoOpenSlotsException(closestStation);
 
             lock (DalApi)
             {
@@ -149,6 +148,7 @@ namespace BL
                 UpdateStation(closestStation);
 
                 drone.Status = Maintenance;
+                drone.Location = LocationOf(closestStation);
                 UpdateDrone(drone);
 
                 return drone;
@@ -175,7 +175,7 @@ namespace BL
         }
 
         /// <summary>
-        /// Charges drone for x hours and releases it (location unchanged). This is for non-threaded simulation
+        /// Charges drone for x hours and releases it (location stays the same). This is for non-threaded simulation
         /// </summary>
         /// <param name="drone"></param>
         /// <param name="hours"></param>
@@ -229,7 +229,7 @@ namespace BL
                 drone.Status = Free;
                 UpdateDrone(drone);
 
-                // Delete droneCharge
+                // Delete drone charge port
                 var station = this.GetClosestStation(drone);
                 if (station.Ports.Exists(p => p.DroneId == drone.Id))
                 {
@@ -289,16 +289,14 @@ namespace BL
             var parcel = GetParcels(p => p.Active).FirstOrDefault(p => p.DroneId == drone.Id);
 
             if (parcel is null || parcel.Requested == default)
-                throw new BlNotFoundException();
+                throw new BlNotFoundException(parcel);
 
             if (!WaitingForDrone(parcel))
-                throw new BlAlreadyCollected();
+                throw new BlAlreadyCollected(parcel);
 
             lock (DalApi)
             {
-                var parcelLocation = LocationOf(parcel);
-
-                drone.Location = parcelLocation;
+                drone.Location = LocationOf(parcel);
                 UpdateDrone(drone);
 
                 parcel.Collected = DateTime.Now;
@@ -346,92 +344,69 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone UpdateBattery(Drone drone)
         {
-            double change;
-            var id = drone.Id;
+            var change = 0.0;
             switch (drone.Status)
             {
                 case Delivery:
-                    var parcel = GetParcels(p => p.Active).First(p => p.DroneId == id);
+                    var parcel = GetParcels(p => p.Active).First(p => p.DroneId == drone.Id);
 
                     // drone hasn't collected parcel yet
                     if (WaitingForDrone(parcel) || NotAssignedToDrone(parcel))
                     {
-                        change = - ConsumptionWhenFree();
+                        change = -ConsumptionWhenFree();
+                        break;
                     }
 
                     // drone is delivering parcel
-                    else
+                    switch (parcel.Weight)
                     {
-                        switch (parcel.Weight)
-                        {
-                            case WeightCategories.Light:
-                                change = - ConsumptionWhenLight();
-                                break;
-                            case WeightCategories.Medium:
-                                change = - ConsumptionWhenMid();
-                                break;
-                            case WeightCategories.Heavy:
-                                change = - ConsumptionWhenHeavy();
-                                break;
-                            default:
-                                throw new ArgumentOutOfRangeException();
-                        }
+                        case WeightCategories.Light:
+                            change = -ConsumptionWhenLight();
+                            break;
+                        case WeightCategories.Medium:
+                            change = -ConsumptionWhenMid();
+                            break;
+                        case WeightCategories.Heavy:
+                            change = -ConsumptionWhenHeavy();
+                            break;
                     }
                     break;
                 case Maintenance:
                     // drone is at the station (negate change)
                     if (LocationOf(drone).Equals(LocationOf(this.GetClosestStation(drone))))
                     {
+                        // drone is also fully charged
+                        if (drone.Battery >= 100)
+                            return drone;
+
                         change = _droneChargeRate;
 
-                        // if overflow detected, change is adjusted
+                        // if overflow detected, change is adjusted (to make the end battery equal 100)
                         if (drone.Battery + change > 100)
                         {
                             change = 100 - drone.Battery;
                         }
+                        break;
                     }
                     // drone is on it's way to station (hence it's free)
-                    else
-                    {
-                        change = - ConsumptionWhenFree();
-                    }
-
+                    change = -ConsumptionWhenFree();
                     break;
                 case Free:
                     // drone is at station (idle state)
                     if (LocationOf(drone).Equals(LocationOf(this.GetClosestStation(drone))))
                     {
                         change = 0;
+                        break;
                     }
                     // drone is on it's way to station (and free)
-                    else
-                    {
-                        change = - ConsumptionWhenFree();
-                    }
-
+                    change = -ConsumptionWhenFree();
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
 
             drone.Battery += change;
             return drone;
         }
 
-        private Parcel BestMatchingParcel(Drone drone)
-        {
-            lock (DalApi)
-            {
-                return
-                    GetParcels(p => p.Active)
-                    .Where(p => NotAssignedToDrone(p))
-                    .Where(p => p.Weight <= drone.MaxWeight)
-                    .OrderByDescending(p => p.Priority)
-                    .ThenByDescending(p => p.Weight)
-                    .ThenBy(p => Distance(LocationOf(p), LocationOf(drone)))
-                    .FirstOrDefault(p => CanDroneMakeTrip(drone, p));
-            }
-        }
         #endregion
     }
 }

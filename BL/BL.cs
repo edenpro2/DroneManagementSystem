@@ -1,11 +1,10 @@
 ﻿#nullable enable
-using BLAPI;
 using DalFacade;
 using DalFacade.DO;
+using DALXML;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DALXML;
 using static BL.BO.LocationFinder;
 
 namespace BL
@@ -120,19 +119,6 @@ namespace BL
                 }
 
                 UpdateDrone(d);
-            }
-
-            foreach (var p in GetParcels())
-            {
-                if (p.Delivered != default)
-                    p.StatusIcon = "../Icons/status4.png";
-                else if (p.Collected != default)
-                    p.StatusIcon = "../Icons/status3.png";
-                else if (p.Scheduled != default)
-                    p.StatusIcon = "../Icons/status2.png";
-                else p.StatusIcon = "../Icons/status1.png";
-
-                UpdateParcel(p);
             }
         }
     }

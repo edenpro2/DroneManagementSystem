@@ -8,7 +8,7 @@ namespace PL.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (DateTime) value == default;
+            return (DateTime)value == default;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

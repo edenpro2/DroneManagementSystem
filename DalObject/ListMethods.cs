@@ -1,7 +1,6 @@
 ﻿using DalFacade.DO;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace DalObject
@@ -11,31 +10,37 @@ namespace DalObject
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> GetStations()
         {
-            return DataSource.Stations.Select(s => s);
+            return new List<Station>(DataSource.Stations);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> GetDrones()
         {
-            return DataSource.Drones.Select(d => d);
+            return new List<Drone>(DataSource.Drones);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Customer> GetCustomers()
         {
-            return DataSource.Customers.Select(c => c);
+            return new List<Customer>(DataSource.Customers);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> GetParcels()
         {
-            return DataSource.Parcels.Select(p => p);
+            return new List<Parcel>(DataSource.Parcels);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<User> GetUsers()
         {
-            return DataSource.Users.Select(u => u);
+            return new List<User>(DataSource.Users);
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<Chat> GetChats()
+        {
+            return new List<Chat>(DataSource.Chats);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -45,33 +50,27 @@ namespace DalObject
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public IEnumerable<Chat> GetChats()
-        {
-            return DataSource.Chats.Select(c => c);
-        }
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> GetStations(Predicate<Station> predicate)
         {
-            return DataSource.Stations.Where(s => predicate(s));
+            return DataSource.Stations.FindAll(predicate);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Customer> GetCustomers(Predicate<Customer> predicate)
         {
-            return DataSource.Customers.Where(c => predicate(c));
+            return DataSource.Customers.FindAll(predicate);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> GetParcels(Predicate<Parcel> predicate)
         {
-            return DataSource.Parcels.Where(p => predicate(p));
+            return DataSource.Parcels.FindAll(predicate);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<User> GetUsers(Predicate<User> predicate)
         {
-            return DataSource.Users.Where(u => predicate(u));
+            return DataSource.Users.FindAll(predicate);
         }
     }
 }

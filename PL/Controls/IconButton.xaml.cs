@@ -14,7 +14,7 @@ namespace PL.Controls
         private void Btn_Click(object sender, RoutedEventArgs e)
         {
             IsChecked = !IsChecked;
-            Click(this, e);
+            Click?.Invoke(this, e);
         }
 
         public static readonly DependencyProperty IconSourceProperty =
@@ -56,7 +56,7 @@ namespace PL.Controls
             }
         }
 
-        public event RoutedEventHandler Click;
+        public event RoutedEventHandler? Click;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

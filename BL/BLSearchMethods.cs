@@ -48,7 +48,7 @@ namespace BL
                 case Station station:
                     return new Location(station.Latitude, station.Longitude);
                 case Customer customer:
-                    return new Location(customer.Latitude, customer.Longitude);
+                    return customer.Location;
                 // parcel is with sender 
                 case Parcel parcel when WaitingForDrone(parcel):
                     return LocationOf(SearchForCustomer(c => c.Id == parcel.SenderId));

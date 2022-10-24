@@ -6,7 +6,8 @@ namespace DalFacade.DO
     public class DroneCharge : ViewModelBase
     {
         private int _droneId;
-        [XmlAttribute] public int DroneId
+        [XmlAttribute]
+        public int DroneId
         {
             get => _droneId;
             set
@@ -16,7 +17,8 @@ namespace DalFacade.DO
             }
         }
         private int _stationId;
-        [XmlAttribute] public int StationId
+        [XmlAttribute]
+        public int StationId
         {
             get => _stationId;
             set
@@ -26,7 +28,7 @@ namespace DalFacade.DO
             }
         }
 
-        public DroneCharge() {}
+        public DroneCharge() { }
 
         // Constructor
         public DroneCharge(int droneId = -1, int stationId = -1)

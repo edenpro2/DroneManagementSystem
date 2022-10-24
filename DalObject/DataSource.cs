@@ -70,7 +70,7 @@ namespace DalObject
             {
                 Drone drone = new(
                     Config.DroneId++,
-                    Randomize.Model(rand),
+                    Randomize.Model(rand) ?? string.Empty,
                     (WeightCategories)rand.Next(3));
 
                 // Search for image related to model
@@ -87,7 +87,7 @@ namespace DalObject
                     rand.Next(MaxStationName),
                     Station.MaxChargeSlots,
                     location.Latitude,
-                    location.Longitude)); 
+                    location.Longitude));
             }
 
             for (var i = 0; i < CUSTOMER_MAX - 1; ++i)
@@ -98,8 +98,7 @@ namespace DalObject
                     Config.CustomerId++,
                     Randomize.Name(rand),
                     Randomize.Phone(rand),
-                    location.Latitude,
-                    location.Longitude)); 
+                    location));
             }
 
             #endregion
@@ -110,8 +109,10 @@ namespace DalObject
                     Config.CustomerId++,
                     "Eden Amiga",
                     "9546582944",
-                    26.03939549441853,
-                    -80.29447791353097)
+                    new Location(
+                        26.03939549441853,
+                        -80.29447791353097)
+                    )
             );
 
             string name;
@@ -164,12 +165,12 @@ namespace DalObject
                     delivered
                 ));
 
-                 
+
             }
 
             #region Chats creator
-            
-            var text = File.ReadAllText(FileReader.GetFilePath("RandomText.txt", new List<string>{".txt"}));
+
+            var text = File.ReadAllText(FileReader.GetFilePath("RandomText.txt", new List<string> { ".txt" }));
 
             var lines = text.Split(new[] { "OBI-WAN", "ANAKIN", "COUNT-DOOKU", "PALPATINE", "DROID" },
                     StringSplitOptions.TrimEntries).ToList();

@@ -3,7 +3,7 @@ using DalFacade.DO;
 using System;
 using System.Linq;
 using static BL.BO.BlPredicates;
-using static BL.BO.GIS;
+using static BL.BO.GeoInfoSystem;
 using static DalFacade.DO.DroneStatuses;
 
 namespace BL
@@ -56,7 +56,7 @@ namespace BL
 
                             default:
                                 drone = DroneRelease(drone);
-                                progress = "Released from charging";
+                                progress = "Released from charging port";
                                 break;
                         }
                     }

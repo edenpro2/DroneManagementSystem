@@ -1,5 +1,4 @@
-﻿using System;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 
 namespace DalFacade.DO
 {
@@ -45,28 +44,15 @@ namespace DalFacade.DO
             }
         }
 
-        private double _latitude;
+        private Location _location;
 
-        [XmlAttribute]
-        public double Latitude
+        [XmlElement]
+        public Location Location
         {
-            get => _latitude;
+            get => _location;
             set
             {
-                _latitude = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private double _longitude;
-
-        [XmlAttribute]
-        public double Longitude
-        {
-            get => _longitude;
-            set
-            {
-                _longitude = value;
+                _location = value;
                 OnPropertyChanged();
             }
         }
@@ -88,13 +74,12 @@ namespace DalFacade.DO
         public Customer() { }
 
         // Constructor 
-        public Customer(int id = -1, string name = "", string phone = "", double lat = 0.0, double lon = 0.0)
+        public Customer(int id = -1, string name = "", string phone = "", Location location = default)
         {
             Id = id;
             Name = name;
             Phone = phone;
-            Latitude = lat;
-            Longitude = lon;
+            Location = location;
             Active = true;
         }
 
@@ -104,16 +89,15 @@ namespace DalFacade.DO
             Id = source.Id;
             Name = source.Name;
             Phone = source.Phone;
-            Latitude = source.Latitude;
-            Longitude = source.Longitude;
+            Location = source.Location;
             Active = source.Active;
         }
 
         public override string ToString() =>
             $"{nameof(Id)}: {Id}\n" +
             $"{nameof(Name)}: {Name}\n" +
-            $"{nameof(Phone)}: {Phone:(###)-###-####}\n" +
-            $"Location: {new Location(Latitude, Longitude).ToSexagesimal()}\n" +
+            $"{nameof(Phone)}: {Phone}\n" +
+            $"Location: {Location.ToSexagesimal()}\n" +
             $"{nameof(Active)}: {Active}";
     }
 }

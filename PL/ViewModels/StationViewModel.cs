@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using DalFacade.DO;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using DalFacade.DO;
 
 namespace PL.ViewModels
 {

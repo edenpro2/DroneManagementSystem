@@ -2,16 +2,18 @@
 using System.ComponentModel;
 using System.Threading;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace PL.Windows.Tracking
 {
     public partial class DroneTrackingWindow : INotifyPropertyChanged
     {
+        #region Properties
         private BackgroundWorker? Worker { get; set; }
         private bool _simulationRunning;
         private const int Time = 1000; //ms
         private bool _shouldStop;
-
+        #endregion
 
         private void SimulatorBtn_Click(object sender, RoutedEventArgs routedEventArgs)
         {
@@ -27,12 +29,12 @@ namespace PL.Windows.Tracking
             Worker.WorkerReportsProgress = true;
             Worker.WorkerSupportsCancellation = true;
             _shouldStop = false;
+            _simulationRunning = true;
             Worker.DoWork += Worker_DoWork!;
             Worker.ProgressChanged += Worker_ProgressChanged;
             Worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
-            _simulationRunning = true;
-            ProgressBox.Text = "Starting simulator...";
             Worker.RunWorkerAsync();
+            ProgressMessage = "Starting simulator...";
         }
 
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
@@ -42,8 +44,8 @@ namespace PL.Windows.Tracking
                 Thread.Sleep(Time);
                 var (drone, progress) = _bl.DroneSimulator(ViewModel);
                 ViewModel = drone;
-                Dispatcher.Invoke(() => { ProgressBox.Text = progress; });
-                Worker?.ReportProgress(1);
+                Dispatcher.Invoke(() => { ProgressMessage = progress; });
+                Worker?.ReportProgress(50);
             }
 
             Worker_RunWorkerCompleted(sender, new RunWorkerCompletedEventArgs(sender, null, true));
@@ -55,14 +57,13 @@ namespace PL.Windows.Tracking
         {
             if (e.Error != null)
             {
-                ProgressBox.Text = "Fatal Error - stopping thread";
-                throw new Exception("Fix");
+                throw new Exception("Fatal Error - stopping thread");
             }
 
-            Dispatcher.Invoke(() => { ProgressBox.Text = "Stopping simulator..."; });
+            Dispatcher.Invoke(() => { ProgressMessage = "Stopping simulator..."; });
             Worker?.CancelAsync();
             _simulationRunning = false;
-            Dispatcher.Invoke(() => { ProgressBox.Text = ""; });
+            Dispatcher.Invoke(() => { ProgressMessage = ""; });
         }
 
     }

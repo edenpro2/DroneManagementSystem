@@ -1,17 +1,17 @@
-﻿using System.Windows;
-using System.Windows.Input;
-using BLAPI;
+﻿using BL;
 using DalFacade.DO;
 using PL.ViewModels;
 using PL.Windows;
 using PL.Windows.Tracking;
+using System.Windows;
+using System.Windows.Input;
 
 namespace PL.Pages
 {
     public partial class ParcelsPage
     {
         public ParcelViewModel ParcelViewModel { get; }
-        private static BlApi _bl;
+        private readonly BlApi _bl;
 
         public ParcelsPage(BlApi ibl)
         {

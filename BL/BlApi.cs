@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace BLAPI
+namespace BL
 {
     public interface BlApi
     {

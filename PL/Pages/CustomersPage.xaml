@@ -125,10 +125,15 @@
                             <TextBlock
                                 Grid.Column="2"
                                 Text="{Binding Phone}"/>
-                            <!-- Todo: Fix -->
                             <TextBlock
-                                Grid.Column="3"
-                                Text="{Binding DMS}"/>
+                                Grid.Column="3">
+                                <TextBlock.Text>
+                                    <MultiBinding Converter="{StaticResource DmsConverter}">
+                                        <Binding Path="Location.Latitude"/>
+                                        <Binding Path="Location.Longitude"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

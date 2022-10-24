@@ -1,34 +1,55 @@
-﻿using System;
+﻿using DalFacade.DO;
+using System;
 
 namespace BL
 {
-    //Item not found
-    public class BlNotFoundException : Exception { }
+    public class BlNotFoundException : Exception
+    {
+        public BlNotFoundException(object o) : base($"{o.GetType()} not found") { }
+    }
 
-    //Item already exists
-    public class BlAlreadyExistsException : Exception { }
+    public class BlAlreadyExistsException : Exception
+    {
+        public BlAlreadyExistsException(object o) : base($"{o} already exists") { }
+    }
 
-    //Drone isn't free
-    public class BlDroneNotFreeException : Exception { }
+    public class BlDroneNotFreeException : Exception
+    {
+        public BlDroneNotFreeException() : base("Drone isn't free") { }
+    }
 
-    //Drone is not currently in maintenance
-    public class BlDroneNotMaintainedException : Exception { }
+    public class BlDroneNotMaintainedException : Exception
+    {
+        public BlDroneNotMaintainedException() : base("Drone is not currently in maintenance") { }
+    }
 
-    //Empty parameter passed
-    public class EmptyParameterException : Exception { }
+    public class EmptyParameterException : Exception
+    {
+        public EmptyParameterException(Type paramType) : base($"Item {paramType} passed is empty or null") { }
+    }
 
-    //Drone doesn't have enough battery
-    public abstract class BlNotEnoughBatteryException : Exception { }
+    public class BlNotEnoughBatteryException : Exception
+    {
+        public BlNotEnoughBatteryException() : base("Not enough battery to make trip") { }
+    }
 
-    //Station doesn't have an open charge slot
-    public class BlNoOpenSlotsException : Exception { }
+    public class BlNoOpenSlotsException : Exception
+    {
+        public BlNoOpenSlotsException(Station s) : base($"Station with ID:{s.Id} has no open slots") { }
+    }
 
-    //Parcel is not awaiting collection
-    public class BlNoMatchingParcels : Exception { }
+    public class BlNoMatchingParcels : Exception
+    {
+        public BlNoMatchingParcels() : base("No parcel is awaiting collection") { }
+    }
 
-    //Parcel is not being delivered
-    public class BlNotBeingDeliveredException : Exception { }
+    public class BlNotBeingDeliveredException : Exception
+    {
+        public BlNotBeingDeliveredException() : base("No parcel is being delivered by drone") { }
+    }
 
-    //Parcel already collected
-    public class BlAlreadyCollected : Exception { }
+    public class BlAlreadyCollected : Exception
+    {
+        public BlAlreadyCollected(Parcel p) : base($"Parcel (ID#{p.Id}) already collected") { }
+    }
 }

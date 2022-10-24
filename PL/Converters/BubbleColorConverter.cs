@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
 using System.Windows.Media;
+using Color = System.Windows.Media.Color;
 
 namespace PL.Converters
 {
@@ -17,15 +18,15 @@ namespace PL.Converters
             var userId = System.Convert.ToInt32(values[1]);
 
             // light blue
-            var receiverBrush = (SolidColorBrush)new BrushConverter().ConvertFrom("#d1e3ff");
+            var receiverBrush = new SolidColorBrush(Color.FromRgb(209, 227, 255));
 
             // off-white
-            var senderBrush = (SolidColorBrush)new BrushConverter().ConvertFrom("#ebebeb");
+            var senderBrush = new SolidColorBrush(Color.FromRgb(235, 235, 235)); 
 
             if (senderId == userId)
                 return senderBrush;
 
-            else return receiverBrush;
+            return receiverBrush;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

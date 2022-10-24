@@ -7,7 +7,8 @@ namespace DalFacade.DO
     public class Station : ViewModelBase
     {
         private int _id;
-        [XmlAttribute] public int Id
+        [XmlAttribute]
+        public int Id
         {
             get => _id;
             set
@@ -21,7 +22,8 @@ namespace DalFacade.DO
         }
 
         private int _name;
-        [XmlAttribute] public int Name
+        [XmlAttribute]
+        public int Name
         {
             get => _name;
             set
@@ -35,7 +37,8 @@ namespace DalFacade.DO
         }
 
         private int _openSlots;
-        [XmlAttribute] public int OpenSlots
+        [XmlAttribute]
+        public int OpenSlots
         {
             get => _openSlots;
             set
@@ -49,7 +52,8 @@ namespace DalFacade.DO
         }
 
         private double _latitude;
-        [XmlElement] public double Latitude
+        [XmlElement]
+        public double Latitude
         {
             get => _latitude;
             set
@@ -63,7 +67,8 @@ namespace DalFacade.DO
         }
 
         private double _longitude;
-        [XmlElement] public double Longitude
+        [XmlElement]
+        public double Longitude
         {
             get => _longitude;
             set
@@ -77,7 +82,8 @@ namespace DalFacade.DO
         }
 
         private List<DroneCharge> _ports;
-        [XmlArray] [XmlArrayItem("Port")]
+        [XmlArray]
+        [XmlArrayItem("Port")]
         public List<DroneCharge> Ports
         {
             get => _ports;
@@ -92,7 +98,8 @@ namespace DalFacade.DO
         }
 
         private bool _active;
-        [XmlAttribute] public bool Active
+        [XmlAttribute]
+        public bool Active
         {
             get => _active;
             set
@@ -107,10 +114,10 @@ namespace DalFacade.DO
 
         public const short MaxChargeSlots = 15;
 
-        public Station() {}
+        public Station() { }
 
         // Full Constructor
-        public Station(int id, int name, int openSlots, double latitude, double longitude, List<DroneCharge> ports, bool active) 
+        public Station(int id, int name, int openSlots, double latitude, double longitude, List<DroneCharge> ports, bool active)
         {
             Id = id;
             Name = name;

@@ -201,8 +201,6 @@
                                 <Run Text="Order #" />
                                 <Run Text="{Binding LatestParcel.Id, StringFormat={}{0:000000}}" />
                             </TextBlock>
-                            <controls:TestControl 
-                                x:Name="Test"/>
                         </StackPanel>
 
                         <Grid

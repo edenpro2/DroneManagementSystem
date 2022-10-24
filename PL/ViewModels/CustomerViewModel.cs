@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using DalFacade.DO;
+﻿using DalFacade.DO;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace PL.ViewModels
 {
-    public class CustomerViewModel : ViewModelBase 
+    public class CustomerViewModel : ViewModelBase
     {
         private ObservableCollection<Customer>? _customers;
         public ObservableCollection<Customer>? Customers

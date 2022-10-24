@@ -1,9 +1,8 @@
-﻿using System.ComponentModel;
+﻿using DalFacade.DO;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
-using DalFacade.DO;
-using PL.ViewModels;
 
 namespace PL.Controls
 {
@@ -22,7 +21,7 @@ namespace PL.Controls
 
         public Parcel ViewModel
         {
-            get => (Parcel) GetValue(ViewModelProperty);
+            get => (Parcel)GetValue(ViewModelProperty);
             set
             {
                 SetValue(ViewModelProperty, value);
@@ -35,7 +34,7 @@ namespace PL.Controls
 
         public SolidColorBrush Fill
         {
-            get => (SolidColorBrush) GetValue(FillProperty);
+            get => (SolidColorBrush)GetValue(FillProperty);
             set
             {
                 SetValue(FillProperty, value);

@@ -1,4 +1,4 @@
-﻿using BLAPI;
+﻿using BL;
 using DalFacade.DO;
 using PL.ViewModels;
 using PL.Windows;
@@ -52,7 +52,7 @@ namespace PL.Pages
 
             var cbWeight = (WeightCategories)WeightComboBox.SelectedItem;
             DroneViewModel.Filtered = new ObservableCollection<Drone>(DroneViewModel.Filtered.Where(drone => drone.MaxWeight == cbWeight));
-            
+
         }
 
         private void ClearSelButton_Click(object sender, RoutedEventArgs e)
@@ -70,10 +70,7 @@ namespace PL.Pages
 
         private void DronesListBox_Click(object sender, MouseButtonEventArgs e)
         {
-            var selectedDrone = (Drone)DronesListBox.SelectedItem;
-            var droneDetailsWindow = new DroneTrackingWindow(_bl, selectedDrone, DroneViewModel);
-            droneDetailsWindow.ShowDialog();
-            DroneViewModel = droneDetailsWindow.GetValue();
+            new DroneTrackingWindow(_bl, (Drone)DronesListBox.SelectedItem).ShowDialog();
             FilterDrones();
         }
 

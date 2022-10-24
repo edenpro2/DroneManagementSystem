@@ -62,12 +62,13 @@
 
                 </DockPanel>
 
+                <!-- Todo: Fix the viewmodel for chats -->
                 <ListBox
                     Background="{x:Null}"
                     Grid.Row="2"
                     Grid.Column="1"
                     d:ItemsSource="{d:SampleData ItemCount=7}"
-                    ItemsSource="{Binding PersonalChat.ChatViewModels}">
+                    ItemsSource="{Binding PersonalChat.ChatViewModel}">
                     <ListBox.Template>
                         <ControlTemplate>
                             <ScrollViewer

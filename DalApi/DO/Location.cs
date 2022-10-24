@@ -8,7 +8,8 @@ namespace DalFacade.DO
     {
         private double _latitude;
 
-        [XmlAttribute("Lat")] public double Latitude
+        [XmlAttribute("Lat")]
+        public double Latitude
         {
             get => _latitude;
             set
@@ -23,7 +24,8 @@ namespace DalFacade.DO
 
         private double _longitude;
 
-        [XmlAttribute("Long")] public double Longitude
+        [XmlAttribute("Long")]
+        public double Longitude
         {
             get => _longitude;
             set
@@ -36,7 +38,7 @@ namespace DalFacade.DO
             }
         }
 
-        public Location() {}
+        public Location() { }
 
         public Location(double lat = 0.0, double lon = 0.0)
         {
@@ -52,7 +54,7 @@ namespace DalFacade.DO
 
         public bool Equals(Location other)
         {
-            return Latitude == other.Latitude && Longitude == other.Longitude;
+            return other != null && (Math.Abs(Latitude - other.Latitude) < 0.0000001) && (Math.Abs(Longitude - other.Longitude) < 0.0000001);
         }
 
         public override string ToString()

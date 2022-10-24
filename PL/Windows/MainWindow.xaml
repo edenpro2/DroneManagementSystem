@@ -18,6 +18,18 @@
         AllowsTransparency="True"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen">
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation
+                        Duration="00:00:2" 
+                        Storyboard.TargetProperty="Opacity"
+                        From="0.25" To="1" />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
  
     <Window.Resources>
         <Style TargetType="{x:Type Separator}" BasedOn="{StaticResource Padding}">
@@ -39,18 +51,6 @@
         </Style>
     </Window.Resources>
 
-    <Window.Triggers>
-        <EventTrigger RoutedEvent="Window.Loaded">
-            <BeginStoryboard>
-                <Storyboard>
-                    <DoubleAnimation
-                        Duration="00:00:2" 
-                        Storyboard.TargetProperty="Opacity"
-                        From="0.25" To="1" />
-                </Storyboard>
-            </BeginStoryboard>
-        </EventTrigger>
-    </Window.Triggers>
 
     <materialDesign:Card
         UniformCornerRadius="10">
@@ -98,7 +98,7 @@
                     <Separator/>
 
                     <TextBlock
-                        x:Name="ErrorTextBlock"
+                        Text="{Binding ErrorMessage}"
                         FontSize="15"
                         Foreground="IndianRed"
                         FontWeight="SemiBold"
@@ -122,15 +122,24 @@
                     <Separator/>
 
                     <Button
-                        Style="{StaticResource MaterialDesignFlatMidBgButton}"
                         x:Name="LoginButton"
                         materialDesign:ElevationAssist.Elevation="Dp1"
                         Height="53"
                         Width="450"
                         materialDesign:ButtonAssist.CornerRadius="5"
                         FontSize="18"
-                        Content="Login"
-                        Click="LoginBtn_Click"/>
+                        Click="LoginBtn_Click">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatMidBgButton}">
+                                <Setter Property="Content" Value="Login"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="False">
+                                        <Setter Property="Content" Value=""/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
 
 
                     <DockPanel
@@ -158,12 +167,9 @@
                         Click="EmployeeBtn_Click" 
                         HorizontalAlignment="Right"
                         Margin="0,0,24,0" />
-
                 </StackPanel>
 
-
             </materialDesign:Card>
-
 
 
             <Image  
@@ -172,11 +178,21 @@
                 x:Name="Gif"
                 gif:ImageBehavior.AnimatedSource="../Resources/loading.gif" 
                 HorizontalAlignment="Center" 
-                Visibility="Hidden"
                 VerticalAlignment="Top" 
                 Height="194" 
                 Width="260"
-                Margin="0,284,0,0"/>
+                Margin="0,284,0,0">
+                <Image.Style>
+                    <Style TargetType="{x:Type Image}">
+                        <Setter Property="Visibility" Value="Hidden"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=LoginButton, Path=IsEnabled}" Value="False">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
 
             <materialDesign:PopupBox
                 Margin="5"

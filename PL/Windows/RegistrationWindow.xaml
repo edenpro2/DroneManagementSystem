@@ -8,7 +8,8 @@
         Background="{x:Null}"
         AllowsTransparency="True"
         WindowStyle="None"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
     <Window.Resources>
         <Style BasedOn="{StaticResource Padding}" TargetType="{x:Type Separator}"/>
@@ -57,7 +58,7 @@
             <Separator/>
 
             <TextBlock
-                x:Name="ErrorBox"
+                Text="{Binding ErrorMessage}"
                 FontSize="15"
                 Foreground="IndianRed"
                 FontWeight="SemiBold"

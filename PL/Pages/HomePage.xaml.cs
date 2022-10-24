@@ -1,8 +1,7 @@
-﻿using PL.Windows;
+﻿using DalFacade.DO;
+using PL.Windows;
 using System.Windows;
 using System.Windows.Media;
-using PL.Controls;
-using DalFacade.DO;
 
 namespace PL.Pages
 {
@@ -18,7 +17,6 @@ namespace PL.Pages
         {
             LatestParcel = parcelVm;
             CustomerUi = customerUi;
-            Test = new TestControl(LatestParcel);
             InitializeComponent();
         }
 

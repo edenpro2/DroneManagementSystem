@@ -1,5 +1,4 @@
 ﻿using DalFacade.DO;
-using PL.Controls;
 using PL.ViewModels;
 using System;
 using System.Windows.Input;
@@ -16,7 +15,7 @@ namespace PL.Windows.Tracking
         public CustomerWindow(Customer customer)
         {
             ViewModel = customer;
-            MapUrl.Uri = NewMapUri(new Location(ViewModel.Latitude, ViewModel.Longitude));
+            MapUrl.Uri = NewMapUri(ViewModel.Location);
             InitializeComponent();
         }
 

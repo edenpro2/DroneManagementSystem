@@ -1,10 +1,10 @@
-﻿using BLAPI;
+﻿using BL;
+using DalFacade.DO;
 using PL.ViewModels;
 using PL.Windows;
 using PL.Windows.Tracking;
 using System.Windows;
 using System.Windows.Input;
-using DalFacade.DO;
 
 namespace PL.Pages
 {
@@ -12,7 +12,7 @@ namespace PL.Pages
     {
         private readonly BlApi _bl;
         public CustomerViewModel CustomerViewModel { get; }
-      
+
         public CustomersPage(BlApi ibl)
         {
             _bl = ibl;

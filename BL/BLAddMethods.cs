@@ -1,6 +1,6 @@
-﻿using System;
+﻿using DalFacade.DO;
+using System;
 using System.Runtime.CompilerServices;
-using DalFacade.DO;
 
 namespace BL
 {

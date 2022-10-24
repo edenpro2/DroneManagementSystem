@@ -1,12 +1,11 @@
-﻿using BLAPI;
-using PL.Controls;
+﻿using BL;
+using DalFacade;
+using DalFacade.DO;
 using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using DalFacade;
-using DalFacade.DO;
 using Image = System.Windows.Controls.Image;
 
 namespace PL.Windows
@@ -23,6 +22,7 @@ namespace PL.Windows
 
             var resources = FileReader.GetFolderPath("\\Resources");
             var icons = FileReader.GetFolderPath("\\Icons");
+            
 
             switch (type)
             {
@@ -32,11 +32,10 @@ namespace PL.Windows
                     {
                         var icon = new Image
                         {
-                            Source = new BitmapImage(new Uri($"{resources}\\drone.png")),
                             Width = 20,
-                            Height = 20
+                            Height = 20,
+                            Source = new BitmapImage(new Uri($"{resources}\\drone.png"))
                         };
-
                         AddIcon(icon, drone);
                     }
                     break;
@@ -46,11 +45,10 @@ namespace PL.Windows
                     {
                         var icon = new Image
                         {
-                            Source = new BitmapImage(new Uri($"{resources}\\warehouse3d.png")),
-                            Width = 30,
-                            Height = 30
+                            Width = 20,
+                            Height = 20,
+                            Source = new BitmapImage(new Uri($"{resources}\\warehouse3d.png"))
                         };
-
                         AddIcon(icon, station);
                     }
                     break;
@@ -60,11 +58,10 @@ namespace PL.Windows
                     {
                         var icon = new Image
                         {
-                            Source = new BitmapImage(new Uri($"{resources}\\account.jpg")),
-                            Width = 30,
-                            Height = 30
+                            Width = 20,
+                            Height = 20,
+                            Source = new BitmapImage(new Uri($"{resources}\\account.jpg"))
                         };
-
                         AddIcon(icon, customer);
                     }
                     break;
@@ -74,11 +71,10 @@ namespace PL.Windows
                     {
                         var icon = new Image
                         {
-                            Source = new BitmapImage(new Uri($"{icons}\\package.png")),
-                            Width = 30,
-                            Height = 30
+                            Width = 20,
+                            Height = 20,
+                            Source = new BitmapImage(new Uri($"{icons}\\package.png"))
                         };
-
                         AddIcon(icon, parcel);
                     }
                     break;
@@ -106,7 +102,7 @@ namespace PL.Windows
             const double maxLong = -79.182916;
 
             var a = targetLong - minLong;
-            var b = maxLong - minLong;
+            const double b = maxLong - minLong;
 
             return ((a) / (b)) * (width - 1);
         }
