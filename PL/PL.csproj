@@ -31,6 +31,13 @@
         </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Cache\**" />
+      <EmbeddedResource Remove="Cache\**" />
+      <None Remove="Cache\**" />
+      <Page Remove="Cache\**" />
+    </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
     <PackageReference Include="LiveCharts.Wpf.Core" Version="0.9.8" />
