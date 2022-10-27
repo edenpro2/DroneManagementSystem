@@ -7,7 +7,7 @@ Welcome to my C# Windows "Mini" Project for JCT Lev International Program in Com
 Bonuses and personal additions are in the word doc files accordingly
 
 ## Bonuses
-* Location coordinates in sexagesimal format, for user readability
+* Location coordinates in sexagesimal/base-60 format, for user readability
 * Option that picks the coordinates of any point and prints distance
 from a base or client to this point
 * In all windows, prevent the window from being closed "by force" by
@@ -23,7 +23,7 @@ maximum lazy initialization
 * Design Pattern - Design by contract for Business layer
 * Maximum Data Binding between elements in window and code-
 behind
-* Interface implementations and ISP INotifyPropertyChanged forMVVM
+* Interface implementations and INotifyPropertyChanged for MVVM (Model-View-ViewModel)
 * The shape of the controls varies symmetrically in the expansion /
 contraction of the windows
 * Intuitive and easy-to-understand user interface
@@ -39,10 +39,13 @@ contraction of the windows
 * Transform
 * Live GPS (1hr=1sec) of drone carrying out task (meaning location is calculated based on bearing, distance and speed) (very hard to do...)
 * UI/UX Design meant to be easy to the eye and comfortable to use
-* +100 hours of work put into this project by myself
 * Bonus file structure (DalXml, DalApi...)
-* Using LINQ and Query Language (from) wherever possible 
+* Using LINQ and Query wherever possible 
 * Delegate/Predicates
 * Anonymous functions/Lambas
 * Map showing the user where each object is (pinpoint location with OpenStreetMaps)
 * More not specified as I did as many bonuses as possible
+* +300 hours of work put into this project by myself
+
+* [NEW] Added a battery chart and cycle bar 
+* [NEW] Added a step progress bar to show where the parcel is currently (also used for drone stage)
