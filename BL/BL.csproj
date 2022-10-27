@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.13.2" />
+    <PackageReference Include="BenchmarkDotNet.Annotations" Version="0.13.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DalApi\DalFacade.csproj" />
     <ProjectReference Include="..\DalObject\DalObject.csproj" />
     <ProjectReference Include="..\DalXml\DalXml.csproj" />

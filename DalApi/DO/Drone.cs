@@ -126,7 +126,7 @@ namespace DalFacade.DO
                 $"{nameof(MaxWeight)}: {MaxWeight}\n" +
                 $"{nameof(Status)}: {Status}\n" +
                 $"{nameof(Battery)}: {Battery:0:0.##}\n" +
-                $"{nameof(Location)}: {Location?.ToSexagesimal()}\n" +
+                $"{nameof(Location)}: {Location?.ToBase60()}\n" +
                 $"{nameof(ModelImg)}: {ModelImg}\n" +
                 $"{nameof(Active)}: {Active}";
         }

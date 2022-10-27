@@ -28,9 +28,9 @@ namespace BL
         public EmptyParameterException(Type paramType) : base($"Item {paramType} passed is empty or null") { }
     }
 
-    public class BlNotEnoughBatteryException : Exception
+    public abstract class BlNotEnoughBatteryException : Exception
     {
-        public BlNotEnoughBatteryException() : base("Not enough battery to make trip") { }
+        protected BlNotEnoughBatteryException() : base("Not enough battery to make trip") { }
     }
 
     public class BlNoOpenSlotsException : Exception

@@ -1,6 +1,11 @@
 ﻿using DalFacade.DO;
+using Newtonsoft.Json;
+using System.IO;
 using System.Linq;
+using System.Net;
+using static DalFacade.FileReader;
 using static System.Math;
+using static BL.BO.BlPredicates;
 
 namespace BL.BO
 {
@@ -41,18 +46,17 @@ namespace BL.BO
         /// <returns></returns>
         public static double Speed(this Bl bl, Drone drone)
         {
-            if (drone.Status == DroneStatuses.Delivery)
+            switch (drone.Status)
             {
-                var parcel = bl.GetParcels(p => p.Active).First(p => p.DroneId == drone.Id);
-                if (parcel.Collected != default && parcel.Delivered == default)
-                {
-                    return (double)Speeds.Loaded;
-                }
+                case DroneStatuses.Delivery:
+                    var parcel = bl.GetParcels(p => p.Active).First(p => p.DroneId == drone.Id); // assigned parcel
+                    if (InTransit(parcel)) 
+                        return (double)Speeds.Loaded;
+                    return (double)Speeds.Unloaded;
+                default:
+                    return (double)Speeds.Unloaded;
             }
-
-            return (double)Speeds.Unloaded;
         }
-
 
         /// <summary>
         /// Convert degree to radians

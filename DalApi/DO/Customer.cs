@@ -97,7 +97,7 @@ namespace DalFacade.DO
             $"{nameof(Id)}: {Id}\n" +
             $"{nameof(Name)}: {Name}\n" +
             $"{nameof(Phone)}: {Phone}\n" +
-            $"Location: {Location.ToSexagesimal()}\n" +
+            $"Location: {Location.ToBase60()}\n" +
             $"{nameof(Active)}: {Active}";
     }
 }

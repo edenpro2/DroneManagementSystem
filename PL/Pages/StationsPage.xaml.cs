@@ -22,7 +22,7 @@ namespace PL.Pages
 
         private void StationListBox_Click(object sender, MouseButtonEventArgs e)
         {
-            new StationWindow((Station)StationListBox.SelectedItem).ShowDialog();
+            new StationWindow(_bl, (Station)StationListBox.SelectedItem).ShowDialog();
         }
 
         private void DisplayAsMap_Click(object sender, RoutedEventArgs e)

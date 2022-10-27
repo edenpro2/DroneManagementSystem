@@ -4,9 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
-using DalFacade.DO;
-using System.Data.SqlTypes;
 
 namespace DalFacade
 {
@@ -31,6 +28,13 @@ namespace DalFacade
             SearchOnly
         }
 
+        /// <summary>
+        /// Return full path of folder (folder parameter must start without \\)
+        /// </summary>
+        /// <param name="folder"></param>
+        /// <param name="pathOption"></param>
+        /// <param name="searchOption"></param>
+        /// <returns></returns>
         public static string GetFolderPath(string folder, PathOption pathOption = PathOption.SearchOnly, SearchOption searchOption = SearchOption.AllDirectories)
         {
             var projectDirectory = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\.."));
@@ -63,42 +67,7 @@ namespace DalFacade
                     .ToList();
         }
 
-        public class NominatimJson
-        {
-            public int place_id { get; set; }
-            public string licence { get; set; }
-            public string osm_type { get; set; }
-            public int osm_id { get; set; }
-            public List<string> boundingbox { get; set; }
-            public string lat { get; set; }
-            public string lon { get; set; }
-            public string display_name { get; set; }
-            public int place_rank { get; set; }
-            public string category { get; set; }
-            public string type { get; set; }
-            public double importance { get; set; }
-        }
-
-
-
-        public static NominatimJson LoadNominatim(Location Loc)
-        {
-            var url = $"https://nominatim.openstreetmap.org/search.php?q={Loc.Latitude}%2C{Loc.Longitude}&format=jsonv2";
-
-            var request = (HttpWebRequest)WebRequest.Create(url);
-            request.UserAgent = "My C# Project -> thank you for letting us use your api :)";
-            request.Method = "GET";
-            var myResponse = (HttpWebResponse)request.GetResponse();
-            Stream newStream = myResponse.GetResponseStream();
-            StreamReader sr = new StreamReader(newStream);
-            var result = sr.ReadToEnd();
-
-            var res = result.Remove(0, 1);
-            res = res.Remove(res.Length - 1, 1);
-
-
-            return JsonConvert.DeserializeObject<NominatimJson>(res);
-        }
+       
 
         public static IList<string> LoadJson(string filename)
         {

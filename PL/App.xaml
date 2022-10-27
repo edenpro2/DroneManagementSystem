@@ -178,14 +178,14 @@
 
             <Style x:Key="InfoHeader" TargetType="TextBlock">
                 <Setter Property="FontSize" Value="20" />
-                <Setter Property="FontFamily" Value="Dubai Medium" />
+                <Setter Property="FontFamily" Value="Inter" />
                 <Setter Property="Foreground" Value="#FF413940" />
                 <Setter Property="VerticalAlignment" Value="Top" />
             </Style>
 
             <Style x:Key="InfoDetails" TargetType="TextBlock">
                 <Setter Property="FontSize" Value="20" />
-                <Setter Property="FontFamily" Value="Dubai" />
+                <Setter Property="FontFamily" Value="Inter" />
                 <Setter Property="Foreground" Value="#FFB2B2B3" />
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="HorizontalAlignment" Value="Left" />

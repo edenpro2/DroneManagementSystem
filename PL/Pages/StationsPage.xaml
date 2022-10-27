@@ -108,13 +108,8 @@
                                 TextAlignment="Left" />
                             <TextBlock
                                 Grid.Column="3"
+                                Text="{Binding Location, Converter={StaticResource DmsConverter}}"
                                 TextAlignment="Left" >
-                                <TextBlock.Text>
-                                    <MultiBinding Converter="{StaticResource DmsConverter}" >
-                                        <Binding Path="Latitude"/>
-                                        <Binding Path="Longitude"/>
-                                    </MultiBinding>
-                                </TextBlock.Text>
                             </TextBlock>
                         </Grid>
                     </DataTemplate>

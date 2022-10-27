@@ -1,8 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Threading;
 using System.Windows;
-using System.Windows.Threading;
 
 namespace PL.Windows.Tracking
 {
@@ -11,7 +9,7 @@ namespace PL.Windows.Tracking
         #region Properties
         private BackgroundWorker? Worker { get; set; }
         private bool _simulationRunning;
-        private const int Time = 1000; //ms
+        private const int Time = 1020; //in ms (extra 20 ms to adjust for internet traffic)
         private bool _shouldStop;
         #endregion
 
@@ -25,9 +23,12 @@ namespace PL.Windows.Tracking
         {
             if (_simulationRunning) { _shouldStop = true; /*and should*/ return; }
 
-            Worker = new BackgroundWorker();
-            Worker.WorkerReportsProgress = true;
-            Worker.WorkerSupportsCancellation = true;
+            Worker = new BackgroundWorker()
+            {
+                WorkerReportsProgress = true,
+                WorkerSupportsCancellation = true
+            };
+
             _shouldStop = false;
             _simulationRunning = true;
             Worker.DoWork += Worker_DoWork!;
@@ -41,11 +42,11 @@ namespace PL.Windows.Tracking
         {
             while (!_shouldStop)
             {
-                Thread.Sleep(Time);
+                System.Threading.Thread.Sleep(Time);
                 var (drone, progress) = _bl.DroneSimulator(ViewModel);
                 ViewModel = drone;
                 Dispatcher.Invoke(() => { ProgressMessage = progress; });
-                Worker?.ReportProgress(50);
+                Worker?.ReportProgress(1);
             }
 
             Worker_RunWorkerCompleted(sender, new RunWorkerCompletedEventArgs(sender, null, true));

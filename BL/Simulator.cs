@@ -143,16 +143,8 @@ namespace BL
                     }
                     catch (Exception exception)
                     {
-                        switch (exception)
-                        {
-                            case BlNotEnoughBatteryException:
-                                drone.Status = Maintenance;
-                                progress = "Drone was in delivery, but doesn't have enough battery (now in maintenance)";
-                                break;
-                            case BlNoMatchingParcels:
-                                drone.Status = Maintenance;
-                                break;
-                        }
+                        drone.Status = Maintenance;
+                        progress = exception.Message;
                         break;
                     }
             }

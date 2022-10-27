@@ -46,7 +46,7 @@ namespace BL
                 case Drone drone:
                     return drone.Location ?? new Location();
                 case Station station:
-                    return new Location(station.Latitude, station.Longitude);
+                    return station.Location;
                 case Customer customer:
                     return customer.Location;
                 // parcel is with sender 

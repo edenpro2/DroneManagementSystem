@@ -97,34 +97,6 @@ namespace DalFacade.DO
                 .First();
         }
 
-        /// <summary>
-        /// Get a random status where bound is the max status to choose from (max 3)
-        /// </summary>
-        /// <example>
-        /// GetRandomStatus(rand, 2) => returns free or maintenance
-        /// </example>
-        /// <param name="rand"></param>
-        /// <param name="bound"></param>
-        /// <returns></returns>
-        public static DroneStatuses GetRandomStatus(Random rand, short bound)
-        {
-            return (DroneStatuses)rand.Next(bound);
-        }
-
-        /// <summary>
-        /// Returns a free, active drone
-        /// </summary>
-        /// <param name="rand"></param>
-        /// <param name="drones"></param>
-        /// <returns></returns>
-        public static Drone? GetFreeRandomDrone(Random rand, IEnumerable<Drone> drones)
-        {
-            return drones.
-                Where(d => d.Active).
-                Where(d => d.Status is DroneStatuses.Free or null).
-                OrderBy(_ => rand.Next()).
-                FirstOrDefault();
-        }
 
         /// <summary>
         /// Gets a random location in a given radius from a coordinate
@@ -132,138 +104,135 @@ namespace DalFacade.DO
         /// <returns> Location </returns>
         public static Location LocationInRadius()
         {
-            Location[] locations =
+            var locations = new List<Location>
             {
                 //Gold Coast:
-                new(25.53166106, -80.45604003),
+                new(25.53166, -80.45604),
 
                 //Kendall:
-                new(25.69277059, -80.36444240),
+                new(25.69277, -80.36444),
 
                 //Miami:
-                new(25.81373808, -80.27764484),
+                new(25.81373, -80.27764),
 
                 //North Miami:
-                new(25.94322679, -80.23644863),
+                new(25.94322, -80.23644),
 
                 //Weston:
-                new(26.05098432, -80.34603680),
+                new(26.05098, -80.34603),
 
                 //Fort Lauderdale:
-                new(26.12437060, -80.20747071),
+                new(26.12437, -80.20747),
 
                 //Pompano Beach:
-                new(26.27777763, -80.18289037),
+                new(26.27777, -80.18289),
 
                 //Boca Raton:
-                new(26.44721357, -80.16132918),
+                new(26.44721, -80.16132),
 
                 //Palm Springs:
-                new(26.64083044, -80.15336961),
+                new(26.64083, -80.15336),
 
                 //West Palm Beach:
-                new(26.75358149, -80.13730158),
+                new(26.75358, -80.13730),
 
                 //Jupiter:
-                new(26.91802913, -80.17012176),
+                new(26.91802, -80.17012),
 
                 //Palm City:
-                new(27.16278540, -80.28451386),
+                new(27.16278, -80.28451),
 
                 //Port St. Lucie:
-                new(27.25157746, -80.34439087),
+                new(27.25157, -80.34439),
 
                 //Vero Beach:
-                new(27.57767735, -80.44024867),
+                new(27.57767, -80.44024),
 
                 //Melbourne:
-                new(28.06798150, -80.70364280),
+                new(28.06798, -80.70364),
 
                 //Cocoa West:
-                new(28.27874464, -80.80252479),
+                new(28.27874, -80.80252),
 
                 //OIA:
-                new(28.43609107, -81.41392834),
+                new(28.43609, -81.41392),
 
                 //Horizon West (Orlando):
-                new(28.43464195, -81.62430062),
+                new(28.43464, -81.62430),
 
                 //Orlando:
-                new(28.57620066, -81.45003025),
+                new(28.57620, -81.45003),
 
                 //Haines City:
-                new(28.13521414, -81.58502549),
+                new(28.13521, -81.58502),
 
                 //Lakeland:
-                new(27.98773187, -82.01222634),
+                new(27.98773, -82.01222),
 
                 //Tampa:
-                new(28.01913575, -82.48109410),
+                new(28.01913, -82.48109),
 
                 //St.Petersburg:
-                new(27.84271908, -82.72788128),
+                new(27.84271, -82.72788),
 
                 //Spring Hill:
-                new(28.41990798, -82.52682799),
+                new(28.41990, -82.52682),
 
                 //Port Richey:
-                new(28.22890596, -82.65206761),
+                new(28.22890, -82.65206),
 
                 //Sarasota:
-                new(27.38566918, -82.45871632),
+                new(27.38566, -82.45871),
 
                 //Rotonda West:
-                new(26.94961686, -82.25271759),
+                new(26.94961, -82.25271),
 
                 //Fort Meyers:
-                new(26.65408661, -81.97928752),
+                new(26.65408, -81.97928),
 
                 //Naples:
-                new(26.16924303 - 81.71411233),
+                new(26.16924 , -81.71411),
 
                 //Bellview:
-                new(29.03792121, -82.05059640),
+                new(29.03792, -82.05059),
 
                 //Daytona Beach:
-                new(29.14568468, -81.08294630),
+                new(29.14568, -81.08294),
 
                 //Palm Coast:
-                new(29.52782131, -81.26312004),
+                new(29.52782, -81.26312),
 
                 //Gainesville:
-                new(29.63769446, -82.35970804),
+                new(29.63769, -82.35970),
 
                 //St.Augustine:
-                new(29.84123950, -81.37503569),
+                new(29.84123, -81.37503),
 
             };
 
-            var random = new Random(Guid.NewGuid().GetHashCode());
+            var random = new Random();
 
-            var randomLocation = locations[random.Next(locations.Length)];
-
-            const double radiusInMeters = 5000;
+            var randomLocation = locations[random.Next(locations.Count)];
+            const int radiusInMeters = 5000;
 
             // Convert radius from meters to degrees
-            const double radiusInDegrees = radiusInMeters / 111000f;
+            const double radiusInDegrees = radiusInMeters / 111_000f;
 
-            var u = random.NextDouble();
-            var v = random.NextDouble();
-            var w = radiusInDegrees * Sqrt(u);
-            var t = 2 * PI * v;
+            var randA = random.NextDouble();
+            var randB = random.NextDouble();
+            var w = radiusInDegrees * Sqrt(randA);
+            var t = 2 * PI * randB;
             var x = w * Cos(t);
             var y = w * Sin(t);
 
-            var y0 = randomLocation.Latitude;
-            var x0 = randomLocation.Longitude;
-
             // Adjust the x-coordinate for the shrinking of the east-west distances
-            var newX = x / Cos(y0 * PI / 180);
+            var newX = x / Cos(randomLocation.Latitude * (PI / 180));
 
-            var foundLongitude = newX + x0;
-            var foundLatitude = y + y0;
 
-            return new(foundLatitude, foundLongitude);
+            var lat = Round(y + randomLocation.Latitude, 5);
+            var lon = Round(newX + randomLocation.Longitude, 5);
+
+            return new Location(lat, lon);
 
         }
     }

@@ -12,7 +12,7 @@ namespace BL
     public partial class Bl
     {
         // Minimum for collection + min for delivery + min for trip to closest station after delivery
-        private double MinForCollection(Drone drone, Parcel parcel)
+        public double MinForCollection(Drone drone, Parcel parcel)
         {
             var min = CalcPowerConsumption(drone, parcel);
             min += MinForDelivery(drone, parcel);
@@ -20,14 +20,14 @@ namespace BL
         }
 
         // Minimum for delivery + min for trip to closest station after delivery
-        private double MinForDelivery(Drone drone, Parcel parcel)
+        public double MinForDelivery(Drone drone, Parcel parcel)
         {
             var min = CalcPowerConsumption(drone, parcel);
             min += MinForTripToStation(drone);
             return min;
         }
 
-        private double MinForTripToStation(Drone drone)
+        public double MinForTripToStation(Drone drone)
         {
             var station = this.ClosestAvailableStation(drone);
             return CalcPowerConsumption(drone, station);
@@ -129,13 +129,24 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         private Parcel? BestMatchingParcel(Drone drone)
         {
-            return GetParcels(p => p.Active)
-                .Where(p => NotAssignedToDrone(p))
-                .Where(p => p.Weight <= drone.MaxWeight)
-                .OrderByDescending(p => p.Priority)
-                .ThenByDescending(p => p.Weight)
-                .ThenBy(p => Distance(LocationOf(p), LocationOf(drone)))
-                .FirstOrDefault(p => CanDroneMakeTrip(drone, p));
+            return
+                (from parcel in GetParcels()  
+                 where parcel.Active && parcel.Weight <= drone.MaxWeight
+                 orderby parcel.Priority descending,
+                         parcel.Weight,
+                         Distance(LocationOf(parcel), drone.Location) 
+                 select parcel)
+                .FirstOrDefault();
+
+
+            // IN LINQ
+            //return GetParcels(p => p.Active)
+            //    .Where(p => p.DroneId < 0)                                                   
+            //    .Where(p => p.Weight <= drone.MaxWeight)                                
+            //    .OrderByDescending(p => p.Priority)
+            //    .ThenByDescending(p => p.Weight)
+            //    .ThenBy(p => Distance(LocationOf(p), LocationOf(drone)))
+            //    .FirstOrDefault(p => CanDroneMakeTrip(drone, p));
         }
     }
 }

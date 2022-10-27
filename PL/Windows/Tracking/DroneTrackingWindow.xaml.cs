@@ -1,16 +1,16 @@
 ﻿using BL;
+using BL.BO.OSM;
+using DalFacade;
 using DalFacade.DO;
 using PL.Controls;
 using System;
 using System.ComponentModel;
 using System.Linq;
-using System.Net;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using DalFacade;
-using static System.Web.HttpUtility;
+using Color = System.Windows.Media.Color;
 
 #pragma warning disable CS8602 // All null values initialized in constructor
 
@@ -19,24 +19,34 @@ namespace PL.Windows.Tracking
     public partial class DroneTrackingWindow
     {
         #region Properties
+        private readonly BlApi _bl;
+        private string CacheFolder { get; } = FileReader.GetFolderPath("PL\\Cache", FileReader.PathOption.CreateDirectory);
+
+        public BatteryChartPlotter BatteryPlotter { get; } = new();
+        public SolidColorBrush CustomFill { get; } = new(Color.FromRgb(68, 110, 189));
+        public NominatimJson Details { get; set; }
         public static double MinScreenHeight => PLMethods.MinScreenHeight(0.80);
         public static double MinScreenWidth => PLMethods.MinScreenWidth(0.80);
-        public SolidColorBrush CustomFill { get; } = new(Color.FromRgb(68, 110, 189));
         public bool IsChecked { get; set; }
-        private readonly BlApi _bl;
-        public string ProgressMessage { get; private set; }
-        public string ErrorMessage { get; private set; }
-        public BatteryChartPlotter BatteryPlotter { get; } = new();
 
-        public FileReader.NominatimJson Details { get; set; }
-
-        private Uri _addressUrl;
-        public Uri AddressUrl
+        private string _errorMessage;
+        public string ErrorMessage
         {
-            get => _addressUrl;
+            get => _errorMessage;
+            private set
+            {
+                _errorMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _progressMessage;
+        public string ProgressMessage
+        {
+            get => _progressMessage;
             set
             {
-                _addressUrl = value;
+                _progressMessage = value;
                 OnPropertyChanged();
             }
         }
@@ -60,9 +70,9 @@ namespace PL.Windows.Tracking
             {
                 _viewModel = value;
                 OnPropertyChanged();
-                //var lat = TruncateLocation(_viewModel.Location.Latitude);
-                //var lon = TruncateLocation(_viewModel.Location.Longitude);
-                //MapUrl = new Uri($"https://www.openstreetmap.org/?mlat={lat}&amp;mlon={lon}#map=12/{lat}/{lon}");
+                var lat = _viewModel.Location.Latitude;
+                var lon = _viewModel.Location.Longitude;
+                MapUrl = new Uri($"https://www.openstreetmap.org/?mlat={lat}&amp;mlon={lon}#map=12/{lat}/{lon}");
             }
         }
 
@@ -78,22 +88,32 @@ namespace PL.Windows.Tracking
         }
         #endregion
 
+        // First, initialize window, then set WebView environment and afterwards assign drone to ViewModel
+        // Since SetWebViewEnvironment sets MapView (UIElement) properties, Window must be created beforehand.
+        // Afterwards, the ViewModel can be updated (alongside the url)
         public DroneTrackingWindow(BlApi bl, Drone drone)
         {
+            InitializeComponent();
+            //SetWebViewEnvironment();
             _bl = bl;
             ViewModel = drone;
-            InitializeComponent();
             UpdateContent();
         }
 
-        private static double TruncateLocation(double val) => val - val % 0.0001;
+        #region Async
+
+        //private async void SetWebViewEnvironment()
+        //{
+        //    var webView2Environment = await CoreWebView2Environment.CreateAsync(null, CacheFolder);
+        //    await MapView.EnsureCoreWebView2Async(webView2Environment);
+        //}
+
+        #endregion
 
         private void UpdateContent()
         {
             Parcel = _bl.GetParcels().FirstOrDefault(p => p.Active && p.DroneId == ViewModel.Id);
             BatteryPlotter.Update(_viewModel.Battery);
-            GetQuery(ViewModel.Location);
-            ErrorMessage = "";
         }
 
         private void MouseLeftBtnDown(object sender, MouseButtonEventArgs e) => DragMove();

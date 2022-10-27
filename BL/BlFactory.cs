@@ -1,4 +1,6 @@
-﻿namespace BL
+﻿using BenchmarkDotNet.Attributes;
+
+namespace BL
 {
     public static class BlFactory
     {

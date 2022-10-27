@@ -63,8 +63,8 @@
                 <StackPanel>
                     <Ellipse 
                         Margin="0 20 0 0"
-                        Width="120"
-                        Height="{Binding RelativeSource={RelativeSource Self}, Path=Width}">
+                        Width="116"
+                        Height="120">
                         <Ellipse.Fill>
                             <ImageBrush 
                                 ImageSource="{Binding ProfilePic}"

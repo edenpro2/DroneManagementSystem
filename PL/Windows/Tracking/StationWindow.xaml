@@ -47,12 +47,13 @@
                     CornerRadius="3" Width="438">
                     <Grid>
                         <TextBlock
-                        Text="Station Information"
-                        FontSize="20"
-                        FontFamily="Dubai Medium"
-                        Margin="10,20,0,0"
-                        VerticalAlignment="Top"
-                        HorizontalAlignment="Left" Foreground="#FFB2B2B3" />
+                            Text="Station Information"
+                            FontSize="20"
+                            FontFamily="Inter"
+                            Margin="10,20,0,0"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Left" 
+                            Foreground="#FFB2B2B3" />
 
                         <StackPanel Margin="10,100,0,0">
                             <TextBlock
@@ -80,6 +81,11 @@
                                 Style="{StaticResource InfoHeader}" 
                                 HorizontalAlignment="Left" />
                             <TextBlock
+                                Text="Address"
+                                Margin="0,15,0,0"
+                                Style="{StaticResource InfoHeader}" 
+                                HorizontalAlignment="Left" />
+                            <TextBlock
                                Text="Location"
                                Margin="0,15,0,0"
                                Style="{StaticResource InfoHeader}" 
@@ -88,26 +94,30 @@
 
                         <StackPanel Margin="147,100,0,0" DataContext="{Binding ViewModel}">
                             <TextBlock
-                                Text="{Binding Station.Id}"
+                                Text="{Binding Id}"
                                 Style="{StaticResource InfoDetails}"/>
                             <TextBlock
-                                Text="{Binding Station.Name}"
+                                Text="{Binding Name}"
                                 Margin="0,15,0,0"
                                 Style="{StaticResource InfoDetails}"/>
                             <TextBlock
-                                Text="{Binding Station.OpenSlots}"
+                                Text="{Binding OpenSlots}"
                                 Margin="0,15,0,0"
                                 Style="{StaticResource InfoDetails}" />
                             <TextBlock
-                                Text="{Binding Station.Ports.Capacity}"
+                                Text="{Binding Ports.Capacity}"
                                 Margin="0,15,0,0"
                                 Style="{StaticResource InfoDetails}" />
                             <TextBlock
-                                Text="{Binding Station.Active}"
+                                Text="{Binding Active}"
                                 Margin="0,15,0,0"
                                 Style="{StaticResource InfoDetails}" />
                             <TextBlock
-                                Text="{Binding Dms}"
+                                Text="{Binding Address}"
+                                Margin="0,15,0,0"
+                                Style="{StaticResource InfoDetails}" />
+                            <TextBlock
+                                Text="{Binding Location, Converter={StaticResource DmsConverter}}"
                                 Margin="0,15,0,0"
                                 Style="{StaticResource InfoDetails}" />
                         </StackPanel>
@@ -117,11 +127,12 @@
 
 
                 <Border
-                Background="White"
-                BorderThickness="1"
-                CornerRadius="3" Margin="5 0 0 0">
+                    Background="White"
+                    BorderThickness="1"
+                    CornerRadius="3" 
+                    Margin="5 0 0 0">
                     <wpf:WebView2
-                        Source="{Binding MapUrl.Uri}"
+                        Source="{Binding MapUrl}"
                         ScrollViewer.VerticalScrollBarVisibility="Disabled"
                         ScrollViewer.CanContentScroll="False"
                         materialDesign:ScrollBarAssist.ButtonsVisibility="Hidden"/>

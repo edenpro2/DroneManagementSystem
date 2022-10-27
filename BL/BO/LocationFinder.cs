@@ -39,10 +39,10 @@ namespace BL.BO
         /// Private method of GetClosestStation()
         /// </summary>
         /// <param name="stations"></param>
-        /// <param name="location"></param>
+        /// <param name="objectLocation"></param>
         /// <returns>Closest station to object</returns>
         /// <exception cref="EmptyParameterException"></exception>
-        private static Station GetClosestStation(IEnumerable<Station> stations, Location location)
+        private static Station GetClosestStation(IEnumerable<Station> stations, Location objectLocation)
         {
             if (stations == null)
             {
@@ -55,8 +55,7 @@ namespace BL.BO
 
             foreach (var station in stations)
             {
-                var stationLoc = new Location(station.Latitude, station.Longitude);
-                var current = Distance(stationLoc, location);
+                var current = Distance(station.Location, objectLocation);
 
                 if (current >= minDistance && !firstIteration)
                 {
@@ -94,8 +93,7 @@ namespace BL.BO
 
             foreach (var station in stations)
             {
-                var stationLoc = new Location(station.Latitude, station.Longitude);
-                var current = Distance(stationLoc, objectLoc);
+                var current = Distance(station.Location, objectLoc);
 
                 if ((current >= minDistance || station.OpenSlots - 1 < 0) && !firstIteration)
                 {

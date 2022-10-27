@@ -7,7 +7,6 @@
         xmlns:controls="clr-namespace:PL.Controls"
         xmlns:wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
-        xmlns:tracking="clr-namespace:PL.Windows.Tracking"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         MinHeight="{Binding MinScreenHeight}"
@@ -262,13 +261,8 @@
                                     TextWrapping="Wrap"
                                     Grid.Row="4"
                                     Style="{StaticResource Details}"
-                                    d:Text="12.321^ 23.1231^">
-                                    <TextBlock.Text>
-                                        <MultiBinding Converter="{StaticResource DmsConverter}">
-                                            <Binding Path="Location.Latitude"/>
-                                            <Binding Path="Location.Longitude"/>
-                                        </MultiBinding>
-                                    </TextBlock.Text>
+                                    d:Text="12.321^ 23.1231^"
+                                    Text="{Binding Location, Converter={StaticResource DmsConverter}}">
                                 </TextBlock>
                             </Grid>
                         </Border>
@@ -442,8 +436,9 @@
                     Grid.Row="1"
                     Margin="25 25 25 0">
                     <wpf:WebView2
+                        Name="MapView"  
                         Margin="7"
-                        Source="{Binding AddressUrl}"
+                        Source="{Binding MapUrl, UpdateSourceTrigger=PropertyChanged}"
                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
                         ScrollViewer.CanContentScroll="False"
                         ZoomFactor="0.7"
@@ -465,7 +460,7 @@
                                     HorizontalAlignment="Left" />
                                 <TextBlock
                                     Margin="4 0 0 0"
-                                    Text="{Binding ErrorMessage}"
+                                    Text="{Binding ErrorMessage, UpdateSourceTrigger=PropertyChanged}"
                                     FontFamily="Inter"
                                     FontSize="14"
                                     Foreground="Tomato"
@@ -483,7 +478,7 @@
                                     Visibility="Visible" />
                                 <TextBlock
                                     Margin="4 0 0 0"
-                                    Text="{Binding ProgressMessage}"
+                                    Text="{Binding ProgressMessage, UpdateSourceTrigger=PropertyChanged}"
                                     FontSize="14"
                                     FontFamily="Inter"
                                     Foreground="#766ccc"
@@ -493,7 +488,6 @@
                             </DockPanel>
                         </StackPanel>
                         <WpfPlot 
-                            Name="Plotter"
                             Margin="5 45 5 5" 
                             Content="{Binding BatteryPlotter.WpfPlotter}">
                         </WpfPlot>

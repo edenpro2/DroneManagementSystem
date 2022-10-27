@@ -1,6 +1,8 @@
-﻿using DalFacade.DO;
-using PL.ViewModels;
+﻿using BL;
+using BL.BO.OSM;
+using DalFacade.DO;
 using System;
+using System.ComponentModel;
 using System.Windows.Input;
 
 namespace PL.Windows.Tracking
@@ -8,13 +10,19 @@ namespace PL.Windows.Tracking
     public partial class StationWindow
     {
         public Station ViewModel { get; }
-        public MapUri MapUrl { get; } = new();
+        public Uri MapUrl { get; init; }
+        private static BackgroundWorker Worker { get; } = new();
 
-        public StationWindow(Station station)
+        public StationWindow(BlApi bl, Station station)
         {
             ViewModel = station;
-            MapUrl.Uri = NewMapUri(new Location(ViewModel.Latitude, ViewModel.Longitude));
+            Worker.WorkerSupportsCancellation = true;
+            Worker.DoWork += (_, _) => ViewModel.Address = Extensions.LocationAddress(ViewModel.Location);
+            Worker.RunWorkerAsync();
+            MapUrl = NewMapUri(ViewModel.Location);
             InitializeComponent();
+            // Update address (from Nominatim)
+            bl.UpdateStation(ViewModel);
         }
 
         private static Uri NewMapUri(Location location)

@@ -62,7 +62,7 @@ namespace DalFacade.DO
             return $"Lon: {Longitude}, Lat: {Latitude}";
         }
 
-        public string ToSexagesimal()
+        public string ToBase60()
         {
             // convert each to absolute
             var absLong = Math.Abs(Longitude);

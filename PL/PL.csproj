@@ -51,6 +51,10 @@
     </Reference>
   </ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Windows\OSM\" />
+	</ItemGroup>
+
 	
 
 </Project>

@@ -126,14 +126,8 @@
                                 Grid.Column="2"
                                 Text="{Binding Phone}"/>
                             <TextBlock
-                                Grid.Column="3">
-                                <TextBlock.Text>
-                                    <MultiBinding Converter="{StaticResource DmsConverter}">
-                                        <Binding Path="Location.Latitude"/>
-                                        <Binding Path="Location.Longitude"/>
-                                    </MultiBinding>
-                                </TextBlock.Text>
-                            </TextBlock>
+                                Grid.Column="3"
+                                Text="{Binding Location, Converter={StaticResource DmsConverter}}"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

@@ -5,16 +5,16 @@ using System.Windows.Data;
 
 namespace PL.Converters
 {
-    public class DmsConverter : IMultiValueConverter
+    public class DmsConverter : IValueConverter
     {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return new Location((double)values[0], (double)values[1]).ToSexagesimal();
+            return ((Location)value).ToBase60();
         }
 
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotSupportedException();
+            throw new NotImplementedException();
         }
     }
 }

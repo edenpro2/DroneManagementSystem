@@ -7,8 +7,7 @@ namespace DalFacade.DO
     public class Station : ViewModelBase
     {
         private int _id;
-        [XmlAttribute]
-        public int Id
+        [XmlAttribute] public int Id
         {
             get => _id;
             set
@@ -22,8 +21,7 @@ namespace DalFacade.DO
         }
 
         private int _name;
-        [XmlAttribute]
-        public int Name
+        [XmlAttribute] public int Name
         {
             get => _name;
             set
@@ -37,8 +35,7 @@ namespace DalFacade.DO
         }
 
         private int _openSlots;
-        [XmlAttribute]
-        public int OpenSlots
+        [XmlAttribute] public int OpenSlots
         {
             get => _openSlots;
             set
@@ -51,39 +48,23 @@ namespace DalFacade.DO
             }
         }
 
-        private double _latitude;
-        [XmlElement]
-        public double Latitude
+        private Location _location;
+        [XmlElement] public Location Location
         {
-            get => _latitude;
+            get => _location;
             set
             {
-                if (value.Equals(_latitude))
+                if (value.Equals(_location))
                     return;
 
-                _latitude = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private double _longitude;
-        [XmlElement]
-        public double Longitude
-        {
-            get => _longitude;
-            set
-            {
-                if (value.Equals(_longitude))
-                    return;
-
-                _longitude = value;
+                _location = value;
                 OnPropertyChanged();
             }
         }
 
         private List<DroneCharge> _ports;
         [XmlArray]
-        [XmlArrayItem("Port")]
+        [XmlArrayItem("Port")] 
         public List<DroneCharge> Ports
         {
             get => _ports;
@@ -97,9 +78,22 @@ namespace DalFacade.DO
             }
         }
 
+        private string _address;
+        [XmlAttribute] public string Address
+        {
+            get => _address;
+            set
+            {
+                if (value == _address)
+                    return;
+
+                _address = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _active;
-        [XmlAttribute]
-        public bool Active
+        [XmlAttribute] public bool Active
         {
             get => _active;
             set
@@ -117,26 +111,26 @@ namespace DalFacade.DO
         public Station() { }
 
         // Full Constructor
-        public Station(int id, int name, int openSlots, double latitude, double longitude, List<DroneCharge> ports, bool active)
+        public Station(int id, int name, int openSlots, Location location, List<DroneCharge> ports, string address, bool active)
         {
             Id = id;
             Name = name;
             OpenSlots = openSlots;
-            Latitude = latitude;
-            Longitude = longitude;
+            Location = location;
             Ports = ports;
+            Address = address;
             Active = active;
         }
 
         // Constructor
-        public Station(int id = -1, int name = -1, int openSlots = -1, double latitude = 0.0, double longitude = 0.0)
+        public Station(int id = -1, int name = -1, int openSlots = -1, Location location = default)
         {
             Id = id;
             Name = name;
             OpenSlots = openSlots;
-            Latitude = latitude;
-            Longitude = longitude;
+            Location = location;
             Ports = new List<DroneCharge>(MaxChargeSlots);
+            Address = "";
             Active = true;
         }
 
@@ -146,9 +140,9 @@ namespace DalFacade.DO
             Id = source.Id;
             Name = source.Name;
             OpenSlots = source.OpenSlots;
-            Latitude = source.Latitude;
-            Longitude = source.Longitude;
+            Location = source.Location;
             Ports = new List<DroneCharge>(source.Ports);
+            Address = source.Address;
             Active = source.Active;
         }
 
@@ -158,7 +152,7 @@ namespace DalFacade.DO
                 "Id: " + Id + '\n' +
                 "Name: " + Name + '\n' +
                 "Available slots:" + OpenSlots + '\n' +
-                new Location(Longitude, Latitude).ToSexagesimal() + '\n';
+                Location.ToBase60() + '\n';
         }
     }
 }

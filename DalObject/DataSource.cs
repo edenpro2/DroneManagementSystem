@@ -80,14 +80,11 @@ namespace DalObject
 
             for (var i = 0; i < STATION_MAX; ++i)
             {
-                var location = Randomize.LocationInRadius();
-
                 Stations.Add(new Station(
                     Config.StationId++,
                     rand.Next(MaxStationName),
                     Station.MaxChargeSlots,
-                    location.Latitude,
-                    location.Longitude));
+                    Randomize.LocationInRadius()));
             }
 
             for (var i = 0; i < CUSTOMER_MAX - 1; ++i)
@@ -109,11 +106,7 @@ namespace DalObject
                     Config.CustomerId++,
                     "Eden Amiga",
                     "9546582944",
-                    new Location(
-                        26.03939549441853,
-                        -80.29447791353097)
-                    )
-            );
+                    new Location(26.03937, -80.2945)));
 
             string name;
 
@@ -124,7 +117,7 @@ namespace DalObject
                     name = new string(c.Name.Where(l => !char.IsWhiteSpace(l)).ToArray()) +
                            rand.Next(100),
                     c.Phone,
-                    name.ToLower() + "@gmail.com"))
+                    name.ToLower() + "@" + "gmail.com"))
                 .ToList();
 
             #region Admin account
