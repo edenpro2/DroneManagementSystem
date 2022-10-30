@@ -1,5 +1,4 @@
-﻿using BL;
-using BL.BO.OSM;
+﻿using BL.BO.OSM;
 using DalFacade;
 using DalFacade.DO;
 using PL.Controls;
@@ -10,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using BL;
 using Color = System.Windows.Media.Color;
 
 #pragma warning disable CS8602 // All null values initialized in constructor
@@ -133,8 +133,7 @@ namespace PL.Windows.Tracking
 
         private void ReleaseBtn_Click(object sender, RoutedEventArgs e)
         {
-            //Todo: implement number of hours
-            const int hours = 1;
+            // Todo: implement number of hours
             //try
             //{
             //    int.TryParse(HourBox.Text, out Hours);
@@ -143,6 +142,8 @@ namespace PL.Windows.Tracking
             //{
             //    return;
             //}
+            
+            const int hours = 1;
 
             try
             {

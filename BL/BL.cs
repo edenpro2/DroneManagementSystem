@@ -9,7 +9,7 @@ using static BL.BO.LocationFinder;
 
 namespace BL
 {
-    public partial class Bl : BlApi
+    public sealed partial class Bl : BlApi
     {
         #region Singleton
         private static BlApi _instance;
@@ -35,7 +35,6 @@ namespace BL
         private static int _droneId;
         private readonly Random _rand = new();
         #endregion
-
 
         private Bl()
         {

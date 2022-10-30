@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,23 +10,37 @@ namespace DalFacade
 {
     public static class FileReader
     {
+        private static readonly string ProjectDirectory;
+        
+        public enum PathOption
+        {
+            CreateDirectory,
+            SearchOnly
+        }
+
+        static FileReader()
+        {
+            var baseDir = @"..\..";
+            string projectDirectory;
+
+            do
+            {
+                projectDirectory = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, baseDir));
+                baseDir += @"\..";
+            } while (!projectDirectory.EndsWith("DroneManagementSystem"));
+
+            ProjectDirectory = projectDirectory;
+        }
+
         public static string GetFilePath(string filename, List<string> extensions)
         {
-            var projectDirectory = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\.."));
-
-            var plPath = projectDirectory + "\\PL";
+            var plPath = ProjectDirectory + "\\PL";
 
             return
                 Directory
                     .GetFiles(plPath, "*.*", SearchOption.AllDirectories)
                     .Where(f => extensions.IndexOf(Path.GetExtension(f)) >= 0)
                     .First(f => f.Contains(Path.GetFileNameWithoutExtension(filename)));
-        }
-
-        public enum PathOption
-        {
-            CreateDirectory,
-            SearchOnly
         }
 
         /// <summary>
@@ -37,19 +52,13 @@ namespace DalFacade
         /// <returns></returns>
         public static string GetFolderPath(string folder, PathOption pathOption = PathOption.SearchOnly, SearchOption searchOption = SearchOption.AllDirectories)
         {
-            var projectDirectory = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\.."));
-
-            //Todo: Fix
-            if (projectDirectory!.Contains(folder))
-                return projectDirectory;
-
-            var dir =
-                Directory.GetDirectories(projectDirectory, "*", searchOption)
+            var dir = Directory
+                    .GetDirectories(ProjectDirectory, "*", searchOption)
                     .FirstOrDefault(sub => sub.EndsWith(folder));
 
             if (dir == null)
             {
-                dir = projectDirectory + $"\\{folder}";
+                dir = ProjectDirectory + $"\\{folder}";
                 Directory.CreateDirectory(dir);
             }
 
@@ -60,23 +69,21 @@ namespace DalFacade
         {
             var dir = GetFolderPath(directory);
 
-            return
-                Directory.GetFiles(dir, "*.*", option)
-                    .Where(f => extensions.IndexOf(Path.GetExtension(f)) >= 0)
-                    .Select(Path.GetFileNameWithoutExtension)
-                    .ToList();
+            return Directory
+                .GetFiles(dir, "*.*", option)
+                .Where(f => extensions.IndexOf(Path.GetExtension(f)) >= 0)
+                .Select(Path.GetFileNameWithoutExtension)
+                .ToList();
         }
 
-       
-
-        public static IList<string> LoadJson(string filename)
+        public static List<T> LoadJson<T>(string filename)
         {
             var dir = GetFilePath(filename, new List<string> { ".json" });
 
             if (dir == null)
                 throw new NullReferenceException("The directory was null - filename might be wrong");
 
-            return (JsonConvert.DeserializeObject<List<string>>(File.ReadAllText(dir)) ?? throw new InvalidOperationException()).ToList();
+            return (JsonConvert.DeserializeObject<List<T>>(File.ReadAllText(dir)) ?? throw new InvalidOperationException()).ToList();
         }
 
         public static IEnumerable<string> LoadTxt(string filename)

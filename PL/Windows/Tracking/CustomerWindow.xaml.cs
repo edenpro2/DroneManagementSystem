@@ -9,8 +9,8 @@ namespace PL.Windows.Tracking
     {
         public Customer ViewModel { get; }
         public MapUri MapUrl { get; } = new();
-        public static double MinScreenHeight => PLMethods.MinScreenHeight(0.30);
-        public static double MinScreenWidth => PLMethods.MinScreenWidth(0.40);
+        public static double MinScreenHeight { get; } = PLMethods.MinScreenHeight(0.30);
+        public static double MinScreenWidth { get; } = PLMethods.MinScreenWidth(0.40);
 
         public CustomerWindow(Customer customer)
         {

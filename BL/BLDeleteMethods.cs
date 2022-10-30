@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace BL
 {
-    public partial class Bl
+    public sealed partial class Bl
     {
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteDrone(Drone drone)

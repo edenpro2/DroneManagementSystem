@@ -1,12 +1,10 @@
-﻿using System;
-using BL;
+﻿using BL;
 using DalFacade.DO;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media.Animation;
 
 namespace PL.Windows
 {
@@ -21,7 +19,10 @@ namespace PL.Windows
         public string ErrorMessage { get; private set; } = "";
         #endregion
 
-        public MainWindow() => InitializeComponent();
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
 
         private void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -88,8 +89,14 @@ namespace PL.Windows
             new RegistrationWindow(Bl).ShowDialog();
         }
         private void DevBtn_Click(object sender, RoutedEventArgs e) { }
-        private void ChangeButtonState() => LoginButton.IsEnabled = !LoginButton.IsEnabled;
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e) => DragMove();
+        private void ChangeButtonState()
+        {
+            LoginButton.IsEnabled = !LoginButton.IsEnabled;
+        }
 
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
     }
 }

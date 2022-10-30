@@ -6,7 +6,7 @@ using static BL.BO.BlPredicates;
 
 namespace BL
 {
-    public partial class Bl
+    public sealed partial class Bl
     {
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone SearchForDrone(Predicate<Drone> predicate)
@@ -44,7 +44,7 @@ namespace BL
             switch (obj)
             {
                 case Drone drone:
-                    return drone.Location ?? new Location();
+                    return drone.Location;
                 case Station station:
                     return station.Location;
                 case Customer customer:
@@ -59,7 +59,7 @@ namespace BL
                 case Parcel parcel when AlreadyDelivered(parcel):
                     return LocationOf(SearchForCustomer(c => c.Id == parcel.TargetId));
                 default:
-                    return new Location();
+                    return default;
             }
         }
     }

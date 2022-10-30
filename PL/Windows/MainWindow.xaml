@@ -51,12 +51,23 @@
         </Style>
     </Window.Resources>
 
-
     <materialDesign:Card
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
         UniformCornerRadius="10">
         <materialDesign:Card.Background>
             <ImageBrush ImageSource="/Resources/Wallpaper.jpg"/>
         </materialDesign:Card.Background>
+        <materialDesign:Card.Style>
+            <Style TargetType="{x:Type materialDesign:Card}">
+                <Setter Property="Margin" Value="10"/>
+                <Setter Property="materialDesign:ElevationAssist.Elevation" Value="dp5"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=WindowState, RelativeSource={RelativeSource AncestorType=Window}}" Value="Maximized">
+                        <Setter Property="Margin" Value="0"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </materialDesign:Card.Style>
 
         <Grid>
             <Grid.ColumnDefinitions>
@@ -72,6 +83,7 @@
 
 
             <materialDesign:Card
+                DataContext="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
                 Grid.Column="1"
                 Grid.Row="1"
                 Background="{StaticResource MaterialDesignLightBackground}"

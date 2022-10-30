@@ -1,9 +1,5 @@
 ﻿using DalFacade.DO;
-using Newtonsoft.Json;
-using System.IO;
 using System.Linq;
-using System.Net;
-using static DalFacade.FileReader;
 using static System.Math;
 using static BL.BO.BlPredicates;
 

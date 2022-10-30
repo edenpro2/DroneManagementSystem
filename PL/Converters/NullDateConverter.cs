@@ -4,11 +4,13 @@ using System.Windows.Data;
 
 namespace PL.Converters
 {
-    public class LocationTruncator : IValueConverter
+    public class NullDateConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (double)value - (double)value % 0.0001;
+            var date = (DateTime)value;
+
+            return date != default ? date.ToString(CultureInfo.InvariantCulture): "N/A";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

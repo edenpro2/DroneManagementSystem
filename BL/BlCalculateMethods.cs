@@ -4,15 +4,14 @@ using DalFacade.DO;
 using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using static BL.BO.BlPredicates;
 using static BL.BO.GeoInfoSystem;
 
 namespace BL
 {
-    public partial class Bl
+    public sealed partial class Bl
     {
         // Minimum for collection + min for delivery + min for trip to closest station after delivery
-        public double MinForCollection(Drone drone, Parcel parcel)
+        private double MinForCollection(Drone drone, Parcel parcel)
         {
             var min = CalcPowerConsumption(drone, parcel);
             min += MinForDelivery(drone, parcel);
@@ -20,14 +19,14 @@ namespace BL
         }
 
         // Minimum for delivery + min for trip to closest station after delivery
-        public double MinForDelivery(Drone drone, Parcel parcel)
+        private double MinForDelivery(Drone drone, Parcel parcel)
         {
             var min = CalcPowerConsumption(drone, parcel);
             min += MinForTripToStation(drone);
             return min;
         }
 
-        public double MinForTripToStation(Drone drone)
+        private double MinForTripToStation(Drone drone)
         {
             var station = this.ClosestAvailableStation(drone);
             return CalcPowerConsumption(drone, station);

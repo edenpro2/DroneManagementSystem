@@ -234,7 +234,7 @@
                                 HorizontalAlignment="Center"
                                 Grid.Column="4"/>
                             <TextBlock
-                                Text="{Binding Scheduled}"
+                                Text="{Binding Scheduled, Converter={StaticResource NullDateConverter}}"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Center"
                                 Grid.Column="5"/>

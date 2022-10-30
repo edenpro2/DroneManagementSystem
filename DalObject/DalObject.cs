@@ -9,10 +9,7 @@ namespace DalObject
 
         public static DalObject Instance => _instance.Value;
 
-        private DalObject()
-        {
-            DataSource.Initialize();
-        }
+        private DalObject() => DataSource.Initialize();
 
         // Power consumption method
         [MethodImpl(MethodImplOptions.Synchronized)]
