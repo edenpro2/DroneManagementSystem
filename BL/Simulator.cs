@@ -8,7 +8,7 @@ using static DalFacade.DO.DroneStatuses;
 
 namespace BL
 {
-    public partial class Bl
+    public sealed partial class Bl
     {
         public Tuple<Drone, string> DroneSimulator(Drone d)
         {

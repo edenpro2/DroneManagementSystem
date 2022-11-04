@@ -16,8 +16,8 @@ namespace DalFacade.DO
 
         #region Lists
         private static readonly IList<string?> ModelNames = FileReader.GetFileNames("Resources\\Models", new List<string> { ".jpg", ".png" }, SearchOption.TopDirectoryOnly);
-        private static readonly IList<string> FirstNames = FileReader.LoadJson(FirstNameJson);
-        private static readonly IList<string> LastNames = FileReader.LoadJson(LastNameJson);
+        private static readonly IList<string> FirstNames = FileReader.LoadJson<string>(FirstNameJson);
+        private static readonly IList<string> LastNames = FileReader.LoadJson<string>(LastNameJson);
         #endregion
 
         /// <summary>

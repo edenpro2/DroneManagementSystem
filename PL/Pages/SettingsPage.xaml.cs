@@ -1,22 +1,63 @@
-﻿using BL.BO;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using BL.BO;
 using BL;
 using DalFacade.DO;
 using Microsoft.Win32;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Media;
+using DalFacade;
 
 namespace PL.Pages
 {
-    public partial class SettingsPage
+    public partial class SettingsPage : INotifyPropertyChanged
     {
+        public sealed class CountryCode
+        {
+            public string country { get; }
+            public string code { get; }
+            public string iso { get; } 
+
+            public CountryCode(string country = "", string code = "", string iso = "")
+            {
+                this.country = country;
+                this.code = code;
+                this.iso = iso;
+            }
+
+            public override string ToString()
+            {
+                return "+" + code + " " + country;
+            }
+        }
         private readonly BlApi _bl;
-        public User User { get; set; }
-        public string? InfoErrorMessage { get; set; } = null;
-        public string BillingErrorMessage { get; set; } = "";
-        public SolidColorBrush InfoErrorColor { get; set; }
-        public SolidColorBrush BillingErrorColor { get; set; }
+        public User User { get; private set; }
+
+        public List<string> CountryCodes { get; } = FileReader.LoadJson<CountryCode>("countrycodes.json").Select(c => new CountryCode(c.country, c.code).ToString()).ToList();
+
+        private string _infoErrorMessage = "";
+        public string InfoErrorMessage
+        {
+            get => _infoErrorMessage;
+            set
+            {
+                _infoErrorMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _billingErrorMessage = "";
+        public string BillingErrorMessage
+        {
+            get => _billingErrorMessage;
+            set
+            {
+                _billingErrorMessage = value;
+                OnPropertyChanged();
+            }
+        } 
 
         public SettingsPage(BlApi ibl, User user)
         {
@@ -27,7 +68,7 @@ namespace PL.Pages
 
         private void ApplyBtn_Click(object sender, RoutedEventArgs e)
         {
-            InfoErrorMessage = null;
+            InfoErrorMessage = "";
             var name = NameBox.Text;
             var username = UsernameBox.Text;
             var password = PasswordBox.Password;
@@ -40,7 +81,7 @@ namespace PL.Pages
                 return;
             }
 
-            var user = User;
+            var user = new User(User);
 
             if (password.Length > 0)
             {
@@ -56,9 +97,9 @@ namespace PL.Pages
             // update each field
             user.Username = username;
             user.Email = email;
-            User.Customer.Name = name;
+            user.Customer.Name = name;
 
-            if (User != user)
+            if (!User.Equals(user))
             {
                 _bl.UpdateCustomer(User.Customer);
                 _bl.UpdateUser(user);
@@ -95,40 +136,45 @@ namespace PL.Pages
             user.ProfilePic = filePath;
             _bl.UpdateUser(user);
             User = user;
-            InfoErrorMessage = null;
+            InfoErrorMessage = "";
         }
 
         private void UpdateBillingBtn_Click(object sender, RoutedEventArgs e)
         {
             BillingErrorMessage = "";
-            BillingErrorColor = Brushes.Tomato;
 
-            var user = User;
-
-            var phone = PhoneBox.Text.Where(c => c != ' ').ToArray().ToString();
-            var success = long.TryParse(phone, out var phoneNumber);
+            // Make a copy of user and before copying phone, remove whitespace
+            var user = new User(User);
+            var phone = PhoneBox.Text = new string(PhoneBox.Text.ToCharArray().Where(char.IsDigit).ToArray());
             var address = AddressBox.Text;
 
-            // update each field
-            if (success)
+            user.Address = address;
+            user.Customer.Phone = phone;
+
+            var c = User.Customer;
+            var c1 = user.Customer;
+
+            if (!User.Equals(user))
             {
-                User.Customer.Phone = phoneNumber.ToString();
-            }
-            else
-            {
-                BillingErrorMessage = "Phone is not valid";
+                _bl.UpdateCustomer(user.Customer);
+                _bl.UpdateUser(user);
+                User = user;
+                InfoErrorMessage = "Successfully updated";
                 return;
             }
 
-            user.Address = address;
-
-            _bl.UpdateCustomer(User.Customer);
-            _bl.UpdateUser(user);
-            User = user;
-            User.Customer.Phone = phoneNumber.ToString();
-
-            BillingErrorColor = Brushes.Green;
-            BillingErrorMessage = "Successfully updated";
+            BillingErrorMessage = "Nothing updated";
         }
+
+        #region INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #endregion
     }
 }

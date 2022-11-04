@@ -10,9 +10,10 @@ namespace BL
         {
             switch (param)
             {
-                case "DalObject":
+                // If namespace doesn't match DalObject (or v.v.), error
+                case nameof(DalObject):
                     return DalObject.DalObject.Instance;
-                case "DalXml":
+                case nameof(DalXml):
                     return DalXml.Instance;
                 default:
                     throw new ArgumentException("Invalid parameter");

@@ -10,23 +10,15 @@ using static DalFacade.DO.DroneStatuses;
 
 namespace BL
 {
-    public partial class Bl
+    public sealed partial class Bl
     {
         #region Update Individual Objects
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDrone(Drone drone)
         {
             var drones = GetDrones().ToList();
-
-            for (var i = 0; i < drones.Count; i++)
-            {
-                if (drones[i].Id == drone.Id)
-                {
-                    drones[i] = drone;
-                    UpdateDroneList(drones);
-                    break;
-                }
-            }
+            drones[drone.Id] = drone;
+            UpdateDroneList(drones);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]

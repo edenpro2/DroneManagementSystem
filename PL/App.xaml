@@ -36,6 +36,7 @@
             <converters:EmployStatusConverter x:Key="EmployStatusConverter"/>
             <converters:DmsConverter x:Key="DmsConverter"/>
             <converters:IsDateDefaultConverter x:Key="IsDateDefaultConverter"/>
+            <converters:NullDateConverter x:Key="NullDateConverter"/>
 
             <Style x:Key="CardStyle" TargetType="{x:Type materialDesign:Card}">
                 <Setter Property="UniformCornerRadius" Value="10"/>

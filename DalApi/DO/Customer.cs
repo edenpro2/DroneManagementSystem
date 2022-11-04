@@ -1,14 +1,13 @@
-﻿using System.Xml.Serialization;
+﻿using System;
+using System.Xml.Serialization;
 
 namespace DalFacade.DO
 {
     [XmlRoot]
-    public class Customer : ViewModelBase
+    public class Customer : ViewModelBase, IEquatable<Customer>
     {
         private int _id;
-
-        [XmlAttribute]
-        public int Id
+        [XmlAttribute] public int Id
         {
             get => _id;
             set
@@ -19,9 +18,7 @@ namespace DalFacade.DO
         }
 
         private string _name;
-
-        [XmlAttribute]
-        public string Name
+        [XmlAttribute] public string Name
         {
             get => _name;
             set
@@ -32,9 +29,7 @@ namespace DalFacade.DO
         }
 
         private string _phone;
-
-        [XmlAttribute]
-        public string Phone
+        [XmlAttribute] public string Phone
         {
             get => _phone;
             set
@@ -45,9 +40,7 @@ namespace DalFacade.DO
         }
 
         private Location _location;
-
-        [XmlElement]
-        public Location Location
+        [XmlElement] public Location Location
         {
             get => _location;
             set
@@ -58,9 +51,7 @@ namespace DalFacade.DO
         }
 
         private bool _active;
-
-        [XmlAttribute]
-        public bool Active
+        [XmlAttribute] public bool Active
         {
             get => _active;
             set
@@ -89,7 +80,7 @@ namespace DalFacade.DO
             Id = source.Id;
             Name = source.Name;
             Phone = source.Phone;
-            Location = source.Location;
+            Location = new Location(source.Location);
             Active = source.Active;
         }
 
@@ -97,7 +88,38 @@ namespace DalFacade.DO
             $"{nameof(Id)}: {Id}\n" +
             $"{nameof(Name)}: {Name}\n" +
             $"{nameof(Phone)}: {Phone}\n" +
-            $"Location: {Location.ToBase60()}\n" +
+            $"{nameof(Location)}: {Location.ToBase60()}\n" +
             $"{nameof(Active)}: {Active}";
+
+        public bool Equals(Customer other)
+        {
+            if (ReferenceEquals(null, other))
+                return false;
+            if (ReferenceEquals(this, other))
+                return true;
+
+            return _id == other._id && 
+                   _name == other._name && 
+                   _phone == other._phone && 
+                   Equals(_location, other._location) && 
+                   _active == other._active;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+                return false;
+            if (ReferenceEquals(this, obj))
+                return true;
+            if (obj.GetType() != GetType())
+                return false;
+
+            return Equals((Customer)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_id, _name, _phone, _location, _active);
+        }
     }
 }

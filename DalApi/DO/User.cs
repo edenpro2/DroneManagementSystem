@@ -1,9 +1,10 @@
-﻿using System.Xml.Serialization;
+﻿using System;
+using System.Xml.Serialization;
 
 namespace DalFacade.DO
 {
     [XmlRoot]
-    public class User : ViewModelBase
+    public class User : ViewModelBase, IEquatable<User>
     {
         private string _username;
         [XmlAttribute]
@@ -139,12 +140,44 @@ namespace DalFacade.DO
             ProfilePic = user.ProfilePic;
             Active = user.Active;
             IsEmployee = user.IsEmployee;
-            Customer = new Customer();
+            Customer = new Customer(user.Customer);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+                return false;
+            if (ReferenceEquals(this, obj))
+                return true;
+            return obj.GetType() == GetType() && Equals((User)obj);
         }
 
         public override string ToString()
         {
             return $"user:{Username} \n email:{Email} \n id:{Customer.Id}";
+        }
+
+        public bool Equals(User other)
+        {
+            if (ReferenceEquals(null, other))
+                return false;
+            if (ReferenceEquals(this, other))
+                return true;
+
+            return
+                _username == other._username &&
+                _password == other._password &&
+                _email == other._email &&
+                _address == other._address &&
+                _profilePic == other._profilePic &&
+                _active == other._active &&
+                _isEmployee == other._isEmployee &&
+                _customer.Equals(other._customer);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_username, _password, _email, _address, _profilePic, _active, _isEmployee, _customer);
         }
     }
 }

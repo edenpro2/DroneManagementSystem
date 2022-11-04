@@ -21,17 +21,14 @@
         </Style>
 
         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
-            <Setter Property="Width" Value="260"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Foreground" Value="#333333"/>
-            <Setter Property="Margin" Value="0 5 0 0"/>
+            <Setter Property="Margin" Value="0 5 20 0"/>
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="BorderThickness" Value="1.5"/>
         </Style>
 
         <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource MaterialDesignOutlinedComboBox}">
-            <Setter Property="Width" Value="65"/>
-            <Setter Property="MaxWidth" Value="65"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Foreground" Value="#333333"/>
             <Setter Property="Margin" Value="0 5 5 0"/>
@@ -39,11 +36,9 @@
             <Setter Property="BorderThickness" Value="1.5"/>
         </Style>
 
-
         <Style TargetType="PasswordBox" BasedOn="{StaticResource MaterialDesignOutlinedPasswordBox}">
-            <Setter Property="Width" Value="260"/>
             <Setter Property="Foreground" Value="#333333"/>
-            <Setter Property="Margin" Value="0 5 0 0"/>
+            <Setter Property="Margin" Value="0 5 20 0"/>
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="BorderBrush" Value="#FFD7E1E8"/>
         </Style>
@@ -145,7 +140,7 @@
                                 Foreground="#333333" 
                                 FontWeight="SemiBold"/>
                             <TextBlock
-                                d:Text="jsmithofficial"
+                                d:Text="eden.offical"
                                 Text="{Binding Username}"
                                 FontSize="12"
                                 Foreground="#333333" 
@@ -227,7 +222,6 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="3.2*"/>
-                        <RowDefinition Height="60"/>
                     </Grid.RowDefinitions>
 
                     <Border
@@ -251,118 +245,115 @@
                         Grid.Row="0"
                         Grid.Column="1"
                         VerticalAlignment="Bottom">
-                        <RadioButton 
-                            x:Name="UserInfoButton"
-                            IsChecked="True"
-                            Content="User info"
-                            FontSize="16"
-                            Foreground="#85949e" 
-                            BorderThickness="0"
-                            FontWeight="Medium"
-                            VerticalAlignment="Bottom"
-                            HorizontalAlignment="Left" />
+                        <RadioButton x:Name="UserInfoButton"
+                             IsChecked="True"
+                             Content="User info"
+                             FontSize="16"
+                             Foreground="#85949e" 
+                             BorderThickness="0"
+                             FontWeight="Medium"
+                             VerticalAlignment="Bottom"
+                             HorizontalAlignment="Left" />
 
                         <Separator Width="30"/>
 
-                        <RadioButton
+                        <RadioButton x:Name="BillingInfoButton"
+                            IsChecked="False"
                             Content="Billing Information"
                             FontSize="16"
-                            IsChecked="False"
                             Foreground="#85949e" 
                             BorderThickness="0"
                             FontWeight="Medium"
                             VerticalAlignment="Bottom"
                             HorizontalAlignment="Left" />
-
                     </DockPanel>
 
-                    <StackPanel 
+                    <Grid
+                        Margin="0 20"
                         Grid.Row="1"
                         Grid.Column="1">
-                        <StackPanel.Style>
-                            <Style TargetType="{x:Type StackPanel}">
-                                <Setter Property="Visibility" Value="Visible" />
+                        <Grid.Style>
+                            <Style TargetType="{x:Type Grid}">
                                 <Style.Triggers>
-                                    <DataTrigger  
-                                        Binding="{Binding IsChecked, ElementName=UserInfoButton}"
-                                        Value="False">
+                                    <DataTrigger Binding="{Binding IsChecked, ElementName=UserInfoButton}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsChecked, ElementName=UserInfoButton}" Value="False">
                                         <Setter Property="Visibility" Value="Hidden" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
-                        </StackPanel.Style>
+                        </Grid.Style>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="283.3"/>
+                            <ColumnDefinition Width="283.3"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
 
                         <!-- Row 1 -->
-
-                        <Separator/>
-
-                        <DockPanel>
-                            <StackPanel
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Left">
-                                <TextBlock 
-                                    Text="Full Name"
-                                    Style="{StaticResource TextBoxLabel}"/>
-                                <TextBox
-                                    x:Name="NameBox"
-                                    d:Text="John Smith"
-                                    Text="{Binding Customer.Name}"
-                                    BorderBrush="#FFD7E1E8"
-                                    BorderThickness="1.5"/>
-                            </StackPanel>
-
-                            <StackPanel
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Right">
-                                <TextBlock 
-                                    Text="Username"
-                                    Style="{StaticResource TextBoxLabel}"/>
-                                <TextBox
-                                    x:Name="UsernameBox"
-                                    d:Text="jsmithoffical"
-                                    Text="{Binding Username}"
-                                    BorderBrush="#FFD7E1E8"
-                                    BorderThickness="1.5"/>
-                            </StackPanel>
-                        </DockPanel>
-
-                        <!-- Row 2 -->
-
-                        <Separator/>
-
-                        <DockPanel>
-                            <StackPanel
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Left">
-                                <TextBlock 
-                                    Text="Password"
-                                    Style="{StaticResource TextBoxLabel}"/>
-                                <PasswordBox
-                                    x:Name="PasswordBox"
-                                    BorderBrush="#FFD7E1E8"
-                                    BorderThickness="1.5"/>
-                            </StackPanel>
-
-                            <StackPanel
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Right">
-                                <TextBlock 
-                                    Text="Confirm Password"
-                                    Style="{StaticResource TextBoxLabel}"/>
-                                <PasswordBox
-                                    x:Name="ConfirmPasswordBox"
-                                    BorderBrush="#FFD7E1E8"
-                                    BorderThickness="1.5"/>
-                            </StackPanel>
-                        </DockPanel>
-
-                        <!-- Row 3 -->
-
-                        <Separator/>
+                        <StackPanel
+                            Grid.Row="0"
+                            Grid.Column="0">
+                            <TextBlock 
+                                Text="Full Name"
+                                Style="{StaticResource TextBoxLabel}"/>
+                            <TextBox
+                                x:Name="NameBox"
+                                d:Text="John Smith"
+                                Text="{Binding Customer.Name}"
+                                BorderBrush="#FFD7E1E8"
+                                BorderThickness="1.5"/>
+                        </StackPanel>
 
                         <StackPanel
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Left">
+                            Grid.Row="0"
+                            Grid.Column="1">
+                            <TextBlock 
+                                Text="Username"
+                                Style="{StaticResource TextBoxLabel}"/>
+                            <TextBox
+                                x:Name="UsernameBox"
+                                d:Text="eden.official"
+                                Text="{Binding Username}"
+                                BorderBrush="#FFD7E1E8"
+                                BorderThickness="1.5"/>
+                        </StackPanel>
+                        <!-- Row 2 -->
+                        <StackPanel
+                            Grid.Row="1"
+                            Grid.Column="0">
+                            <TextBlock 
+                                Text="Password"
+                                Style="{StaticResource TextBoxLabel}"/>
+                            <PasswordBox
+                                x:Name="PasswordBox"
+                                BorderBrush="#FFD7E1E8"
+                                BorderThickness="1.5"/>
+                        </StackPanel>
+
+                        <StackPanel
+                            Grid.Row="1"
+                            Grid.Column="1">
+                            <TextBlock 
+                                Text="Confirm Password"
+                                Style="{StaticResource TextBoxLabel}"/>
+                            <PasswordBox
+                                x:Name="ConfirmPasswordBox"
+                                BorderBrush="#FFD7E1E8"
+                                BorderThickness="1.5"/>
+                        </StackPanel>
+
+                        <!-- Row 3 -->
+                        <StackPanel
+                            Grid.Row="2"
+                            Grid.Column="0">
                             <TextBlock 
                                 Text="Email Address"
                                 Style="{StaticResource TextBoxLabel}"/>
@@ -374,103 +365,107 @@
                                 BorderThickness="1.5"/>
                         </StackPanel>
 
-                        <Separator Height="20"/>
+                       <StackPanel
+                           Grid.Row="3"
+                           Grid.Column="0">
+                           <TextBlock
+                               Text="{Binding InfoErrorMessage, RelativeSource={RelativeSource AncestorType=pages:SettingsPage}}"
+                               FontSize="10"
+                               FontWeight="SemiBold"
+                               HorizontalAlignment="Left">
+                               <TextBlock.Style>
+                                   <Style TargetType="{x:Type TextBlock}">
+                                       <Setter Property="Foreground" Value="Red"/>
+                                       <Style.Triggers>
+                                           <DataTrigger Binding="{Binding InfoErrorMessage, RelativeSource={RelativeSource AncestorType=pages:SettingsPage}}" Value="Successfully updated">
+                                               <Setter Property="Foreground" Value="Green"/>
+                                           </DataTrigger>
+                                       </Style.Triggers>
+                                   </Style>
+                               </TextBlock.Style>
+                           </TextBlock>
 
-                        <TextBlock
-                            Text="{Binding InfoErrorMessage, RelativeSource={RelativeSource AncestorType=pages:SettingsPage}}"
-                            FontSize="10"
-                            FontWeight="SemiBold"
-                            VerticalAlignment="Bottom"
-                            HorizontalAlignment="Left">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Foreground" Value="Red"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding InfoErrorMessage, RelativeSource={RelativeSource AncestorType=pages:SettingsPage}}" Value="Successfully updated">
-                                            <Setter Property="Foreground" Value="Green"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding InfoErrorMessage, RelativeSource={RelativeSource AncestorType=pages:SettingsPage}}" Value="{x:Null}">
-                                            <Setter Property="Foreground" Value="{x:Null}"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
+                           <Button 
+                               Margin="0 10"
+                               Click="ApplyBtn_Click"
+                               Width="180"
+                               Height="40"
+                               HorizontalAlignment="Left"
+                               Content="Update info" 
+                               BorderBrush="#FF217BF3"
+                               Background="#FF217BF3"/>
+                        </StackPanel>
+                    </Grid>
 
-                        <Separator Height="10"/>
 
-                        <Button 
-                            Click="ApplyBtn_Click"
-                            Width="180"
-                            Height="40"
-                            VerticalAlignment="Bottom"
-                            HorizontalAlignment="Left"
-                            Content="Update info" 
-                            BorderBrush="#FF217BF3"
-                            Background="#FF217BF3"/>
-                    </StackPanel>
-
-                    <!-- Billing View -->
-
-                    <StackPanel 
+                    <!-- BILLING View -->
+                    <Grid 
+                        Margin="0 20"
                         Grid.Row="1"
                         Grid.Column="1">
-                        <StackPanel.Style>
-                            <Style TargetType="{x:Type StackPanel}">
-                                <Setter Property="Visibility" Value="Hidden" />
+                        <Grid.Style>
+                            <Style TargetType="{x:Type Grid}">
+                                <Setter Property="Visibility" Value="Hidden"/>
                                 <Style.Triggers>
-                                    <DataTrigger  
-                                        Binding="{Binding IsChecked, ElementName=UserInfoButton}"
-                                        Value="False">
+                                    <DataTrigger Binding="{Binding IsChecked, ElementName=BillingInfoButton}" Value="True">
                                         <Setter Property="Visibility" Value="Visible" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
-                        </StackPanel.Style>
+                        </Grid.Style>
 
-                        <Separator/>
-
-                        <DockPanel>
-                            <StackPanel>
-                                <TextBlock 
-                                    Text="Phone Number"
-                                    Style="{StaticResource TextBoxLabel}"/>
-                                <DockPanel>
-                                    <ComboBox 
-                                       BorderBrush="#FFD7E1E8"
-                                       BorderThickness="1.5"
-                                       Text="+1" />
-                                    <TextBox
-                                       x:Name="PhoneBox"
-                                       d:Text="9546582944"
-                                       Width="190"
-                                       Text="{Binding Customer.Phone}"
-                                       BorderBrush="#FFD7E1E8"
-                                       BorderThickness="1.5"/>
-                                </DockPanel>
-                            </StackPanel>
-
-                            <StackPanel
-                                HorizontalAlignment="Right">
-                                <TextBlock 
-                                    Text="Status"
-                                    Style="{StaticResource TextBoxLabel}"/>
-                                <TextBox
-                                    d:Text="Customer"
-                                    IsReadOnly="True"
-                                    Foreground="#bb222222"
-                                    Background="#11444444"
-                                    Text="{Binding IsEmployee,
-                                    Converter={StaticResource EmployStatusConverter }}"
-                                    BorderBrush="#FFD7E1E8"
-                                    BorderThickness="1.5"/>
-                            </StackPanel>
-                        </DockPanel>
-
-                        <Separator/>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
 
                         <StackPanel
-                            HorizontalAlignment="Left">
+                            Grid.Row="0"
+                            Grid.Column="0">
+                            <TextBlock 
+                                Text="Phone Number"
+                                Style="{StaticResource TextBoxLabel}"/>
+                            <DockPanel>
+                                <ComboBox 
+                                    Width="90"
+                                    VerticalAlignment="Center"
+                                    ItemsSource="{Binding CountryCodes, RelativeSource={RelativeSource AncestorType=pages:SettingsPage}}"
+                                    BorderBrush="#FFD7E1E8"
+                                    BorderThickness="1.5"/>
+                                <TextBox
+                                    x:Name="PhoneBox"
+                                    d:Text="9546582944"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Customer.Phone}"
+                                    BorderBrush="#FFD7E1E8"
+                                    BorderThickness="1.5"/>
+                            </DockPanel>
+                        </StackPanel>
+
+                        <StackPanel
+                            Grid.Row="0"
+                            Grid.Column="1">
+                            <TextBlock 
+                                Text="Status"
+                                Style="{StaticResource TextBoxLabel}"/>
+                            <TextBox
+                                d:Text="Customer"
+                                IsReadOnly="True"
+                                Foreground="#bb222222"
+                                Background="#11444444"
+                                Text="{Binding IsEmployee, Converter={StaticResource EmployStatusConverter }}"
+                                BorderBrush="#FFD7E1E8"
+                                BorderThickness="1.5"/>
+                        </StackPanel>
+
+                        <StackPanel
+                            Grid.Row="1"
+                            Grid.Column="0">
                             <TextBlock 
                                 Text="Address"
                                 Style="{StaticResource TextBoxLabel}"/>
@@ -482,31 +477,41 @@
                                 BorderThickness="1.5"/>
                         </StackPanel>
 
-                        <Separator Height="20"/>
 
-                        <TextBlock
-                            Text="{Binding BillingErrorMessage, RelativeSource={RelativeSource AncestorType=pages:SettingsPage}}"
-                            Foreground="{Binding BillingErrorColor, RelativeSource={RelativeSource AncestorType=pages:SettingsPage}}"
-                            FontSize="10"
-                            FontWeight="SemiBold"
-                            VerticalAlignment="Bottom"
-                            HorizontalAlignment="Left">
-                            
-                        </TextBlock>
+                       <StackPanel
+                           Grid.Row="2"
+                           Grid.Column="0">
+                           <TextBlock
+                               Text="{Binding BillingErrorMessage, RelativeSource={RelativeSource AncestorType=pages:SettingsPage}}"
+                               FontSize="10"
+                               FontWeight="SemiBold"
+                               VerticalAlignment="Bottom"
+                               HorizontalAlignment="Left">
+                               <TextBlock.Style>
+                                   <Style TargetType="{x:Type TextBlock}">
+                                       <Setter Property="Foreground" Value="Red"/>
+                                       <Style.Triggers>
+                                           <DataTrigger Binding="{Binding InfoErrorMessage, RelativeSource={RelativeSource AncestorType=pages:SettingsPage}}" Value="Successfully updated">
+                                               <Setter Property="Foreground" Value="Green"/>
+                                           </DataTrigger>
+                                       </Style.Triggers>
+                                   </Style>
+                               </TextBlock.Style>
+                           </TextBlock>
 
-                        <Separator Height="10"/>
+                           <Button 
+                               Margin="0 10"
+                               Click="UpdateBillingBtn_Click"
+                               Width="180"
+                               Height="40"
+                               VerticalAlignment="Bottom"
+                               HorizontalAlignment="Left"
+                               Content="Update billing info" 
+                               BorderBrush="#FF217BF3" 
+                               Background="#FF217BF3"/>
+                        </StackPanel>
 
-                        <Button 
-                            Click="UpdateBillingBtn_Click"
-                            Width="180"
-                            Height="40"
-                            VerticalAlignment="Bottom"
-                            HorizontalAlignment="Left"
-                            Content="Update billing info" 
-                            BorderBrush="#FF217BF3" 
-                            Background="#FF217BF3"/>
-
-                    </StackPanel>
+                    </Grid>
                 </Grid>
             </materialDesign:Card>
         </Grid>

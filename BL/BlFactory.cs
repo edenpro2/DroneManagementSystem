@@ -1,6 +1,4 @@
-﻿using BenchmarkDotNet.Attributes;
-
-namespace BL
+﻿namespace BL
 {
     public static class BlFactory
     {

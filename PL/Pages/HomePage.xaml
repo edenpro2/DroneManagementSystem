@@ -67,6 +67,7 @@
                         Height="120">
                         <Ellipse.Fill>
                             <ImageBrush 
+                                Stretch="UniformToFill"
                                 ImageSource="{Binding ProfilePic}"
                                 d:ImageSource="../Resources/account.jpg"/>
                         </Ellipse.Fill>
