@@ -9,11 +9,11 @@ namespace PL.Pages
     {
         public CustomerUi CustomerUi { get; set; }
 
-        public Parcel LatestParcel { get; set; }
+        public Parcel? LatestParcel { get; set; }
 
         public SolidColorBrush CustomFill { get; } = new(Color.FromRgb(204, 85, 61));
 
-        public HomePage(Parcel parcelVm, CustomerUi customerUi)
+        public HomePage(Parcel? parcelVm, CustomerUi customerUi)
         {
             LatestParcel = parcelVm;
             CustomerUi = customerUi;

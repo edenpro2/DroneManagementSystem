@@ -120,7 +120,7 @@
                                 Style="{StaticResource InfoDetails}" />
                             <!-- Todo: Fix -->
                             <TextBlock
-                                Text="{Binding Dms}" 
+                                Text="{Binding Location, Converter={StaticResource DmsConverter}}"
                                 Style="{StaticResource InfoDetails}" />
                         </StackPanel>
 

@@ -86,5 +86,13 @@ namespace DalFacade.DO
 
             return $"{longDegree}°{longMinute}'{longSecond:0.00}”{longDir} {latDegree}°{latMinute}'{latSecond:0.00}”{latDir}";
         }
+
+        public double LatToRadians() => Latitude * Math.PI / 180;
+        public double LonToRadians() => Longitude * Math.PI / 180;
+
+        public double LatToDegrees() => Latitude * 180 / Math.PI;
+        public double LonToDegrees() => Longitude * 180 / Math.PI;
     }
+
+    
 }

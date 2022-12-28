@@ -23,7 +23,7 @@
         UniformCornerRadius="10"
         Background="{DynamicResource MaterialDesignPaper}"
         Margin="25"
-        materialDesign:ShadowAssist.ShadowDepth="Depth4">
+        materialDesign:ElevationAssist.Elevation="Dp4">
 
         <Grid>
             <Grid.ColumnDefinitions>

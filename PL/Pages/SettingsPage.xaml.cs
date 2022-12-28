@@ -52,7 +52,7 @@ namespace PL.Pages
         public string BillingErrorMessage
         {
             get => _billingErrorMessage;
-            set
+            private set
             {
                 _billingErrorMessage = value;
                 OnPropertyChanged();
@@ -150,9 +150,6 @@ namespace PL.Pages
 
             user.Address = address;
             user.Customer.Phone = phone;
-
-            var c = User.Customer;
-            var c1 = user.Customer;
 
             if (!User.Equals(user))
             {

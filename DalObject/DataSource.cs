@@ -98,15 +98,12 @@ namespace DalObject
                     location));
             }
 
-            #endregion
-
-            // Also possible to use Randomize.LocationInRadius() for coordinates
-
             Customers.Add(new Customer(
-                    Config.CustomerId++,
-                    "Eden Amiga",
-                    "9546582944",
-                    new Location(26.03937, -80.2945)));
+                Config.CustomerId++,
+                "Eden Amiga",
+                "9546582944",
+                new Location(26.03936, -80.29449)));
+            #endregion
 
             string name;
 
@@ -121,11 +118,11 @@ namespace DalObject
                 .ToList();
 
             #region Admin account
-            var eden = Users[Config.CustomerId - 1];
-            eden.IsEmployee = true;
-            eden.Username = "admin";
-            eden.Password = "admin";
-            Users[Config.CustomerId - 1] = eden;
+            var userAdmin = Users[Config.CustomerId - 1];
+            userAdmin.IsEmployee = true;
+            userAdmin.Username = "admin";
+            userAdmin.Password = "admin";
+            Users[Config.CustomerId - 1] = userAdmin;
             #endregion
 
 
@@ -136,7 +133,7 @@ namespace DalObject
                          delivered = default,
                          requested = Randomize.Date(rand);
 
-                int senderId = Customers[rand.Next(Customers.Count)].Id;
+                var senderId = Customers[rand.Next(Customers.Count)].Id;
                 int targetId;
 
                 do

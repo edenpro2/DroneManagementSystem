@@ -108,7 +108,7 @@ namespace BL
                             break;
                         }
 
-                        if (WaitingForDrone(parcel))
+                        if (WaitingForCollection(parcel))
                         {
                             if (Distance(LocationOf(drone), LocationOf(parcel)) > this.Speed(drone))
                             {

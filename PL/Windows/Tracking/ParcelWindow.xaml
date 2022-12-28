@@ -6,6 +6,7 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
     xmlns:controls="clr-namespace:PL.Controls"
+    xmlns:tracking="clr-namespace:PL.Windows.Tracking"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     x:Class="PL.Windows.Tracking.ParcelWindow"
     mc:Ignorable="d"
@@ -159,7 +160,7 @@
                                 Margin="0,15,0,0"
                                 Style="{StaticResource InfoDetails}" />
                             <TextBlock
-                                Text="{Binding Dms}"
+                                Text="{Binding ViewLocation, RelativeSource={RelativeSource AncestorType=tracking:ParcelWindow}, Converter={StaticResource DmsConverter}}"
                                 Margin="0,15,0,0"
                                 Style="{StaticResource InfoDetails}" />
                         </StackPanel>

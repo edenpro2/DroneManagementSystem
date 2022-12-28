@@ -111,7 +111,7 @@ namespace DalFacade.DO
                 return false;
             if (ReferenceEquals(this, obj))
                 return true;
-            if (obj.GetType() != GetType())
+            if (obj.GetType() != this.GetType())
                 return false;
 
             return Equals((Customer)obj);

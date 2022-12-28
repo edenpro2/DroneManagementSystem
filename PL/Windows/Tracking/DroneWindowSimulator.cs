@@ -9,13 +9,13 @@ namespace PL.Windows.Tracking
         #region Properties
         private BackgroundWorker? Worker { get; set; }
         private bool _simulationRunning;
-        private const int Time = 1020; //in ms (extra 20 ms to adjust for internet traffic)
+        private const int TIME = 1090; //in ms (extra 90 ms to adjust for internet traffic)
         private bool _shouldStop;
         #endregion
 
         private void SimulatorBtn_Click(object sender, RoutedEventArgs routedEventArgs)
         {
-            IsChecked = !IsChecked;
+            //IsChecked = !IsChecked;
             Simulation();
         }
 
@@ -42,7 +42,7 @@ namespace PL.Windows.Tracking
         {
             while (!_shouldStop)
             {
-                System.Threading.Thread.Sleep(Time);
+                System.Threading.Thread.Sleep(TIME);
                 var (drone, progress) = _bl.DroneSimulator(ViewModel);
                 ViewModel = drone;
                 Dispatcher.Invoke(() => { ProgressMessage = progress; });

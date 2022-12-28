@@ -10,7 +10,7 @@ namespace PL.ViewModels
         public ObservableCollection<Station> Stations
         {
             get => _stations;
-            set
+            private init
             {
                 _stations = value;
                 OnPropertyChanged();

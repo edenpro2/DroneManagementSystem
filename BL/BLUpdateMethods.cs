@@ -283,7 +283,7 @@ namespace BL
             if (parcel is null || parcel.Requested == default)
                 throw new BlNotFoundException(parcel);
 
-            if (!WaitingForDrone(parcel))
+            if (!WaitingForCollection(parcel))
                 throw new BlAlreadyCollected(parcel);
 
             lock (DalApi)
@@ -343,7 +343,7 @@ namespace BL
                     var parcel = GetParcels(p => p.Active).First(p => p.DroneId == drone.Id);
 
                     // drone hasn't collected parcel yet
-                    if (WaitingForDrone(parcel) || NotAssignedToDrone(parcel))
+                    if (WaitingForCollection(parcel) || NotAssignedToDrone(parcel))
                     {
                         change = -ConsumptionWhenFree();
                         break;

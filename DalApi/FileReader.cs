@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using Newtonsoft.Json;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,7 +10,7 @@ namespace DalFacade
     public static class FileReader
     {
         private static readonly string ProjectDirectory;
-        
+
         public enum PathOption
         {
             CreateDirectory,

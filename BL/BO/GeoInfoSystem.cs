@@ -42,16 +42,12 @@ namespace BL.BO
         /// <returns></returns>
         public static double Speed(this Bl bl, Drone drone)
         {
-            switch (drone.Status)
-            {
-                case DroneStatuses.Delivery:
-                    var parcel = bl.GetParcels(p => p.Active).First(p => p.DroneId == drone.Id); // assigned parcel
-                    if (InTransit(parcel)) 
-                        return (double)Speeds.Loaded;
-                    return (double)Speeds.Unloaded;
-                default:
-                    return (double)Speeds.Unloaded;
-            }
+            if (drone.Status != DroneStatuses.Delivery)
+                return (double)Speeds.Unloaded;
+
+            var parcel = bl.GetParcels(p => p.Active).First(p => p.DroneId == drone.Id); // assigned parcel
+
+            return InTransit(parcel) ? (double)Speeds.Loaded : (double)Speeds.Unloaded;
         }
 
         /// <summary>
@@ -65,16 +61,6 @@ namespace BL.BO
         }
 
         /// <summary>
-        /// Convert radians to degrees
-        /// </summary>
-        /// <param name="radians"></param>
-        /// <returns>Degrees</returns>
-        private static double ToDegrees(double radians)
-        {
-            return radians * 180 / PI;
-        }
-
-        /// <summary>
         /// Calculates the bearing (direction) of the drone
         /// </summary>
         /// <param name="loc1"></param>
@@ -82,19 +68,16 @@ namespace BL.BO
         /// <returns>Direction of drone</returns>
         private static double Bearing(Location loc1, Location loc2)
         {
-            double lat1 = loc1.Latitude, long1 = loc1.Longitude, lat2 = loc2.Latitude, long2 = loc2.Longitude;
-
             //Convert input values to radians   
-            lat1 = ToRadians(lat1);
-            long1 = ToRadians(long1);
-            lat2 = ToRadians(lat2);
-            long2 = ToRadians(long2);
+            var lat1 = loc1.LatToRadians();
+            var long1 = loc1.LonToRadians();
+            var lat2 = loc2.LatToRadians();
+            var long2 = loc2.LonToRadians();
 
             var deltaLong = long2 - long1;
 
             var y = Sin(deltaLong) * Cos(lat2);
-            var x = Cos(lat1) * Sin(lat2) -
-                    Sin(lat1) * Cos(lat2) * Cos(deltaLong);
+            var x = Cos(lat1) * Sin(lat2) - Sin(lat1) * Cos(lat2) * Cos(deltaLong);
 
             return Atan2(y, x);
         }
@@ -129,12 +112,10 @@ namespace BL.BO
                              + Atan2(Sin(bearing) * distRatioSine * startLatCos,
                                  distRatioCosine - startLatSin * Sin(endLatRads));
 
-            var d = new Location(
-                ToDegrees(endLatRads),
-                ToDegrees(endLonRads)
-            );
+            // Location in radians
+            var newLoc = new Location(endLatRads, endLonRads);
 
-            return d;
+            return new Location(newLoc.LatToDegrees(), newLoc.LonToDegrees());
         }
     }
 }

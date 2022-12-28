@@ -138,8 +138,8 @@ namespace BL
                 .FirstOrDefault();
 
 
-            // IN LINQ
-            //return GetParcels(p => p.Active)
+            // // In LINQ
+            //    return GetParcels(p => p.Active)
             //    .Where(p => p.DroneId < 0)                                                   
             //    .Where(p => p.Weight <= drone.MaxWeight)                                
             //    .OrderByDescending(p => p.Priority)

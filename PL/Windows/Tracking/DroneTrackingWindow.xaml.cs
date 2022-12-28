@@ -1,6 +1,7 @@
-﻿using BL.BO.OSM;
+﻿using BL;
 using DalFacade;
 using DalFacade.DO;
+using Microsoft.Web.WebView2.Core;
 using PL.Controls;
 using System;
 using System.ComponentModel;
@@ -9,10 +10,8 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using BL;
 using Color = System.Windows.Media.Color;
-
-#pragma warning disable CS8602 // All null values initialized in constructor
+#pragma warning disable CS8602 
 
 namespace PL.Windows.Tracking
 {
@@ -24,12 +23,11 @@ namespace PL.Windows.Tracking
 
         public BatteryChartPlotter BatteryPlotter { get; } = new();
         public SolidColorBrush CustomFill { get; } = new(Color.FromRgb(68, 110, 189));
-        public NominatimJson Details { get; set; }
         public static double MinScreenHeight => PLMethods.MinScreenHeight(0.80);
         public static double MinScreenWidth => PLMethods.MinScreenWidth(0.80);
-        public bool IsChecked { get; set; }
+        //public bool IsChecked { get; set; }
 
-        private string _errorMessage;
+        private string _errorMessage = "";
         public string ErrorMessage
         {
             get => _errorMessage;
@@ -40,19 +38,19 @@ namespace PL.Windows.Tracking
             }
         }
 
-        private string _progressMessage;
+        private string _progressMessage = "";
         public string ProgressMessage
         {
             get => _progressMessage;
-            set
+            private set
             {
                 _progressMessage = value;
                 OnPropertyChanged();
             }
         }
 
-        private Uri _mapUrl;
-        public Uri MapUrl
+        private Uri? _mapUrl;
+        public Uri? MapUrl
         {
             get => _mapUrl;
             set
@@ -62,11 +60,11 @@ namespace PL.Windows.Tracking
             }
         }
 
-        private Drone _viewModel;
-        public Drone ViewModel
+        private Drone? _viewModel;
+        public Drone? ViewModel
         {
             get => _viewModel;
-            set
+            private set
             {
                 _viewModel = value;
                 OnPropertyChanged();
@@ -94,7 +92,7 @@ namespace PL.Windows.Tracking
         public DroneTrackingWindow(BlApi bl, Drone drone)
         {
             InitializeComponent();
-            //SetWebViewEnvironment();
+            SetWebViewEnvironment();
             _bl = bl;
             ViewModel = drone;
             UpdateContent();
@@ -102,11 +100,11 @@ namespace PL.Windows.Tracking
 
         #region Async
 
-        //private async void SetWebViewEnvironment()
-        //{
-        //    var webView2Environment = await CoreWebView2Environment.CreateAsync(null, CacheFolder);
-        //    await MapView.EnsureCoreWebView2Async(webView2Environment);
-        //}
+        private async void SetWebViewEnvironment()
+        {
+            var webView2Environment = await CoreWebView2Environment.CreateAsync(null, CacheFolder);
+            await MapView.EnsureCoreWebView2Async(webView2Environment);
+        }
 
         #endregion
 
@@ -142,7 +140,7 @@ namespace PL.Windows.Tracking
             //{
             //    return;
             //}
-            
+
             const int hours = 1;
 
             try

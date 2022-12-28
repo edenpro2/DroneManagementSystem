@@ -2,7 +2,6 @@
 using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using static BL.BO.BlPredicates;
 
 namespace BL
 {
@@ -49,15 +48,15 @@ namespace BL
                     return station.Location;
                 case Customer customer:
                     return customer.Location;
-                // parcel is with sender 
-                case Parcel parcel when WaitingForDrone(parcel):
-                    return LocationOf(SearchForCustomer(c => c.Id == parcel.SenderId));
-                // parcel is with drone
-                case Parcel parcel when InTransit(parcel):
-                    return LocationOf(SearchForDrone(d => d.Id == parcel.DroneId));
                 // parcel is with receiver
-                case Parcel parcel when AlreadyDelivered(parcel):
+                case Parcel parcel when parcel.Delivered != default:
                     return LocationOf(SearchForCustomer(c => c.Id == parcel.TargetId));
+                // parcel is with drone
+                case Parcel parcel when parcel.Collected != default:
+                    return LocationOf(SearchForDrone(d => d.Id == parcel.DroneId));
+                // parcel is with sender 
+                case Parcel parcel when true:
+                    return LocationOf(SearchForCustomer(c => c.Id == parcel.SenderId));
                 default:
                     return default;
             }
